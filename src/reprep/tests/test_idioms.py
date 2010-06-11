@@ -34,17 +34,16 @@ class Test(unittest.TestCase):
         with cov.data_file('plot', 'image/png') as f:
             pylab.figure()
             pylab.plot(C)
-            pylab.close()
             pylab.savefig(f)
+            pylab.close()
                 
-        t = report.table('results',
+        report.table('results',
                          col_desc=['One', 'Two'],
                          data=[[1, 2], [3, 4]])        
         
         f = report.figure('Covariance and information matrix', shape=(1, 3))
-        f.sub('covariance')
-        f.sub('covariance/plot')
-        f.sub('information')
+        f.sub('covariance', 'should default to plot')
+        f.sub('covariance/plot', 'Same as <-')
             
         f = report.figure('Tensors', shape=(1, 3))
         f.sub('Tx', display='posneg')

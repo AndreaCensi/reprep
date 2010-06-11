@@ -101,6 +101,20 @@ def node_to_html(node, context):
 def table_to_html(figure, context):
     pass
 
+def is_image_node(node):
+    return isinstance(node, DataNode) and node.mime == 'image/png'
+    
+def find_suitable_image(node):
+    ''' Finds the closest node with image data. '''
+    if is_image_node(node):
+        return node
+    else:
+        for child in node.children:
+            res = find_suitable_image(child)
+            if res is not None:
+                return res
+        return None
+
 def figure_to_html(node, context):
     complete_id = get_complete_id(node)
     file = context.file
@@ -127,7 +141,14 @@ def figure_to_html(node, context):
         file.write('<div style="%s" class="report-subfigure"> ' % style)
       
         actual_resource = node.parent.resolve_url(sub.image)
-        image_filename, absolute = get_node_filename(actual_resource, context)
+        
+        actual_image = find_suitable_image(actual_resource)
+        
+        if actual_image is None:
+            msg = 'Could not find image from "%s".' % get_complete_id(actual_resource)
+            raise ValueError(msg)
+        
+        image_filename, absolute = get_node_filename(actual_image, context)
         
         file.write('<img src="%s" />' % image_filename)
 
