@@ -19,3 +19,6 @@ src/reprep/tests/test_idioms.pyc
 src/reprep/tests/test_urls.pyc
 src/reprep.egg-info
 src/reprep/graphics/success.pyc
+tmp*
+error*
+**/*pyc

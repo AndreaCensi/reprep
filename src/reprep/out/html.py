@@ -1,16 +1,12 @@
 import os
-from reprep import Figure, Table, Node, DataNode
 import mimetypes
 import sys
 
 class html_context:
-    def __init__(self, file, rel_resources_dir, resources_dir, id_prefix):
+    def __init__(self, file, rel_resources_dir, resources_dir):
         self.file = file
         self.rel_resources_dir = rel_resources_dir
         self.resources_dir = resources_dir
-        self.id_prefix = id_prefix
-        self.parents = [] 
-
 
 def htmlfy(s):
     # XXX to write
@@ -63,6 +59,8 @@ sssection { border: solid 2px gray; display: block; clear: both; padding: 1em; m
 
 .node-class { margin:1em; float: right; font-family: monospace; color: blue;}
 .node-id {margin:1em;  float: right; font-family: monospace; font-weight: bold; color: green;}
+.datanode { font-family: monospace; font-weight: bold; }
+.datanode-children { margin-left: 1em; }
     </style>
     <title> %s </title>
     
@@ -72,20 +70,19 @@ sssection { border: solid 2px gray; display: block; clear: both; padding: 1em; m
         
         context = html_context(file,
                     resources_dir=resources_dir,
-                    rel_resources_dir=rel_resources_dir,
-                    id_prefix="")
+                    rel_resources_dir=rel_resources_dir)
         node_to_html(node, context)
         
         file.write("\n</body></html>")
  
 
 def children_to_html(node, context):
-    context.parents.append(node)
     for child in node.children:
         node_to_html(child, context)
-    context.parents.pop()
-
+    
 def node_to_html(node, context):
+    from reprep.node import Figure, Table, Node, DataNode
+
     functions = {
         DataNode: datanode_to_html,
         Table: table_to_html,
@@ -93,27 +90,12 @@ def node_to_html(node, context):
         Node: simple_node_to_html
     }
     t = node.__class__
-    print t, node
     if not t in functions:
         raise ValueError('Could not find type of %s (%s) in %s.' % (node, t, functions.keys()))
     functions[t](node, context)
     
 def table_to_html(figure, context):
     pass
-
-def is_image_node(node):
-    return isinstance(node, DataNode) and node.mime == 'image/png'
-    
-def find_suitable_image(node):
-    ''' Finds the closest node with image data. '''
-    if is_image_node(node):
-        return node
-    else:
-        for child in node.children:
-            res = find_suitable_image(child)
-            if res is not None:
-                return res
-        return None
 
 def figure_to_html(node, context):
     complete_id = get_complete_id(node)
@@ -140,15 +122,15 @@ def figure_to_html(node, context):
     
         file.write('<div style="%s" class="report-subfigure"> ' % style)
       
-        actual_resource = node.parent.resolve_url(sub.image)
+        actual_resource = node.resolve_url(sub.image)
         
-        actual_image = find_suitable_image(actual_resource)
+      #  actual_image = find_suitable_image(actual_resource)
         
-        if actual_image is None:
-            msg = 'Could not find image from "%s".' % get_complete_id(actual_resource)
-            raise ValueError(msg)
+      #  if actual_image is None:
+      #      msg = 'Could not find image from "%s".' % get_complete_id(actual_resource)
+      #      raise ValueError(msg)
         
-        image_filename, absolute = get_node_filename(actual_image, context)
+        image_filename, absolute = get_node_filename(actual_resource, context)
         
         file.write('<img src="%s" />' % image_filename)
 
@@ -172,16 +154,23 @@ def datanode_to_html(node, context):
     ''' Writes the data on the file '''
     relative, filename = get_node_filename(node, context)
     if node.mime == 'python':
-        print "Ignoring %s" % filename
+        #print "Ignoring %s" % filename
+        pass
     else:
         if not isinstance(node.raw_data, str):
             sys.stderr.write("Ignoring %s because raw_data is %s\n" % \
                 (filename, node.raw_data.__clasS__))
         else:
-            print "Writing on %s" % filename
+            # print "Writing on %s" % filename
             with open(filename, 'w') as f:
                 f.write(node.raw_data)
+                
+    context.file.write('<p class="datanode">Resource: <a href="%s">%s</a></p>\n' % \
+                       (relative, node.id))
+
+    context.file.write('<div class="datanode-children">\n')
     children_to_html(node, context)
+    context.file.write('</div>\n')
 
 
 def simple_node_to_html(node, context):
