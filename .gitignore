@@ -22,3 +22,6 @@ src/reprep/graphics/success.pyc
 tmp*
 error*
 **/*pyc
+**/*pyc
+src/reprep/out/platex.pyc
+src/reprep/out/platex_test.pyc
