@@ -5,6 +5,9 @@ from graphics import posneg, Image_from_array
 from reprep.graphics.success import colorize_success
 import sys
 
+
+# TODO: check no "/" in node
+
 class NotExistent(Exception):
     pass
 class InvalidURL(Exception):
@@ -244,8 +247,10 @@ class Figure(Node):
         else:
             image = data.get_suitable_image_representation()
             if image is None:
-                raise ValueError('Could not find candidate image for "%s".' % 
-                                 resource)
+                
+                self.parent.print_tree()
+                raise ValueError('Could not find candidate image for resource "%s" image node is "%s".' % 
+                                 (resource, data.get_complete_id()))
         
         resource_url = self.get_relative_url(data)
         image_url = self.get_relative_url(image)    
