@@ -68,6 +68,11 @@ class NodeInterface:
         n.parent = self
         self.children.append(n)
 
+    def node(self, id):
+        ''' Creates a simple child node. '''
+        n = Node(id)
+        self.add_child(n)
+        return n 
     
     
 class Attacher:
