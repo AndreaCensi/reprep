@@ -4,6 +4,7 @@ import mimetypes
 from graphics import posneg, Image_from_array
 from reprep.graphics.success import colorize_success
 import sys
+from reprep.graphics.scale import scale
 
 
 # TODO: check no "/" in node
@@ -279,7 +280,9 @@ class DataNode(Node):
     def create_display(self, display, **kwargs):
         if display is None:
             display = 'posneg'
-        known = {'posneg': posneg, 'success': colorize_success}
+        known = {'posneg': posneg,
+                 'success': colorize_success,
+                 'scale': scale}
         if not display in known:
             raise ValueError('No known converter "%s". ' % display)
         id = display # TODO: check; add args in the name
