@@ -32,9 +32,9 @@ def colorize_success(value):
     magenta = [186, 50, 50, 255]
     yellow = [255, 255, 0, 255]
     orange = [255, 164, 18, 255]
-    blue = [0, 0, 255, 255]
-    bluegreen = [255, 255, 120, 255]
-    darkgreen = [0, 100, 0 , 255]
+    blue = [0, 50, 255, 255]
+    bluegreen = [0, 150, 50, 255]
+    darkgreen = [0, 200, 0 , 255]
     green = [0, 255, 0, 255]
     
     colors = [(0, 0.001, red), (0.001, 0.05, magenta), (0.05, 0.25, yellow),
