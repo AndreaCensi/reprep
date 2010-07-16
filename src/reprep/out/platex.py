@@ -9,6 +9,9 @@ class Latex:
     @staticmethod
     def document(filename, graphics_path=".", document_class="article",
                  class_options=""):
+        
+        graphics_path = os.path.relpath(graphics_path, os.path.dirname(filename))
+
         class BodyWrap:
             def __init__(self, filename, document):
                 self.document = document
@@ -68,6 +71,11 @@ class LatexEnvironment:
                 
     def hfill(self):
         self.context.f.write('\\hfill\ \n')
+    def hspace(self, size):
+        self.context.f.write('\\hspace{%s}' % size)
+    
+    def vspace(self, size):
+        self.context.f.write('\\vspace{%s}' % size)
     
     def parbreak(self):
         self.context.f.write('\n\n')
@@ -106,7 +114,7 @@ class LatexEnvironment:
         filename = os.path.join(self.context.graphics_path, id + suffix)
         with open(filename, 'w') as f:
             f.write(data)
-        self.context.f.write('\\includegraphics[width=%s]{%s}\n' % (width, id))
+        self.context.f.write('\\includegraphics[width=%s]{%s}%%\n' % (width, id))
         
     class GenericWrap:
         def __init__(self, figure, main_context):
@@ -122,7 +130,7 @@ class LatexDocument(LatexEnvironment):
     def __init__(self, document_class, class_options, graphics_path="."):
         self.context = LatexContext(graphics_path)
         self.document_class = document_class
-        self.class_options = class_options
+        self.class_options = class_options 
         
     def dump_stream(self, file):
         file.write('\\documentclass[%s]{%s}\n' % (self.class_options,
@@ -130,7 +138,7 @@ class LatexDocument(LatexEnvironment):
         file.write('\\usepackage{graphicx}\n')
         file.write('\\usepackage{xcolor}\n')
         file.write('\\usepackage{subfig}\n') 
-        file.write('\\graphicspath{{%s}}\n' % self.context.graphics_path)
+        file.write('\\graphicspath{{%s/}}\n' % self.context.graphics_path)
         file.write(self.context.preamble.getvalue())
         file.write('\\begin{document}\n')
         file.write(self.context.f.getvalue())
@@ -197,5 +205,17 @@ def latexify(s):
     # XXX TO WRITE and use
     return str(s).replace('_', '\\_')
 
-        
+def texif(cmd, use, otherwise):
+    return "\\ifx %s\\undefined %s\\else %s\\fi" % (cmd,otherwise,use)
+
+def makeupcmd(name):
+    return texif("\\%s" % name,"", "\\newcommand{\\%s}{%s}" % (name, name)) + '\n'
+
     
+
+def safecmd(s):
+    rep = {'-':'','_':'','0':'Z', '1':'O','2':'t','3':'T','4':'f','5':'F','6':'s','7':'S','8':'E',
+           '9':'N'}
+    for a,b in rep.items():
+        s = s.replace(a,b)
+    return s
