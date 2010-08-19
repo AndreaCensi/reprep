@@ -1,11 +1,11 @@
 
 from reprep.node import Node
 
- 
-#        
-#        self.add_child(DataNode('table_data', data))
-#        self.add_child(DataNode('col_desc', col_desc))
-#        self.add_child(DataNode('row_desc', row_desc))
-#        
-        # TODO: test types
 
+
+class Table(Node):
+    def __init__(self, id, data, col_desc=None, row_desc=None):
+        Node.__init__(self, id)
+        self.data = data
+        self.col_desc = col_desc
+        self.row_desc = row_desc

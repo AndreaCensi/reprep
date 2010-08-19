@@ -81,7 +81,7 @@ def children_to_html(node, context):
         node_to_html(child, context)
     
 def node_to_html(node, context):
-    from reprep.node import Figure, Table, Node, DataNode
+    from reprep import Figure, Table, Node, DataNode
 
     functions = {
         DataNode: datanode_to_html,

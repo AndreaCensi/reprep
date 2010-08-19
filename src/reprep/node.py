@@ -1,100 +1,19 @@
-from collections import namedtuple
-import tempfile
-import mimetypes
+
 from graphics import posneg, Image_from_array
 from reprep.graphics.success import colorize_success
 import sys
 from reprep.graphics.scale import scale
+from reprep.interface import NodeInterface
 
 
 # TODO: check no "/" in node
 
 class NotExistent(Exception):
     pass
+
 class InvalidURL(Exception):
     pass
-
-
-class NodeInterface: 
- 
-    def data(self, id, data, mime=None, desc=None):
-        ''' Attaches a data node. "data" is assumed to be a raw python structure. 
-            Or, if data is a string, pass a proper mime type ('image/png'). '''
-        n = DataNode(id=id, data=data, mime=mime)
-        self.add_child(n) 
-        return n
-    
-    def data_file(self, id, mime):
-        ''' Support for attaching data from a file. 
-        This method is supposed to be used in conjunction with the "with"
-        construct. 
-        
-        For example, the following is the concise way to attach a pdf
-        plot to a node.::
-        
-            with report.data_file('plot', 'application/pdf') as f:
-                pylab.figure()
-                pylab.plot(x,y)
-                pylab.savefig(f)
-        
-        Omit any file extension from 'id', ("plot" and not "plot.pdf"), we 
-        will take care of it for you.
-        
-        This is a more complicated example, where we attach two versions
-        of the same image, in different formats::
-         
-            for format in ['application/pdf', 'image/png']:
-                with report.data_file('plot', format) as f:
-                    pylab.figure()
-                    pylab.plot(x,y)
-                    pylab.savefig(f)
-
-        '''
-        return Attacher(self, id, mime)
- 
-    def figure(self, id, *args, **kwargs):
-        f = Figure(id, *args, **kwargs)
-        self.add_child(f) 
-        return f
- 
-    def table(self, id, data, col_desc=None, row_desc=None):
-        t = Table(id, data, col_desc, row_desc)
-        self.add_child(t) 
-        return t
-        
-    def add_child(self, n):
-        ''' Adds a child to this node. Usually you would not use this
-            method directly. '''
-        n.parent = self
-        self.children.append(n)
-
-    def node(self, id):
-        ''' Creates a simple child node. '''
-        n = Node(id)
-        self.add_child(n)
-        return n 
-    
-    
-class Attacher:
-    def __init__(self, node, id, mime):
-        self.node = node
-        self.id = id
-        self.mime = mime
-        if self.mime is not None:
-            suffix = mimetypes.guess_extension(self.mime)
-        else:
-            suffix = '.bin'
-        
-        self.temp_file = tempfile.NamedTemporaryFile(suffix=suffix)
-        
-    def __enter__(self):
-        return self.temp_file.name
-        
-    def __exit__(self, type, value, traceback): #@UnusedVariable
-        with open(self.temp_file.name) as f:
-            data = f.read()
-            self.node.data(id=self.id, data=data, mime=self.mime)
-        self.temp_file.close()
+   
          
 class Node(NodeInterface):
     def __init__(self, id=None, children=None):
@@ -106,6 +25,20 @@ class Node(NodeInterface):
             self.add_child(c)
         self.parent = None
     
+    def add_child(self, n):
+        ''' Adds a child to this node. Usually you would not use this
+            method directly. '''
+        n.parent = self
+        self.children.append(n)
+
+    def node(self, id):
+        ''' Creates a simple child node. '''
+        from reprep import Node
+        n = Node(id)
+        self.add_child(n)
+        return n 
+
+
     def resolve_url_dumb(self, url):
         if not isinstance(url, str):
             raise ValueError('I expect a string, not %s.' % url)
@@ -229,50 +162,6 @@ class Node(NodeInterface):
             return self.parent.get_complete_id() + separator + self.id
 
     
-SubFigure = namedtuple('SubFigure', 'resource image caption display display_args')
-
-class Figure(Node):
-
-    def __init__(self, id=None, caption=None, shape=None):
-        Node.__init__(self, id=id)
-        self.caption = caption
-        self.shape = shape
-        self.subfigures = []
-
-    def sub(self, resource, caption=None, display=None, **kwargs):
-        if caption is None:
-            caption = resource
-            
-        data = self.resolve_url(resource)
-        
-        if not isinstance(data, DataNode):
-            raise ValueError('I expect a data node as an argument to sub(). (%s)' \
-                             % resource)
-        if display is not None:
-            image = data.create_display(display, **kwargs)
-        else:
-            image = data.get_suitable_image_representation()
-            if image is None:
-                
-                self.parent.print_tree()
-                raise ValueError('Could not find candidate image for resource "%s" image node is "%s".' % 
-                                 (resource, data.get_complete_id()))
-        
-        resource_url = self.get_relative_url(data)
-        image_url = self.get_relative_url(image)    
-        
-        sub = SubFigure(resource=resource_url, image=image_url,
-                                caption=caption,
-                               display=display, display_args=kwargs)
-        self.subfigures.append(sub)  
-      
-
-class Table(Node):
-    def __init__(self, id, data, col_desc=None, row_desc=None):
-        Node.__init__(self, id)
-        self.data = data
-        self.col_desc = col_desc
-        self.row_desc = row_desc
         
 class DataNode(Node):
     def __init__(self, id, data, mime=None):
