@@ -10,10 +10,12 @@ to the report.
 **(add image)**
 
 
+**Current status:** usable, but the documentation is incomplete.
+
 Documentation
 -------------
 
-.. container:: col1
+.. container:: col1b
 
 	* :ref:`why`
 	* :ref:`tutorial`
