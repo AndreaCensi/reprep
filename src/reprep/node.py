@@ -16,7 +16,8 @@ class InvalidURL(Exception):
    
          
 class Node(NodeInterface):
-    def __init__(self, id=None, children=None):
+    def __init__(self, id, children=None):
+        assert isinstance(id, str)
         self.id = id
         if children is None:
             children = []

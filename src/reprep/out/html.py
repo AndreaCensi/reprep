@@ -25,6 +25,7 @@ def get_node_filename(node, context):
     if suffix is None:
         suffix = '.pickle'
     id = get_complete_id(node)
+    id = id.replace('/', '_')
     relative = os.path.join(context.rel_resources_dir, id + suffix)
     absolute = os.path.join(context.resources_dir, id + suffix)
     return relative, absolute
@@ -123,13 +124,7 @@ def figure_to_html(node, context):
         file.write('<div style="%s" class="report-subfigure"> ' % style)
       
         actual_resource = node.resolve_url(sub.image)
-        
-      #  actual_image = find_suitable_image(actual_resource)
-        
-      #  if actual_image is None:
-      #      msg = 'Could not find image from "%s".' % get_complete_id(actual_resource)
-      #      raise ValueError(msg)
-        
+          
         image_filename, absolute = get_node_filename(actual_resource, context)
         
         file.write('<img src="%s" />' % image_filename)
