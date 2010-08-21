@@ -1,0 +1,267 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Tutorial &mdash; RepRep v0.1 documentation</title>
+    <link rel="stylesheet" href="static/haiku.css" type="text/css" />
+    <link rel="stylesheet" href="static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/print.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="static/jquery.js"></script>
+    <script type="text/javascript" src="static/underscore.js"></script>
+    <script type="text/javascript" src="static/doctools.js"></script>
+    <script type="text/javascript" src="_static/theme_extras.js"></script>
+    <link rel="top" title="RepRep v0.1 documentation" href="index.html" />
+	 
+	
+   <style type="text/css">
+   .pagetoc { 
+	max-width: 30%;
+	display: block; float: right; margin-left: 3em; background-color: white; border: solid 2px gray;}
+   </style>
+
+   <style type="text/css">
+	div.col1 {
+		display: block;
+		float: left;
+	}
+
+	div.col2 {
+		margin-left: 3em;
+		display: block;
+		float: left;
+	}
+
+	div.after {
+		clear: left;
+	}
+
+	div.twitterbadge {
+		float: right;
+		margin-left: 2em;
+	}
+
+	img.bigpicture {
+		margin: 1em;
+		max-width: 90%;
+	}
+	
+	.header h2 {
+		color: #990033 !important;
+		font-size: 200% !important;
+	}
+	.content {
+/*		padding-left: 5em; */
+	}
+	.content p, .content p {
+		max-width: 40em;
+	}
+	
+	.content h1 { 
+		display: none;
+	}
+	h2, h3 {  
+		border-bottom: solid 2px orange;
+		max-width: 40em;
+	}
+	
+	h1 { font-size: 200%;}
+	h2 { font-size: 150%;}
+	h3 { font-size: 125%;}
+	
+/*	body { font-size: 120%; font-family: Georgia,Serif !important;} */
+		
+	pre{
+		max-width: 60em;
+	/*	width: 80ex;*/
+	}
+	
+	body {  font-size: 120%; font-family: "Droid Serif", serif; }
+	
+	h1,h2,h3 { 
+  font-family: "Lobster", serif;
+  font-style: normal;
+  font-weight: 400;
+  text-shadow: 6px 6px 6px #ccc;
+}
+
+div.header h2 {
+    font-size: 1.3em;
+    font-weight: normal;
+    letter-spacing: 1px;
+    text-transform: none !important;
+    color: #aaa;
+    border: 0;
+    margin-top: -3px;
+    padding: 0;
+}
+
+/* On the first page */
+
+.col1 strong, .col2 strong { 
+	font-family: "Lobster", serif; color: #990033;text-shadow: 6px 6px 6px #ccc;
+	font-size: 160%;
+ }
+
+.compmake-brand {
+	font-family: "Lobster", serif;
+	font-size: 120%;
+}
+
+a.reference em, a.external em {
+	font-style: normal !important;
+}
+
+</style>
+
+<link  href="http://fonts.googleapis.com/css?family=Lobster" rel="stylesheet" type="text/css" >
+<link  href="http://fonts.googleapis.com/css?family=Droid+Serif" rel="stylesheet" type="text/css" >
+<!--<link  href="http://fonts.googleapis.com/css?family=Cardo" rel="stylesheet" type="text/css" >-->
+
+<!--
+<script src="http://yui.yahooapis.com/3.1.0/build/yui/yui-min.js"></script>
+<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.1.0/build/cssreset/reset-context-min.css"></link>
+<script src="http://www.remarkbox.com/deploy/remarkbox-min.js"></script>
+<script type="text/javascript">
+YUI().use('remarkbox', function (Y) {
+Y.Remarkbox.remarkson.elements("p,code");
+Y.Remarkbox.remarkson.ids("para,tnt");
+Y.Remarkbox.remarkson.classes("rmkit,contentfeedback");
+Y.Remarkbox.remarktype.pointer("right");
+Y.Remarkbox.remarktype.strongcolor("#ECFCE8");
+Y.Remarkbox.remarktype.strongcolortext("#000000");
+Y.Remarkbox.remarktype.lightcolor("#FF8040");
+Y.Remarkbox.remarktype.lightcolortext("#800000");
+Y.Remarkbox.remarktype.alwaysvisible("true");
+Y.Remarkbox.remarktype.offsetx("-3em");
+Y.Remarkbox.remarktype.offsety("-2em");
+Y.Remarkbox.remarktype.allowanonymous("true");
+Y.Remarkbox.render();
+});
+</script>
+-->
+
+
+
+  </head>
+  <body>
+      <div class="header"><h1 class="heading"><a href="index.html">
+          <span>RepRep v0.1 documentation</span></a></h1>
+        <h2 class="heading"><span>Tutorial</span></h2>
+      </div>
+      <div class="topnav">
+      
+        <p>
+        <a class="uplink" href="index.html">Contents</a>
+        </p>
+
+      </div>
+      <div class="content">
+        
+        
+  <div class="section" id="tutorial">
+<span id="id1"></span><h1>Tutorial<a class="headerlink" href="#tutorial" title="Permalink to this headline">¶</a></h1>
+<p>A RepRep report is a hierarchical collection of nodes. There are three types of nodes:</p>
+<ol class="arabic simple">
+<li><strong>Generic nodes</strong> holding python data, such as numpy arrays.</li>
+<li><strong>Binary nodes</strong> holding file data, such as PNG images.</li>
+<li><strong>Figure nodes</strong> that describe an arrangement of the data suitable to create a quick report for preview.</li>
+</ol>
+<p>The following is the minimal example of a report.
+We add one data node called <tt class="docutils literal"><span class="pre">'covariance'</span></tt>, and one figure.
+The figure contains one subfigure that displays the node <tt class="docutils literal"><span class="pre">'covariance'</span></tt>.
+The <tt class="docutils literal"><span class="pre">display='posneg'</span></tt> parameters is a hint on how the covariance
+should be displayed. (see HTML and PDF results):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">reprep</span> <span class="kn">import</span> <span class="n">Report</span>
+
+<span class="n">report</span> <span class="o">=</span> <span class="n">Report</span><span class="p">()</span>
+
+<span class="c"># add a node called &quot;covariance&quot; with the data M</span>
+<span class="n">report</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s">&#39;covariance&#39;</span><span class="p">,</span> <span class="n">M</span><span class="p">)</span>
+
+<span class="c"># add a figure with one subfigure;</span>
+<span class="c"># &#39;posneg&#39; is one of the default formatters</span>
+<span class="n">f</span> <span class="o">=</span>  <span class="n">report</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">f</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s">&#39;covariance&#39;</span><span class="p">,</span> <span class="n">caption</span><span class="o">=</span><span class="s">&#39;The covariance&#39;</span><span class="p">,</span> <span class="n">display</span><span class="o">=</span><span class="s">&#39;posneg&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Under the hood, the node structure has been created as follows:</p>
+<div class="highlight-python"><pre>report
+|_ covariance         numpy array
+|  |_ as_posneg       image/png data
+|_ figure
+   |_ sub             '../covariance/as_posneg'</pre>
+</div>
+<p>As you can see, a new node <tt class="docutils literal"><span class="pre">'as_posneg'</span></tt> has been created as a child node to covariance</p>
+<p>Of course, you can create your own data visualizations, and RepRep makes it easy.</p>
+<p>The next example is largely equivalent to the former, with the only change that this time we use <tt class="docutils literal"><span class="pre">pylab</span></tt> to display the covariance. (see HTML and PDF results):::</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">reprep</span> <span class="kn">import</span> <span class="n">Report</span>
+
+<span class="n">report</span> <span class="o">=</span> <span class="n">Report</span><span class="p">()</span>
+<span class="n">cov</span> <span class="o">=</span> <span class="n">report</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s">&#39;covariance&#39;</span><span class="p">,</span> <span class="n">M</span><span class="p">)</span>
+
+<span class="c"># Attach a png file to the &#39;covariance&#39; node.</span>
+<span class="c"># Note the idiomatic &#39;with&#39; construct, explained below.</span>
+<span class="k">with</span> <span class="n">cov</span><span class="o">.</span><span class="n">data_file</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s">&#39;display&#39;</span><span class="p">,</span> <span class="n">mime</span><span class="o">=</span><span class="s">&#39;image/png&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">filename</span><span class="p">:</span>
+        <span class="n">pylab</span><span class="o">.</span><span class="n">imsave</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+
+<span class="n">f</span> <span class="o">=</span>  <span class="n">report</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">f</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s">&#39;covariance&#39;</span><span class="p">,</span> <span class="n">caption</span><span class="o">=</span><span class="s">&#39;The covariance&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Note the idiomatic &#8216;with&#8217; construct above. In the block, just write to the
+given <tt class="docutils literal"><span class="pre">filename</span></tt>, and RepRep will take care of generating a temporary file name,
+and copying the results into the report.</p>
+<p>Finally, here&#8217;s a slightly more complicated example, in which we attach
+two plots</p>
+<ul class="simple">
+<li>RepRep&#8217;s interface encourages you to add the source data to the report other than the</li>
+</ul>
+</div>
+
+
+      </div>
+      <div class="bottomnav">
+      
+        <p>
+        <a class="uplink" href="index.html">Contents</a>
+        </p>
+
+      </div>
+
+	
+    <div class="footer">
+        &copy; Copyright 2010, Andrea Censi.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.1.
+    </div>
+	
+	<script type="text/javascript">
+
+	  var _gaq = _gaq || [];
+	  _gaq.push(['_setAccount', 'UA-155626-5']);
+	  _gaq.push(['_trackPageview']);
+
+	  (function() {
+	    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+	    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+	    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+	  })();
+
+	</script>
+
+
+  </body>
+</html>
