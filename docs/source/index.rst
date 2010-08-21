@@ -1,23 +1,37 @@
-.. RepRep documentation master file, created by
-   sphinx-quickstart on Wed Aug 18 20:45:54 2010.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
 
-Welcome to RepRep's documentation!
-==================================
+RepRep -- quick reports for the busy pythonista
+===============================================
 
-"RepRep" stands for Reproducible Reports.
+"RepRep" stands for Reproducible Reports. 
+It is designed to make quick  hierarchical reports of experimental data.
+"Reproducible" is in there because it encourages you to add the source data
+to the report.
+
+**(add image)**
 
 
-Contents:
+Documentation
+-------------
 
-.. toctree::
-   :maxdepth: 2
+.. container:: col1
 
-Indices and tables
-==================
+	* :ref:`why`
+	* :ref:`tutorial`
+	* :ref:`userguide`
+	* :ref:`api`
 
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+
+Install
+-------
+
+The quick install is:
+
+$ easy_install -U reprep
+
+Development happens on github: http://github.com/AndreaCensi/reprep
+
+.. raw:: html
+   :file: download.html
+
+
 
