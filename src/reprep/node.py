@@ -3,7 +3,7 @@ from graphics import posneg, Image_from_array
 from reprep.graphics.success import colorize_success
 import sys
 from reprep.graphics.scale import scale
-from reprep.interface import NodeInterface
+from reprep.interface import  Report
 
 
 # TODO: check no "/" in node
@@ -15,7 +15,7 @@ class InvalidURL(Exception):
     pass
    
          
-class Node(NodeInterface):
+class Node(Report):
     def __init__(self, id, children=None):
         assert isinstance(id, str)
         self.id = id

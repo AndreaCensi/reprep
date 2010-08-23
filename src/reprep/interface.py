@@ -1,6 +1,6 @@
 import mimetypes
 
-class NodeInterface: 
+class Report: 
  
     def data(self, id, data, mime=None, desc=None):
         ''' Attaches a data child to this note. 

@@ -29,4 +29,13 @@ def require_array(v):
 def assert_finite(a):
     require_array(a)
     if not isfinite(a).all():
-        raise ValueError('Invalid value %s' % a)
+        n = len(a.flat)
+        n_nan = (1*isnan(a)).sum()
+        n_inf = (1*isinf(a)).sum()
+        
+        raise ValueError('Some values are not finite. Nan: %s/%s Inf: %s/%s' % \
+            (n_nan, n, n_inf, n) )
+
+
+
+
