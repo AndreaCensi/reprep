@@ -1,13 +1,17 @@
 import mimetypes
+from reprep.helpers import PylabAttacher
 
 class Report: 
  
     def data(self, id, data, mime=None, desc=None):
-        ''' Attaches a data child to this note. 
+        ''' Attaches a data child to this node. 
         
             "data" is assumed to be a raw python structure. 
             Or, if data is a string representing a file, 
-            pass a proper mime type (mime='image/png'). '''
+            pass a proper mime type (mime='image/png'). 
+            
+            Returns a reference to the node being created.
+        '''
         if not isinstance(id, str):
             raise ValueError('The ID must be a string, not a %s' % \
                              id.__class__.__name__) 
@@ -17,9 +21,8 @@ class Report:
         return n
     
     def data_file(self, id, mime):
-        ''' Support for attaching data from a file. 
-        This method is supposed to be used in conjunction with the "with"
-        construct. 
+        ''' Support for attaching data from a file. Note: this method is 
+        supposed to be used in conjunction with the "with" construct. 
         
         For example, the following is the concise way to attach a pdf
         plot to a node.::
@@ -41,20 +44,46 @@ class Report:
                     pylab.figure()
                     pylab.plot(x,y)
                     pylab.savefig(f)
-
+                    pylab.close()
+                    
+        Note that if you are mainly using pylab plots, there is the function
+        :py:func:`.data_pylab` which offers a shortcut with less ceremony.
         '''
         from helpers import Attacher
         
         if not mimetypes.guess_extension(mime):
-            raise Exception('Cannot guess extension for MIME "%s".' % mime)
+            raise ValueError('Cannot guess extension for MIME "%s".' % mime)
         
         return Attacher(self, id, mime)
  
-    def figure(self, id, *args, **kwargs):
+    def data_pylab(self, id, mime='image/png'): 
+        ''' Easy support for creating a node consisting of a pylab plot.
+        Note: this method is supposed to be used in conjunction with 
+        the "with" construct. 
+        
+        For example, the following is the concise way to attach a plot: ::
+        
+            with report.data_pylab('my_plot') as pylab:
+                pylab.plot(x,y)
+                pylab.title('my x-y plot')
+
+        Basically, data_pylab allows you to save some lines of code 
+        that with :py:func:`.data_file`. '''
+        
+        if not mimetypes.guess_extension(mime):
+            raise ValueError('Cannot guess extension for MIME "%s".' % mime)
+        
+        return PylabAttacher(self, id, mime)
+
+    def figure(self, id, sub=[], **kwargs):
         ''' Attaches a figure to this node. '''
         from reprep import Figure
-        f = Figure(id, *args, **kwargs)
-        self.add_child(f) 
+        f = Figure(id, **kwargs)
+        self.add_child(f)
+        
+        for resource in sub:
+            f.sub(resource)
+ 
         return f
  
     def table(self, id, data, col_desc=None, row_desc=None):

@@ -10,7 +10,8 @@ class Figure(Node):
         self.caption = caption
         self.shape = shape
         self.subfigures = []
-
+        
+        
     def sub(self, resource, caption=None, display=None, **kwargs):
         ''' Adds a subfigure displaying the given resource. '''
         if caption is None:
