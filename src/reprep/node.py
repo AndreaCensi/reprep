@@ -162,6 +162,9 @@ class Node(Report):
         else:
             return self.parent.get_complete_id() + separator + self.id
 
+def just_check_rgb(value):
+    ''' return value, checking it's a rgb image '''
+    return value
     
         
 class DataNode(Node):
@@ -177,7 +180,8 @@ class DataNode(Node):
             display = 'posneg'
         known = {'posneg': posneg,
                  'success': colorize_success,
-                 'scale': scale}
+                 'scale': scale,
+                 'rgb': just_check_rgb}
         if not display in known:
             raise ValueError('No known converter "%s". ' % display)
         id = display # TODO: check; add args in the name
