@@ -123,7 +123,12 @@ def figure_to_html(node, context):
     
         file.write('<div style="%s" class="report-subfigure"> ' % style)
       
-        actual_resource = node.resolve_url(sub.image)
+        try:
+            actual_resource = node.resolve_url(sub.image)
+        except:
+            print "Cannot find sub.image url %s" % sub.image.__repr__()
+            node.parent.print_tree()
+            raise
           
         image_filename, absolute = get_node_filename(actual_resource, context)
         

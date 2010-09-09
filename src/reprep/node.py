@@ -1,13 +1,11 @@
+import sys
 
 from graphics import posneg, Image_from_array
+
 from reprep.graphics.success import colorize_success
-import sys
 from reprep.graphics.scale import scale
 from reprep.interface import  Report
-
-
-# TODO: check no "/" in node
-
+ 
 class NotExistent(Exception):
     pass
 
@@ -16,8 +14,15 @@ class InvalidURL(Exception):
    
          
 class Node(Report):
-    def __init__(self, id, children=None):
-        assert isinstance(id, str)
+    def __init__(self, id=None, children=None):
+        assert id is None or isinstance(id, str)
+        
+        if isinstance(id, str):
+            if '/' in id:
+                raise Exception('Invalid name %s for a node.' % id.__repr__())
+            if len(id) == 0:
+                raise Exception('Cannot give an empty string as name.')
+        
         self.id = id
         if children is None:
             children = []
@@ -25,11 +30,22 @@ class Node(Report):
         for c in children:
             self.add_child(c)
         self.parent = None
+        
+        self.childid2node = {}
     
     def add_child(self, n):
         ''' Adds a child to this node. Usually you would not use this
             method directly. '''
+        if n.id is not None:
+            if n.id in self.childid2node:
+                raise Exception('Already have child with same id %s.' % n.id.__repr__())
+        else:
+            # give it a name
+            n.id = "%s%s" % (n.__class__.__name__, len(self.children))
+            assert not n.id in self.childid2node
+            
         n.parent = self
+        self.childid2node[n.id] = n
         self.children.append(n)
 
     def node(self, id):
