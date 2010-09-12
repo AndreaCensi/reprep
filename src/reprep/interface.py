@@ -56,7 +56,7 @@ class Report:
         
         return Attacher(self, id, mime)
  
-    def data_pylab(self, id, mime='image/png'): 
+    def data_pylab(self, id, mime='image/png', **figure_args): 
         ''' Easy support for creating a node consisting of a pylab plot.
         Note: this method is supposed to be used in conjunction with 
         the "with" construct. 
@@ -68,14 +68,18 @@ class Report:
                 pylab.title('my x-y plot')
 
         Basically, data_pylab allows you to save some lines of code 
-        that with :py:func:`.data_file`. '''
+        more than with :py:func:`.data_file`.
+        
+        You can pass **figure_args to pylab.figure().
+        
+         '''
         
         if not mimetypes.guess_extension(mime):
             raise ValueError('Cannot guess extension for MIME "%s".' % mime)
         
-        return PylabAttacher(self, id, mime)
+        return PylabAttacher(self, id, mime, **figure_args)
 
-    def figure(self, id, sub=[], **kwargs):
+    def figure(self, id=None, sub=[], **kwargs):
         ''' Attaches a figure to this node. '''
         from reprep import Figure
         f = Figure(id, **kwargs)

@@ -1,5 +1,6 @@
 import mimetypes
 import tempfile
+import subprocess
 
  
 class Attacher:
@@ -29,7 +30,7 @@ class Attacher:
 from matplotlib import pylab
 
 class PylabAttacher:
-    def __init__(self, node, id, mime):
+    def __init__(self, node, id, mime, **figure_args):
         self.node = node
         self.id = id
         self.mime = mime
@@ -42,7 +43,8 @@ class PylabAttacher:
         
         self.temp_file = tempfile.NamedTemporaryFile(suffix=suffix)
         
-        self.figure = pylab.figure()
+        print 'Using ', figure_args
+        self.figure = pylab.figure(**figure_args)
         
     def __enter__(self):
         return pylab 
@@ -54,5 +56,12 @@ class PylabAttacher:
         
         with open(self.temp_file.name) as f:
             data = f.read()
-            self.node.data(id=self.id, data=data, mime=self.mime)
+            image_node = self.node.data(id=self.id, data=data, mime=self.mime)
+        
+        with image_node.data_file('png', 'image/png') as f2:
+            subprocess.check_call(['convert', self.temp_file.name, f2])
+        
         self.temp_file.close()
+        
+        
+        

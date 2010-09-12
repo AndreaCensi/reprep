@@ -26,6 +26,7 @@ def get_node_filename(node, context):
         suffix = '.pickle'
     id = get_complete_id(node)
     id = id.replace('/', '_')
+    id = id.replace('.', '_')
     relative = os.path.join(context.rel_resources_dir, id + suffix)
     absolute = os.path.join(context.resources_dir, id + suffix)
     return relative, absolute

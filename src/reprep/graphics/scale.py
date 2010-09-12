@@ -1,10 +1,11 @@
 import numpy
 from numpy import maximum, minimum, zeros
 from reprep.graphics.numpy_utils import assert_finite, gt, require_shape
+from reprep.graphics.posneg import skim_top
 
 
 def scale(value, min_value=None, max_value=None,
-                 min_color=[1, 1, 1], max_color=[0, 0, 0]):
+                 min_color=[1, 1, 1], max_color=[0, 0, 0], skim=0):
     """ Provides a RGB representation of the values by interpolating the range 
         [min(value),max(value)] into the colorspace [min_color, max_color].
     
@@ -15,9 +16,6 @@ def scale(value, min_value=None, max_value=None,
       max_value:  Optional upper threshold.
       min_color:  color associated to minimum value. Default: [1,1,1] = white.
       max_color:  color associated to maximum value. Default: [0,0,0] = black.
-    
-    Raises:
-      ValueError: if min_value == max_value
     
     Returns:  a (W,H,3) numpy array with dtype uint8 representing a RGB image.
       
@@ -31,15 +29,21 @@ def scale(value, min_value=None, max_value=None,
     require_shape((3,), min_color)
     require_shape((3,), max_color)
     
+    if skim != 0:
+        value = skim_top(value, skim)
+
     if max_value is None:
         max_value = numpy.max(value)
-        
+            
+       
     if min_value is None:
         min_value = numpy.min(value)
 
     if max_value == min_value:
-        raise ValueError('I end up with max_value = %s = %s = min_value.' % \
-                         (max_value, min_value))
+        result = zeros((value.shape[0], value.shape[1], 3), dtype='uint8')
+        return result
+        #raise ValueError('I end up with max_value = %s = %s = min_value.' % \
+        #                 (max_value, min_value))
 
     value01 = (value - min_value) / (max_value - min_value)
     

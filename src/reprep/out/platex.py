@@ -38,6 +38,9 @@ class Latex:
             def __enter__(self):
                 return self.environment
             def __exit__(self, type, value, traceback): #@UnusedVariable
+                dir = os.path.dirname(self.filename)
+                if not os.path.exists(dir):
+                    os.makedirs(dir)
                 with open(self.filename, 'w') as f:
                     f.write(self.context.f.getvalue())
         return Attacher(filename, graphics_path)
@@ -102,16 +105,25 @@ class LatexEnvironment:
     def use_package(self, name, options=""):
         self.context.preamble.write('\\usepackage[%s]{%s}\n' % (options, name))
         
-    def figure(self, caption=None, label=None, placement="t"):
+    def figure(self, caption=None, label=None, placement="t", double=False):
         figure = Figure(caption=caption, label=label, placement=placement,
-                        context=self.context.child())
+                        context=self.context.child(), double=double)
         return LatexEnvironment.GenericWrap(figure, self.context)
     
     def graphics_data(self, data, mime, width="3cm", id=None):
         suffix = mimetypes.guess_extension(mime)
         if id is None:
             id = self.context.generate_file_id()
+        # cannot have '.' in the filename, otherwise latex gets confused
+        id = id.replace('.', '_')
+        id = id.replace('/', ':')
+            
         filename = os.path.join(self.context.graphics_path, id + suffix)
+        # make sure dir exists
+        dir = os.path.dirname(filename)
+        if not os.path.exists(dir):
+            os.makedirs(dir)
+
         with open(filename, 'w') as f:
             f.write(data)
         self.context.f.write('\\includegraphics[width=%s]{%s}%%\n' % (width, id))
@@ -145,11 +157,12 @@ class LatexDocument(LatexEnvironment):
         file.write('\\end{document}\n')
 
 class Figure(LatexEnvironment):
-    def __init__(self, caption, label, placement, context):
+    def __init__(self, caption, label, placement, context, double):
         self.caption = caption
         self.label = label
         self.context = context
         self.placement = placement
+        self.double = double
     
     def figure(self, *args, **kwargs):
         raise StructureError('Cannot nest figures; use sub().')
@@ -162,14 +175,15 @@ class Figure(LatexEnvironment):
     def dump(self, main_context):
         # writes everything, and caption delayed
         main_context.preamble.write(self.context.preamble.getvalue())
-        main_context.f.write('\\begin{figure}[%s]\n' % self.placement)
+        env = "figure*" if self.double else "figure"
+        main_context.f.write('\\begin{%s}[%s]\n' % (env, self.placement))
         main_context.f.write(self.context.f.getvalue())
         if self.label:
             label = '\\label{%s}' % self.label
         else:
             label = "" 
         main_context.f.write('\\caption{%s%s}\n' % (label, self.caption))
-        main_context.f.write('\\end{figure}\n')
+        main_context.f.write('\\end{%s}\n' % env)
         
 
 class StructureError(Exception):
@@ -206,16 +220,22 @@ def latexify(s):
     return str(s).replace('_', '\\_')
 
 def texif(cmd, use, otherwise):
-    return "\\ifx %s\\undefined %s\\else %s\\fi" % (cmd,otherwise,use)
+    return "\\ifx %s\\undefined %s\\else %s\\fi" % (cmd, otherwise, use)
 
 def makeupcmd(name):
-    return texif("\\%s" % name,"", "\\newcommand{\\%s}{%s}" % (name, name)) + '\n'
+    return texif("\\%s" % name, "", "\\newcommand{\\%s}{%s}" % (name, name)) + '\n'
 
-    
+
+def makecmd(frag, desired):
+    actual = safecmd(desired)
+    frag.tex(makeupcmd(actual))
+    return '\\' + actual
+
 
 def safecmd(s):
-    rep = {'-':'','_':'','0':'Z', '1':'O','2':'t','3':'T','4':'f','5':'F','6':'s','7':'S','8':'E',
+    rep = {'-':'', '_':'', ':': '', '.':'',
+           '0':'Z', '1':'O', '2':'t', '3':'T', '4':'f', '5':'F', '6':'s', '7':'S', '8':'E',
            '9':'N'}
-    for a,b in rep.items():
-        s = s.replace(a,b)
+    for a, b in rep.items():
+        s = s.replace(a, b)
     return s
