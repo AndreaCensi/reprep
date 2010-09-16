@@ -165,7 +165,7 @@ Y.Remarkbox.render();
       <div class="topnav">
       
         <p>
-        <a class="uplink" href="main.html">Contents</a>
+        <a class="uplink" href="index.html">Contents</a>
         </p>
 
       </div>
@@ -180,18 +180,18 @@ Y.Remarkbox.render();
 <dd><dl class="method">
 <dt id="reprep.Report.data">
 <tt class="descname">data</tt><big>(</big><em>id</em>, <em>data</em>, <em>mime=None</em>, <em>desc=None</em><big>)</big><a class="headerlink" href="#reprep.Report.data" title="Permalink to this definition">¶</a></dt>
-<dd><p>Attaches a data child to this note.</p>
+<dd><p>Attaches a data child to this node.</p>
 <p>&#8220;data&#8221; is assumed to be a raw python structure. 
 Or, if data is a string representing a file, 
 pass a proper mime type (mime=&#8217;image/png&#8217;).</p>
+<p>Returns a reference to the node being created.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="reprep.Report.data_file">
 <tt class="descname">data_file</tt><big>(</big><em>id</em>, <em>mime</em><big>)</big><a class="headerlink" href="#reprep.Report.data_file" title="Permalink to this definition">¶</a></dt>
-<dd><p>Support for attaching data from a file. 
-This method is supposed to be used in conjunction with the &#8220;with&#8221;
-construct.</p>
+<dd><p>Support for attaching data from a file. Note: this method is 
+supposed to be used in conjunction with the &#8220;with&#8221; construct.</p>
 <p>For example, the following is the concise way to attach a pdf
 plot to a node.:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="k">with</span> <span class="n">report</span><span class="o">.</span><span class="n">data_file</span><span class="p">(</span><span class="s">&#39;my_plot&#39;</span><span class="p">,</span> <span class="s">&#39;application/pdf&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
@@ -210,13 +210,33 @@ of the same image, in different formats:</p>
         <span class="n">pylab</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
         <span class="n">pylab</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
         <span class="n">pylab</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+        <span class="n">pylab</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 </pre></div>
 </div>
+<p>Note that if you are mainly using pylab plots, there is the function
+<a class="reference internal" href="#reprep.Report.data_pylab" title="reprep.Report.data_pylab"><tt class="xref py py-func docutils literal"><span class="pre">data_pylab()</span></tt></a> which offers a shortcut with less ceremony.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="reprep.Report.data_pylab">
+<tt class="descname">data_pylab</tt><big>(</big><em>id</em>, <em>mime='image/png'</em>, <em>**figure_args</em><big>)</big><a class="headerlink" href="#reprep.Report.data_pylab" title="Permalink to this definition">¶</a></dt>
+<dd><p>Easy support for creating a node consisting of a pylab plot.
+Note: this method is supposed to be used in conjunction with 
+the &#8220;with&#8221; construct.</p>
+<p>For example, the following is the concise way to attach a plot:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">with</span> <span class="n">report</span><span class="o">.</span><span class="n">data_pylab</span><span class="p">(</span><span class="s">&#39;my_plot&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">pylab</span><span class="p">:</span>
+    <span class="n">pylab</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+    <span class="n">pylab</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s">&#39;my x-y plot&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Basically, data_pylab allows you to save some lines of code 
+more than with <a class="reference internal" href="#reprep.Report.data_file" title="reprep.Report.data_file"><tt class="xref py py-func docutils literal"><span class="pre">data_file()</span></tt></a>.</p>
+<p>You can pass <a href="#id1"><span class="problematic" id="id2">**</span></a>figure_args to pylab.figure().</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="reprep.Report.figure">
-<tt class="descname">figure</tt><big>(</big><em>id</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#reprep.Report.figure" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">figure</tt><big>(</big><em>id=None</em>, <em>sub=</em><span class="optional">[</span><span class="optional">]</span>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#reprep.Report.figure" title="Permalink to this definition">¶</a></dt>
 <dd><p>Attaches a figure to this node.</p>
 </dd></dl>
 
@@ -246,7 +266,7 @@ of the same image, in different formats:</p>
       <div class="bottomnav">
       
         <p>
-        <a class="uplink" href="main.html">Contents</a>
+        <a class="uplink" href="index.html">Contents</a>
         </p>
 
       </div>
