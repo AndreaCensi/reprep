@@ -26,10 +26,6 @@ Documentation
 Install
 -------
 
-The quick install is:
-
-$ easy_install -U reprep
-
 Development happens on github: http://github.com/AndreaCensi/reprep
 
 .. raw:: html
