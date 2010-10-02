@@ -4,7 +4,7 @@ from graphics import posneg, Image_from_array
 
 from reprep.graphics.success import colorize_success
 from reprep.graphics.scale import scale
-from reprep.interface import  Report
+from reprep.interface import  ReportInterface
  
 class NotExistent(Exception):
     pass
@@ -13,7 +13,7 @@ class InvalidURL(Exception):
     pass
    
          
-class Node(Report):
+class Node(ReportInterface):
     def __init__(self, id=None, children=None):
         assert id is None or isinstance(id, str)
         

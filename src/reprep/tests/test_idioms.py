@@ -16,7 +16,7 @@ class Test(unittest.TestCase):
         
         table = Table('mytable',
                       [['Andrea', 'Censi'], ['a', 'b']], ['Name', 'Last'],
-                      ['Developer', 'User'])
+                      )
         self.tryWritingOutput(table)
         
     def testImage(self):

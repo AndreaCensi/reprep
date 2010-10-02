@@ -1,7 +1,5 @@
-import mimetypes
-from reprep.helpers import PylabAttacher
 
-class Report: 
+class ReportInterface: 
  
     def data(self, id, data, mime=None, desc=None):
         ''' Attaches a data child to this node. 
@@ -50,6 +48,7 @@ class Report:
         :py:func:`.data_pylab` which offers a shortcut with less ceremony.
         '''
         from helpers import Attacher
+        import mimetypes
         
         if not mimetypes.guess_extension(mime):
             raise ValueError('Cannot guess extension for MIME "%s".' % mime)
@@ -73,6 +72,9 @@ class Report:
         You can pass **figure_args to pylab.figure().
         
          '''
+        import mimetypes
+        from reprep.helpers import PylabAttacher
+
         
         if not mimetypes.guess_extension(mime):
             raise ValueError('Cannot guess extension for MIME "%s".' % mime)
@@ -90,10 +92,15 @@ class Report:
  
         return f
  
-    def table(self, id, data, col_desc=None, row_desc=None):
-        ''' Attaches a table to this node. '''
+    def table(self, id, data, col_desc=None):
+        ''' Attaches a table to this node. 
+            
+            data must be either a list of lists, or a 1D numpy array
+        
+        
+        '''
         from reprep import Table
-        t = Table(id, data, col_desc, row_desc)
+        t = Table(id, data, col_desc)
         self.add_child(t) 
         return t
         
