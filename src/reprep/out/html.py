@@ -63,6 +63,28 @@ sssection { border: solid 2px gray; display: block; clear: both; padding: 1em; m
 .node-id {margin:1em;  float: right; font-family: monospace; font-weight: bold; color: green;}
 .datanode { font-family: monospace; font-weight: bold; }
 .datanode-children { margin-left: 1em; }
+
+.report-table td {
+    padding: 5px;
+    text-align: right;
+}
+.report-table tr th {
+    padding-left: 2em;
+}
+
+.report-table tr.even {
+    background-color: #EEF;
+}
+
+.report-table caption {
+    font-size: 150%%;
+
+}
+.report-table {
+    margin-top: 1em;
+    padding: 1em;
+    border: solid 2px gray;
+}
     </style>
     <title> %s </title>
     
@@ -96,8 +118,32 @@ def node_to_html(node, context):
         raise ValueError('Could not find type of %s (%s) in %s.' % (node, t, functions.keys()))
     functions[t](node, context)
     
-def table_to_html(figure, context):
-    pass
+def table_to_html(table, context):
+    f = context.file
+
+    f.write('<table class="report-table">\n')
+    
+    caption = table.caption if table.caption else table.id
+    
+    f.write('<caption>%s</caption>\n' % caption)
+    
+    f.write('<tbody>\n')
+    f.write('<tr>\n')
+    for field in table.cols:
+        f.write('\t<th>%s</th>\n' % field)
+    f.write('</tr>\n')
+    
+    for i, row in enumerate(table.data):
+        html_class = {0: 'even', 1: 'odd'}[i % 2]
+        f.write('<tr class="%s">\n' % html_class)
+        for field in row.dtype.names:
+            value = row[field]
+            rep = str(value)
+            f.write('\t<td>%s</td>\n' % rep)
+        f.write('</tr>\n')      
+    f.write('</tbody>\n')  
+    f.write('</table>\n')
+
 
 def figure_to_html(node, context):
     complete_id = get_complete_id(node)

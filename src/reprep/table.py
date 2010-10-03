@@ -2,8 +2,7 @@ from reprep.node import Node
 import numpy
 
 class Table(Node):
-    def __init__(self, id, data, col_desc=None):
-        # TODO: add checks
+    def __init__(self, id, data, cols=None, caption=None):
         Node.__init__(self, id)
         
         if isinstance(data, list):
@@ -35,26 +34,27 @@ class Table(Node):
                     array[i][dtype[j][0]] = data[i][j]
             data = array
             
-            if col_desc is None:
-                col_desc = [None] * ncols
+            if cols is None:
+                cols = [None] * ncols
                     
         elif isinstance(data, numpy.ndarray) :
             if len(data.shape) != 1:
                 raise Exception('Expected array of 1D shape, got %s.' % \
                                 str(data.shape))
             # use fields name if desc not provided
-            if col_desc is None:
-                col_desc = list(data.dtype.fields)
+            if cols is None:
+                cols = list(data.dtype.fields)
            
         else:
             raise ValueError('Expected list of list or ndarray, got %s' % \
                              data.__class__.__name__)
     
-        if len(col_desc) != len(data.dtype.fields):
-            raise ValueError('Expected col_desc of length %s, not %s' % \
-                             (len(data.dtype.fields), str(col_desc)))
+        if len(cols) != len(data.dtype.fields):
+            raise ValueError('Expected cols of length %s, not %s' % \
+                             (len(data.dtype.fields), str(cols)))
             
     
     
         self.data = data
-        self.col_desc = col_desc 
+        self.cols = cols
+        self.caption = caption 

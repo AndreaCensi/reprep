@@ -92,15 +92,20 @@ class ReportInterface:
  
         return f
  
-    def table(self, id, data, col_desc=None):
+    def table(self, id, data, cols=None, caption=None):
         ''' Attaches a table to this node. 
             
-            data must be either a list of lists, or a 1D numpy array
-        
+            ``data`` must be either a list of lists, or a 1D numpy array.
+            
+            ``cols`` must be either None, or a list of strings.
         
         '''
         from reprep import Table
-        t = Table(id, data, col_desc)
+        t = Table(id=id, data=data, cols=cols, caption=caption)
         self.add_child(t) 
         return t
         
+    def to_html(self, filename):
+        ''' Creates a HTML representation of this report. '''
+        from reprep.out.html import node_to_html_document
+        node_to_html_document(self, filename)
