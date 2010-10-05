@@ -5,3 +5,6 @@ from figure import *
 
 # Alias
 Report = Node
+
+
+version = '0.9'

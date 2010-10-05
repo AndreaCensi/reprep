@@ -1,6 +1,6 @@
 import unittest
 
-from reprep import Table, Node
+from reprep import Table, Node, Report
 import numpy
 import pylab
 from reprep.out.html import node_to_html_document
@@ -38,7 +38,7 @@ class Test(unittest.TestCase):
             pylab.close()
                 
         report.table('results',
-                         col_desc=['One', 'Two'],
+                         cols=['One', 'Two'],
                          data=[[1, 2], [3, 4]])        
         
         f = report.figure('Covariance and information matrix', shape=(1, 3))
@@ -53,6 +53,13 @@ class Test(unittest.TestCase):
         
         self.tryWritingOutput(report)
 
+    def test_invalid_id(self):
+        self.assertRaises(ValueError, Report, 1)
+
+    def test_invalid_children(self):
+        self.assertRaises(ValueError, Report, children=1)
+        self.assertRaises(ValueError, Report, children=[1])
+        self.assertRaises(ValueError, Report, children=[None])
 
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']

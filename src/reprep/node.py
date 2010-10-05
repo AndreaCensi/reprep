@@ -15,27 +15,39 @@ class InvalidURL(Exception):
          
 class Node(ReportInterface):
     def __init__(self, id=None, children=None):
-        assert id is None or isinstance(id, str)
+        if id is not None and not isinstance(id, str):
+            raise ValueError('Received a %s object as ID, should be None or str.' % \
+                            id.__class__.__name__)
+        
+        if children is not None and not isinstance(children, list):
+            raise ValueError('Received a %s object as children list, should'\
+                             ' be None or list.' % children.__class__.__name__)
+        
         
         if isinstance(id, str):
             if '/' in id:
-                raise Exception('Invalid name %s for a node.' % id.__repr__())
+                raise ValueError('Invalid name %s for a node.' % id.__repr__())
             if len(id) == 0:
-                raise Exception('Cannot give an empty string as name.')
+                raise ValueError('Cannot give an empty string as name.')
         
         self.id = id
+        
+        
         if children is None:
             children = []
+    
+        self.childid2node = {}
         self.children = []
         for c in children:
+            if not isinstance(c, Node):
+                raise ValueError('Passed instance of class %s as child.' % c.__class__.__name__)
             self.add_child(c)
         self.parent = None
         
-        self.childid2node = {}
-    
     def add_child(self, n):
         ''' Adds a child to this node. Usually you would not use this
             method directly. '''
+        assert n is not None
         if n.id is not None:
             if n.id in self.childid2node:
                 raise Exception('Already have child with same id %s.' % n.id.__repr__())
