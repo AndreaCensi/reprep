@@ -1,6 +1,11 @@
 import os
 import mimetypes
 import sys
+from pkg_resources import resource_filename
+import shutil
+
+
+
 
 class html_context:
     def __init__(self, file, rel_resources_dir, resources_dir):
@@ -15,7 +20,7 @@ def htmlfy(s):
 
 def get_complete_id(node):
     if not node.parent:
-        return node.id
+        return node.id if node.id else 'anonymous'
     else:
         return get_complete_id(node.parent) + ":" + node.id
 
@@ -41,28 +46,40 @@ def node_to_html_document(node, filename):
         os.makedirs(dirname)
     if not os.path.exists(resources_dir):
         os.makedirs(resources_dir)
+        
+    # look for static data
+    static = resource_filename("reprep", "static")
+    print 'static' , static
+        
+    if not os.path.exists(static):
+        print 'Warning: resource dir %s not found' % js
+    else: 
+        shutil.copytree(os.path.join(static, 'PopBox'),
+                        os.path.join(resources_dir, 'PopBox'))
+        
     with open(filename, 'w') as file:
         file.write('''
 <html>
-<head>
-    <!--<link rel="stylesheet" href="report.css" type="text/css" />-->
+<head> 
+    <script type="text/javascript" src="%s/PopBox/scripts/PopBox.js"></script>
+
     <style type='text/css'>
     
-img { width: 120px; border: solid 1px black;}
+img { border: solid 1px black;}
 h { font-family: monospace; font-size: 120%%; color: black; font-weight: bold;  display: block;}
 
 sssection { border: solid 2px gray; display: block; clear: both; padding: 1em; margin: 1em;}
 
-.report-node { display: block; border: solid 2px gray; padding: 1em; margin: 1em}
-.report-figure { display: block; border: solid 2px green; padding: 1em; margin: 1em}
-.report-figure-caption { display: block; clear: both; border: solid 1px blue;}
-.report-subfigure {  padding: 1em; padding-bottom: 0; margin: 1em; border: solid 1px red; display: block;}
-.report-subfigure-caption { clear: both; display: block; font-weight: bold; text-align: center; border: solid 1px blue;}
+.report-node { display: block; border: solid 2px gray; padding: 0.2em; margin: 0.2em}
+.report-figure { display: block; border: solid 2px green; padding: 0.2em; margin: 0.2em}
+.report-figure-caption { display: block; clear: both;  }
+.report-subfigure {  padding: 5px; padding-bottom: 0; margin: 5px; display: block;}
+.report-subfigure-caption { clear: both; display: block; font-weight: bold; text-align: center;  }
 
 .node-class { margin:1em; float: right; font-family: monospace; color: blue;}
 .node-id {margin:1em;  float: right; font-family: monospace; font-weight: bold; color: green;}
 .datanode { font-family: monospace; font-weight: bold; }
-.datanode-children { margin-left: 1em; }
+.datanode-children { margin-left: 0.2em; }
 
 .report-table td {
     padding: 5px;
@@ -90,7 +107,7 @@ sssection { border: solid 2px gray; display: block; clear: both; padding: 1em; m
     
 </head>
 <body>
-''' % str(node.id))
+''' % (rel_resources_dir, str(node.id)))
         
         context = html_context(file,
                     resources_dir=resources_dir,
@@ -151,7 +168,7 @@ def figure_to_html(node, context):
     file.write('''<div style="clear:left" class='report-figure %s' id='%s'>
     ''' % (None, complete_id))  
 
-    file.write('''<span class='node-id'>%s</span>''' % node.id)  
+    #file.write('''<span class='node-id'>%s</span>''' % node.id)  
     file.write('<h>%s</h>' % complete_id) 
   
     if node.shape is None:
@@ -159,6 +176,7 @@ def figure_to_html(node, context):
         
     nrows, ncols = node.shape  
   
+    
     for i, sub in enumerate(node.subfigures):
         col = i % ncols
         last_col = col == ncols - 1
@@ -166,7 +184,10 @@ def figure_to_html(node, context):
         
         style = "float:left;"
         if first_col:
-            style += "clear:left"
+            style += "clear:left;"
+            
+        width = "%d%%" % (75.0 / ncols)
+        style += 'width:%s' % width
     
         file.write('<div style="%s" class="report-subfigure"> ' % style)
       
@@ -179,7 +200,10 @@ def figure_to_html(node, context):
           
         image_filename, absolute = get_node_filename(actual_resource, context)
         
-        file.write('<img src="%s" />' % image_filename)
+        file.write('''
+            <img onclick="Pop(this,50,'PopBoxImageLarge');"  
+                style="width:95%%" src="%s" />'''
+         % image_filename)
 
         file.write('<p class="report-subfigure-caption">%s</p>' % \
                  htmlfy(sub.caption))
@@ -236,9 +260,9 @@ def simple_node_to_html(node, context):
     <div class='report-node' id="%s">
     ''' % complete_id)
     
-    file.write(''' 
-    <span class='node-id'>%s </span>
-    ''' % (node.id))
+    #file.write(''' 
+    #<span class='node-id'>%s </span>
+    #''' % (node.id))
     
     file.write('<h>%s</h>' % complete_id) 
     

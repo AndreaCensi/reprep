@@ -1,0 +1,93 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+	<title>PopBox! Installation Instructions</title>
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+	<link id="lnkStyleSheet" rel="stylesheet" type="text/css" href="stylesheets/Styles.css" />
+	<script src="scripts/PopBox.js" type="text/javascript"></script>
+	<script type="text/javascript">
+		popBoxShowRevertBar = false;
+		popBoxShowRevertText = false;
+		popBoxShowRevertImage = false;
+	</script>
+</head>
+<body>
+<table border="0" cellpadding="0" cellspacing="0" width="100%"><tr><td align="center">
+	<div style="position: absolute; left: 0px; top: 0px;">
+		<a href="http://www.c6software.com/"><img id="imgC6" alt="C6 Software" src="images/c6sred.jpg" title="C6 Software" align="right" border="0" style="padding-right: 20px;" /></a>
+	</div>
+	<table border="0" cellpadding="20" cellspacing="0" width="80%">
+		<tr>
+			<td align="center">
+				<a href="http://www.c6software.com/products/popbox/default.aspx">
+				<img id="imgPopBox" alt="PopBox!" border="0" src="images/PopBox.gif" class="PopBoxImageLink" style="width: 100px; height: 49px;" onmouseover="PopEx(this,-50,-25,200,98,20,null);" onclick="window.location.href='http://www.c6software.com/products/popbox/default.aspx';" /></a><br />
+				<span style="font-size: 8pt;">(place your mouse over this image)</span><br /><br />
+				<span style="font-size: 8pt;">If you can't see the image Pop your browser may not be running javascript from local files.<br /> You may have to load this page from a web server.</span>
+			</td>
+		</tr>
+		<tr>
+			<td align="center" style="font-size: 18pt; font-weight: bold;">
+				PopBox! - Javascript Image Magnification
+			</td>
+		</tr>
+		<tr>
+			<td align="center">
+				<table border="0" cellpadding="10" cellspacing="0" width="400"><tr><td align="left">
+					PopBox is an image magnification javascript solution for dynamically resizing your
+					images on your web page.
+				</td></tr></table>
+			</td>
+		</tr>
+	</table>
+	<table border="1" cellpadding="10" cellspacing="0" width="400">
+		<tr>
+			<th style="font-size: 16pt;">Installation Instructions</th>
+		</tr>
+		<tr>
+			<td align="left">
+				<ol>
+					<li>Copy PopBox.js to your scripts directory and reference it in your web pages
+						with a <br /><span style="color: #0000ff;">&lt;<span style="color: #660000">script</span> <span
+						style="color: #ff0000">src</span>="/scripts/PopBox.js" <span style="color: #ff0000">
+						type</span>="text/javascript"&gt;&lt;/<span style="color: #660000">script</span>&gt;
+						</span> tag.<br /><br /></li>
+					<li>Make changes to the global variables to support your installation directory structure (<span style="font-style: italic;">after</span>
+						the PopBox.js script include):
+						<p class="CodeSample" style="padding-left: 20px;">
+							<span style="color: #0000ff;">&lt;<span style="color: #660000">script</span> <span
+								style="color: #ff0000">type</span>="text/javascript"&gt;</span><br />
+							popBoxWaitImage.src = <span style="color: #660000">"/images/spinner40.gif"</span>;<br />
+							popBoxRevertImage = <span style="color: #660000">"/images/magminus.gif"</span>;<br />
+							popBoxPopImage = <span style="color: #660000">"/images/magplus.gif"</span>;<br />
+							<span style="color: #0000ff;">&lt;/<span style="color: #660000">script</span>&gt;</span>
+						</p>
+					</li>
+					<li>Add any CSS classes you wish to your stylesheet file to help determine the look of your images.<br /><br /></li>
+					<li>If you are using the magnification glass icons copy them to your images directory and modify their location
+						in your stylesheet accordingly.<br /><br /></li>
+					<li>Attribute your &lt;img&gt; tags with PopBox events. Instructions can be found on the
+						<a href="http://www.c6software.com/products/popbox/default.aspx">PopBox product page</a>
+						and the <a href="http://www.c6software.com/products/popbox/documentation.aspx">PopBox documentation page</a>.</li>
+				</ol>
+			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="10" cellspacing="0" width="80%"><tr><td align="left">
+		Questions and suggestions can be sent to <a href="mailto:john.reid@c6software.com?Subject=PopBox">
+			john.reid@c6software.com</a>. Please put "PopBox" somewhere in the email subject so I can
+		easily filter. Send me your URL and I may post it!
+	</td></tr></table>
+	<div style="font-size: 7pt; text-align: center; margin-top:20px;">
+		<a href="http://www.c6software.com/">home</a>
+		|
+		<a href="http://www.c6software.com/Contact.aspx">contact</a>
+		|
+		<a href="http://www.c6software.com/EmailList.aspx">mailing list</a>
+		|
+		<a href="http://www.c6software.com/rss.xml"><img src="images/rss.gif" border="0" alt="RSS Feed" style="position: relative; top: 2px;" /></a>
+		<br />
+		All content Copyright &copy; 2001-2009, C6 Software, Inc.
+	</div>
+</td></tr></table>
+</body>
+</html>
