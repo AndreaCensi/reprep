@@ -49,19 +49,19 @@ def node_to_html_document(node, filename):
         
     # look for static data
     static = resource_filename("reprep", "static")
-    print 'static' , static
         
     if not os.path.exists(static):
         print 'Warning: resource dir %s not found' % js
     else: 
-        shutil.copytree(os.path.join(static, 'PopBox'),
-                        os.path.join(resources_dir, 'PopBox'))
+        dst = os.path.join(resources_dir, 'static')
+        if not os.path.exists(dst):
+            shutil.copytree(static, dst)
         
     with open(filename, 'w') as file:
         file.write('''
 <html>
 <head> 
-    <script type="text/javascript" src="%s/PopBox/scripts/PopBox.js"></script>
+    <script type="text/javascript" src="%s/static/PopBox/scripts/PopBox.js"></script>
 
     <style type='text/css'>
     
