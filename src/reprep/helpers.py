@@ -58,9 +58,11 @@ class PylabAttacher:
             data = f.read()
             image_node = self.node.data(id=self.id, data=data, mime=self.mime)
         
-        with image_node.data_file('png', 'image/png') as f2:
-            subprocess.check_call(['convert', self.temp_file.name, f2])
-        
+        # save a png copy if one is needed
+        if not self.temp_file.name.endswith('png'):
+            with image_node.data_file('png', 'image/png') as f2:
+                subprocess.check_call(['convert', self.temp_file.name, f2])
+            
         self.temp_file.close()
         
         
