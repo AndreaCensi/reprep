@@ -49,3 +49,5 @@ src/reprep/tests/__init__.pyc
 src/reprep/tests/test_idioms.pyc
 src/reprep/tests/test_urls.pyc
 src/.noseids
+build
+dist
