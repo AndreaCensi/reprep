@@ -43,7 +43,6 @@ class PylabAttacher:
         
         self.temp_file = tempfile.NamedTemporaryFile(suffix=suffix)
         
-        print 'Using ', figure_args
         self.figure = pylab.figure(**figure_args)
         
     def __enter__(self):
