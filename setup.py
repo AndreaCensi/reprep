@@ -10,7 +10,7 @@ setup(name='reprep',
       version='0.9',
       package_dir={'':'src'},
       packages=find_packages('src'),
-      install_requires=['numpy'],
+      install_requires=[],
       
       package_data=package_data,
       url='http://AndreaCensi.github.com/reprep/',
