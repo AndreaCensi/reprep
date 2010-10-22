@@ -35,7 +35,7 @@ class ReportInterface:
         we will take care of it for you.
         
         This is a more complicated example, where we attach two versions
-        of the same image, in different formats::
+        of the same image, in different formats. ::
          
             for format in ['application/pdf', 'image/png']:
                 with report.data_file('plot', format) as f:
@@ -80,6 +80,16 @@ class ReportInterface:
             raise ValueError('Cannot guess extension for MIME "%s".' % mime)
         
         return PylabAttacher(self, id, mime, **figure_args)
+
+    def data_rgb(self, id, rgb): 
+        ''' Creates a node containing an image from a RGB[a] array.
+            (internally, it will be saved as PNG)
+            ``rgb`` must be a height x width x 3 uint8 numpy array.        
+         '''
+        from reprep.helpers import data_rgb_imp
+        data_rgb_imp(self, id, rgb)
+        
+        
 
     def figure(self, id=None, sub=[], **kwargs):
         ''' Attaches a figure to this node. '''

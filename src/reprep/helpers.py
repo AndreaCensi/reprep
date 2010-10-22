@@ -64,5 +64,12 @@ class PylabAttacher:
             
         self.temp_file.close()
         
+def data_rgb_imp(parent, id, rgb):
+    from reprep.graphics.conversions import Image_from_array
+
+    pil_image = Image_from_array(rgb)
         
+    with parent.data_file(id, 'image/png') as f:
+        pil_image.save(f)
+
         

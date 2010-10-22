@@ -1,8 +1,3 @@
-'''
-Created on 10/giu/2010
-
-@author: andrea
-'''
 import unittest
 import numpy
 from reprep.graphics.conversions import Image_from_array
