@@ -115,7 +115,7 @@ class ReportInterface:
         self.add_child(t) 
         return t
         
-    def to_html(self, filename):
+    def to_html(self, filename,  resources_dir=None):
         ''' Creates a HTML representation of this report. '''
         from reprep.out.html import node_to_html_document
-        node_to_html_document(self, filename)
+        node_to_html_document(self, filename,  resources_dir)

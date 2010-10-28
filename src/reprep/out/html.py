@@ -37,11 +37,15 @@ def get_node_filename(node, context):
     return relative, absolute
     
 
-def node_to_html_document(node, filename):
+def node_to_html_document(node, filename, resources_dir=None):
     basename = os.path.basename(filename)
     dirname = os.path.dirname(filename)
-    rel_resources_dir = basename + '_resources'
-    resources_dir = os.path.join(dirname, rel_resources_dir) 
+    
+    if resources_dir is None:
+        resources_dir = os.path.join(dirname, basename+'_resources')
+        
+    rel_resources_dir = os.path.relpath(resources_dir, dirname)
+     
     if dirname and not os.path.exists(dirname):
         os.makedirs(dirname)
     if not os.path.exists(resources_dir):
