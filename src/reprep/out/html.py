@@ -3,7 +3,35 @@ import mimetypes
 import sys
 from pkg_resources import resource_filename
 import shutil
+from string import Template
 
+header = """
+<html>
+<head>  
+    <script type="text/javascript" src="${resources}/static/jquery/jquery.js"></script>
+    <script type="text/javascript" src="${resources}/static/jquery/jquery.imageZoom.js"></script>
+    <link rel="stylesheet" href="${resources}/static/jquery/jquery.imageZoom.css"/>
+
+    <script type="text/javascript"> 
+        $$(document).ready( function () {
+            $$('.zoomable').imageZoom();
+        });       
+    </script>
+    
+    <link rel="stylesheet" href="${resources}/static/reprep/default_style.css"/>
+
+    <title> ${title} </title>
+<body>
+"""
+
+footer = """
+
+<p> Created by <a href="http://purl.org/censi/2010/RepRep">RepRep</a>. </p>
+
+</body>
+</html>
+
+"""
 
 
 
@@ -55,70 +83,26 @@ def node_to_html_document(node, filename, resources_dir=None):
     static = resource_filename("reprep", "static")
         
     if not os.path.exists(static):
-        print 'Warning: resource dir %s not found' % js
+        print 'Warning: resource dir %s not found' % static
     else: 
         dst = os.path.join(resources_dir, 'static')
         if not os.path.exists(dst):
+            # XXX does not work if updated
             shutil.copytree(static, dst)
         
     with open(filename, 'w') as file:
-        file.write('''
-<html>
-<head> 
-    <script type="text/javascript" src="%s/static/PopBox/scripts/PopBox.js"></script>
-
-    <style type='text/css'>
-    
-img { border: solid 1px black;}
-h { font-family: monospace; font-size: 120%%; color: black; font-weight: bold;  display: block;}
-
-sssection { border: solid 2px gray; display: block; clear: both; padding: 1em; margin: 1em;}
-
-.report-node { display: block; border: solid 2px gray; padding: 0.2em; margin: 0.2em}
-.report-figure { display: block; border: solid 2px green; padding: 0.2em; margin: 0.2em}
-.report-figure-caption { display: block; clear: both;  }
-.report-subfigure {  padding: 5px; padding-bottom: 0; margin: 5px; display: block;}
-.report-subfigure-caption { clear: both; display: block; font-weight: bold; text-align: center;  }
-
-.node-class { margin:1em; float: right; font-family: monospace; color: blue;}
-.node-id {margin:1em;  float: right; font-family: monospace; font-weight: bold; color: green;}
-.datanode { font-family: monospace; font-weight: bold; }
-.datanode-children { margin-left: 0.2em; }
-
-.report-table td {
-    padding: 5px;
-    text-align: right;
-}
-.report-table tr th {
-    padding-left: 2em;
-}
-
-.report-table tr.even {
-    background-color: #EEF;
-}
-
-.report-table caption {
-    font-size: 150%%;
-
-}
-.report-table {
-    margin-top: 1em;
-    padding: 1em;
-    border: solid 2px gray;
-}
-    </style>
-    <title> %s </title>
-    
-</head>
-<body>
-''' % (rel_resources_dir, str(node.id)))
+        
+        mapping = {'resources': rel_resources_dir,
+                   'title': str(node.id)}
+        
+        file.write(Template(header).substitute(mapping)) 
         
         context = html_context(file,
                     resources_dir=resources_dir,
                     rel_resources_dir=rel_resources_dir)
         node_to_html(node, context)
         
-        file.write("\n</body></html>")
+        file.write(Template(footer).substitute(mapping))
  
 
 def children_to_html(node, context):
@@ -204,10 +188,18 @@ def figure_to_html(node, context):
           
         image_filename, absolute = get_node_filename(actual_resource, context)
         
-        file.write('''
-            <img onclick="Pop(this,50,'PopBoxImageLarge');"  
-                style="width:95%%" src="%s" />'''
-         % image_filename)
+#        file.write('''
+#            <img onclick="Pop(this,50,'PopBoxImageLarge');"  
+#                style="width:95%%" src="%s" />'''
+#         % image_filename)
+
+        file.write(
+        Template('''
+        <a href="${src}" class="zoomable">
+            <img style="width:95%" src="${src}"/>
+        </a>    
+        ''').substitute(src=image_filename))
+
 
         file.write('<p class="report-subfigure-caption">%s</p>' % \
                  htmlfy(sub.caption))
