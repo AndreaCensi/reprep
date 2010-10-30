@@ -1,9 +1,10 @@
 import os
-import mimetypes
 import sys
-from pkg_resources import resource_filename
+import mimetypes
 import shutil
 from string import Template
+
+from pkg_resources import resource_filename
 
 header = """
 <html>
@@ -174,7 +175,7 @@ def figure_to_html(node, context):
         if first_col:
             style += "clear:left;"
             
-        width = "%d%%" % (75.0 / ncols)
+        width = "%d%%" % (95.0 / max(ncols,2))
         style += 'width:%s' % width
     
         file.write('<div style="%s" class="report-subfigure"> ' % style)
@@ -186,19 +187,16 @@ def figure_to_html(node, context):
             node.parent.print_tree()
             raise
           
-        image_filename, absolute = get_node_filename(actual_resource, context)
-        
-#        file.write('''
-#            <img onclick="Pop(this,50,'PopBoxImageLarge');"  
-#                style="width:95%%" src="%s" />'''
-#         % image_filename)
+        image_filename, absolute = get_node_filename(actual_resource, #@UnusedVariable
+                                                     context) 
 
         file.write(
-        Template('''
-        <a href="${src}" class="zoomable">
-            <img style="width:95%" src="${src}"/>
-        </a>    
-        ''').substitute(src=image_filename))
+            Template('''
+                <a href="${src}" class="zoomable">
+                    <img style="width:95%" src="${src}"/>
+                </a>    
+            ''').substitute(src=image_filename)
+        )
 
 
         file.write('<p class="report-subfigure-caption">%s</p>' % \
