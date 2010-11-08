@@ -9,16 +9,24 @@ from pkg_resources import resource_filename
 header = """
 <html>
 <head>  
-    <script type="text/javascript" src="${resources}/static/jquery/jquery.js"></script>
-    <script type="text/javascript" src="${resources}/static/jquery/jquery.imageZoom.js"></script>
+    <script type="text/javascript" 
+        src="${resources}/static/jquery/jquery.js"></script>
+    
+    <!-- Use imagezoom plugin --> 
+    <script type="text/javascript" 
+        src="${resources}/static/jquery/jquery.imageZoom.js"></script>
     <link rel="stylesheet" href="${resources}/static/jquery/jquery.imageZoom.css"/>
-
     <script type="text/javascript"> 
         $$(document).ready( function () {
             $$('.zoomable').imageZoom();
         });       
     </script>
     
+    <style type="text/css">
+    /* Extra CSS passed by user. */
+        ${extra_css}
+    </style>
+
     <link rel="stylesheet" href="${resources}/static/reprep/default_style.css"/>
 
     <title> ${title} </title>
@@ -27,11 +35,12 @@ header = """
 
 footer = """
 
-<p> Created by <a href="http://purl.org/censi/2010/RepRep">RepRep</a>. </p>
+<p id="reprep-credits"> 
+    Created by <a href="http://purl.org/censi/2010/RepRep">RepRep</a>. 
+</p>
 
 </body>
 </html>
-
 """
 
 
@@ -66,7 +75,9 @@ def get_node_filename(node, context):
     return relative, absolute
     
 
-def node_to_html_document(node, filename, resources_dir=None):
+def node_to_html_document(node, filename, 
+                          resources_dir=None,
+                          extra_css=None):
     basename = os.path.basename(filename)
     dirname = os.path.dirname(filename)
     
@@ -93,8 +104,11 @@ def node_to_html_document(node, filename, resources_dir=None):
         
     with open(filename, 'w') as file:
         
+
+        
         mapping = {'resources': rel_resources_dir,
-                   'title': str(node.id)}
+                   'title': str(node.id),
+                   'extra_css': extra_css}
         
         file.write(Template(header).substitute(mapping)) 
         

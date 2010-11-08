@@ -26,7 +26,8 @@ class Attacher:
             self.node.data(id=self.id, data=data, mime=self.mime)
         self.temp_file.close()
 
-
+import matplotlib
+matplotlib.use('Agg')
 from matplotlib import pylab
 
 class PylabAttacher:
@@ -50,7 +51,9 @@ class PylabAttacher:
         
     def __exit__(self, type, value, traceback): #@UnusedVariable
         
-        pylab.savefig(self.temp_file.name)
+        #pylab.savefig(self.temp_file.name)
+        pylab.savefig(self.temp_file.name, bbox_inches='tight', pad_inches=0.2)
+        
         pylab.close()
         
         with open(self.temp_file.name) as f:

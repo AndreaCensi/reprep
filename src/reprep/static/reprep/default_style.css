@@ -1,4 +1,6 @@
 
+body { font-family: Verdana, Tahoma; }
+
 img { border: solid 1px black;}
 h { font-family: monospace; font-size: 120%; color: black; font-weight: bold;  display: block;}
 
@@ -35,4 +37,9 @@ sssection { border: solid 2px gray; display: block; clear: both; padding: 1em; m
     margin-top: 1em;
     padding: 1em;
     border: solid 2px gray;
+}
+
+p.reprep-credits {
+	font-size: 90%; 
+	font-weight: bold;
 }
