@@ -51,8 +51,8 @@ class PylabAttacher:
         
     def __exit__(self, type, value, traceback): #@UnusedVariable
         
-        #pylab.savefig(self.temp_file.name)
-        pylab.savefig(self.temp_file.name, bbox_inches='tight', pad_inches=0.2)
+        pylab.savefig(self.temp_file.name)
+        #pylab.savefig(self.temp_file.name, bbox_inches='tight', pad_inches=0.2)
         
         pylab.close()
         
