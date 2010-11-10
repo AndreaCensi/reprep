@@ -221,8 +221,10 @@ def figure_to_html(node, context):
         if last_col:
             file.write('\n\n')
   
+    caption = node.caption if node.caption else ""
+    
     file.write('<p class="report-figure-caption">%s</p>' % \
-             htmlfy(node.caption))
+             htmlfy(caption))
     
     children_to_html(node, context)
 
