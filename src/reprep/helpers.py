@@ -49,10 +49,18 @@ class PylabAttacher:
     def __enter__(self):
         return pylab 
         
-    def __exit__(self, type, value, traceback): #@UnusedVariable
+    def __exit__(self, exc_type, exc_value, traceback): #@UnusedVariable
+        if exc_type is not None:
+            # an error occurred. Close the figure and return false.
+            pylab.close()
+            return False
         
-        pylab.savefig(self.temp_file.name)
-        #pylab.savefig(self.temp_file.name, bbox_inches='tight', pad_inches=0.2)
+        if not self.figure.axes:
+            raise Exception('You did not draw anything in the image.')
+                
+        #pylab.savefig(self.temp_file.name)
+        
+        pylab.savefig(self.temp_file.name, bbox_inches='tight', pad_inches=0.2)
         
         pylab.close()
         
