@@ -1,7 +1,7 @@
 
 class ReportInterface: 
  
-    def data(self, id, data, mime=None, desc=None):
+    def data(self, id, data, mime=None):
         ''' Attaches a data child to this node. 
         
             "data" is assumed to be a raw python structure. 
@@ -82,17 +82,16 @@ class ReportInterface:
         return PylabAttacher(self, id, mime, **figure_args)
 
     def data_rgb(self, id, rgb): 
-        ''' Creates a node containing an image from a RGB[a] array.
+        ''' Create a node containing an image from a RGB[a] array.
             (internally, it will be saved as PNG)
             ``rgb`` must be a height x width x 3 uint8 numpy array.        
          '''
         from reprep.helpers import data_rgb_imp
         data_rgb_imp(self, id, rgb)
-        
-        
 
     def figure(self, id=None, sub=[], **kwargs):
-        ''' Attaches a figure to this node. '''
+        ''' Attach a figure to this node. '''
+        
         from reprep import Figure
         f = Figure(id, **kwargs)
         self.add_child(f)
@@ -103,11 +102,13 @@ class ReportInterface:
         return f
  
     def table(self, id, data, cols=None, caption=None):
-        ''' Attaches a table to this node. 
+        ''' Attach a table to this node. 
             
-            ``data`` must be either a list of lists, or a 1D numpy array.
+            ``data`` 
+              must be either a list of lists, or a 1D numpy array.
             
-            ``cols`` must be either None, or a list of strings.
+            ``cols`` 
+              must be either None, or a list of strings.
         
         '''
         from reprep import Table
@@ -115,7 +116,19 @@ class ReportInterface:
         self.add_child(t) 
         return t
         
-    def to_html(self, filename,  resources_dir=None, **kwargs):
+    def text(self, id, text, mime="text/x-rst"):
+        ''' Adds a text node with the given id.
+            
+            This is a very thin wrapper around data() that 
+            provides a default mime type (restructured text). 
+            
+            For now, only restructured text is converted to HTML,
+            the rest is displayed as plain text.
+        '''
+        return self.data(id, data=text, mime=mime)    
+    
+        
+    def to_html(self, filename, resources_dir=None, **kwargs):
         ''' Creates a HTML representation of this report. '''
         from reprep.out.html import node_to_html_document
-        node_to_html_document(self, filename,  resources_dir, **kwargs)
+        node_to_html_document(self, filename, resources_dir, **kwargs)

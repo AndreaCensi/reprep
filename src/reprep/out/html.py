@@ -75,14 +75,14 @@ def get_node_filename(node, context):
     return relative, absolute
     
 
-def node_to_html_document(node, filename, 
+def node_to_html_document(node, filename,
                           resources_dir=None,
                           extra_css=None):
     basename = os.path.basename(filename)
     dirname = os.path.dirname(filename)
     
     if resources_dir is None:
-        resources_dir = os.path.join(dirname, basename+'_resources')
+        resources_dir = os.path.join(dirname, basename + '_resources')
         
     rel_resources_dir = os.path.relpath(resources_dir, dirname)
      
@@ -189,7 +189,7 @@ def figure_to_html(node, context):
         if first_col:
             style += "clear:left;"
             
-        width = "%d%%" % (95.0 / max(ncols,2))
+        width = "%d%%" % (95.0 / max(ncols, 2))
         style += 'width:%s' % width
     
         file.write('<div style="%s" class="report-subfigure"> ' % style)
@@ -231,30 +231,70 @@ def figure_to_html(node, context):
     file.write('''</div>''')  
 
 
+def rst2htmlfragment(text):
+    from docutils.core import publish_string #@UnresolvedImport
+
+    html = publish_string(
+           source=text,
+           writer_name='html')
+    html = html[html.find('<body>') + 6:html.find('</body>')].strip()
+    return html
+
+
+def text2html(text, mime):
+    ''' Converts rst to HTML element. '''
+    
+    if mime == 'text/plain':
+        # FIXME: add escaping here
+        return '<pre> %s </pre>' % text
+    elif mime == 'text/x-rst':
+        return rst2htmlfragment(text)
+    else:
+        assert('Unknown mime "%s" for text.' % mime)
+    
+
 def datanode_to_html(node, context):
     ''' Writes the data on the file '''
     relative, filename = get_node_filename(node, context) #@UnusedVariable
-    if node.mime == 'python':
-        #print "Ignoring %s" % filename
-        pass
-    else:
-        if not isinstance(node.raw_data, str):
-            sys.stderr.write("Ignoring %s because raw_data is %s\n" % \
-                (filename, node.raw_data.__clasS__))
-        else:
-            # print "Writing on %s" % filename
-            with open(filename, 'w') as f:
-                f.write(node.raw_data)
-                
-    inline = ""
     
-    if node.mime == 'python':
-        s = str(node.raw_data)
-        if len(s) < 128:
-            inline = "<code>%s</code>" % s # TODO: escape
-            
-    context.file.write('<p class="datanode">Resource: <a href="%s">%s</a> %s</p>\n' % \
-                       (relative, node.id, inline))
+    text_mimes = ['text/plain', 'text/x-rst']
+    
+    if node.mime in text_mimes:
+        content = text2html(node.raw_data, node.mime)
+        context.file.write("""
+<div class="textnode"> 
+
+    <span class="textid"> {id} </span> 
+   
+     {content}
+     
+</div>  
+""".format(id=node.id, content=content))
+    
+    else:
+        if node.mime == 'python':
+            #print "Ignoring %s" % filename
+            pass
+        else:
+            if not isinstance(node.raw_data, str):
+                sys.stderr.write("Ignoring %s because raw_data is %s\n" % \
+                    (filename, node.raw_data.__clasS__))
+            else:
+                # print "Writing on %s" % filename
+                with open(filename, 'w') as f:
+                    f.write(node.raw_data)
+                    
+        inline = ""
+        
+        if node.mime == 'python':
+            s = str(node.raw_data)
+            if len(s) < 128:
+                inline = "<code>%s</code>" % s # TODO: escape
+            else:
+                inline = ""
+                
+        context.file.write('<p class="datanode">Resource: <a href="%s">%s</a> %s</p>\n' % \
+                           (relative, node.id, inline))
 
     context.file.write('<div class="datanode-children">\n')
     children_to_html(node, context)

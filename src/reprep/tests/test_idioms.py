@@ -3,21 +3,17 @@ import unittest
 from reprep import Table, Node, Report
 import numpy
 import pylab
-from reprep.out.html import node_to_html_document
 from numpy.linalg.linalg import pinv
+from reprep.tests.utils import ReprepTest
 
-class Test(unittest.TestCase):
-
-    def tryWritingOutput(self, node):
-        node_to_html_document(node, 'tests/%s.html' % node.id)
-    
+class Test(ReprepTest):    
     
     def testTable(self):
         
         table = Table('mytable',
                       [['Andrea', 'Censi'], ['a', 'b']], ['Name', 'Last'],
                       )
-        self.tryWritingOutput(table)
+        self.node_serialization_ok(table)
         
     def testImage(self):
         C = numpy.random.rand(50, 50)
@@ -28,7 +24,7 @@ class Test(unittest.TestCase):
         report.data('Tx', T[:, :, 0])
         report.data('Ty', T[:, :, 1])
         report.data('Tz', T[:, :, 2])
-        cov = report.data('covariance', C, desc="Covariance matrix")
+        cov = report.data('covariance', C)
         inf = report.data('information', information)
 
         with cov.data_file('plot', 'image/png') as f:
@@ -51,7 +47,7 @@ class Test(unittest.TestCase):
         f.sub('Tz', display='posneg')
         
         
-        self.tryWritingOutput(report)
+        self.node_serialization_ok(report)
 
     def test_invalid_id(self):
         self.assertRaises(ValueError, Report, 1)

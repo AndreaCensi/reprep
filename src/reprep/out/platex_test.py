@@ -1,12 +1,11 @@
 import unittest
-from reprep.out.platex import Latex
 import tempfile
 import os
 import shutil
 
+from reprep.out.platex import Latex
 
-class Test(unittest.TestCase):
-
+class Test(unittest.TestCase): 
 
     def testEmpty(self):
         with tempfile.NamedTemporaryFile(suffix='tex') as tmp:
