@@ -22,7 +22,9 @@ class Test(unittest.TestCase):
             self.assertRaises(ValueError, posneg, v)
             
     def testInvalidNumbers(self):
-        a = numpy.ones(shape=(10, 10))
-        a[0, 0] = nan
-        self.assertRaises(ValueError, posneg, a)
+        pass
+        # we now have nan support in posneg
+        # a = numpy.ones(shape=(10, 10))
+        # a[0, 0] = nan
+        # self.assertRaises(ValueError, posneg, a)
             
