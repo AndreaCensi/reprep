@@ -7,4 +7,4 @@ from figure import *
 Report = Node
 
 
-version = '0.9'
+version = '0.9.1'

@@ -108,7 +108,7 @@ def node_to_html_document(node, filename,
         
         mapping = {'resources': rel_resources_dir,
                    'title': str(node.id),
-                   'extra_css': extra_css}
+                   'extra_css': extra_css if extra_css else ""}
         
         file.write(Template(header).substitute(mapping)) 
         
