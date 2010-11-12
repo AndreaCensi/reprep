@@ -2,7 +2,7 @@ from reprep.node import Node
 import numpy
 
 class Table(Node):
-    def __init__(self, id, data, cols=None, caption=None):
+    def __init__(self, id, data, cols=None, rows=None, caption=None):
         Node.__init__(self, id)
         
         if isinstance(data, list):
@@ -36,6 +36,9 @@ class Table(Node):
             
             if cols is None:
                 cols = [None] * ncols
+                
+            if rows is None: 
+                rows = [None] * nrows
                     
         elif isinstance(data, numpy.ndarray) :
             if len(data.shape) != 1:
@@ -45,6 +48,9 @@ class Table(Node):
             if cols is None:
                 cols = list(data.dtype.fields)
            
+            if rows is None: 
+                rows = [None] * nrows
+                
         else:
             raise ValueError('Expected list of list or ndarray, got %s' % \
                              data.__class__.__name__)
@@ -53,8 +59,10 @@ class Table(Node):
             raise ValueError('Expected cols of length %s, not %s' % \
                              (len(data.dtype.fields), str(cols)))
             
-    
-    
+        # TODO: add unit tests for rows
         self.data = data
         self.cols = cols
+        self.rows = rows
         self.caption = caption 
+
+

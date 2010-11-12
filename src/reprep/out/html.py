@@ -149,6 +149,7 @@ def table_to_html(table, context):
     
     f.write('<tbody>\n')
     f.write('<tr>\n')
+    f.write('<th></th>')
     for field in table.cols:
         f.write('\t<th>%s</th>\n' % field)
     f.write('</tr>\n')
@@ -156,6 +157,12 @@ def table_to_html(table, context):
     for i, row in enumerate(table.data):
         html_class = {0: 'even', 1: 'odd'}[i % 2]
         f.write('<tr class="%s">\n' % html_class)
+        
+        if table.rows[i] is not None:
+            f.write('<th>%s</th>\n' % table.rows[i]) # FIXME html escaping
+        else:
+            f.write('<th></th>\n')
+            
         for field in row.dtype.names:
             value = row[field]
             rep = str(value)

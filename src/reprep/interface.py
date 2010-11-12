@@ -101,18 +101,23 @@ class ReportInterface:
  
         return f
  
-    def table(self, id, data, cols=None, caption=None):
+    def table(self, id, data, cols=None, rows=None, caption=None):
         ''' Attach a table to this node. 
             
-            ``data`` 
-              must be either a list of lists, or a 1D numpy array.
+            *data* 
+              must be either a list of lists, or a 2D numpy array.
             
-            ``cols`` 
+            *cols*
+              Labels for the columns. 
+              must be either None, or a list of strings.
+            
+            *rows*
+              Labels for the rows. 
               must be either None, or a list of strings.
         
         '''
         from reprep import Table
-        t = Table(id=id, data=data, cols=cols, caption=caption)
+        t = Table(id=id, data=data, cols=cols, rows=rows, caption=caption)
         self.add_child(t) 
         return t
         
