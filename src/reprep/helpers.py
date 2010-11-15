@@ -1,7 +1,6 @@
 import mimetypes
 import tempfile
 import subprocess
-
  
 class Attacher:
     def __init__(self, node, id, mime):
@@ -26,10 +25,6 @@ class Attacher:
             self.node.data(id=self.id, data=data, mime=self.mime)
         self.temp_file.close()
 
-import matplotlib
-matplotlib.use('Agg')
-from matplotlib import pylab
-
 class PylabAttacher:
     def __init__(self, node, id, mime, **figure_args):
         self.node = node
@@ -44,25 +39,30 @@ class PylabAttacher:
         
         self.temp_file = tempfile.NamedTemporaryFile(suffix=suffix)
         
-        self.figure = pylab.figure(**figure_args)
+        import matplotlib
+        if matplotlib.get_backend() != 'agg':
+           matplotlib.use('agg')
+        from matplotlib import pylab
+        self.pylab = pylab 
+        self.figure = self.pylab.figure(**figure_args)
         
     def __enter__(self):
-        return pylab 
+        return self.pylab 
         
     def __exit__(self, exc_type, exc_value, traceback): #@UnusedVariable
         if exc_type is not None:
             # an error occurred. Close the figure and return false.
-            pylab.close()
+            self.pylab.close()
             return False
         
         if not self.figure.axes:
             raise Exception('You did not draw anything in the image.')
-                
+
         #pylab.savefig(self.temp_file.name)
         
-        pylab.savefig(self.temp_file.name, bbox_inches='tight', pad_inches=0.2)
+        self.pylab.savefig(self.temp_file.name, bbox_inches='tight', pad_inches=0.2)
         
-        pylab.close()
+        self.pylab.close()
         
         with open(self.temp_file.name) as f:
             data = f.read()
