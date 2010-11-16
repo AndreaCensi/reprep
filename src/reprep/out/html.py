@@ -181,10 +181,10 @@ def figure_to_html(node, context):
     #file.write('''<span class='node-id'>%s</span>''' % node.id)  
     file.write('<h>%s</h>' % complete_id) 
   
-    if node.shape is None:
-        node.shape = (1, len(node.subfigures))
-        
-    nrows, ncols = node.shape  
+    if node.cols is None:
+        ncols = len(node.subfigures)
+    else:
+        ncols = node.cols
   
     
     for i, sub in enumerate(node.subfigures):
