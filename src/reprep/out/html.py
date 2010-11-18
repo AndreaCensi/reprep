@@ -5,6 +5,7 @@ import shutil
 from string import Template
 
 from pkg_resources import resource_filename
+import cPickle
 
 header = """
 <html>
@@ -281,7 +282,9 @@ def datanode_to_html(node, context):
     else:
         if node.mime == 'python':
             #print "Ignoring %s" % filename
-            pass
+            with open(filename, 'wb') as f:
+                cPickle.dump(node.raw_data, f)
+            # TODO: add other representations for numpy array
         else:
             if not isinstance(node.raw_data, str):
                 sys.stderr.write("Ignoring %s because raw_data is %s\n" % \
