@@ -51,3 +51,4 @@ src/reprep/tests/test_urls.pyc
 src/.noseids
 build
 dist
+*~
