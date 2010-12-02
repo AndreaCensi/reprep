@@ -1,6 +1,7 @@
 import numpy
 from numpy import maximum, minimum, zeros
-from reprep.graphics.numpy_utils import  gt, require_shape
+
+from .numpy_utils import  gt, require_shape
 
 #
 #def scale(value, min_value=None, max_value=None,

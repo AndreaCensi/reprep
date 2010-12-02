@@ -1,6 +1,6 @@
 import numpy
-from reprep.graphics.numpy_utils import gt, require_shape, require_array, \
-    assert_finite
+
+from .numpy_utils import gt, require_shape, require_array, assert_finite
 
 def colormap_rgba(values, colors, invalid_color=[255, 255, 0, 255],
                    nan_color=[0, 0, 0, 0]):

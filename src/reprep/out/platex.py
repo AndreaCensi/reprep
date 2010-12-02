@@ -1,7 +1,5 @@
-
+import mimetypes, os
 from StringIO import StringIO
-import mimetypes
-import os
 
 
 class Latex:

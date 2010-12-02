@@ -1,11 +1,7 @@
-import os
-import sys
-import mimetypes
-import shutil
+import os, sys, mimetypes, shutil, cPickle
 from string import Template
 
 from pkg_resources import resource_filename
-import cPickle
 
 header = """
 <html>

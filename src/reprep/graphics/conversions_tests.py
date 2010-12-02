@@ -1,6 +1,6 @@
-import unittest
-import numpy
-from reprep.graphics.conversions import Image_from_array
+import unittest, numpy
+
+from .conversions import Image_from_array
 
 
 class Test(unittest.TestCase):

@@ -1,6 +1,5 @@
-import mimetypes
-import tempfile
-import subprocess
+import mimetypes, tempfile, subprocess
+
  
 class Attacher:
     def __init__(self, node, id, mime):

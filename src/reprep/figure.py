@@ -1,6 +1,7 @@
 from collections import namedtuple
-from reprep.node import Node, DataNode
 from warnings import warn
+
+from .node import Node, DataNode
 
 SubFigure = namedtuple('SubFigure', 'resource image caption display display_args')
 

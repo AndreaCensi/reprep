@@ -1,5 +1,5 @@
-from numpy import isnan, isinf, isfinite
 import numpy
+from numpy import isnan, isinf, isfinite
 
 class gt:
     def __init__(self, n):

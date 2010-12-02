@@ -1,5 +1,6 @@
-from reprep.node import Node
 import numpy
+
+from .node import Node
 
 class Table(Node):
     def __init__(self, id, data, cols=None, rows=None, caption=None):

@@ -1,6 +1,7 @@
-import Image
 import numpy
-from reprep.graphics.numpy_utils import gt, require_shape, require_array
+import Image
+
+from .numpy_utils import gt, require_shape, require_array
 
 def Image_from_array(a):
     ''' Converts an image in a numpy array to an Image instance.
