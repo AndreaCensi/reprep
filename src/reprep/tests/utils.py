@@ -1,8 +1,4 @@
-import tempfile
-import os
-import unittest
-import shutil
-
+import tempfile, os, unittest, shutil
 
 class ReprepTest(unittest.TestCase):
     

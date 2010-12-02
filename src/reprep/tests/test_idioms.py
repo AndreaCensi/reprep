@@ -1,10 +1,10 @@
-import unittest
+import numpy, unittest
+from numpy.linalg.linalg import pinv
+from matplotlib import pylab
 
 from reprep import Table, Node, Report
-import numpy
-import pylab
-from numpy.linalg.linalg import pinv
-from reprep.tests.utils import ReprepTest
+
+from .utils import ReprepTest
 
 class Test(ReprepTest):    
     
@@ -37,11 +37,11 @@ class Test(ReprepTest):
                          cols=['One', 'Two'],
                          data=[[1, 2], [3, 4]])        
         
-        f = report.figure('Covariance and information matrix', shape=(1, 3))
+        f = report.figure('Covariance and information matrix', cols=3)
         f.sub('covariance', 'should default to plot')
         f.sub('covariance/plot', 'Same as <-')
             
-        f = report.figure('Tensors', shape=(1, 3))
+        f = report.figure('Tensors', cols=3)
         f.sub('Tx', display='posneg')
         f.sub('Ty', display='posneg')
         f.sub('Tz', display='posneg')
