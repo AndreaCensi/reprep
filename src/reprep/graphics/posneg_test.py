@@ -1,7 +1,6 @@
 import unittest
 from posneg import posneg
 import numpy
-from numpy  import nan
 
 
 class Test(unittest.TestCase):

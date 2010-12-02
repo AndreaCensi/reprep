@@ -1,7 +1,6 @@
 import numpy
 from numpy import maximum, minimum, zeros
-from reprep.graphics.numpy_utils import assert_finite, gt, require_shape
-from reprep.graphics.posneg import skim_top
+from reprep.graphics.numpy_utils import  gt, require_shape
 
 #
 #def scale(value, min_value=None, max_value=None,
@@ -84,7 +83,8 @@ def scale(value, min_value=None, max_value=None,
     """
     
     #check_2d_array(value, 'input to scale()')
-     
+    
+    # TODO: copy nx1 code from procgraph 
     value = value.squeeze().copy()
     require_shape((gt(0), gt(0)), value)
     

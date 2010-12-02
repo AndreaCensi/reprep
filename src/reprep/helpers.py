@@ -41,7 +41,7 @@ class PylabAttacher:
         
         import matplotlib
         if matplotlib.get_backend() != 'agg':
-           matplotlib.use('agg')
+            matplotlib.use('agg')
         from matplotlib import pylab
         self.pylab = pylab 
         self.figure = self.pylab.figure(**figure_args)

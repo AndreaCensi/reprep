@@ -25,7 +25,7 @@ class Test(ReprepTest):
         report.data('Ty', T[:, :, 1])
         report.data('Tz', T[:, :, 2])
         cov = report.data('covariance', C)
-        inf = report.data('information', information)
+        report.data('information', information)
 
         with cov.data_file('plot', 'image/png') as f:
             pylab.figure()

@@ -18,7 +18,7 @@ class Test(unittest.TestCase):
         with tempfile.NamedTemporaryFile(suffix='tex') as tmp:
             filename = tmp.name
             with Latex.document(filename) as doc:
-                with doc.figure(caption="") as fig:
+                with doc.figure(caption="") as fig: #@UnusedVariable
                     pass
                 
             self.try_compile(tmp)

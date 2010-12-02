@@ -1,6 +1,6 @@
 import numpy
 from numpy import maximum, minimum, zeros
-from reprep.graphics.numpy_utils import assert_finite, gt, require_shape
+from reprep.graphics.numpy_utils import  gt, require_shape
 
 
 def skim_top(a, top_percent):
