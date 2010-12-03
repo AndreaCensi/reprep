@@ -45,8 +45,8 @@ class Figure(Node):
             image = data.create_display(display, **kwargs)
         else:
             image = data.get_suitable_image_representation()
+            
             if image is None:
-                
                 self.parent.print_tree()
                 raise ValueError('Could not find candidate image for resource '
                                  '"%s" image node is "%s".' % 
