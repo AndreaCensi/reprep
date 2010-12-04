@@ -1,8 +1,10 @@
 import sys
 
-from graphics import posneg, Image_from_array, colorize_success, scale
+from graphics import Image_from_array, colorize_success
 
 from .interface import  ReportInterface
+from reprep.graphics.scale import scale
+from reprep.graphics.posneg import posneg
  
 class NotExistent(Exception):
     pass
