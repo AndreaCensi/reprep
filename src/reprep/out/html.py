@@ -1,7 +1,7 @@
 import os, sys, mimetypes, shutil, cPickle
 from string import Template
 
-from pkg_resources import resource_filename
+from pkg_resources import resource_filename #@UnresolvedImport  Eclipse fails here
 
 header = """
 <html>
