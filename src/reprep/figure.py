@@ -42,14 +42,14 @@ class Figure(Node):
             raise ValueError('I expect a **data** node as an argument to sub(). (%s)' \
                              % resource)
         if display is not None:
-            image = data.create_display(display, **kwargs)
+            image = data.display(display, **kwargs)
         else:
             image = data.get_suitable_image_representation()
             
             if image is None:
                 self.parent.print_tree()
                 raise ValueError('Could not find candidate image for resource '
-                                 '"%s" image node is "%s".' % 
+                                 '%r; image node is %r.' % 
                                  (resource, data.get_complete_id()))
         
         resource_url = self.get_relative_url(data)

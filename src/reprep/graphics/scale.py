@@ -85,6 +85,8 @@ def scale(value, min_value=None, max_value=None,
     
     #check_2d_array(value, 'input to scale()')
     
+    value = value.astype('float32')
+    
     # TODO: copy nx1 code from procgraph 
     value = value.squeeze().copy()
     require_shape((gt(0), gt(0)), value)

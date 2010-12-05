@@ -203,7 +203,7 @@ class DataNode(Node):
             mime = 'python'
         self.mime = mime
 
-    def create_display(self, display, **kwargs):
+    def display(self, display, **kwargs):
         if display is None:
             display = 'posneg'
         known = {'posneg': posneg,
