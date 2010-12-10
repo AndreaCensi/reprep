@@ -1,3 +1,4 @@
+
 from interface import *
 from table import *
 from node import *
@@ -7,3 +8,7 @@ from figure import *
 Report = Node
 
 version = '0.9.1'
+
+
+from reprep.graphics.scale import scale
+from reprep.graphics.posneg import posneg
