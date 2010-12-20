@@ -122,6 +122,11 @@ jQuery.fn.imageZoom = function (conf) {
 					width:	jQuery(window).width(), 
 					height:	jQuery(window).height()
 				};
+				/* Make sure it is zoomed all the way. */
+				ratio = imgzoomAfter.height / imgzoomAfter.width;
+				imgzoomAfter.width = windowDim.width * 0.9;
+				imgzoomAfter.height = imgzoomAfter.width * ratio;
+				
 				// Make sure imgzoom isn't wider than screen
 				if (imgzoomAfter.width > (windowDim.width - config.imageMargin * 2)) {
 					var nWidth			= windowDim.width - config.imageMargin * 2;
