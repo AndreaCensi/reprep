@@ -323,9 +323,10 @@ def datanode_to_html(node, context):
         context.file.write('<p class="datanode">Resource: <a href="%s">%s</a> %s</p>\n' % \
                            (relative, node.id, inline))
 
-    context.file.write('<div class="datanode-children">\n')
-    children_to_html(node, context)
-    context.file.write('</div>\n')
+    if node.children:
+        context.file.write('<div class="datanode-children">\n')
+        children_to_html(node, context)
+        context.file.write('</div>\n')
 
 
 def simple_node_to_html(node, context):
