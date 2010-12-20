@@ -99,10 +99,7 @@ def node_to_html_document(node, filename,
             # XXX does not work if updated
             shutil.copytree(static, dst)
         
-    with open(filename, 'w') as file:
-        
-
-        
+    with open(filename, 'w') as file: 
         mapping = {'resources': rel_resources_dir,
                    'title': str(node.id),
                    'extra_css': extra_css if extra_css else ""}
@@ -118,8 +115,23 @@ def node_to_html_document(node, filename,
  
 
 def children_to_html(node, context):
-    for child in node.children:
+    from reprep import Figure, Table, Node #, DataNode
+    # First figure and tables
+    priority = (Table, Figure, Node)
+
+    first = [x for x in node.children if isinstance(x, priority)]
+    second = [x for x in node.children if not x in first]
+    
+    for child in first:
         node_to_html(child, context)
+        
+    if second:
+        f = context.file
+        f.write('<div class="report-nongui-nodes">\n')
+        for child in second:
+            node_to_html(child, context)
+        f.write('</div>\n')
+
     
 def node_to_html(node, context):
     from reprep import Figure, Table, Node, DataNode
