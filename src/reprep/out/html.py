@@ -145,12 +145,19 @@ def table_to_html(table, context):
     f.write('<caption>%s</caption>\n' % caption)
     
     f.write('<tbody>\n')
-    f.write('<tr>\n')
-    f.write('<th></th>')
-    for field in table.cols:
-        f.write('\t<th>%s</th>\n' % field)
-    f.write('</tr>\n')
     
+    if filter(None, table.cols): # at least one not None
+        f.write('<tr>\n')
+        f.write('<th></th>')
+        for field in table.cols:
+            if field is not None:
+                f.write('\t<th>%s</th>\n' % field)
+            else:
+                f.write('\t<th></th>\n')
+        f.write('</tr>\n')
+        
+    has_row_labels = filter(None, table.rows) 
+        
     for i, row in enumerate(table.data):
         html_class = {0: 'even', 1: 'odd'}[i % 2]
         f.write('<tr class="%s">\n' % html_class)
@@ -158,10 +165,12 @@ def table_to_html(table, context):
         if table.rows[i] is not None:
             f.write('<th>%s</th>\n' % table.rows[i]) # FIXME html escaping
         else:
-            f.write('<th></th>\n')
+            if has_row_labels:
+                f.write('<th></th>\n')
             
-        for field in row.dtype.names:
-            value = row[field]
+        #for field in row.dtype.names:
+        #  value = row[field]
+        for value in row:
             rep = str(value)
             f.write('\t<td>%s</td>\n' % rep)
         f.write('</tr>\n')      

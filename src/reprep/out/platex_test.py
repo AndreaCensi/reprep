@@ -4,28 +4,40 @@ import os
 import shutil
 
 from reprep.out.platex import Latex
+from subprocess import Popen
+import subprocess
+from contextlib import contextmanager
 
 class Test(unittest.TestCase): 
 
+    def setUp(self):
+        self.test_directory = tempfile.mkdtemp(prefix='tmp-reprep-tests')
+        
+    def tearDown(self):
+        # # TODO: cleanup, remove dir
+        pass
+    
+    @contextmanager
+    def get_random_file(self):
+        (fd, filename) = tempfile.mkstemp(suffix='tex', dir=self.test_directory)
+        yield filename
+        # TODO: cleanup
+    
     def testEmpty(self):
-        with tempfile.NamedTemporaryFile(suffix='tex') as tmp:
-            filename = tmp.name
+        with  self.get_random_file() as filename:
             with Latex.document(filename) as doc: #@UnusedVariable
                 pass
-            self.try_compile(tmp)
+            self.try_compile(filename)
             
     def testEmptyFigure(self):
-        with tempfile.NamedTemporaryFile(suffix='tex') as tmp:
-            filename = tmp.name
+        with self.get_random_file() as  filename:
             with Latex.document(filename) as doc:
                 with doc.figure(caption="") as fig: #@UnusedVariable
                     pass
-                
-            self.try_compile(tmp)
+            self.try_compile(filename)
 
     def testSubFigure(self):
-        with tempfile.NamedTemporaryFile(suffix='tex') as tmp:
-            filename = tmp.name
+        with self.get_random_file()  as filename:
             with Latex.document(filename) as doc:
                 with doc.figure(caption="") as fig:
                     with fig.subfigure(caption="fig1") as sub:
@@ -33,7 +45,7 @@ class Test(unittest.TestCase):
                     with fig.subfigure(caption="fig2") as sub:
                         sub.text('hello')
                     
-            self.try_compile(tmp)
+            self.try_compile(filename)
 
 #    def testGraphics(self):
 #        with tempfile.NamedTemporaryFile(suffix='tex') as tmp:
@@ -47,11 +59,12 @@ class Test(unittest.TestCase):
 #                    
 #            self.try_compile(tmp)
 
-    def try_compile(self, tmp):
-        filename = tmp.name
-        command = "pdflatex --interaction batchmode %s" % filename
-        res = os.system(command)
-        if res != 0:
+    def try_compile(self, filename):
+        filename = os.path.basename(filename)
+        command = ["pdflatex", "--interaction", "batchmode", filename]
+        val = subprocess.call(command, cwd=self.test_directory,
+                              stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        if val != 0:
             d = 'error.tex'
             shutil.copy(filename, d)
 #            with open(filename) as f:

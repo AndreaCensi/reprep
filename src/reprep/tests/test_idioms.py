@@ -14,7 +14,28 @@ class Test(ReprepTest):
                       [['Andrea', 'Censi'], ['a', 'b']], ['Name', 'Last'],
                       )
         self.node_serialization_ok(table)
+    
+    def testTable2(self):
+        data = numpy.zeros((2, 2))
+        table = Table('mytable', data)
+        self.node_serialization_ok(table)
+    
+    def testTable3(self):
+        dtype = numpy.dtype([('field1', 'int32'), ('field2', 'int32')])
+        data = numpy.zeros(shape=(5,), dtype=dtype)
+        table = Table('mytable', data)
+        self.node_serialization_ok(table)
+    
+    def testTable4(self):
+        data = numpy.zeros((2, 2, 3))
+        self.assertRaises(ValueError, Table, 'mytable', data)
         
+    def testTable5(self):
+        dtype = numpy.dtype([('field1', 'int32'), ('field2', 'int32')])
+        data = numpy.zeros(shape=(5, 4), dtype=dtype)
+        self.assertRaises(ValueError, Table, 'mytable', data)
+
+    
     def testImage(self):
         C = numpy.random.rand(50, 50)
         information = pinv(C)
