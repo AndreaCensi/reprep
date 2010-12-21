@@ -2,11 +2,11 @@ import unittest
 import tempfile
 import os
 import shutil
-
-from reprep.out.platex import Latex
-from subprocess import Popen
 import subprocess
 from contextlib import contextmanager
+
+from .platex import Latex
+
 
 class Test(unittest.TestCase): 
 
