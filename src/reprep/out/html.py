@@ -158,9 +158,12 @@ def table_to_html(table, context):
     
     f.write('<tbody>\n')
     
+    has_row_labels = filter(None, table.rows) 
+
     if filter(None, table.cols): # at least one not None
         f.write('<tr>\n')
-        f.write('<th></th>')
+        if has_row_labels: 
+            f.write('<th></th>')
         for field in table.cols:
             if field is not None:
                 f.write('\t<th>%s</th>\n' % field)
@@ -168,7 +171,6 @@ def table_to_html(table, context):
                 f.write('\t<th></th>\n')
         f.write('</tr>\n')
         
-    has_row_labels = filter(None, table.rows) 
         
     for i, row in enumerate(table.data):
         html_class = {0: 'even', 1: 'odd'}[i % 2]

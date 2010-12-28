@@ -4,6 +4,8 @@ import numpy
 
 from .node import Node
 
+# TODO: use contracts!!!
+
 class Table(Node):
     def __init__(self, id, data, cols=None, rows=None, caption=None):
         ''' 
@@ -35,19 +37,6 @@ class Table(Node):
             
             if ncols == 0:
                 raise ValueError('At least one column expected')
-            
-#            dtype = map(lambda n: ('col%d' % n, numpy.object), range(ncols))
-            
-#            array = numpy.ndarray(shape=(nrows,), dtype=dtype)
-#            for i in range(nrows):
-#                for j in range(ncols):
-#                    array[i][dtype[j][0]] = data[i][j]
-#            data = array
-#            array = numpy.ndarray(shape=(nrows, ncols), dtype=dtype)
-#            for i in range(nrows):
-#                for j in range(ncols):
-#                    array[i, j] = data[i][j]
-#            data = array
             
             if cols is None:
                 cols = [None] * ncols
