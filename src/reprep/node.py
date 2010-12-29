@@ -23,15 +23,13 @@ class Node(ReportInterface):
             raise ValueError('Received a %s object as children list, should'\
                              ' be None or list.' % children.__class__.__name__)
         
-        
         if isinstance(id, str):
             if '/' in id:
-                raise ValueError('Invalid name %s for a node.' % id.__repr__())
+                raise ValueError('Invalid node id %r (contains "/").' % id)
             if len(id) == 0:
                 raise ValueError('Cannot give an empty string as name.')
         
-        self.id = id
-        
+        self.id = id 
         
         if children is None:
             children = []
@@ -59,6 +57,10 @@ class Node(ReportInterface):
         n.parent = self
         self.childid2node[n.id] = n
         self.children.append(n)
+
+    def last(self):
+        ''' Returns the last added child Node. '''
+        return self.children[-1]
 
     def node(self, id):
         ''' Creates a simple child node. '''
@@ -126,6 +128,8 @@ class Node(ReportInterface):
             # in the end, we get here
             raise NotExistent('Could not find url "%s".' % url)
                 
+    def __getitem__(self, relative_url):
+        return self.get_relative_url(relative_url)
         
     @staticmethod        
     def url_split(u):    
