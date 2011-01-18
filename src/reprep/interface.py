@@ -87,7 +87,7 @@ class ReportInterface:
             ``rgb`` must be a height x width x 3 uint8 numpy array.        
          '''
         from reprep.helpers import data_rgb_imp
-        data_rgb_imp(self, id, rgb)
+        return data_rgb_imp(self, id, rgb)
 
     def figure(self, id=None, sub=[], **kwargs):
         ''' Attach a figure to this node. '''

@@ -56,9 +56,7 @@ class PylabAttacher:
         
         if not self.figure.axes:
             raise Exception('You did not draw anything in the image.')
-
-        #pylab.savefig(self.temp_file.name)
-        
+ 
         self.pylab.savefig(self.temp_file.name, bbox_inches='tight', pad_inches=0.2)
         
         self.pylab.close()
@@ -81,5 +79,7 @@ def data_rgb_imp(parent, id, rgb):
         
     with parent.data_file(id, 'image/png') as f:
         pil_image.save(f)
+        
+    return parent[id]
 
         

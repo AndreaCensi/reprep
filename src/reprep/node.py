@@ -129,7 +129,7 @@ class Node(ReportInterface):
             raise NotExistent('Could not find url "%s".' % url)
                 
     def __getitem__(self, relative_url):
-        return self.get_relative_url(relative_url)
+        return self.resolve_url(relative_url)
         
     @staticmethod        
     def url_split(u):    

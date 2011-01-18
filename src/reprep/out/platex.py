@@ -91,8 +91,29 @@ class LatexEnvironment:
     def text(self, t):
         self.context.f.write(latexify(t))
         
-    def table(self, data, row_desc, col_desc, alignment=None, escape=True):
-        pass
+    def tabular_simple(self, data, row_desc, col_desc, write_col_desc=True):
+        ''' Writes a tabular environment with very simple options. '''
+        def hline():
+            self.context.f.write('\\hline\n')
+        def write_row_tex(entries):
+            self.context.f.write(" & ".join(entries))
+            self.context.f.write(' \\tabularnewline\n')
+            
+        alignment_string = '|r||' + ('r|' * len(col_desc))
+        self.context.f.write('\\begin{tabular}{%s}\n' % alignment_string)
+        hline()
+        if write_col_desc:
+            row_tex = [''] + ['\\makebox[0.7cm]{%s}' % x for x in col_desc]
+            write_row_tex(row_tex)
+            hline()
+            hline()
+        
+        for i, row in enumerate(row_desc):
+            row_tex = ['\\makebox[2.3cm][r]{%s}' % row] + ['\\makebox[0.7cm]{%s}' % x for x in data[i]]
+            write_row_tex(row_tex)
+            hline()
+            
+        self.context.f.write('\\end{tabular}\n')
         
     def tex(self, tex):
         self.context.f.write(tex)
