@@ -139,6 +139,8 @@ class ReportInterface:
         node_to_html_document(self, filename, resources_dir, **kwargs)
 
     def add_to(self, figure, caption=None):
+        if caption is None:
+            caption = self.id
         figure.sub(self, caption)
         
         
