@@ -2,6 +2,7 @@ import numpy
 from numpy import maximum, minimum, zeros
 
 from .numpy_utils import  gt, require_shape
+from .posneg import skim_top
 
 #
 #def scale(value, min_value=None, max_value=None,
@@ -62,7 +63,8 @@ from .numpy_utils import  gt, require_shape
 
 
 def scale(value, min_value=None, max_value=None,
-                 min_color=[1, 1, 1], max_color=[0, 0, 0], nan_color=[1,0.6,0.6]):
+                 min_color=[1, 1, 1], max_color=[0, 0, 0], nan_color=[1, 0.6, 0.6],
+                 skim=0):
     """ Provides a RGB representation of the values by interpolating the range 
     [min(value),max(value)] into the colorspace [min_color, max_color].
     
@@ -99,6 +101,9 @@ def scale(value, min_value=None, max_value=None,
     
     isnan = numpy.logical_not(numpy.isfinite(value))
     
+    if skim != 0:
+        value = skim_top(value, skim)
+        
     if max_value is None:
         value[isnan] = -numpy.inf
         max_value = numpy.max(value)
