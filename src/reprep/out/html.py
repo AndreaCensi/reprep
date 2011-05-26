@@ -43,10 +43,11 @@ footer = """
 
 
 class html_context:
-    def __init__(self, file, rel_resources_dir, resources_dir):
+    def __init__(self, file, rel_resources_dir, resources_dir, write_pickle):
         self.file = file
         self.rel_resources_dir = rel_resources_dir
         self.resources_dir = resources_dir
+        self.write_pickle = write_pickle
 
 def htmlfy(s):
     # XXX to write
@@ -74,7 +75,8 @@ def get_node_filename(node, context):
 
 def node_to_html_document(node, filename,
                           resources_dir=None,
-                          extra_css=None):
+                          extra_css=None,
+                          write_pickle=False):
     basename = os.path.basename(filename)
     dirname = os.path.dirname(filename)
     
@@ -92,11 +94,12 @@ def node_to_html_document(node, filename,
     static = resource_filename("reprep", "static")
         
     if not os.path.exists(static):
-        print 'Warning: resource dir %s not found' % static
+        # XXX:
+        print('Warning: resource dir %s not found' % static)
     else: 
         dst = os.path.join(resources_dir, 'static')
         if not os.path.exists(dst):
-            # XXX does not work if updated
+            # XXX: does not work if updated
             shutil.copytree(static, dst)
         
     with open(filename, 'w') as file: 
@@ -108,7 +111,8 @@ def node_to_html_document(node, filename,
         
         context = html_context(file,
                     resources_dir=resources_dir,
-                    rel_resources_dir=rel_resources_dir)
+                    rel_resources_dir=rel_resources_dir,
+                    write_pickle=write_pickle)
         node_to_html(node, context)
         
         file.write(Template(footer).substitute(mapping))
@@ -144,7 +148,8 @@ def node_to_html(node, context):
     }
     t = node.__class__
     if not t in functions:
-        raise ValueError('Could not find type of %s (%s) in %s.' % (node, t, functions.keys()))
+        msg = 'Could not find type of %s (%s) in %s.' % (node, t, functions.keys())
+        raise ValueError(msg)
     functions[t](node, context)
     
 def table_to_html(table, context):
@@ -224,7 +229,8 @@ def figure_to_html(node, context):
         try:
             actual_resource = node.resolve_url(sub.image)
         except:
-            print "Cannot find sub.image url %s" % sub.image.__repr__()
+            # XXX:
+            print("Cannot find sub.image url %s" % sub.image.__repr__()) 
             node.parent.print_tree()
             raise
           
@@ -277,7 +283,7 @@ def text2html(text, mime):
     elif mime == 'text/x-rst':
         return rst2htmlfragment(text)
     else:
-        assert('Unknown mime "%s" for text.' % mime)
+        assert('Unknown mime %r for text.' % mime)
     
 
 def datanode_to_html(node, context):
@@ -301,8 +307,9 @@ def datanode_to_html(node, context):
     else:
         if node.mime == 'python':
             #print "Ignoring %s" % filename
-            with open(filename, 'wb') as f:
-                cPickle.dump(node.raw_data, f)
+            if context.write_pickle:
+                with open(filename, 'wb') as f:
+                    cPickle.dump(node.raw_data, f)
             # TODO: add other representations for numpy array
         else:
             if not isinstance(node.raw_data, str):
