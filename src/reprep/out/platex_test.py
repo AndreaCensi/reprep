@@ -19,9 +19,9 @@ class Test(unittest.TestCase):
     
     @contextmanager
     def get_random_file(self):
-        (fd, filename) = tempfile.mkstemp(suffix='tex', dir=self.test_directory)
+        res = tempfile.mkstemp(suffix='tex', dir=self.test_directory)
+        filename = res[1] 
         yield filename
-        # TODO: cleanup
     
     def testEmpty(self):
         with  self.get_random_file() as filename:
