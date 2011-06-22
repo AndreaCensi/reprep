@@ -143,4 +143,6 @@ class ReportInterface:
             caption = self.id
         figure.sub(self, caption)
         
+    MIME_RST = 'text/x-rst'
+    
         
