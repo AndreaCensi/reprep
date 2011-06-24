@@ -7,7 +7,7 @@ from setuptools import setup, find_packages
 package_data = {'':['*.*']}
 
 setup(name='reprep',
-      version='0.9',
+      version='0.9.2',
       package_dir={'':'src'},
       packages=find_packages('src'),
       install_requires=['docutils'],

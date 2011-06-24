@@ -8,7 +8,7 @@ from figure import *
 # Alias
 Report = Node
 
-version = '0.9.1'
+version = '0.9.2'
 
 from reprep.graphics.scale import scale
 from reprep.graphics.posneg import posneg
