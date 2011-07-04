@@ -121,7 +121,7 @@ class ReportInterface:
         self.add_child(t) 
         return t
         
-    def text(self, id, text, mime="text/x-rst"):
+    def text(self, id, text, mime="text/plain"):
         ''' Adds a text node with the given id.
             
             This is a very thin wrapper around data() that 
