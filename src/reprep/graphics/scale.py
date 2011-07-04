@@ -91,6 +91,7 @@ def scale(value, min_value=None, max_value=None,
     
     # TODO: copy nx1 code from procgraph 
     value = value.squeeze().copy()
+    # XXX: do contracts
     require_shape((gt(0), gt(0)), value)
     
     min_color = numpy.array(min_color)
