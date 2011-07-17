@@ -1,4 +1,4 @@
-import unittest, numpy
+import unittest, numpy as np
 
 from .conversions import Image_from_array
 
@@ -10,13 +10,14 @@ class Test(unittest.TestCase):
     
     def testValid(self):
         for shape in Test.valid_shapes:
-            v = numpy.zeros(shape=shape, dtype='uint8')
-            v[...] = numpy.random.rand(*shape) * 255 
+            v = np.zeros(shape=shape, dtype='uint8')
+            v[...] = np.random.rand(*shape) * 255 
             Image_from_array(v)
 
 
     def testInvalidShapes(self):
         for shape in Test.invalid_shapes:
-            v = numpy.zeros(shape=shape, dtype='uint8')
-            self.assertRaises(ValueError, Image_from_array, v)
+            v = np.zeros(shape=shape, dtype='uint8')
+            print('Trying with %s' % str(v.shape))
+            self.assertRaises(Exception, Image_from_array, v)
             

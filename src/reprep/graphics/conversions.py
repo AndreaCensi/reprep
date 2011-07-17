@@ -1,22 +1,16 @@
-import numpy
 import Image
+from . import contract, np
 
-from .numpy_utils import gt, require_shape, require_array
-
+@contract(a='(array[HxW](uint8)|array[HxWx3](uint8)|array[HxWx4](uint8)),H>0,W>0')
 def Image_from_array(a):
     ''' Converts an image in a numpy array to an Image instance.
         Accepts:  h x w      255  interpreted as grayscale
         Accepts:  h x w x 3  255  rgb  
         Accepts:  h x w x 4  255  rgba '''
-        
-    require_array(a)
 
-    if not a.dtype == 'uint8':
-        raise ValueError('I expect dtype to be uint8, got "%s".' % a.dtype)
-    
     if len(a.shape) == 2:
         height, width = a.shape
-        rgba = numpy.zeros((height, width, 4), dtype='uint8')
+        rgba = np.zeros((height, width, 4), dtype='uint8')
         rgba[:, :, 0] = a
         rgba[:, :, 1] = a
         rgba[:, :, 2] = a
@@ -24,7 +18,7 @@ def Image_from_array(a):
     elif len(a.shape) == 3:
         height, width = a.shape[0:2]
         depth = a.shape[2]
-        rgba = numpy.zeros((height, width, 4), dtype='uint8')
+        rgba = np.zeros((height, width, 4), dtype='uint8')
         if not depth in [3, 4]:
             raise ValueError('Unexpected shape "%s".' % str(a.shape))
         rgba[:, :, 0:depth] = a[:, :, 0:depth]
@@ -33,8 +27,7 @@ def Image_from_array(a):
     else:
         raise ValueError('Unexpected shape "%s".' % str(a.shape))
     
-    require_shape((gt(0), gt(0), 4), rgba) 
-    
+    assert rgba.shape == (height, width, 4)
     
     im = Image.frombuffer("RGBA", (width, height), rgba.data,
                            "raw", "RGBA", 0, 1)

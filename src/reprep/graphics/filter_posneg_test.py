@@ -1,7 +1,5 @@
 import unittest
-from .filter_posneg import posneg
-import numpy
-
+from . import posneg, np
 
 class Test(unittest.TestCase):
 
@@ -10,20 +8,20 @@ class Test(unittest.TestCase):
     
     def testValid(self):
         for shape in Test.valid_shapes:
-            v = numpy.zeros(shape=shape, dtype='float32')
-            v[...] = numpy.random.rand(*shape) * 255 
+            v = np.zeros(shape=shape, dtype='float32')
+            v[...] = np.random.rand(*shape) * 255 
             posneg(v)
 
 
     def testInvalidShapes(self):
         for shape in Test.invalid_shapes:
-            v = numpy.zeros(shape=shape, dtype='float32')
-            self.assertRaises(ValueError, posneg, v)
+            v = np.zeros(shape=shape, dtype='float32')
+            self.assertRaises(Exception, posneg, v)
             
     def testInvalidNumbers(self):
         pass
         # we now have nan support in posneg
-        # a = numpy.ones(shape=(10, 10))
+        # a = np.ones(shape=(10, 10))
         # a[0, 0] = nan
         # self.assertRaises(ValueError, posneg, a)
             

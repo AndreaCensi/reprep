@@ -1,13 +1,13 @@
-import numpy
+from . import contract, np
 
-from .numpy_utils import gt, require_shape, require_array, assert_finite
-
-def colormap_rgba(values, colors, invalid_color=[255, 255, 0, 255],
-                   nan_color=[0, 0, 0, 0]):
-    ''' entries = [ (min, max, [r,g,b,a]),... ] '''
-    require_shape((gt(0), gt(0)), values)
+@contract(values='array[HxW]',
+          colors='list[>=1](tuple(a,(b,b>a),seq[4](number)))')
+def colormap_rgba(values, colors,
+                  invalid_color=[255, 255, 0, 255],
+                  nan_color=[0, 0, 0, 0]):
+    ''' colors = [ (min, max, [r,g,b,a]),... ] '''
     h, w = values.shape
-    res = numpy.zeros(shape=(h, w, 4), dtype='uint8')
+    res = np.zeros(shape=(h, w, 4), dtype='uint8')
     for i in range(h):
         for j in range(w):
             chosen = invalid_color
@@ -16,18 +16,14 @@ def colormap_rgba(values, colors, invalid_color=[255, 255, 0, 255],
                 if vmin <= val <= vmax:
                     chosen = color
                     break
-            if numpy.isnan(val):
+            if np.isnan(val):
                 chosen = nan_color
             res[i, j, :] = chosen
     return res
 
 
+@contract(value='array[HxW](>=0,<=1)')
 def colorize_success(value):
-    require_array(value)
-    assert_finite(value)
-    if value.max() > 1 or value.min() < 0:
-        raise ValueError('I expect a probability matrix.')
-    
     red = [255, 0, 0, 255]
     magenta = [186, 50, 50, 255]
     yellow = [255, 255, 0, 255]

@@ -7,10 +7,10 @@ from setuptools import setup, find_packages
 package_data = {'':['*.*']}
 
 setup(name='reprep',
-      version='0.9.2',
+      version='0.10.0',
       package_dir={'':'src'},
       packages=find_packages('src'),
-      install_requires=['docutils'],
+      install_requires=['docutils', 'PyContracts'],
       
       package_data=package_data,
       url='http://AndreaCensi.github.com/reprep/',
