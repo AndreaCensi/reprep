@@ -30,7 +30,6 @@ def scale(value, min_value=None, max_value=None,
     -  ``max_color``:  color associated to maximum value. Default: [0,0,0] = black.
     -  ``nan_color``:  color associated to nan/inf values. Default: light red.
    
-    Raises :py:class:`.ValueError` if min_value == max_value
     
     Returns:  a (W,H,3) numpy array with dtype uint8 representing a RGB image.
       
@@ -66,7 +65,7 @@ def scale(value, min_value=None, max_value=None,
     value01 = maximum(value01, 0)
     value01 = minimum(value01, 1)
 
-    result = interpolate_colors(value, min_color, max_color)
+    result = interpolate_colors(value01, min_color, max_color)
     for u in [0, 1, 2]:
         col = result[:, :, u]
         col[isnan] = nan_color[u] * 255
@@ -81,10 +80,12 @@ def scale(value, min_value=None, max_value=None,
     return result
  
 
-def interpolate_color(value, min_color, max_color):
-    return 255 * ((1 - value) * min_color + value * max_color)
+def interpolate_color(value, a, b):
+    return 255 * ((1 - value) * a + value * b)
 
-@contract(value='array', min_colors='color_spec', max_colors='color_spec')
+@contract(value='array[HxW]((float32|float64),>=0,<=1)',
+          min_colors='color_spec', max_colors='color_spec',
+          returns='array[HxWx3](uint8)')
 def interpolate_colors(value, min_colors, max_colors):
     result = zeros((value.shape[0], value.shape[1], 3), dtype='uint8')
     for u in [0, 1, 2]:

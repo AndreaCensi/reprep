@@ -1,6 +1,6 @@
 import unittest, numpy as np
 
-from .conversions import Image_from_array
+from . import Image_from_array
 
 
 class Test(unittest.TestCase):
