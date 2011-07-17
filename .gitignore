@@ -1,6 +1,5 @@
 .project
 .pydevproject
-tests
 src/reprep/__init__.pyc
 src/reprep/figure.pyc
 src/reprep/graphics/__init__.pyc
@@ -52,3 +51,4 @@ src/.noseids
 build
 dist
 *~
+*.pyc

@@ -1,10 +1,8 @@
+from .graphics import Image_from_array, colorize_success, posneg, scale
+from .interface import ReportInterface
 import sys
 
-from graphics import Image_from_array, colorize_success
 
-from .interface import  ReportInterface
-from reprep.graphics.scale import scale
-from reprep.graphics.posneg import posneg
  
 class NotExistent(Exception):
     pass
@@ -64,7 +62,7 @@ class Node(ReportInterface):
 
     def node(self, id):
         ''' Creates a simple child node. '''
-        from reprep import Node
+        from . import Node
         n = Node(id)
         self.add_child(n)
         return n 

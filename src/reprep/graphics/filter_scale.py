@@ -2,7 +2,7 @@ import numpy
 from numpy import maximum, minimum, zeros
 
 from .numpy_utils import  gt, require_shape
-from .posneg import skim_top
+from .filter_posneg import skim_top
 
 #
 #def scale(value, min_value=None, max_value=None,

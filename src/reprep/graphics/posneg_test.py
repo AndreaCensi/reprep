@@ -1,5 +1,5 @@
 import unittest
-from posneg import posneg
+from .filter_posneg import posneg
 import numpy
 
 

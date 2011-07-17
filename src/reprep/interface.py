@@ -13,7 +13,7 @@ class ReportInterface:
         if not isinstance(id, str):
             raise ValueError('The ID must be a string, not a %s' % \
                              id.__class__.__name__) 
-        from reprep import DataNode
+        from . import DataNode
         n = DataNode(id=id, data=data, mime=mime)
         self.add_child(n) 
         return n
@@ -47,7 +47,7 @@ class ReportInterface:
         Note that if you are mainly using pylab plots, there is the function
         :py:func:`.data_pylab` which offers a shortcut with less ceremony.
         '''
-        from helpers import Attacher
+        from .helpers import Attacher
         import mimetypes
         
         if not mimetypes.guess_extension(mime):
@@ -73,7 +73,7 @@ class ReportInterface:
         
          '''
         import mimetypes
-        from reprep.helpers import PylabAttacher
+        from .helpers import PylabAttacher
 
         
         if not mimetypes.guess_extension(mime):
@@ -86,13 +86,13 @@ class ReportInterface:
             (internally, it will be saved as PNG)
             ``rgb`` must be a height x width x 3 uint8 numpy array.        
          '''
-        from reprep.helpers import data_rgb_imp
+        from .helpers import data_rgb_imp
         return data_rgb_imp(self, id, rgb)
 
     def figure(self, id=None, sub=[], **kwargs):
         ''' Attach a figure to this node. '''
         
-        from reprep import Figure
+        from . import Figure
         f = Figure(id, **kwargs)
         self.add_child(f)
         
@@ -116,12 +116,12 @@ class ReportInterface:
               must be either None, or a list of strings.
         
         '''
-        from reprep import Table
+        from . import Table
         t = Table(id=id, data=data, cols=cols, rows=rows, caption=caption)
         self.add_child(t) 
         return t
         
-    def text(self, id, text, mime="text/plain"):
+    def text(self, id, text, mime=None):
         ''' Adds a text node with the given id.
             
             This is a very thin wrapper around data() that 
@@ -130,12 +130,14 @@ class ReportInterface:
             For now, only restructured text is converted to HTML,
             the rest is displayed as plain text.
         '''
+        if mime is None:
+            mime = self.MIME_PLAIN
         return self.data(id, data=text, mime=mime)    
     
         
     def to_html(self, filename, resources_dir=None, **kwargs):
         ''' Creates a HTML representation of this report. '''
-        from reprep.out.html import node_to_html_document
+        from .out.html import node_to_html_document
         node_to_html_document(self, filename, resources_dir, **kwargs)
 
     def add_to(self, figure, caption=None):
@@ -144,5 +146,5 @@ class ReportInterface:
         figure.sub(self, caption)
         
     MIME_RST = 'text/x-rst'
-    
+    MIME_PLAIN = 'text/plain'
         

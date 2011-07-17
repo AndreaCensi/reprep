@@ -2,6 +2,7 @@ import os, sys, mimetypes, shutil, cPickle
 from string import Template
 
 from pkg_resources import resource_filename #@UnresolvedImport  Eclipse fails here
+from .. import Node
 
 header = """
 <html>
@@ -277,10 +278,10 @@ def rst2htmlfragment(text):
 def text2html(text, mime):
     ''' Converts rst to HTML element. '''
     
-    if mime == 'text/plain':
+    if mime == Node.MIME_PLAIN:
         # FIXME: add escaping here
         return '<pre> %s </pre>' % text
-    elif mime == 'text/x-rst':
+    elif mime == Node.MIME_RST:
         return rst2htmlfragment(text)
     else:
         assert('Unknown mime %r for text.' % mime)
@@ -290,7 +291,7 @@ def datanode_to_html(node, context):
     ''' Writes the data on the file '''
     relative, filename = get_node_filename(node, context) #@UnusedVariable
     
-    text_mimes = ['text/plain', 'text/x-rst']
+    text_mimes = [ Node.MIME_PLAIN, Node.MIME_RST]
     
     if node.mime in text_mimes:
         content = text2html(node.raw_data, node.mime)
