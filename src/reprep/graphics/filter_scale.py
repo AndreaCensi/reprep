@@ -52,9 +52,20 @@ def scale(value, min_value=None, max_value=None,
         value[isnan] = np.inf
         min_value = np.min(value)
 
+    if properties is not None:
+        properties['min_value'] = min_value
+        properties['max_value'] = max_value
+        properties['min_color'] = min_color
+        properties['max_color'] = max_color
+        properties['nan_color'] = nan_color
+        bar_shape = (512, 16)
+        bar = np.vstack([np.linspace(0, 1, bar_shape[0])] * bar_shape[1]).T
+        properties['color_bar'] = interpolate_colors(bar, min_color, max_color)
+    
+    
     if max_value == min_value or np.isnan(min_value) or np.isnan(max_value):
-#        raise ValueError('I end up with max_value = %s = %s = min_value.' % \
-#                         (max_value, min_value))
+        #print('I end up with max_value = %s; min_value= %s' % \
+        #                (max_value, min_value))
         result = zeros((value.shape[0], value.shape[1], 3), dtype='uint8')
         result[:, :, :] = 255 # TODO: write something?
         return result
@@ -64,19 +75,13 @@ def scale(value, min_value=None, max_value=None,
     # Cut at the thresholds
     value01 = maximum(value01, 0)
     value01 = minimum(value01, 1)
-
+    value01[isnan] = 0.5
     result = interpolate_colors(value01, min_color, max_color)
     for u in [0, 1, 2]:
         col = result[:, :, u]
         col[isnan] = nan_color[u] * 255
         result[:, :, u] = col
     
-    if properties is not None:
-        properties['min_value'] = min_value
-        properties['max_value'] = max_value
-        bar_shape = (512, 16)
-        bar = np.vstack([np.linspace(0, 1, bar_shape[0])] * bar_shape[1]).T
-        properties['color_bar'] = interpolate_colors(bar, min_color, max_color)
     return result
  
 
