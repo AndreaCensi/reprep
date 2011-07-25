@@ -31,13 +31,12 @@ def posneg(value, max_value=None, skim=0, nan_color=[0.5, 0.5, 0.5]):
             
         max_value = np.max(abs_value)
 
-        if max_value == 0:
-        #    raise ValueError('You asked to normalize a matrix which is all 0')
-            result = zeros((value.shape[0], value.shape[1], 3), dtype='uint8')
-            return result
+    if max_value == 0:
+        result = zeros((value.shape[0], value.shape[1], 3), dtype='uint8')
+        return result
 
     assert np.isfinite(max_value)
-    
+
     positive = minimum(maximum(value, 0), max_value) / max_value
     negative = maximum(minimum(value, 0), -max_value) / -max_value
     positive_part = (positive * 255).astype('uint8')

@@ -120,7 +120,7 @@ def node_to_html_document(node, filename,
  
 
 def children_to_html(node, context):
-    from reprep import Figure, Table, Node #, DataNode
+    from reprep import Figure, Table
     # First figure and tables
     priority = (Table, Figure, Node)
 
@@ -139,7 +139,7 @@ def children_to_html(node, context):
 
     
 def node_to_html(node, context):
-    from reprep import Figure, Table, Node, DataNode
+    from reprep import Figure, Table, DataNode
 
     functions = {
         DataNode: datanode_to_html,
