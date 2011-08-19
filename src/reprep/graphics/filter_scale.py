@@ -9,11 +9,13 @@ from . import contract, np, skim_top
           min_color='color_spec',
           nan_color='color_spec',
           max_color='color_spec',
+          flat_color='color_spec',
           properties='None|map')
 def scale(value, min_value=None, max_value=None,
                  min_color=[1, 1, 1],
                  max_color=[0, 0, 0],
                  nan_color=[1, 0.6, 0.6],
+                 flat_color=[0.5, 0.5, 0.5],
                  skim=0,
                  properties={}):
     """ Provides a RGB representation of the values by interpolating the range 
@@ -30,6 +32,7 @@ def scale(value, min_value=None, max_value=None,
     -  ``max_color``:  color associated to maximum value. Default: [0,0,0] = black.
     -  ``nan_color``:  color associated to nan/inf values. Default: light red.
    
+    If all valid elements have the same value, their color will be ``flat_color``.
     
     Returns:  a (W,H,3) numpy array with dtype uint8 representing a RGB image.
       
@@ -67,23 +70,29 @@ def scale(value, min_value=None, max_value=None,
         #print('I end up with max_value = %s; min_value= %s' % \
         #                (max_value, min_value))
         result = zeros((value.shape[0], value.shape[1], 3), dtype='uint8')
-        result[:, :, :] = 255 # TODO: write something?
+        result[:, :, 0] = flat_color[0] # TODO: write something?
+        result[:, :, 1] = flat_color[1] # TODO: write something?
+        result[:, :, 2] = flat_color[2] # TODO: write something?
+        mark_nan(result, isnan, nan_color)
         return result
-    
+
     value01 = (value - min_value) / (max_value - min_value)
     
     # Cut at the thresholds
     value01 = maximum(value01, 0)
     value01 = minimum(value01, 1)
-    value01[isnan] = 0.5
+    value01[isnan] = 0.5 # any value
     result = interpolate_colors(value01, min_color, max_color)
+    mark_nan(result, isnan, nan_color)
+    return result
+ 
+
+def mark_nan(result, isnan, nan_color):
     for u in [0, 1, 2]:
         col = result[:, :, u]
         col[isnan] = nan_color[u] * 255
         result[:, :, u] = col
-    
-    return result
- 
+
 
 def interpolate_color(value, a, b):
     return 255 * ((1 - value) * a + value * b)

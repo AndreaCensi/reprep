@@ -31,10 +31,10 @@ def posneg(value, max_value=None, skim=0, nan_color=[0.5, 0.5, 0.5]):
             
         max_value = np.max(abs_value)
 
-    if max_value == 0:
-        result = zeros((value.shape[0], value.shape[1], 3), dtype='uint8')
-        return result
-
+    if max_value == 0: 
+        # In this case, it means that all is 0
+        max_value = 1 # don't divide by 0 later
+        
     assert np.isfinite(max_value)
 
     positive = minimum(maximum(value, 0), max_value) / max_value
