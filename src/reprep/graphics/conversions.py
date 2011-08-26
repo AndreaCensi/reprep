@@ -25,7 +25,7 @@ def Image_from_array(a):
         if depth == 3:
             rgba[:, :, 3] = 255
     else:
-        raise ValueError('Unexpected shape "%s".' % str(a.shape))
+        assert False
     
     assert rgba.shape == (height, width, 4)
     
