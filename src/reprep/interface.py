@@ -1,4 +1,7 @@
 
+MIME_PNG = 'image/png'
+MIME_PDF = 'application/pdf'
+
 class ReportInterface: 
  
     def data(self, id, data, mime=None):
@@ -55,7 +58,7 @@ class ReportInterface:
         
         return Attacher(self, id, mime)
  
-    def data_pylab(self, id, mime='image/png', **figure_args): 
+    def data_pylab(self, nid, mime=MIME_PNG, **figure_args): 
         ''' Easy support for creating a node consisting of a pylab plot.
         Note: this method is supposed to be used in conjunction with 
         the "with" construct. 
@@ -79,7 +82,7 @@ class ReportInterface:
         if not mimetypes.guess_extension(mime):
             raise ValueError('Cannot guess extension for MIME "%s".' % mime)
         
-        return PylabAttacher(self, id, mime, **figure_args)
+        return PylabAttacher(self, nid, mime, **figure_args)
 
     def data_rgb(self, id, rgb): 
         ''' Create a node containing an image from a RGB[a] array.
