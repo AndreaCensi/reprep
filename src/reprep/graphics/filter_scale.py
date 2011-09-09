@@ -1,7 +1,6 @@
 from numpy import maximum, minimum, zeros
 from . import contract, np, skim_top
 
-
 @contract(value='array[HxW],H>0,W>0',
           max_value='None|number',
           min_value='None|number',
@@ -25,14 +24,15 @@ def scale(value, min_value=None, max_value=None,
     
     Configuration:
     
-    -  ``min_value``:  If specified, this is taken to be the threshold. Everything
-                         below min_value is considered to be equal to min_value.
-    -  ``max_value``:  Optional upper threshold.
-    -  ``min_color``:  color associated to minimum value. Default: [1,1,1] = white.
-    -  ``max_color``:  color associated to maximum value. Default: [0,0,0] = black.
-    -  ``nan_color``:  color associated to nan/inf values. Default: light red.
+    - ``min_value``: If specified, this is taken to be the threshold. Everything
+                     below min_value is considered to be equal to min_value.
+    - ``max_value``: Optional upper threshold.
+    - ``min_color``: color associated to minimum value. Default: [1,1,1] .
+    - ``max_color``: color associated to maximum value. Default: [0,0,0].
+    - ``nan_color``: color associated to nan/inf values. Default: light red.
    
-    If all valid elements have the same value, their color will be ``flat_color``.
+    If all valid elements have the same value, their color will be 
+    ``flat_color``.
     
     Returns:  a (W,H,3) numpy array with dtype uint8 representing a RGB image.
       
@@ -47,13 +47,9 @@ def scale(value, min_value=None, max_value=None,
     if skim != 0:
         value = skim_top(value, skim)
         
-    if max_value is None:
-        value[isnan] = -np.inf
-        max_value = np.max(value)
-        
-    if min_value is None:
-        value[isnan] = np.inf
-        min_value = np.min(value)
+    if max_value is None: max_value = np.nanmax(value)
+    if min_value is None: min_value = np.nanmin(value)
+    # but what about +- inf?
 
     if properties is not None:
         properties['min_value'] = min_value
@@ -64,17 +60,19 @@ def scale(value, min_value=None, max_value=None,
         bar_shape = (512, 16)
         bar = np.vstack([np.linspace(0, 1, bar_shape[0])] * bar_shape[1]).T
         properties['color_bar'] = interpolate_colors(bar, min_color, max_color)
-    
-    
-    if max_value == min_value or np.isnan(min_value) or np.isnan(max_value):
-        #print('I end up with max_value = %s; min_value= %s' % \
-        #                (max_value, min_value))
+  
+    if max_value == min_value or \
+      (not np.isfinite(min_value)) or \
+      (not np.isfinite(max_value)):
         result = zeros((value.shape[0], value.shape[1], 3), dtype='uint8')
         result[:, :, 0] = flat_color[0] # TODO: write something?
-        result[:, :, 1] = flat_color[1] # TODO: write something?
-        result[:, :, 2] = flat_color[2] # TODO: write something?
+        result[:, :, 1] = flat_color[1] 
+        result[:, :, 2] = flat_color[2] 
         mark_nan(result, isnan, nan_color)
         return result
+  
+    assert np.isfinite(min_value)
+    assert np.isfinite(max_value)  
 
     value01 = (value - min_value) / (max_value - min_value)
     
@@ -85,14 +83,12 @@ def scale(value, min_value=None, max_value=None,
     result = interpolate_colors(value01, min_color, max_color)
     mark_nan(result, isnan, nan_color)
     return result
- 
 
 def mark_nan(result, isnan, nan_color):
     for u in [0, 1, 2]:
         col = result[:, :, u]
         col[isnan] = nan_color[u] * 255
         result[:, :, u] = col
-
 
 def interpolate_color(value, a, b):
     return 255 * ((1 - value) * a + value * b)
