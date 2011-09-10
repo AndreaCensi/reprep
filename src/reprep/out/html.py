@@ -280,7 +280,7 @@ def text2html(text, mime):
     
     if mime == Node.MIME_PLAIN:
         # FIXME: add escaping here
-        return '<pre>%s</pre>' % text
+        return '<pre>%s</pre>' % str(text)
     elif mime == Node.MIME_RST:
         return rst2htmlfragment(text)
     else:
