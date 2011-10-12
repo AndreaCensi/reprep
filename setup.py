@@ -1,16 +1,17 @@
 from setuptools import setup, find_packages
 
-#'*.js', '*.gif', '*.jpg', '*.cur', '*.css'
-#package_data = {'reprep': ['static/PopBox/*']}
-
-#package_data = {'': ['*.js']}
 package_data = {'':['*.*']}
 
+version='1.0'
+
 setup(name='reprep',
-      version='0.10.0',
+      version=version,
       package_dir={'':'src'},
       packages=find_packages('src'),
-      install_requires=['docutils', 'PyContracts'],
+      install_requires=[
+            'docutils', 
+            'PyContracts>=1.2,<2'
+      ],
       
       package_data=package_data,
       url='http://AndreaCensi.github.com/reprep/',
@@ -18,5 +19,7 @@ setup(name='reprep',
       author_email='andrea@cds.caltech.edu',
       license="LGPL",
       keywords="report reproducible research tables html latex",
+      download_url='http://github.com/AndreaCensi/reprep/tarball/%s' % version,
+      
 )
 
