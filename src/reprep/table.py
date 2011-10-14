@@ -1,13 +1,12 @@
 import numpy
-
-#from contracts import check_multiple
-
-from .node import Node
+from . import contract, Node
+from contracts import describe_value
 
 # TODO: use contracts!!!
 
 class Table(Node):
-    def __init__(self, id, data, cols=None, rows=None, caption=None):
+    @contract(nid='valid_id', caption='None|str')
+    def __init__(self, nid, data, cols=None, rows=None, caption=None):
         ''' 
             :type data:    ( array[R](fields[C]) | array[RxC] | list[R](list[C]) ), R>0, C>0
             :type cols:    None|list[C](str)
@@ -16,7 +15,7 @@ class Table(Node):
         '''
         # :type data:    ( array[R](fields[C]) | array[RxC] | list[R](list[C]) ), R>0, C>0
             
-        Node.__init__(self, id)
+        Node.__init__(self, nid)
         
         if isinstance(data, list):
             # check minimum length
@@ -47,7 +46,7 @@ class Table(Node):
         elif isinstance(data, numpy.ndarray) :
             if not data.ndim in [1, 2]:
                 raise ValueError('Expected array of 1D or 2D shape, got %s.' % 
-                                describe_array(data))
+                                describe_value(data))
                    
             if data.ndim == 1:             
                 # use fields name if desc not provided
@@ -69,7 +68,7 @@ class Table(Node):
                 if data.dtype.fields is not None: 
                     raise ValueError('Cannot convert ndarray to table using '
                                      'the heuristics that I know '
-                                     '(received: %s). ' % describe_array(data))
+                                     '(received: %s). ' % describe_value(data))
                 
                 nrows = data.shape[0]
                 ncols = data.shape[1]
@@ -94,9 +93,3 @@ class Table(Node):
         self.rows = rows
         self.caption = caption 
 
-def describe_array(x):
-    '''
-        :type x: array
-    '''
-    return 'array[%s](%s)' % (x.shape, x.dtype)
-    

@@ -1,10 +1,12 @@
-import numpy, unittest
-from numpy.linalg.linalg import pinv
-from matplotlib import pylab
-
-from reprep import Table, Node, Report
-
 from .utils import ReprepTest
+from contracts import ContractNotRespected
+from matplotlib import pylab
+from numpy.linalg.linalg import pinv
+from reprep import Table, Node, Report
+import numpy
+import unittest
+from reprep.constants import MIME_PLAIN
+
 
 class Test(ReprepTest):    
     
@@ -35,7 +37,46 @@ class Test(ReprepTest):
         data = numpy.zeros(shape=(5, 4), dtype=dtype)
         self.assertRaises(ValueError, Table, 'mytable', data)
 
+    def testImageRGB(self):
+        rgb = numpy.zeros((4, 4, 3), 'uint8')
+        report = Node('test')
+        report.data_rgb('rgb', rgb)
+
+    def testImageRGBCaption(self):
+        rgb = numpy.zeros((4, 4, 3), 'uint8')
+        r = Report('test')
+        r.data_rgb('rgb', rgb, caption='ciao')
+
+    def testFigures(self):
+        rgb = numpy.zeros((4, 4, 3), 'uint8')
+        r = Report('test')
+        f = r.figure()
+        f.data_rgb('rgb', rgb, caption='ciao')
+        assert len(f.get_subfigures()) == 1
+        r.data_rgb('rgb', rgb, caption='ciao2')
+        r.last().add_to(f)
+        assert len(f.get_subfigures()) == 2
+
+    def testPlot(self):
+        r = Report('test')
+        with r.data_pylab('ciao') as pylab:
+            pylab.plot([0, 1], [0, 1], '-k')
+
+    def testPlotCaption(self):
+        r = Report('test')
+        with r.data_pylab('ciao', caption='my caption') as pylab:
+            pylab.plot([0, 1], [0, 1], '-k')
+        
     
+    def testText(self):
+        r = Report('test')
+        r.text('ciao', 'come va?')
+            
+    def testText2(self):
+        r = Report('test')
+        r.text('ciao', 'come va?', MIME_PLAIN)
+        
+        
     def testImage(self):
         C = numpy.random.rand(50, 50)
         information = pinv(C)
@@ -71,12 +112,12 @@ class Test(ReprepTest):
         self.node_serialization_ok(report)
 
     def test_invalid_id(self):
-        self.assertRaises(ValueError, Report, 1)
+        self.assertRaises((ValueError, ContractNotRespected), Report, 1)
 
     def test_invalid_children(self):
-        self.assertRaises(ValueError, Report, children=1)
-        self.assertRaises(ValueError, Report, children=[1])
-        self.assertRaises(ValueError, Report, children=[None])
+        self.assertRaises((ValueError, ContractNotRespected), Report, children=1)
+        self.assertRaises((ValueError, ContractNotRespected), Report, children=[1])
+        self.assertRaises((ValueError, ContractNotRespected), Report, children=[None])
 
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']

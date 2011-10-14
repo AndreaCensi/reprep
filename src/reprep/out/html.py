@@ -3,6 +3,7 @@ from string import Template
 
 from pkg_resources import resource_filename #@UnresolvedImport  Eclipse fails here
 from .. import Node
+from reprep.constants import MIME_PLAIN, MIME_RST, MIME_PYTHON
 
 header = """
 <html>
@@ -44,7 +45,7 @@ footer = """
 
 
 class html_context:
-    def __init__(self, file, rel_resources_dir, resources_dir, write_pickle):
+    def __init__(self, file, rel_resources_dir, resources_dir, write_pickle): #@ReservedAssignment
         self.file = file
         self.rel_resources_dir = rel_resources_dir
         self.resources_dir = resources_dir
@@ -57,20 +58,20 @@ def htmlfy(s):
 
 def get_complete_id(node):
     if not node.parent:
-        return node.id if node.id else 'anonymous'
+        return node.nid if node.nid else 'anonymous'
     else:
-        return get_complete_id(node.parent) + ":" + node.id
+        return get_complete_id(node.parent) + ":" + node.nid
 
 def get_node_filename(node, context):
     ''' Returns a tuple (relative_from_file, absolute) '''
     suffix = mimetypes.guess_extension(node.mime)
     if suffix is None:
         suffix = '.pickle'
-    id = get_complete_id(node)
-    id = id.replace('/', '_')
-    id = id.replace('.', '_')
-    relative = os.path.join(context.rel_resources_dir, id + suffix)
-    absolute = os.path.join(context.resources_dir, id + suffix)
+    nid = get_complete_id(node)
+    nid = nid.replace('/', '_')
+    nid = nid.replace('.', '_')
+    relative = os.path.join(context.rel_resources_dir, nid + suffix)
+    absolute = os.path.join(context.resources_dir, nid + suffix)
     return relative, absolute
     
 
@@ -103,20 +104,20 @@ def node_to_html_document(node, filename,
             # XXX: does not work if updated
             shutil.copytree(static, dst)
         
-    with open(filename, 'w') as file: 
+    with open(filename, 'w') as f: 
         mapping = {'resources': rel_resources_dir,
-                   'title': str(node.id),
+                   'title': str(node.nid),
                    'extra_css': extra_css if extra_css else ""}
         
-        file.write(Template(header).substitute(mapping)) 
+        f.write(Template(header).substitute(mapping)) 
         
-        context = html_context(file,
+        context = html_context(f,
                     resources_dir=resources_dir,
                     rel_resources_dir=rel_resources_dir,
                     write_pickle=write_pickle)
         node_to_html(node, context)
         
-        file.write(Template(footer).substitute(mapping))
+        f.write(Template(footer).substitute(mapping))
  
 
 def children_to_html(node, context):
@@ -158,7 +159,7 @@ def table_to_html(table, context):
 
     f.write('<table class="report-table">\n')
     
-    caption = table.caption if table.caption else table.id
+    caption = table.caption if table.caption else table.nid
     
     f.write('<caption>%s</caption>\n' % caption)
     
@@ -200,11 +201,11 @@ def table_to_html(table, context):
 
 def figure_to_html(node, context):
     complete_id = get_complete_id(node)
-    file = context.file
+    file = context.file  #@ReservedAssignment # XXX
     file.write('''<div style="clear:left" class='report-figure %s' id='%s'>
     ''' % (None, complete_id))  
 
-    #file.write('''<span class='node-id'>%s</span>''' % node.id)  
+    #file.write('''<span class='node-id'>%s</span>''' % node.nid)  
     file.write('<h>%s</h>' % complete_id) 
   
     if node.cols is None:
@@ -278,10 +279,10 @@ def rst2htmlfragment(text):
 def text2html(text, mime):
     ''' Converts rst to HTML element. '''
     
-    if mime == Node.MIME_PLAIN:
+    if mime == MIME_PLAIN:
         # FIXME: add escaping here
         return '<pre>%s</pre>' % str(text)
-    elif mime == Node.MIME_RST:
+    elif mime == MIME_RST:
         return rst2htmlfragment(text)
     else:
         assert('Unknown mime %r for text.' % mime)
@@ -291,7 +292,7 @@ def datanode_to_html(node, context):
     ''' Writes the data on the file '''
     relative, filename = get_node_filename(node, context) #@UnusedVariable
     
-    text_mimes = [ Node.MIME_PLAIN, Node.MIME_RST]
+    text_mimes = [ MIME_PLAIN, MIME_RST]
     
     if node.mime in text_mimes:
         content = text2html(node.raw_data, node.mime)
@@ -303,10 +304,10 @@ def datanode_to_html(node, context):
      {content}
      
 </div>  
-""".format(id=node.id, content=content))
+""".format(id=node.nid, content=content))
     
     else:
-        if node.mime == 'python':
+        if node.mime == MIME_PYTHON:
             #print "Ignoring %s" % filename
             if context.write_pickle:
                 with open(filename, 'wb') as f:
@@ -315,7 +316,7 @@ def datanode_to_html(node, context):
         else:
             if not isinstance(node.raw_data, str):
                 sys.stderr.write("Ignoring %s because raw_data is %s\n" % \
-                    (filename, node.raw_data.__clasS__))
+                    (filename, node.raw_data.__class__))
             else:
                 # print "Writing on %s" % filename
                 with open(filename, 'w') as f:
@@ -323,7 +324,7 @@ def datanode_to_html(node, context):
                     
         inline = ""
         
-        if node.mime == 'python':
+        if node.mime == MIME_PYTHON:
             s = str(node.raw_data)
             if len(s) < 128:
                 inline = "<code>%s</code>" % s # TODO: escape
@@ -331,7 +332,7 @@ def datanode_to_html(node, context):
                 inline = ""
                 
         context.file.write('<p class="datanode">Resource: <a href="%s">%s</a> %s</p>\n' % \
-                           (relative, node.id, inline))
+                           (relative, node.nid, inline))
 
     if node.children:
         context.file.write('<div class="datanode-children">\n')
@@ -342,22 +343,22 @@ def datanode_to_html(node, context):
 def simple_node_to_html(node, context):
     complete_id = get_complete_id(node)
     
-    file = context.file
+    f = context.file
     
-    file.write('''
+    f.write('''
     <div class='report-node' id="%s">
     ''' % complete_id)
     
     #file.write(''' 
     #<span class='node-id'>%s </span>
-    #''' % (node.id))
+    #''' % (node.nid))
     
-    file.write('<h>%s</h>' % complete_id) 
+    f.write('<h>%s</h>' % node.nid) 
     
-    file.write('<section> \n')
+    f.write('<section> \n')
     
     children_to_html(node, context)
     
-    file.write('</section> \n')
-    file.write('</div> \n')
+    f.write('</section> \n')
+    f.write('</div> \n')
 

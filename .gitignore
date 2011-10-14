@@ -52,3 +52,7 @@ build
 dist
 *~
 *.pyc
+.noseids
+.coverage
+*cover
+coverage_information

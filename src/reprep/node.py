@@ -1,3 +1,4 @@
+from . import MIME_PNG, MIME_PYTHON, contract
 from .graphics import Image_from_array, colorize_success, posneg, scale
 from .interface import ReportInterface
 import sys
@@ -9,25 +10,19 @@ class NotExistent(Exception):
 
 class InvalidURL(Exception):
     pass
-   
+ 
+
          
 class Node(ReportInterface):
-    def __init__(self, id=None, children=None):
-        if id is not None and not isinstance(id, str):
-            raise ValueError('Received a %s object as ID, should be None or str.' % \
-                            id.__class__.__name__)
+    
+    @contract(nid='valid_id|None')
+    def __init__(self, nid=None, children=None):
         
         if children is not None and not isinstance(children, list):
-            raise ValueError('Received a %s object as children list, should'\
+            raise ValueError('Received a %s object as children list, should'
                              ' be None or list.' % children.__class__.__name__)
         
-        if isinstance(id, str):
-            if '/' in id:
-                raise ValueError('Invalid node id %r (contains "/").' % id)
-            if len(id) == 0:
-                raise ValueError('Cannot give an empty string as name.')
-        
-        self.id = id 
+        self.nid = nid 
         
         if children is None:
             children = []
@@ -44,26 +39,26 @@ class Node(ReportInterface):
         ''' Adds a child to this node. Usually you would not use this
             method directly. '''
         assert n is not None
-        if n.id is not None:
-            if n.id in self.childid2node:
-                raise Exception('Already have child with same id %s.' % n.id.__repr__())
+        if n.nid is not None:
+            if n.nid in self.childid2node:
+                raise Exception('Already have child with same id %s.' % n.nid.__repr__())
         else:
             # give it a name
-            n.id = "%s%s" % (n.__class__.__name__, len(self.children))
-            assert not n.id in self.childid2node
+            n.nid = "%s%s" % (n.__class__.__name__, len(self.children))
+            assert not n.nid in self.childid2node
             
         n.parent = self
-        self.childid2node[n.id] = n
+        self.childid2node[n.nid] = n
         self.children.append(n)
 
     def last(self):
         ''' Returns the last added child Node. '''
         return self.children[-1]
 
-    def node(self, id):
+    def node(self, nid):
         ''' Creates a simple child node. '''
         from . import Node
-        n = Node(id)
+        n = Node(nid)
         self.add_child(n)
         return n 
 
@@ -77,26 +72,25 @@ class Node(ReportInterface):
             child = self.resolve_url_dumb(components[0])
             return child.resolve_url_dumb(Node.url_join(components[1:]))
         else:
-            id = components[0]
-            if id == '':
+            nid = components[0]
+            if nid == '':
                 raise InvalidURL()
-            if id == '..':
+            if nid == '..':
                 if self.parent:
                     return self.parent
                 else:
                     raise NotExistent('No parent.')
                 
-            l = dict([(child.id, child) for child in self.children])
-            if not id in l:
-                if self.id == id:
+            l = dict([(child.nid, child) for child in self.children])
+            if not nid in l:
+                if self.nid == nid:
                     return self
         
-                raise NotExistent('Could not find child "%s".' % id)
-            return l[id]
+                raise NotExistent('Could not find child %r.' % nid)
+            return l[nid]
     
+    @contract(url='str')
     def resolve_url(self, url, already_visited=None):
-        if not isinstance(url, str):
-            raise ValueError('I expect a string, not %s.' % url)
         if already_visited is None:
             already_visited = [self]
         else:
@@ -154,7 +148,7 @@ class Node(ReportInterface):
         
         if self in all_his_parents:
             his_remaining = all_his_parents[all_his_parents.index(self) + 1:]
-            components = [x.id for x in his_remaining] + [other.id]
+            components = [x.nid for x in his_remaining] + [other.nid]
             url = Node.url_join(components)
             return url
         
@@ -164,7 +158,7 @@ class Node(ReportInterface):
         closest = common[-1]
         levels = len(all_my_parents) - all_my_parents.index(closest) 
         his_remaining = all_his_parents[all_his_parents.index(closest) + 1:]
-        components = ['..'] * levels + [x.id for x in his_remaining] + [other.id]
+        components = ['..'] * levels + [x.nid for x in his_remaining] + [other.nid]
         url = Node.url_join(components)
         
         try:
@@ -182,28 +176,30 @@ class Node(ReportInterface):
             return []
         
     def print_tree(self, s=sys.stdout, prefix=""):
-        s.write('%s- %s (%s)\n' % (prefix, self.id, self.__class__))
+        s.write('%s- %s (%s)\n' % (prefix, self.nid, self.__class__))
         for child in self.children:
             child.print_tree(s, prefix + '  ')
         
     def get_complete_id(self, separator=":"):
         if not self.parent:
-            return self.id
+            return self.nid
         else:
-            return self.parent.get_complete_id() + separator + self.id
+            return self.parent.get_complete_id() + separator + self.nid
 
 def just_check_rgb(value):
     ''' return value, checking it's a rgb image '''
+    # TODO
     return value
     
         
 class DataNode(Node):
-    def __init__(self, id, data, mime=None):
-        Node.__init__(self, id)
+    def __init__(self, nid, data, mime=None, caption=None):
+        Node.__init__(self, nid)
         self.raw_data = data
         if mime is None:
-            mime = 'python'
+            mime = MIME_PYTHON
         self.mime = mime
+        self.caption = caption
 
     def display(self, display, **kwargs):
         if display is None:
@@ -213,17 +209,17 @@ class DataNode(Node):
                  'scale': scale,
                  'rgb': just_check_rgb}
         if not display in known:
-            raise ValueError('No known converter "%s". ' % display)
-        id = display # TODO: check; add args in the name
+            raise ValueError('No known converter %r. ' % display)
+        nid = display # TODO: check; add args in the name
 
         image = known[display](self.raw_data, **kwargs) 
         #print image.dtype, image.shape
         pil_image = Image_from_array(image)  
 
-        with self.data_file(id, 'image/png') as f:
+        with self.data_file(nid, MIME_PNG) as f:
             pil_image.save(f)
             
-        return self.resolve_url_dumb(id)
+        return self.resolve_url_dumb(nid)
         
     def get_suitable_image_representation(self):
         ''' Returns the node if it is an image; otherwise it looks recursively

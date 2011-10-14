@@ -1,11 +1,11 @@
-import unittest
-import tempfile
+from .platex import Latex
+from contextlib import contextmanager
 import os
 import shutil
 import subprocess
-from contextlib import contextmanager
+import tempfile
+import unittest
 
-from .platex import Latex
 
 
 class Test(unittest.TestCase): 

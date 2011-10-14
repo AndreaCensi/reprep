@@ -1,15 +1,19 @@
 import mimetypes, tempfile, subprocess
+from . import MIME_PNG, contract, Node
 
  
 class Attacher:
-    def __init__(self, node, id, mime):
+    
+    @contract(node=Node, nid='valid_id', mime='None|str', caption='None|str')
+    def __init__(self, node, nid, mime, caption):
         self.node = node
-        self.id = id
+        self.nid = nid
         self.mime = mime
+        self.caption = caption
         if self.mime is not None:
             suffix = mimetypes.guess_extension(self.mime)
             if not suffix:
-                raise Exception('Cannot guess extension for MIME "%s".' % mime)
+                raise Exception('Cannot guess extension for MIME %r.' % mime)
         else:
             suffix = '.bin'
         
@@ -18,17 +22,22 @@ class Attacher:
     def __enter__(self):
         return self.temp_file.name
         
-    def __exit__(self, type, value, traceback): #@UnusedVariable
+    def __exit__(self, _a, _b, _c): 
         with open(self.temp_file.name) as f:
             data = f.read()
-            self.node.data(id=self.id, data=data, mime=self.mime)
+            self.node.data(nid=self.nid, data=data,
+                           mime=self.mime,
+                           caption=self.caption)
         self.temp_file.close()
 
 class PylabAttacher:
-    def __init__(self, node, id, mime, **figure_args):
+    
+    @contract(node=Node, nid='valid_id', mime='None|str', caption='None|str')
+    def __init__(self, node, nid, mime, caption, **figure_args):
         self.node = node
-        self.id = id
+        self.nid = nid
         self.mime = mime
+        self.caption = caption
         if self.mime is not None:
             suffix = mimetypes.guess_extension(self.mime)
             if not suffix:
@@ -48,7 +57,7 @@ class PylabAttacher:
     def __enter__(self):
         return self.pylab 
         
-    def __exit__(self, exc_type, exc_value, traceback): #@UnusedVariable
+    def __exit__(self, exc_type, exc_value, traceback): 
         if exc_type is not None:
             # an error occurred. Close the figure and return false.
             self.pylab.close()
@@ -63,23 +72,25 @@ class PylabAttacher:
         
         with open(self.temp_file.name) as f:
             data = f.read()
-            image_node = self.node.data(id=self.id, data=data, mime=self.mime)
+            image_node = self.node.data(nid=self.nid, data=data,
+                                        mime=self.mime, caption=self.caption)
         
         # save a png copy if one is needed
         if not self.temp_file.name.endswith('png'):
-            with image_node.data_file('png', 'image/png') as f2:
+            with image_node.data_file('png', MIME_PNG) as f2:
                 subprocess.check_call(['convert', self.temp_file.name, f2])
             
         self.temp_file.close()
         
-def data_rgb_imp(parent, id, rgb):
+@contract(parent=Node, nid='valid_id', rgb='array[HxWx3]', caption='None|str')
+def data_rgb_imp(parent, nid, rgb, caption=None):
     from reprep.graphics.conversions import Image_from_array
 
     pil_image = Image_from_array(rgb)
         
-    with parent.data_file(id, 'image/png') as f:
+    with parent.data_file(nid, MIME_PNG) as f:
         pil_image.save(f)
         
-    return parent[id]
+    return parent[nid]
 
         
