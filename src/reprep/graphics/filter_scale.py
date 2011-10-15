@@ -1,5 +1,5 @@
-from numpy import maximum, minimum, zeros
 from . import contract, np, skim_top
+from numpy import maximum, minimum, zeros
 
 @contract(value='array[HxW],H>0,W>0',
           max_value='None|number',

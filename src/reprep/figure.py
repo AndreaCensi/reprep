@@ -1,7 +1,5 @@
+from . import MIME_PNG, Node, DataNode, contract, describe_type
 from collections import namedtuple
-from contracts import describe_type
-from .node import Node, DataNode
-from . import contract
 import warnings
 
 SubFigure = namedtuple('SubFigure', 'resource image caption display display_args')
@@ -24,9 +22,12 @@ class Figure(Node):
         
         child = Node.data(self, nid=nid, data=data, mime=mime, caption=caption)
 
-        if isinstance(child, DataNode) and child.get_suitable_image_representation():
+        if (isinstance(child, DataNode) and 
+            (child.get_suitable_image_representation() or child.mime == MIME_PNG)):
             self.sub(child, child.caption)
             self.automatically_added.add(child)
+        else:
+            print('Not adding %s to figure.' % child)
             
         return child
             
@@ -36,8 +37,6 @@ class Figure(Node):
         
             resource can either be a string or a data node.
         '''
-        if caption is None:
-            caption = resource
             
         if isinstance(resource, str):
             data = self.resolve_url(resource)
@@ -47,6 +46,11 @@ class Figure(Node):
             raise ValueError('The first parameter to sub() must be either'
                              ' a string (url) or a reference to a Node, '
                              ' not a %s.' % describe_type(resource))
+        
+        if caption is None:
+            caption = data.caption
+            if caption is None:
+                caption = data.nid  
             
         if data in self.automatically_added:
             warnings.warn('Node %r was automatically added to figure (new '

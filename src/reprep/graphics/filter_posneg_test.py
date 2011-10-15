@@ -1,5 +1,5 @@
-import unittest
 from . import posneg, np
+import unittest
 
 class Test(unittest.TestCase):
 

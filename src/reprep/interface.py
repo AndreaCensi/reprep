@@ -1,12 +1,10 @@
-from contracts import contract
-from . import MIME_PNG
-from . import MIME_PLAIN
+from . import MIME_PLAIN, MIME_PNG, contract, MIME_PYTHON
 
 
 class ReportInterface: 
  
     @contract(nid='valid_id', mime='None|str', caption='None|str')
-    def data(self, nid, data, mime=None, caption=None):
+    def data(self, nid, data, mime=MIME_PYTHON, caption=None):
         ''' Attaches a data child to this node. 
         
             "data" is assumed to be a raw python structure. 

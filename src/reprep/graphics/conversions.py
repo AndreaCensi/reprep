@@ -1,4 +1,4 @@
-import Image
+from PIL import Image
 from . import contract, np
 
 @contract(a='(array[HxW](uint8)|array[HxWx3](uint8)|array[HxWx4](uint8)),H>0,W>0')

@@ -1,5 +1,5 @@
-from numpy import maximum, minimum, zeros
 from . import contract, np
+from numpy import maximum, minimum, zeros
 
 @contract(a='array', top_percent='>=0,<=90')
 def skim_top(a, top_percent):

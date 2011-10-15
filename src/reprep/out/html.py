@@ -1,9 +1,13 @@
-import os, sys, mimetypes, shutil, cPickle
+from .. import MIME_PLAIN, MIME_RST, MIME_PYTHON, Node
+from pkg_resources import (
+    resource_filename) #@UnresolvedImport  Eclipse fails here
 from string import Template
+import cPickle
+import mimetypes
+import os
+import shutil
+import sys
 
-from pkg_resources import resource_filename #@UnresolvedImport  Eclipse fails here
-from .. import Node
-from reprep.constants import MIME_PLAIN, MIME_RST, MIME_PYTHON
 
 header = """
 <html>
@@ -206,7 +210,7 @@ def figure_to_html(node, context):
     ''' % (None, complete_id))  
 
     #file.write('''<span class='node-id'>%s</span>''' % node.nid)  
-    file.write('<h>%s</h>' % complete_id) 
+    file.write('<h>%s</h>' % node.nid) 
   
     if node.cols is None:
         ncols = len(node.subfigures)

@@ -1,6 +1,5 @@
-from . import MIME_PNG, MIME_PYTHON, contract
-from .graphics import Image_from_array, colorize_success, posneg, scale
-from .interface import ReportInterface
+from . import MIME_PNG, MIME_PYTHON, contract, ReportInterface, describe_value
+from .graphics import colorize_success, scale, posneg, Image_from_array
 import sys
 
 
@@ -193,13 +192,19 @@ def just_check_rgb(value):
     
         
 class DataNode(Node):
-    def __init__(self, nid, data, mime=None, caption=None):
+    
+    @contract(nid='valid_id', mime='str', caption='None|str')
+    def __init__(self, nid, data, mime=MIME_PYTHON, caption=None):
         Node.__init__(self, nid)
         self.raw_data = data
-        if mime is None:
-            mime = MIME_PYTHON
         self.mime = mime
         self.caption = caption
+
+    def __str__(self):
+        return 'DataNode(%s,%s,%s)' % (self.nid, self.mime,
+                                       describe_value(self.raw_data))
+    def is_image(self):
+        return self.mime in [MIME_PNG]
 
     def display(self, display, **kwargs):
         if display is None:
@@ -225,7 +230,7 @@ class DataNode(Node):
         ''' Returns the node if it is an image; otherwise it looks recursively
             in the children. '''
         def is_image(node):
-            return isinstance(node, DataNode) and node.mime.startswith('image')
+            return isinstance(node, DataNode) and node.is_image()
         return self.find_recursively(is_image)
 
     def find_recursively(self, criterium):

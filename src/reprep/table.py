@@ -1,6 +1,4 @@
-import numpy
-from . import contract, Node
-from contracts import describe_value
+from . import contract, Node, describe_value, np
 
 # TODO: use contracts!!!
 
@@ -43,7 +41,7 @@ class Table(Node):
             if rows is None: 
                 rows = [None] * nrows
                     
-        elif isinstance(data, numpy.ndarray) :
+        elif isinstance(data, np.ndarray) :
             if not data.ndim in [1, 2]:
                 raise ValueError('Expected array of 1D or 2D shape, got %s.' % 
                                 describe_value(data))
