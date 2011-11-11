@@ -1,5 +1,5 @@
 
-version = '1.0'
+version = '1.1'
 __version__ = version
 
 from contracts import contract, new_contract, describe_value, describe_type

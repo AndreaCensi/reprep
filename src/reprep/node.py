@@ -1,6 +1,8 @@
 from . import MIME_PNG, MIME_PYTHON, contract, ReportInterface, describe_value
 from .graphics import colorize_success, scale, posneg, Image_from_array
+import numpy as np
 import sys
+from contracts import describe_type
 
 
  
@@ -14,12 +16,12 @@ class InvalidURL(Exception):
          
 class Node(ReportInterface):
     
-    @contract(nid='valid_id|None')
+    @contract(nid='valid_id|None', children='None|list')
     def __init__(self, nid=None, children=None):
         
         if children is not None and not isinstance(children, list):
             raise ValueError('Received a %s object as children list, should'
-                             ' be None or list.' % children.__class__.__name__)
+                             ' be None or list.' % describe_type(children))
         
         self.nid = nid 
         
@@ -30,7 +32,8 @@ class Node(ReportInterface):
         self.children = []
         for c in children:
             if not isinstance(c, Node):
-                raise ValueError('Passed instance of class %s as child.' % c.__class__.__name__)
+                msg = 'Expected Node, got %s.' % describe_type(c)
+                raise ValueError(msg)
             self.add_child(c)
         self.parent = None
         
@@ -40,7 +43,7 @@ class Node(ReportInterface):
         assert n is not None
         if n.nid is not None:
             if n.nid in self.childid2node:
-                raise Exception('Already have child with same id %s.' % n.nid.__repr__())
+                raise Exception('Already have child with same id %r.' % n.nid)
         else:
             # give it a name
             n.nid = "%s%s" % (n.__class__.__name__, len(self.children))
@@ -64,7 +67,7 @@ class Node(ReportInterface):
 
     def resolve_url_dumb(self, url):
         if not isinstance(url, str):
-            raise ValueError('I expect a string, not %s.' % url)
+            raise ValueError('I expect a string, not %s.' % describe_type(url))
         
         components = Node.url_split(url)
         if len(components) > 1:
@@ -219,6 +222,11 @@ class DataNode(Node):
 
         image = known[display](self.raw_data, **kwargs) 
         #print image.dtype, image.shape
+
+        # TODO: add options somewhere for minimum size and zoom factor        
+        if image.shape[0] < 50:
+            image = zoom(image, 10)
+
         pil_image = Image_from_array(image)  
 
         with self.data_file(nid, MIME_PNG) as f:
@@ -243,4 +251,14 @@ class DataNode(Node):
                 if res is not None:
                     return res
             return None
+
+@contract(M='array[HxWx3](uint8)', K='K,>1',
+          returns='array[(H*K)x(W*K)x3](uint8)')
+def zoom(M, K=10):
+    H, W, _ = M.shape
+    Z = np.zeros((H * K, W * K, 3), 'uint8')
+    for i in range(3):
+        Z[:, :, i] = np.kron(M[:, :, i], np.ones((10, 10)))
+    return Z
+
 
