@@ -1,19 +1,9 @@
-from . import MIME_PNG, MIME_PYTHON, contract, ReportInterface, describe_value
-from .graphics import colorize_success, scale, posneg, Image_from_array
-import numpy as np
+from . import (MIME_PNG, MIME_PYTHON, contract, ReportInterface, describe_value,
+    describe_type, colorize_success, scale, posneg, Image_from_array, rgb_zoom,
+    InvalidURL, NotExistent)
 import sys
-from contracts import describe_type
-
-
- 
-class NotExistent(Exception):
-    pass
-
-class InvalidURL(Exception):
-    pass
  
 
-         
 class Node(ReportInterface):
     
     @contract(nid='valid_id|None', children='None|list')
@@ -66,8 +56,7 @@ class Node(ReportInterface):
 
 
     def resolve_url_dumb(self, url):
-        if not isinstance(url, str):
-            raise ValueError('I expect a string, not %s.' % describe_type(url))
+        assert isinstance(url, str)
         
         components = Node.url_split(url)
         if len(components) > 1:
@@ -76,7 +65,7 @@ class Node(ReportInterface):
         else:
             nid = components[0]
             if nid == '':
-                raise InvalidURL()
+                raise InvalidURL(url)
             if nid == '..':
                 if self.parent:
                     return self.parent
@@ -225,7 +214,7 @@ class DataNode(Node):
 
         # TODO: add options somewhere for minimum size and zoom factor        
         if image.shape[0] < 50:
-            image = zoom(image, 10)
+            image = rgb_zoom(image, 10)
 
         pil_image = Image_from_array(image)  
 
@@ -252,13 +241,5 @@ class DataNode(Node):
                     return res
             return None
 
-@contract(M='array[HxWx3](uint8)', K='K,>1',
-          returns='array[(H*K)x(W*K)x3](uint8)')
-def zoom(M, K=10):
-    H, W, _ = M.shape
-    Z = np.zeros((H * K, W * K, 3), 'uint8')
-    for i in range(3):
-        Z[:, :, i] = np.kron(M[:, :, i], np.ones((10, 10)))
-    return Z
 
 

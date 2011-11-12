@@ -5,3 +5,4 @@ from .conversions import Image_from_array
 from .success import colorize_success
 from .filter_posneg import posneg, skim_top
 from .filter_scale import scale
+from .zoom import *
