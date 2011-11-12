@@ -8,8 +8,7 @@ def y_axis_balanced(pylab, extra_space=0.1, show0=True):
     D *= (1 + extra_space)
     pylab.axis((a[0], a[1], -D, +D))
     if show0:
-        pylab.plot([a[0], a[1]], [0, 0], 'k--') # TODO: zdepth
-        
+        pylab.plot([a[0], a[1]], [0, 0], 'k--') # TODO: zdepth        
 
 def y_axis_positive(pylab, extra_space=0.1, show0=True):
     a = pylab.axis()
@@ -31,3 +30,7 @@ def x_axis_balanced(pylab, extra_space=0.1):
     D = a[1] - a[0]
     extra = D * extra_space
     pylab.axis((a[0] - extra, a[1] + extra, a[2], a[3]))
+
+def x_axis_set(pylab, xmin, xmax):
+    a = pylab.axis()
+    pylab.axis((xmin, xmax, a[2], a[3]))

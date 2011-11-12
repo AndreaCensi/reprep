@@ -3,10 +3,12 @@ from . import contract, np
 
 @contract(a='(array[HxW](uint8)|array[HxWx3](uint8)|array[HxWx4](uint8)),H>0,W>0')
 def Image_from_array(a):
-    ''' Converts an image in a numpy array to an Image instance.
+    ''' 
+        Converts an image in a numpy array to an Image instance.
         Accepts:  h x w      255  interpreted as grayscale
-        Accepts:  h x w x 3  255  rgb  
-        Accepts:  h x w x 4  255  rgba '''
+        Accepts:  h x w x 3  255  RGB  
+        Accepts:  h x w x 4  255  RGBA 
+    '''
 
     if len(a.shape) == 2:
         height, width = a.shape

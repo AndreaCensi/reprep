@@ -128,7 +128,7 @@ class ReportInterface:
         ''' Adds a text node with the given id.
             
             This is a very thin wrapper around data() that 
-            provides a default mime type (restructured text). 
+            provides a default mime type (MIME_PLAIN). 
             
             For now, only restructured text is converted to HTML,
             the rest is displayed as plain text.
