@@ -47,11 +47,8 @@ class PylabAttacher:
         
         self.temp_file = tempfile.NamedTemporaryFile(suffix=suffix)
         
-        import matplotlib
-        if matplotlib.get_backend() != 'agg':
-            matplotlib.use('agg')
-        from matplotlib import pylab
-        self.pylab = pylab 
+        from . import reprep_pylab_instance
+        self.pylab = reprep_pylab_instance 
         self.figure = self.pylab.figure(**figure_args)
         
     def __enter__(self):

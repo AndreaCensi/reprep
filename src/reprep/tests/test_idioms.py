@@ -1,11 +1,10 @@
 from .utils import ReprepTest
 from contracts import ContractNotRespected
-from matplotlib import pylab
 from numpy.linalg.linalg import pinv
-from reprep import Table, Node, Report
+from reprep import (MIME_PLAIN, Table, Node, Report,
+    reprep_pylab_instance as pylab)
 import numpy
 import unittest
-from reprep.constants import MIME_PLAIN
 
 
 class Test(ReprepTest):    
