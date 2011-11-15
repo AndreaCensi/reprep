@@ -6,8 +6,17 @@ h { font-family: monospace; font-size: 120%; color: black; font-weight: bold;  d
 
 sssection { border: solid 2px gray; display: block; clear: both; padding: 1em; margin: 1em;}
 
-.report-node { display: block; border: solid 2px gray; padding: 0.2em; margin: 0.2em}
-.report-figure { display: block; border: solid 2px green; padding: 0.2em; margin: 0.2em}
+.report-node { 
+	display: block;padding: 0.2em; margin: 0.2em;
+	 border-left: solid 0.2em #eee; 
+	 border-top : solid 0.2em #eee;
+}
+
+.report-figure { display: block; padding: 0.2em; margin: 0.2em;
+	background-color: #eee;
+}
+
+
 .report-figure-caption { display: block; clear: both;  }
 .report-subfigure {  padding: 5px; padding-bottom: 0; margin: 5px; display: block;}
 .report-subfigure-caption { clear: both; display: block; font-weight: bold; text-align: center;  }
