@@ -58,21 +58,21 @@ class ReportInterface:
  
     @contract(nid='valid_id', mime='str', caption='None|str')
     def data_pylab(self, nid, mime=MIME_PNG, caption=None, **figure_args): 
-        ''' Easy support for creating a node consisting of a pylab plot.
-        Note: this method is supposed to be used in conjunction with 
-        the "with" construct. 
-        
-        For example, the following is the concise way to attach a plot: ::
-        
-            with report.data_pylab('my_plot') as pylab:
-                pylab.plot(x,y)
-                pylab.title('my x-y plot')
-
-        Basically, data_pylab allows you to save some lines of code 
-        more than with :py:func:`.data_file`.
-        
-        You can pass **figure_args to pylab.figure().
-        
+        ''' 
+            Easy support for creating a node consisting of a pylab plot.
+            Note: this method is supposed to be used in conjunction with 
+            the "with" construct. 
+            
+            For example, the following is the concise way to attach a plot: ::
+            
+                with report.data_pylab('my_plot') as pylab:
+                    pylab.plot(x,y)
+                    pylab.title('my x-y plot')
+    
+            Basically, data_pylab allows you to save some lines of code 
+            more than with :py:func:`.data_file`.
+            
+            You can pass **figure_args to pylab.figure().
          '''
         import mimetypes
         from .helpers import PylabAttacher

@@ -1,4 +1,4 @@
-from PIL import Image
+from .. import Image
 from . import contract, np
 
 @contract(a='(array[HxW](uint8)|array[HxWx3](uint8)|array[HxWx4](uint8)),H>0,W>0')
@@ -31,6 +31,6 @@ def Image_from_array(a):
     
     assert rgba.shape == (height, width, 4)
     
-    im = Image.frombuffer("RGBA", (width, height), rgba.data,
+    im = Image.frombuffer("RGBA", (width, height), rgba.data, #@UndefinedVariable
                            "raw", "RGBA", 0, 1)
     return im

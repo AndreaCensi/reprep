@@ -1,6 +1,7 @@
 from . import MIME_PNG, Node, DataNode, contract, describe_type
 from collections import namedtuple
 import warnings
+from reprep.constants import MIME_PYTHON
 
 SubFigure = namedtuple('SubFigure', 'resource image caption display display_args')
 
@@ -16,7 +17,7 @@ class Figure(Node):
         self.automatically_added = set()
         
     @contract(nid='valid_id', mime='None|str', caption='None|str')
-    def data(self, nid, data, mime=None, caption=None):
+    def data(self, nid, data, mime=MIME_PYTHON, caption=None):
         ''' Overloaded from Node. Displays the node automatically
             if it can be displayed. '''
         
@@ -26,8 +27,9 @@ class Figure(Node):
             (child.get_suitable_image_representation() or child.mime == MIME_PNG)):
             self.sub(child, child.caption)
             self.automatically_added.add(child)
-        else:
-            print('Not adding %s to figure.' % child)
+        #else:
+            # XXX: what to do now?
+            # print('Not adding %s to figure.' % child)
             
         return child
             
