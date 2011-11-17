@@ -3,6 +3,11 @@ from . import MIME_PLAIN, MIME_PNG, contract, MIME_PYTHON
 
 class ReportInterface: 
  
+    @contract(nid='valid_id')
+    def section(self, nid):
+        ''' Creates a subsection of this report. Returns a reference. '''
+        return self.node(nid) 
+
     @contract(nid='valid_id', mime='None|str', caption='None|str')
     def data(self, nid, data, mime=MIME_PYTHON, caption=None):
         ''' Attaches a data child to this node. 
@@ -57,7 +62,12 @@ class ReportInterface:
         return Attacher(self, nid=nid, mime=mime, caption=caption)
  
     @contract(nid='valid_id', mime='str', caption='None|str')
-    def data_pylab(self, nid, mime=MIME_PNG, caption=None, **figure_args): 
+    def data_pylab(self, nid, mime=MIME_PNG, caption=None, **figure_args):
+        ''' Same as plot(), but deprecated. ''' 
+        self.plot(nid, mime, caption, **figure_args)
+        
+    @contract(nid='valid_id', mime='str', caption='None|str')
+    def plot(self, nid, mime=MIME_PNG, caption=None, **figure_args): 
         ''' 
             Easy support for creating a node consisting of a pylab plot.
             Note: this method is supposed to be used in conjunction with 
@@ -65,7 +75,7 @@ class ReportInterface:
             
             For example, the following is the concise way to attach a plot: ::
             
-                with report.data_pylab('my_plot') as pylab:
+                with report.plot('my_plot') as pylab:
                     pylab.plot(x,y)
                     pylab.title('my x-y plot')
     
