@@ -64,7 +64,7 @@ class ReportInterface:
     @contract(nid='valid_id', mime='str', caption='None|str')
     def data_pylab(self, nid, mime=MIME_PNG, caption=None, **figure_args):
         ''' Same as plot(), but deprecated. ''' 
-        self.plot(nid, mime, caption, **figure_args)
+        return self.plot(nid, mime, caption, **figure_args)
         
     @contract(nid='valid_id', mime='str', caption='None|str')
     def plot(self, nid, mime=MIME_PNG, caption=None, **figure_args): 

@@ -16,7 +16,7 @@ class Latex:
                 self.filename = filename
             def __enter__(self):
                 return self.document
-            def __exit__(self, type, value, traceback): #@UnusedVariable
+            def __exit__(self, type, value, traceback): #@UnusedVariable @ReservedAssignment
                 with open(self.filename, 'w') as f:
                     self.document.dump_stream(f)
                    
@@ -35,8 +35,8 @@ class Latex:
                 self.environment = LatexEnvironment(self.context)
             def __enter__(self):
                 return self.environment
-            def __exit__(self, type, value, traceback): #@UnusedVariable
-                dir = os.path.dirname(self.filename)
+            def __exit__(self, type, value, traceback): #@UnusedVariable @ReservedAssignment
+                dir = os.path.dirname(self.filename) #@ReservedAssignment
                 if not os.path.exists(dir):
                     os.makedirs(dir)
                 with open(self.filename, 'w') as f:
@@ -119,7 +119,7 @@ class LatexEnvironment:
     def tex(self, tex):
         self.context.f.write(tex)
         
-    def input(self, filename):
+    def input(self, filename): #@ReservedAssignment
         self.context.f.write('\\input{%s}\n' % filename)
     
     def use_package(self, name, options=""):
@@ -130,19 +130,19 @@ class LatexEnvironment:
                         context=self.context.child(), double=double)
         return LatexEnvironment.GenericWrap(figure, self.context)
     
-    def graphics_data(self, data, mime, width="3cm", id=None):
+    def graphics_data(self, data, mime, width="3cm", nid=None):
         suffix = mimetypes.guess_extension(mime)
-        if id is None:
-            id = self.context.generate_file_id()
+        if nid is None:
+            nid = self.context.generate_file_id()
         # cannot have '.' in the filename, otherwise latex gets confused
-        id = id.replace('.', '_')
-        id = id.replace('/', ':')
+        nid = nid.replace('.', '_')
+        nid = nid.replace('/', ':')
             
         filename = os.path.join(self.context.graphics_path, id + suffix)
         # make sure dir exists
-        dir = os.path.dirname(filename)
-        if not os.path.exists(dir):
-            os.makedirs(dir)
+        dirname = os.path.dirname(filename)
+        if not os.path.exists(dirname):
+            os.makedirs(dirname)
 
         with open(filename, 'w') as f:
             f.write(data)
@@ -154,7 +154,7 @@ class LatexEnvironment:
             self.main_context = main_context
         def __enter__(self):
             return self.figure
-        def __exit__(self, type, value, traceback): #@UnusedVariable
+        def __exit__(self, type, value, traceback): #@UnusedVariable @ReservedAssignment
             self.figure.dump(main_context=self.main_context)
     
     
@@ -164,17 +164,17 @@ class LatexDocument(LatexEnvironment):
         self.document_class = document_class
         self.class_options = class_options 
         
-    def dump_stream(self, file):
-        file.write('\\documentclass[%s]{%s}\n' % (self.class_options,
+    def dump_stream(self, f):
+        f.write('\\documentclass[%s]{%s}\n' % (self.class_options,
                                                   self.document_class))
-        file.write('\\usepackage{graphicx}\n')
-        file.write('\\usepackage{xcolor}\n')
-        file.write('\\usepackage{subfig}\n') 
-        file.write('\\graphicspath{{%s/}}\n' % self.context.graphics_path)
-        file.write(self.context.preamble.getvalue())
-        file.write('\\begin{document}\n')
-        file.write(self.context.f.getvalue())
-        file.write('\\end{document}\n')
+        f.write('\\usepackage{graphicx}\n')
+        f.write('\\usepackage{xcolor}\n')
+        f.write('\\usepackage{subfig}\n') 
+        f.write('\\graphicspath{{%s/}}\n' % self.context.graphics_path)
+        f.write(self.context.preamble.getvalue())
+        f.write('\\begin{document}\n')
+        f.write(self.context.f.getvalue())
+        f.write('\\end{document}\n')
 
 class Figure(LatexEnvironment):
     def __init__(self, caption, label, placement, context, double):

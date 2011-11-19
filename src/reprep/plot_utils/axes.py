@@ -19,6 +19,12 @@ def y_axis_positive(pylab, extra_space=0.1, show0=True):
     if show0:
         pylab.plot([a[0], a[1]], [0, 0], 'k--') # TODO: zdepth
     
+def x_axis_extra_space_right(pylab, fraction=0.1):
+    a = pylab.axis()
+    D = a[1] - a[0]
+    extra = D * fraction
+    pylab.axis((a[0], a[1] + extra, a[2], a[3]))
+    
 def y_axis_extra_space(pylab, extra_space=0.1):
     a = pylab.axis()
     D = a[3] - a[2]

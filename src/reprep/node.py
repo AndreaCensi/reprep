@@ -54,7 +54,6 @@ class Node(ReportInterface):
         self.add_child(n)
         return n 
 
-
     def resolve_url_dumb(self, url):
         assert isinstance(url, str)
         
