@@ -1,5 +1,6 @@
 import mimetypes, tempfile, subprocess
 from . import MIME_PNG, contract, Node
+from reprep.figure import Figure
 
  
 class Attacher:
@@ -63,19 +64,26 @@ class PylabAttacher:
         if not self.figure.axes:
             raise Exception('You did not draw anything in the image.')
  
-        self.pylab.savefig(self.temp_file.name, bbox_inches='tight', pad_inches=0.2)
+        self.pylab.savefig(self.temp_file.name, bbox_inches='tight',
+                           pad_inches=0) # TODO: make parameter
         
         self.pylab.close()
         
         with open(self.temp_file.name) as f:
             data = f.read()
-            image_node = self.node.data(nid=self.nid, data=data,
+        image_node = self.node.data(nid=self.nid, data=data,
                                         mime=self.mime, caption=self.caption)
         
         # save a png copy if one is needed
         if not self.temp_file.name.endswith('png'):
             with image_node.data_file('png', MIME_PNG) as f2:
-                subprocess.check_call(['convert', self.temp_file.name, f2])
+                density = 200 # TODO: parameter
+                # TODO: check that 'convert' exists
+                subprocess.check_call(['convert', '-density', '%s' % density,
+                                        self.temp_file.name, f2])
+            if isinstance(self.node, Figure):
+                self.node.sub(image_node, image_node.caption)
+                
             
         self.temp_file.close()
         

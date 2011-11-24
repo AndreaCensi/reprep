@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 package_data = {'':['*.*']}
 
-version = '1.2'
+version = '1.3'
 
 setup(name='reprep',
       version=version,

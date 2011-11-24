@@ -1,4 +1,4 @@
-__version__ = '1.2'
+__version__ = '1.3'
 
 import matplotlib
 if matplotlib.get_backend() != 'agg':
@@ -19,9 +19,7 @@ from .graphics import *
 from .node import *
 from .figure import *
 from .table import *
-
-
-
+ 
 # Alias
 Report = Node
 
