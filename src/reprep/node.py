@@ -2,6 +2,7 @@ from . import (MIME_PNG, MIME_PYTHON, contract, ReportInterface, describe_value,
     describe_type, colorize_success, scale, posneg, Image_from_array, rgb_zoom,
     InvalidURL, NotExistent)
 import sys
+from reprep.constants import MIME_PDF
  
 
 class Node(ReportInterface):
@@ -27,9 +28,12 @@ class Node(ReportInterface):
             self.add_child(c)
         self.parent = None
         
+        
     def add_child(self, n):
-        ''' Adds a child to this node. Usually you would not use this
-            method directly. '''
+        ''' 
+            Adds a child to this node. Usually you would not use this
+            method directly. 
+        '''
         assert n is not None
         if n.nid is not None:
             if n.nid in self.childid2node:
@@ -176,6 +180,21 @@ class Node(ReportInterface):
         else:
             return self.parent.get_complete_id() + separator + self.nid
 
+    def find_recursively(self, criterium):
+        ''' 
+            Finds the closest node in the family passing the criterium, 
+            or None if none can be found. 
+        '''
+        if criterium(self):
+            return self
+        else:
+            for child in self.children:
+                res = child.find_recursively(criterium)
+                if res is not None:
+                    return res
+            return None
+
+
 def just_check_rgb(value):
     ''' return value, checking it's a rgb image '''
     # TODO
@@ -195,7 +214,7 @@ class DataNode(Node):
         return 'DataNode(%s,%s,%s)' % (self.nid, self.mime,
                                        describe_value(self.raw_data))
     def is_image(self):
-        return self.mime in [MIME_PNG]
+        return self.mime in [MIME_PNG] # XXX 
 
     def display(self, display, **kwargs):
         if display is None:
@@ -208,8 +227,7 @@ class DataNode(Node):
             raise ValueError('No known converter %r. ' % display)
         nid = display # TODO: check; add args in the name
 
-        image = known[display](self.raw_data, **kwargs) 
-        #print image.dtype, image.shape
+        image = known[display](self.raw_data, **kwargs)  
 
         # TODO: add options somewhere for minimum size and zoom factor        
         if image.shape[0] < 50:
@@ -228,17 +246,6 @@ class DataNode(Node):
         def is_image(node):
             return isinstance(node, DataNode) and node.is_image()
         return self.find_recursively(is_image)
-
-    def find_recursively(self, criterium):
-        ''' Finds the closest node in the family passing the criterium.'''
-        if criterium(self):
-            return self
-        else:
-            for child in self.children:
-                res = child.find_recursively(criterium)
-                if res is not None:
-                    return res
-            return None
 
 
 

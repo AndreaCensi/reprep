@@ -10,7 +10,8 @@ def skim_top(a, top_percent):
   
 @contract(value='array[HxW],H>0,W>0', max_value='None|number',
           skim='>=0,<=90', nan_color='color_spec')
-def posneg(value, max_value=None, skim=0, nan_color=[0.5, 0.5, 0.5]):
+def posneg(value, max_value=None, skim=0, nan_color=[0.5, 0.5, 0.5],
+           properties=None):
     """ 
     Converts a 2D value to normalized uint8 RGB red=positive, blue=negative 0-255.
     
@@ -59,6 +60,14 @@ def posneg(value, max_value=None, skim=0, nan_color=[0.5, 0.5, 0.5]):
     result[:, :, 2] = B
     
     # TODO: colorbar
-    
+    if properties is not None:
+        properties['min_value'] = -max_value
+        properties['max_value'] = max_value
+        properties['nan_color'] = nan_color
+        bar_shape = (512, 128)
+        bar = np.vstack([np.linspace(-1, 1, bar_shape[0])] * bar_shape[1]).T
+        properties['color_bar'] = posneg(bar)
+        
+        
     return result
  

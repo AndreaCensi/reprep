@@ -16,25 +16,26 @@ def scale(value, min_value=None, max_value=None,
                  nan_color=[1, 0.6, 0.6],
                  flat_color=[0.5, 0.5, 0.5],
                  skim=0,
-                 properties={}):
-    """ Provides a RGB representation of the values by interpolating the range 
-    [min(value),max(value)] into the colorspace [min_color, max_color].
-    
-    Input: a numpy array with finite values squeeze()able to (W,H).
-    
-    Configuration:
-    
-    - ``min_value``: If specified, this is taken to be the threshold. Everything
-                     below min_value is considered to be equal to min_value.
-    - ``max_value``: Optional upper threshold.
-    - ``min_color``: color associated to minimum value. Default: [1,1,1] .
-    - ``max_color``: color associated to maximum value. Default: [0,0,0].
-    - ``nan_color``: color associated to nan/inf values. Default: light red.
-   
-    If all valid elements have the same value, their color will be 
-    ``flat_color``.
-    
-    Returns:  a (W,H,3) numpy array with dtype uint8 representing a RGB image.
+                 properties=None):
+    """ 
+        Provides a RGB representation of the values by interpolating the range 
+        [min(value),max(value)] into the colorspace [min_color, max_color].
+        
+        Input: a numpy array with finite values squeeze()able to (W,H).
+        
+        Configuration:
+        
+        - ``min_value``: If specified, this is taken to be the threshold. Everything
+                         below min_value is considered to be equal to min_value.
+        - ``max_value``: Optional upper threshold.
+        - ``min_color``: color associated to minimum value. Default: [1,1,1] .
+        - ``max_color``: color associated to maximum value. Default: [0,0,0].
+        - ``nan_color``: color associated to nan/inf values. Default: light red.
+       
+        If all valid elements have the same value, their color will be 
+        ``flat_color``.
+        
+        Returns:  a (W,H,3) numpy array with dtype uint8 representing a RGB image.
       
     """
     value = value.astype('float32')
@@ -57,7 +58,7 @@ def scale(value, min_value=None, max_value=None,
         properties['min_color'] = min_color
         properties['max_color'] = max_color
         properties['nan_color'] = nan_color
-        bar_shape = (512, 16)
+        bar_shape = (512, 128)
         bar = np.vstack([np.linspace(0, 1, bar_shape[0])] * bar_shape[1]).T
         properties['color_bar'] = interpolate_colors(bar, min_color, max_color)
   

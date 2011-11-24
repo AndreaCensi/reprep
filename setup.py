@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 package_data = {'':['*.*']}
 
-version = '1.2'
+version = '1.3'
 
 setup(name='reprep',
       version=version,
@@ -10,7 +10,7 @@ setup(name='reprep',
       packages=find_packages('src'),
       install_requires=[
             'docutils',
-            'PyContracts>=1.2,<2'
+            'PyContracts>=1.2,<2',
       ],
       
       package_data=package_data,

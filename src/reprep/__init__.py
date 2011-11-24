@@ -1,4 +1,4 @@
-__version__ = '1.2'
+__version__ = '1.3'
 
 import matplotlib
 if matplotlib.get_backend() != 'agg':
@@ -13,6 +13,7 @@ import numpy as np
 # XXX only import things explicitely
 from .structures import *
 from .constants import *
+from .config import *
 from .utils import *
 from .interface import *
 from .graphics import *

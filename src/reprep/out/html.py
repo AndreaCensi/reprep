@@ -60,11 +60,11 @@ def htmlfy(s):
     return str(s)
 
 
-def get_complete_id(node):
+def get_complete_id(node, separator='-'):
     if not node.parent:
         return node.nid if node.nid else 'anonymous'
     else:
-        return get_complete_id(node.parent) + ":" + node.nid
+        return get_complete_id(node.parent) + separator + node.nid
 
 def get_node_filename(node, context):
     ''' Returns a tuple (relative_from_file, absolute) '''
@@ -74,6 +74,7 @@ def get_node_filename(node, context):
     nid = get_complete_id(node)
     nid = nid.replace('/', '_')
     nid = nid.replace('.', '_')
+    nid = nid.replace(' ', '_')
     relative = os.path.join(context.rel_resources_dir, nid + suffix)
     absolute = os.path.join(context.resources_dir, nid + suffix)
     return relative, absolute
