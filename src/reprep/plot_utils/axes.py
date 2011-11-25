@@ -40,3 +40,7 @@ def x_axis_balanced(pylab, extra_space=0.1):
 def x_axis_set(pylab, xmin, xmax):
     a = pylab.axis()
     pylab.axis((xmin, xmax, a[2], a[3]))
+
+def y_axis_set(pylab, ymin, ymax):
+    a = pylab.axis()
+    pylab.axis((a[0], a[1], ymin, ymax))

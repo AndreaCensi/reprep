@@ -1,7 +1,9 @@
-import mimetypes, tempfile, subprocess
-from . import MIME_PNG, contract, Node
-from reprep.config import RepRepDefaults
+from . import RepRepDefaults, MIME_PNG, contract, Node
+import mimetypes
+import tempfile
+import subprocess
 
+ 
  
 class Attacher:
     
@@ -66,7 +68,7 @@ class PylabAttacher:
             raise Exception('You did not draw anything in the image.')
  
         self.pylab.savefig(self.temp_file.name, bbox_inches='tight',
-                           pad_inches=0.01)
+                           pad_inches=0.01) # TODO: make parameters
         
         
         with open(self.temp_file.name) as f:
@@ -82,14 +84,16 @@ class PylabAttacher:
         
             with image_node.data_file('png', mime=MIME_PNG,
                                       caption=self.caption) as f2:
-                subprocess.check_call(['convert', self.temp_file.name, f2])
+                density = 200
+                subprocess.check_call(['convert', '-density', '%s' % density,
+                                        self.temp_file.name, f2])
 #        
             from . import Figure
             if isinstance(self.node, Figure):
                 self.node.sub(image_node)
                 
         self.pylab.close()
- 
+
         self.temp_file.close()
         
 @contract(parent=Node, nid='valid_id', rgb='array[HxWx3]', caption='None|str')

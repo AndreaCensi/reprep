@@ -2,6 +2,7 @@ from . import MIME_PLAIN, contract, MIME_PYTHON
 import warnings
 
 
+
 class ReportInterface: 
  
     @contract(nid='valid_id')
@@ -96,8 +97,10 @@ class ReportInterface:
 
     @contract(nid='valid_id|None', rgb='array[HxWx3](uint8)', caption='None|str')
     def data_rgb(self, nid, rgb, caption=None): 
-        ''' Create a node containing an image from a RGB[a] array.
+        ''' 
+            Create a node containing an image from a RGB[a] array.
             (internally, it will be saved as PNG)
+            
             ``rgb`` must be a height x width x 3 uint8 numpy array.        
          '''
         from .helpers import data_rgb_imp
@@ -115,7 +118,8 @@ class ReportInterface:
  
     @contract(nid='valid_id', data='list(list)|array[HxW]', caption='None|str')
     def table(self, nid, data, cols=None, rows=None, caption=None):
-        ''' Attach a table to this node. 
+        ''' 
+            Attach a table to this node. 
             
             *data* 
               must be either a list of lists, or a 2D numpy array.
@@ -145,8 +149,6 @@ class ReportInterface:
             For now, only restructured text is converted to HTML,
             the rest is displayed as plain text.
         '''
-#        if mime is None:
-#            mime = MIME_PLAIN
         return self.data(nid=nid, data=text, mime=mime)    
     
         
@@ -160,11 +162,11 @@ class ReportInterface:
             caption = self.nid
         figure.sub(self, caption)
         
-        
-    def set_plot_format_policy(self, policy):
-        '''
-            PDF
-            PNG
-            PDF+PNG
-        '''
+#        
+#    def set_plot_format_policy(self, policy):
+#        '''
+#            PDF
+#            PNG
+#            PDF+PNG
+#        '''
         # TODO
