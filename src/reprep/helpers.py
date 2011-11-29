@@ -84,7 +84,7 @@ class PylabAttacher:
         
             with image_node.data_file('png', mime=MIME_PNG,
                                       caption=self.caption) as f2:
-                density = 200
+                density = 300
                 subprocess.check_call(['convert', '-density', '%s' % density,
                                         self.temp_file.name, f2])
 #        
