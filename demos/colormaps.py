@@ -1,5 +1,4 @@
-from reprep import Report
-from reprep.graphics import filter_colormap
+from reprep import Report, filter_colormap
 from reprep.graphics import get_solid
 import numpy as np
 
@@ -12,7 +11,6 @@ def get_test_bar(shape=(100, 10)):
     bar[pos] = +np.Inf
     bar[neg] = -np.Inf
     bar[nan] = np.NaN
-    print bar
     return bar
     
 def diagflip(x):

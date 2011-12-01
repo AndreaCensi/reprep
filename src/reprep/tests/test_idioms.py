@@ -58,12 +58,12 @@ class Test(ReprepTest):
 
     def testPlot(self):
         r = Report('test')
-        with r.data_pylab('ciao') as pylab:
+        with r.plot('ciao') as pylab:
             pylab.plot([0, 1], [0, 1], '-k')
 
     def testPlotCaption(self):
         r = Report('test')
-        with r.data_pylab('ciao', caption='my caption') as pylab:
+        with r.plot('ciao', caption='my caption') as pylab:
             pylab.plot([0, 1], [0, 1], '-k')
         
     

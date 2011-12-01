@@ -9,7 +9,7 @@ def value2rgb(x, vmin=0, vmax=1, cmap='jet'):
     if isint:
         matplotlib.set_interactive(False) #@UndefinedVariable
     f = pyplot.figure()
-#    m = f.gca().imshow(x, vmin=vmin, vmax=vmax, cmap=pyplot.cm.get_cmap(cmap))
+    # m = f.gca().imshow(x, vmin=vmin, vmax=vmax, cmap=pyplot.cm.get_cmap(cmap))
     mcmap = pyplot.cm.get_cmap(cmap)
     if mcmap is None:
         raise Exception('Unknown cmap %r.' % cmap)
@@ -18,8 +18,7 @@ def value2rgb(x, vmin=0, vmax=1, cmap='jet'):
     rgb = m.to_rgba(x)
     rgb = (rgb * 255).astype('uint8')
     pyplot.close(f)
-    return rgb
-
+    return rgb 
     
 
 @contract(value='array[HxW],H>0,W>0',

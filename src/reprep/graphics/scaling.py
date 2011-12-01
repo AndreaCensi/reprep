@@ -24,7 +24,7 @@ def get_scaled_values(value, min_value=None, max_value=None, skim=0):
         - min_value
         - max_value
     '''
-    value = value.copy()
+    value = value.copy().astype('float32')
     
     isfin = np.isfinite(value)
     isnan = np.isnan(value)
