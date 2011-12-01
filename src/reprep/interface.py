@@ -158,15 +158,5 @@ class ReportInterface:
         node_to_html_document(self, filename, resources_dir, **kwargs)
 
     def add_to(self, figure, caption=None):
-        if caption is None:
-            caption = self.nid
         figure.sub(self, caption)
-        
-#        
-#    def set_plot_format_policy(self, policy):
-#        '''
-#            PDF
-#            PNG
-#            PDF+PNG
-#        '''
-        # TODO
+         

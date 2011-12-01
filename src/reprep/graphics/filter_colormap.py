@@ -52,7 +52,7 @@ def filter_colormap(value,
     
     if properties is not None:
         properties['min_value'] = scaled['min_value']
-        properties['max_value'] = max_value
+        properties['max_value'] = scaled['max_value']
         properties['nan_color'] = nan_color
         properties['flat_color'] = flat_color
         properties['inf_color'] = inf_color

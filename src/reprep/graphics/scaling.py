@@ -44,9 +44,9 @@ def get_scaled_values(value, min_value=None, max_value=None, skim=0):
         bounds = (vmin, vmax)
         
     if max_value is None: 
-        max_value = bounds[0] 
+        max_value = bounds[1] 
     if min_value is None: 
-        min_value = bounds[1]
+        min_value = bounds[0]
     # but what about +- inf?
   
     assert np.isfinite(min_value)
