@@ -1,9 +1,7 @@
 from . import RepRepDefaults, MIME_PNG, contract, Node
 import mimetypes
 import tempfile
-import subprocess
-
- 
+import subprocess 
  
 class Attacher:
     
@@ -96,7 +94,7 @@ class PylabAttacher:
 
         self.temp_file.close()
         
-@contract(parent=Node, nid='valid_id', rgb='array[HxWx3]', caption='None|str')
+@contract(parent=Node, nid='valid_id', rgb='array[HxWx(3|4)]', caption='None|str')
 def data_rgb_imp(parent, nid, rgb, caption=None):
     from reprep.graphics.conversions import Image_from_array
 

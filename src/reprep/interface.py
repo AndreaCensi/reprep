@@ -95,7 +95,7 @@ class ReportInterface:
         return PylabAttacher(self, nid=nid, mime=mime, caption=caption,
                              **figure_args)
 
-    @contract(nid='valid_id|None', rgb='array[HxWx3](uint8)', caption='None|str')
+    @contract(nid='valid_id|None', rgb='array[HxWx(3|4)](uint8)', caption='None|str')
     def data_rgb(self, nid, rgb, caption=None): 
         ''' 
             Create a node containing an image from a RGB[a] array.

@@ -1,11 +1,6 @@
-from . import contract, np
+from . import contract, np, skim_top
 from numpy import maximum, minimum, zeros
 
-@contract(a='array', top_percent='>=0,<=90')
-def skim_top(a, top_percent):
-    ''' Cuts off the top percentile '''
-    threshold = np.percentile(a.flat, 100 - top_percent) 
-    return np.minimum(a, threshold)
 
   
 @contract(value='array[HxW],H>0,W>0', max_value='None|number',
