@@ -154,7 +154,7 @@ class ReportInterface:
         
     def to_html(self, filename, resources_dir=None, **kwargs):
         ''' Creates a HTML representation of this report. '''
-        from .out.html import node_to_html_document
+        from .output.html import node_to_html_document
         node_to_html_document(self, filename, resources_dir, **kwargs)
 
     def add_to(self, figure, caption=None):

@@ -65,9 +65,10 @@ class PylabAttacher:
         if not self.figure.axes:
             raise Exception('You did not draw anything in the image.')
  
+#        print('Saving %s...' % self.mime)
         self.pylab.savefig(self.temp_file.name, bbox_inches='tight',
                            pad_inches=0.01) # TODO: make parameters
-        
+#        print('..done')
         
         with open(self.temp_file.name) as f:
             data = f.read()
@@ -80,12 +81,14 @@ class PylabAttacher:
             # TODO: use savefig() instead of "convert"
             # self.pylab.savefig(self.temp_file.name, bbox_inches='tight', pad_inches=0.2)
         
+#            print('Saving png...')
             with image_node.data_file('png', mime=MIME_PNG,
                                       caption=self.caption) as f2:
-                density = 300
+                density = 100
                 subprocess.check_call(['convert', '-density', '%s' % density,
                                         self.temp_file.name, f2])
 #        
+#            print('..done')
             from . import Figure
             if isinstance(self.node, Figure):
                 self.node.sub(image_node)
