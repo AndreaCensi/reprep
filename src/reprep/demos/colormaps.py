@@ -1,7 +1,6 @@
-from reprep import Report, filter_colormap
+from reprep import filter_colormap
 from reprep.graphics import get_solid
-import numpy as np
-
+from . import np, reprep_demo
 
 def get_test_bar(shape=(100, 10)):
     bar = np.vstack([np.linspace(-0.1, 1.2, shape[0])] * shape[1]).T
@@ -16,12 +15,10 @@ def get_test_bar(shape=(100, 10)):
 def diagflip(x):
     return np.transpose(x, (1, 0, 2))
     
-def demo_colormaps():
+@reprep_demo
+def demo_colormaps(r):
     x = get_test_bar()
     cmaps = ['Reds', 'jet', 'Accent']
-    
-    r = Report()
-    
     for cmap in cmaps:
         f = r.figure(cmap)
         properties = {}
@@ -31,13 +28,4 @@ def demo_colormaps():
         f.data_rgb('nan_color', get_solid((20, 20), properties['nan_color']))
         f.data_rgb('inf_color', get_solid((20, 20), properties['inf_color']))
         f.data_rgb('flat_color', get_solid((20, 20), properties['flat_color']))
-        
-#        with f.plot('colorbar') as pl:
-#            pl.imshow(properties['color_bar'].T)
-        
     
-    r.to_html('reprep_demo_colormaps.html')
-    
-    
-if __name__ == '__main__':
-    demo_colormaps()

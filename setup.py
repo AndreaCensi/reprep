@@ -1,8 +1,9 @@
 from setuptools import setup, find_packages
+from setup_info import console_scripts
 
 package_data = {'':['*.*']}
 
-version = '1.3'
+version = '2.0'
 
 setup(name='reprep',
       version=version,
@@ -20,6 +21,6 @@ setup(name='reprep',
       license="LGPL",
       keywords="report reproducible research tables html latex",
       download_url='http://github.com/AndreaCensi/reprep/tarball/%s' % version,
-      
+      entry_points={ 'console_scripts': console_scripts},
 )
 
