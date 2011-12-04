@@ -1,4 +1,4 @@
 from .. import np
 from .manager import *
-from .clear_plots import *
+from .spines import *
 from .colormaps import *
