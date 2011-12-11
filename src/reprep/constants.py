@@ -11,3 +11,6 @@ USE_PDF = 'pdf' # Plot using pdf
 USE_PDF_PLUS_PNG = 'pdf+png' # also create 
 
 VALID_ID_REGEXP = '\A\w+\Z'
+VALID_ID_REGEXP = '\A\w(\w|-)*\Z'
+VALID_ID_REGEXP = '\A\w(\w|-|\.)*\Z'
+

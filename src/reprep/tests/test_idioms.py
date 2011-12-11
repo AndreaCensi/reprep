@@ -117,6 +117,10 @@ class Test(ReprepTest):
     def test_invalid_id_2(self):
         valid = [
             'cioa',
+            'cioa',
+            'cioa_',
+            'cioa-0.4',
+            'cioa-',
         ]
         invalid = [
              'cioa/',
@@ -132,6 +136,7 @@ class Test(ReprepTest):
              "a\\a",
         ]
         for s in invalid:
+            print('TRying with %r' % s)
             self.assertRaises((ValueError, ContractNotRespected), Report, s)
                 
         for s in valid:

@@ -17,3 +17,15 @@ def set_spines_look_A(pylab, outward_offset=10):
     # turn off ticks where there is no spine
     ax.xaxis.set_ticks_position('bottom')
     ax.yaxis.set_ticks_position('left')
+    
+    for l in ax.get_xticklines() + ax.get_yticklines(): 
+        l.set_markersize(3) 
+        l.set_markeredgewidth(1) 
+
+    ax.get_frame().set_linewidth(2)
+
+#for l in ax1.yaxis.get_minorticklines()+ax1.xaxis.get_minorticklines():
+#
+#    l.set_markersize(3) 
+#
+#    l.set_markeredgewidth(1.2)  

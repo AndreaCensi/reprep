@@ -65,7 +65,8 @@ class PylabAttacher:
         if not self.figure.axes:
             raise Exception('You did not draw anything in the image.')
  
-        self.pylab.savefig(self.temp_file.name, bbox_inches='tight',
+        self.pylab.savefig(self.temp_file.name,
+                           bbox_inches='tight',
                            pad_inches=0.01) # TODO: make parameters
         
         
