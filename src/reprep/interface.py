@@ -45,8 +45,8 @@ class ReportInterface:
                     pylab.title('my x-y plot')
                     pylab.savefig(f)
             
-            Omit any file extension from 'id', ("my_plot" and not "my_plot.pdf"), 
-            we will take care of it for you.
+            Omit any file extension from 'id', ("my_plot" and not 
+            "my_plot.pdf"), we will take care of it for you.
             
             This is a more complicated example, where we attach two versions
             of the same image, in different formats. ::
@@ -58,7 +58,8 @@ class ReportInterface:
                         pylab.savefig(f)
                         pylab.close()
                         
-            Note that if you are mainly using pylab plots, there is the function
+            Note that if you are mainly using pylab plots, there is the 
+            function
             :py:func:`.data_pylab` which offers a shortcut with less ceremony.
         '''
         from .helpers import Attacher
@@ -101,7 +102,8 @@ class ReportInterface:
         return PylabAttacher(self, nid=nid, mime=mime, caption=caption,
                              **figure_args)
 
-    @contract(nid='valid_id|None', rgb='array[HxWx(3|4)](uint8)', caption='None|str')
+    @contract(nid='valid_id|None',
+              rgb='array[HxWx(3|4)](uint8)', caption='None|str')
     def data_rgb(self, nid, rgb, caption=None):
         ''' 
             Create a node containing an image from a RGB[a] array.
@@ -158,7 +160,6 @@ class ReportInterface:
             the rest is displayed as plain text.
         '''
         return self.data(nid=nid, data=text, mime=mime)
-
 
     def to_html(self, filename, resources_dir=None, **kwargs):
         ''' Creates a HTML representation of this report. '''

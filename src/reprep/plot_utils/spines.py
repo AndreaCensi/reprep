@@ -3,7 +3,8 @@
 def set_spines_look_A(pylab, outward_offset=10):
     ''' 
         Taken from 
-        http://matplotlib.sourceforge.net/examples/pylab_examples/spine_placement_demo.html
+        http://matplotlib.sourceforge.net/examples/pylab_examples/
+        spine_placement_demo.html
     '''
 
     ax = pylab.gca()

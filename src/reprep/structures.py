@@ -1,9 +1,12 @@
 
+
 class ReprepException(Exception):
     pass
 
+
 class NotExistent(ReprepException):
     pass
+
 
 class InvalidURL(ReprepException):
     pass
@@ -11,4 +14,4 @@ class InvalidURL(ReprepException):
 #
 #class InvalidID(ReprepException):
 #    pass
- 
+

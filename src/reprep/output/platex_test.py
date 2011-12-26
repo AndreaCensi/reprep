@@ -7,28 +7,27 @@ import tempfile
 import unittest
 
 
-
-class Test(unittest.TestCase): 
+class Test(unittest.TestCase):
 
     def setUp(self):
         self.test_directory = tempfile.mkdtemp(prefix='tmp-reprep-tests')
-        
+
     def tearDown(self):
         # # TODO: cleanup, remove dir
         pass
-    
+
     @contextmanager
     def get_random_file(self):
         res = tempfile.mkstemp(suffix='tex', dir=self.test_directory)
-        filename = res[1] 
+        filename = res[1]
         yield filename
-    
+
     def testEmpty(self):
         with  self.get_random_file() as filename:
             with Latex.document(filename) as doc: #@UnusedVariable
                 pass
             self.try_compile(filename)
-            
+
     def testEmptyFigure(self):
         with self.get_random_file() as  filename:
             with Latex.document(filename) as doc:
@@ -44,7 +43,7 @@ class Test(unittest.TestCase):
                         sub.text('ciao')
                     with fig.subfigure(caption="fig2") as sub:
                         sub.text('hello')
-                    
+
             self.try_compile(filename)
 
 #    def testGraphics(self):
@@ -71,7 +70,7 @@ class Test(unittest.TestCase):
 #                with open(d, 'w') as fd:
 #                    fd.write(f.read())
 #                     
-            raise Exception('Could not execute command. Dumped on %s.' % d) 
+            raise Exception('Could not execute command. Dumped on %s.' % d)
 
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']
