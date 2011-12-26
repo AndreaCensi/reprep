@@ -56,3 +56,4 @@ dist
 .coverage
 *cover
 coverage_information
+reprep_demos

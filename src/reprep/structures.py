@@ -7,4 +7,8 @@ class NotExistent(ReprepException):
 
 class InvalidURL(ReprepException):
     pass
+
+#
+#class InvalidID(ReprepException):
+#    pass
  

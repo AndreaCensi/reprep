@@ -5,10 +5,15 @@ import warnings
 
 class ReportInterface: 
  
-    @contract(nid='valid_id')
-    def section(self, nid):
-        ''' Creates a subsection of this report. Returns a reference. '''
-        return self.node(nid) 
+    @contract(nid='None|valid_id')
+    def section(self, nid=None, caption=None):
+        ''' Creates a subsection of the report. Returns a reference. '''
+        if nid is None:
+            nid = self.get_first_available_name(prefix='section')
+        node = self.node(nid)
+        # TODO: unify treatment of caption
+        node.text('caption', caption)
+        return node 
 
     @contract(nid='valid_id', mime='None|str', caption='None|str')
     def data(self, nid, data, mime=MIME_PYTHON, caption=None):
@@ -65,15 +70,15 @@ class ReportInterface:
         
         return Attacher(self, nid=nid, mime=mime, caption=caption)
  
-    @contract(nid='valid_id', mime='None|str', caption='None|str')
+    @contract(nid='None|valid_id', mime='None|str', caption='None|str')
     def data_pylab(self, nid, mime=None, caption=None, **figure_args):
         ''' Same as plot(), but deprecated. '''
         warnings.warn('data_pylab() has been deprecated, use plot().',
                       stacklevel=2) 
         return self.plot(nid=nid, mime=mime, caption=caption, **figure_args)
         
-    @contract(nid='valid_id', mime='None|str', caption='None|str')
-    def plot(self, nid, mime=None, caption=None, **figure_args): 
+    @contract(nid='None|valid_id', mime='None|str', caption='None|str')
+    def plot(self, nid=None, mime=None, caption=None, **figure_args): 
         ''' 
             Easy support for creating a node consisting of a pylab plot.
             Note: this method is supposed to be used in conjunction with 
@@ -91,6 +96,8 @@ class ReportInterface:
             You can pass **figure_args to pylab.figure().
          '''
         from .helpers import PylabAttacher 
+        if nid is None:
+            nid = self.get_first_available_name(prefix='plot')
         
         return PylabAttacher(self, nid=nid, mime=mime, caption=caption,
                              **figure_args)
@@ -109,7 +116,9 @@ class ReportInterface:
     @contract(nid='valid_id|None', cols='None|(int,>=1)', caption='None|str')
     def figure(self, nid=None, cols=None, caption=None):
         ''' Attach a figure to this node. '''
-        
+        if nid is None:
+            nid = self.get_first_available_name(prefix='figure')
+
         from . import Figure
         f = Figure(nid=nid, caption=caption, cols=cols)
         self.add_child(f)

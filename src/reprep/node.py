@@ -46,6 +46,9 @@ class Node(ReportInterface):
         self.childid2node[n.nid] = n
         self.children.append(n)
 
+    def has_child(self, nid):
+        return nid in self.childid2node
+    
     def last(self):
         ''' Returns the last added child Node. '''
         return self.children[-1]
@@ -192,6 +195,15 @@ class Node(ReportInterface):
                 if res is not None:
                     return res
             return None
+
+
+    def get_first_available_name(self, prefix):
+        for i in xrange(1, 1000):
+            nid = '%s%d' % (prefix, i)
+            if not self.has_child(nid):
+                return nid
+        assert False
+        
 
 
 def just_check_rgb(value):

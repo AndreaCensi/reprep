@@ -98,7 +98,7 @@ class Test(ReprepTest):
                          cols=['One', 'Two'],
                          data=[[1, 2], [3, 4]])        
         
-        f = report.figure('Covariance and information matrix', cols=3)
+        f = report.figure(caption='Covariance and information matrix', cols=3)
         f.sub('covariance', 'should default to plot')
         f.sub('covariance/plot', 'Same as <-')
             
@@ -112,6 +112,35 @@ class Test(ReprepTest):
 
     def test_invalid_id(self):
         self.assertRaises((ValueError, ContractNotRespected), Report, 1)
+
+    
+    def test_invalid_id_2(self):
+        valid = [
+            'cioa',
+            'cioa',
+            'cioa_',
+            'cioa-0.4',
+            'cioa-',
+        ]
+        invalid = [
+             'cioa/',
+             'cioa:',
+             'cioa ',
+             'cioa <',
+             '$cioa',
+             ' cioa',
+             '',
+             '"',
+             '""',
+             "'",
+             "a\\a",
+        ]
+        for s in invalid:
+            print('TRying with %r' % s)
+            self.assertRaises((ValueError, ContractNotRespected), Report, s)
+                
+        for s in valid:
+            Report(s)
 
     def test_invalid_children(self):
         self.assertRaises((ValueError, ContractNotRespected), Report, children=1)
