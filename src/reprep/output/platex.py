@@ -29,6 +29,7 @@ class Latex:
                                  class_options=class_options)
         return BodyWrap(filename, document)
 
+
     @staticmethod
     def fragment(filename, graphics_path):
         class Attacher:
@@ -122,7 +123,7 @@ class LatexEnvironment:
             write_row_tex(row_tex)
             hline()
 
-        self.context.f.write('\\end{tabular}\n')
+        self.context.f.write('\\end{tabular}%\n')
 
     def tex(self, tex):
         self.context.f.write(tex)
@@ -215,7 +216,7 @@ class Figure(LatexEnvironment):
         else:
             label = ""
         main_context.f.write('\\caption{%s%s}\n' % (label, self.caption))
-        main_context.f.write('\\end{%s}\n' % env)
+        main_context.f.write('\\end{%s}%%\n' % env)
 
 
 class StructureError(Exception):

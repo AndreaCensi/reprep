@@ -2,6 +2,7 @@ from . import contract, np, get_scaled_values
 from .. import matplotlib
 from matplotlib import pyplot
 
+
 @contract(returns='array[HxWx4](uint8)')
 def value2rgb(x, vmin=0, vmax=1, cmap='jet'):
     ''' Asssumes x is in [0,1]. '''
@@ -18,8 +19,8 @@ def value2rgb(x, vmin=0, vmax=1, cmap='jet'):
     rgb = m.to_rgba(x)
     rgb = (rgb * 255).astype('uint8')
     pyplot.close(f)
-    return rgb 
-    
+    return rgb
+
 
 @contract(value='array[HxW],H>0,W>0',
           max_value='None|number',
@@ -40,16 +41,16 @@ def filter_colormap(value,
     scaled = get_scaled_values(value,
                                min_value=min_value, max_value=max_value,
                                skim=skim)
-        
+
     if scaled['flat']:
-        rgb = get_solid(value.shape, flat_color) 
+        rgb = get_solid(value.shape, flat_color)
     else:
         rgba = value2rgb(scaled['scaled01'], cmap=cmap)
         rgb = rgba[:, :, :3]
         # TODO: clip?
         mark_values(rgb, scaled['isinf'], inf_color)
         mark_values(rgb, scaled['isnan'], nan_color)
-    
+
     if properties is not None:
         properties['min_value'] = scaled['min_value']
         properties['max_value'] = scaled['max_value']
@@ -63,6 +64,7 @@ def filter_colormap(value,
 
     return rgb
 
+
 @contract(rgb='array[HxWx3](uint8)', which='array[HxW]', color='color_spec') # bool
 def mark_values(rgb, which, color):
     for u in [0, 1, 2]:
@@ -70,10 +72,11 @@ def mark_values(rgb, which, color):
         col[which] = color[u] * 255
         rgb[:, :, u] = col
 
+
 @contract(shape='tuple((int,H),(int,W))', color='color_spec',
           returns='array[HxWx3](uint8)')
 def get_solid(shape, color):
     res = np.zeros((shape[0], shape[1], 3), dtype='uint8')
     for u in [0, 1, 2]:
-        res[:, :, u] = color[u] * 255 
+        res[:, :, u] = color[u] * 255
     return res
