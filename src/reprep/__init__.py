@@ -20,7 +20,7 @@ from .graphics import *
 from .node import *
 from .figure import *
 from .table import *
- 
+
 # Alias
 Report = Node
 

@@ -2,9 +2,8 @@ from . import MIME_PLAIN, contract, MIME_PYTHON
 import warnings
 
 
+class ReportInterface:
 
-class ReportInterface: 
- 
     @contract(nid='None|valid_id')
     def section(self, nid=None, caption=None):
         ''' Creates a subsection of the report. Returns a reference. '''
@@ -13,7 +12,7 @@ class ReportInterface:
         node = self.node(nid)
         # TODO: unify treatment of caption
         node.text('caption', caption)
-        return node 
+        return node
 
     @contract(nid='valid_id', mime='None|str', caption='None|str')
     def data(self, nid, data, mime=MIME_PYTHON, caption=None):
@@ -28,9 +27,9 @@ class ReportInterface:
         '''
         from . import DataNode
         n = DataNode(nid=nid, data=data, mime=mime, caption=caption)
-        self.add_child(n) 
+        self.add_child(n)
         return n
-    
+
     @contract(nid='valid_id', mime='str', caption='None|str')
     def data_file(self, nid, mime, caption=None):
         ''' 
@@ -64,21 +63,21 @@ class ReportInterface:
         '''
         from .helpers import Attacher
         import mimetypes
-        
+
         if not mimetypes.guess_extension(mime):
             raise ValueError('Cannot guess extension for MIME "%s".' % mime)
-        
+
         return Attacher(self, nid=nid, mime=mime, caption=caption)
- 
+
     @contract(nid='None|valid_id', mime='None|str', caption='None|str')
     def data_pylab(self, nid, mime=None, caption=None, **figure_args):
         ''' Same as plot(), but deprecated. '''
         warnings.warn('data_pylab() has been deprecated, use plot().',
-                      stacklevel=2) 
+                      stacklevel=2)
         return self.plot(nid=nid, mime=mime, caption=caption, **figure_args)
-        
+
     @contract(nid='None|valid_id', mime='None|str', caption='None|str')
-    def plot(self, nid=None, mime=None, caption=None, **figure_args): 
+    def plot(self, nid=None, mime=None, caption=None, **figure_args):
         ''' 
             Easy support for creating a node consisting of a pylab plot.
             Note: this method is supposed to be used in conjunction with 
@@ -95,15 +94,15 @@ class ReportInterface:
             
             You can pass **figure_args to pylab.figure().
          '''
-        from .helpers import PylabAttacher 
+        from .helpers import PylabAttacher
         if nid is None:
             nid = self.get_first_available_name(prefix='plot')
-        
+
         return PylabAttacher(self, nid=nid, mime=mime, caption=caption,
                              **figure_args)
 
     @contract(nid='valid_id|None', rgb='array[HxWx(3|4)](uint8)', caption='None|str')
-    def data_rgb(self, nid, rgb, caption=None): 
+    def data_rgb(self, nid, rgb, caption=None):
         ''' 
             Create a node containing an image from a RGB[a] array.
             (internally, it will be saved as PNG)
@@ -122,9 +121,9 @@ class ReportInterface:
         from . import Figure
         f = Figure(nid=nid, caption=caption, cols=cols)
         self.add_child(f)
-        
+
         return f
- 
+
     @contract(nid='valid_id', data='list(list)|array[HxW]', caption='None|str')
     def table(self, nid, data, cols=None, rows=None, caption=None):
         ''' 
@@ -144,10 +143,10 @@ class ReportInterface:
         '''
         from . import Table
         t = Table(nid=nid, data=data, cols=cols, rows=rows, caption=caption)
-        self.add_child(t) 
+        self.add_child(t)
         return t
-     
-    @contract(nid='valid_id', text='str', mime='None|str')   
+
+    @contract(nid='valid_id', text='str', mime='None|str')
     def text(self, nid, text, mime=MIME_PLAIN):
         ''' 
             Adds a text node with the given id.
@@ -158,14 +157,13 @@ class ReportInterface:
             For now, only restructured text is converted to HTML,
             the rest is displayed as plain text.
         '''
-        return self.data(nid=nid, data=text, mime=mime)    
-    
-        
+        return self.data(nid=nid, data=text, mime=mime)
+
     def to_html(self, filename, resources_dir=None, **kwargs):
         ''' Creates a HTML representation of this report. '''
-        from .out.html import node_to_html_document
+        from reprep.output.html import node_to_html_document
         node_to_html_document(self, filename, resources_dir, **kwargs)
 
     def add_to(self, figure, caption=None):
         figure.sub(self, caption)
-         
+
