@@ -242,8 +242,7 @@ def figure_to_html(node, context):
             node.parent.print_tree()
             raise
 
-        image_filename, absolute = get_node_filename(actual_resource, #@UnusedVariable
-                                                     context)
+        image_filename, _ = get_node_filename(actual_resource, context)
 
         file.write(
             Template('''
@@ -253,11 +252,9 @@ def figure_to_html(node, context):
             ''').substitute(src=image_filename)
         )
 
-
         file.write('<p class="report-subfigure-caption">%s</p>' % \
                  htmlfy(sub.caption))
         file.write('</div> ')
-
 
         if last_col:
             file.write('\n\n')
