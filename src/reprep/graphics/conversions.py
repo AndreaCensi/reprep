@@ -1,7 +1,9 @@
-from .. import Image
 from . import contract, np
+from .. import Image
 
-@contract(a='(array[HxW](uint8)|array[HxWx3](uint8)|array[HxWx4](uint8)),H>0,W>0')
+
+@contract(a='(array[HxW](uint8)|array[HxWx3](uint8)|array[HxWx4](uint8)),'
+            'H>0,W>0')
 def Image_from_array(a):
     ''' 
         Converts an image in a numpy array to an Image instance.
@@ -28,9 +30,9 @@ def Image_from_array(a):
             rgba[:, :, 3] = 255
     else:
         assert False
-    
+
     assert rgba.shape == (height, width, 4)
-    
-    im = Image.frombuffer("RGBA", (width, height), rgba.data, #@UndefinedVariable
-                           "raw", "RGBA", 0, 1)
+
+    im = Image.frombuffer("RGBA", (width, height), #@UndefinedVariable
+                           rgba.data, "raw", "RGBA", 0, 1)
     return im

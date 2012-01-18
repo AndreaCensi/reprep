@@ -10,7 +10,6 @@ def value2rgb(x, vmin=0, vmax=1, cmap='jet'):
     if isint:
         matplotlib.set_interactive(False) #@UndefinedVariable
     f = pyplot.figure()
-    # m = f.gca().imshow(x, vmin=vmin, vmax=vmax, cmap=pyplot.cm.get_cmap(cmap))
     mcmap = pyplot.cm.get_cmap(cmap)
     if mcmap is None:
         raise Exception('Unknown cmap %r.' % cmap)
@@ -65,7 +64,8 @@ def filter_colormap(value,
     return rgb
 
 
-@contract(rgb='array[HxWx3](uint8)', which='array[HxW]', color='color_spec') # bool
+@contract(rgb='array[HxWx3](uint8)', which='array[HxW]',
+          color='color_spec') # bool
 def mark_values(rgb, which, color):
     for u in [0, 1, 2]:
         col = rgb[:, :, u]

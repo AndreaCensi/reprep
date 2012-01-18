@@ -1,5 +1,6 @@
 from . import contract, np
 
+
 @contract(values='array[HxW]',
           colors='list[>=1](tuple(a,(b,b>a),seq[4](number)))')
 def colormap_rgba(values, colors,
@@ -32,7 +33,7 @@ def colorize_success(value):
     bluegreen = [0, 150, 50, 255]
     darkgreen = [0, 200, 0 , 255]
     green = [0, 255, 0, 255]
-    
+
     colors = [(0, 0.001, red), (0.001, 0.05, magenta), (0.05, 0.25, yellow),
               (0.25, 0.50, orange), (0.5, 0.75, blue), (0.75, 0.95, bluegreen),
               (0.95, 0.99, darkgreen), (0.99, 1, green) ]

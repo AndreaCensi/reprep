@@ -1,7 +1,6 @@
 from . import RepRepDefaults, MIME_PNG, contract, Node
 import mimetypes
 import tempfile
-#import subprocess
 
 
 class Attacher:
