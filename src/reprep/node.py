@@ -2,6 +2,7 @@ from . import (MIME_PNG, MIME_PYTHON, contract, ReportInterface, describe_value,
     describe_type, colorize_success, scale, posneg, Image_from_array, rgb_zoom,
     InvalidURL, NotExistent)
 import sys
+from reprep.constants import MIME_SVG
 
 
 class Node(ReportInterface):
@@ -224,7 +225,7 @@ class DataNode(Node):
         return 'DataNode(%s,%s,%s)' % (self.nid, self.mime,
                                        describe_value(self.raw_data))
     def is_image(self):
-        return self.mime in [MIME_PNG] # XXX 
+        return self.mime in [MIME_PNG, MIME_SVG] # XXX 
 
     def display(self, display, **kwargs):
         if display is None:

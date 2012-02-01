@@ -8,7 +8,7 @@ import os
 import shutil
 import sys
 import datetime
-
+from . import logger
 
 header = """
 <html>
@@ -122,7 +122,7 @@ def node_to_html_document(node, filename,
 
     if not os.path.exists(static):
         # XXX:
-        print('Warning: resource dir %s not found' % static)
+        logger.warn('Warning: resource dir %s not found' % static)
     else:
         dst = os.path.join(resources_dir, 'static')
         if not os.path.exists(dst):
@@ -264,9 +264,8 @@ def figure_to_html(node, context):
         try:
             actual_resource = node.resolve_url(sub.image)
         except:
-            # XXX:
-            print("Cannot find sub.image url %s" % sub.image.__repr__())
-            node.parent.print_tree()
+            logger.error("Cannot find sub.image url %s" % sub.image.__repr__())
+            node.parent.print_tree() # XXX
             raise
 
         image_filename, _ = get_node_filename(actual_resource, context)
@@ -279,7 +278,7 @@ def figure_to_html(node, context):
             ''').substitute(src=image_filename)
         )
 
-        file.write('<p class="report-subfigure-caption">%s</p>' % \
+        file.write('<p class="report-subfigure-caption">%s</p>' %
                  htmlfy(sub.caption))
         file.write('</div> ')
 
@@ -288,7 +287,7 @@ def figure_to_html(node, context):
 
     caption = node.caption if node.caption else ""
 
-    file.write('<p class="report-figure-caption">%s</p>' % \
+    file.write('<p class="report-figure-caption">%s</p>' %
              htmlfy(caption))
 
     children_to_html(node, context)

@@ -11,7 +11,8 @@ class ReportInterface:
             nid = self.get_first_available_name(prefix='section')
         node = self.node(nid)
         # TODO: unify treatment of caption
-        node.text('caption', caption)
+        if caption:
+            node.text('caption', caption)
         return node
 
     @contract(nid='valid_id', mime='None|str', caption='None|str')

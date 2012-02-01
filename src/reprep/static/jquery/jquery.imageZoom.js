@@ -62,7 +62,8 @@ jQuery.fn.imageZoom = function (conf) {
 		// Make sure the target-element is a link (or an element inside a link)
 		var clickedElement	= jQuery(e.target); // The element that was actually clicked
 		var clickedLink		= clickedElement.is('a') ? clickedElement : clickedElement.parents('a'); // If it's not an a, check if any of its parents is
-			clickedLink		= (clickedLink && clickedLink.is('a') && clickedLink.attr('href').search(/(.*)\.(jpg|jpeg|gif|png|bmp|tif|tiff)$/gi) != -1) ? clickedLink : false; // If it was an a or child of an a, make sure it points to an image
+		/* AC: added svg */
+			clickedLink		= (clickedLink && clickedLink.is('a') && clickedLink.attr('href').search(/(.*)\.(jpg|jpeg|svg|svgz|gif|png|bmp|tif|tiff)$/gi) != -1) ? clickedLink : false; // If it was an a or child of an a, make sure it points to an image
 		var clickedImg		= (clickedLink && clickedLink.find('img').length) ? clickedLink.find('img') : false; // See if the clicked link contains and image
 
 		// Only continue if a link pointing to an image was clicked
@@ -112,10 +113,11 @@ jQuery.fn.imageZoom = function (conf) {
 					top:		offset.top/*, 
 					opacity:	config.dontFadeIn*/
 				};
+				
 				var imgzoom			= jQuery('<div><img src="' + displayImgSrc + '" alt="" /></div>').css('position', 'absolute').appendTo(document.body); // We don't want any class-name or any other contents part from the image when we calculate the new dimensions of the imgzoom
 				var imgzoomAfter	= { // The dimensions of the imgzoom _after_ it is zoomed out
-					width:		imgzoom.outerWidth(), 
-					height:		imgzoom.outerHeight()/*, 
+					width:		100, /*imgzoom.outerWidth(), */
+					height:		100 /*imgzoom.outerHeight()/*, 
 					opacity:	1*/
 				};
 				var windowDim = {
@@ -123,7 +125,15 @@ jQuery.fn.imageZoom = function (conf) {
 					height:	jQuery(window).height()
 				};
 				/* Make sure it is zoomed all the way. */
-				ratio = imgzoomAfter.height / imgzoomAfter.width;
+				/*ratio = imgzoomAfter.height  / imgzoomAfter.width;*/
+				
+				/*alert("width " + imgzoomAfter.width + " height " + imgzoomAfter.height + " ratio " + ratio);*/
+				/* AC: width = height = 1 for some reason (preload?) */
+				/* AC: use ratio from current dimensions */
+				ratio = imgzoomBefore.height  / imgzoomBefore.width;
+				
+				/*alert("width " + imgzoomBefore.width + " height " + imgzoomBefore.height + " ratio " + ratio);*/
+
 				imgzoomAfter.width = windowDim.width * 0.9;
 				imgzoomAfter.height = imgzoomAfter.width * ratio;
 				
@@ -143,6 +153,8 @@ jQuery.fn.imageZoom = function (conf) {
 				imgzoomAfter.left	= (windowDim.width - imgzoomAfter.width) / 2 + jQuery(window).scrollLeft();
 				imgzoomAfter.top	= (windowDim.height - imgzoomAfter.height) / 2 + jQuery(window).scrollTop();
 				var closeButton		= jQuery('<a href="#">Close</a>').appendTo(imgzoom).hide(); // The button that closes the imgzoom (we're adding this after the calculation of the dimensions)
+
+				/*alert("final width " + imgzoomAfter.width + " height " + imgzoomAfter.height);*/
 
 				// Hide the clicked link if set so in config
 				if (hideClicked) {
