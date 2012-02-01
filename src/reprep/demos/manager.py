@@ -17,7 +17,7 @@ def all_demos(argv):
                        )
         demo(ri)
         
-    r.to_html('reprep_demos/all_demos.html')
+    r.to_html('reprep_demos_out/index.html')
     
     
 def main(): all_demos(sys.argv)

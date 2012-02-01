@@ -1,8 +1,14 @@
 
-body { font-family: Verdana, Tahoma; }
+body { font-family: Verdana, Tahoma; padding: 0; margin: 0;}
 
 img { border: solid 1px black;}
-h { font-family: monospace; font-size: 120%; color: black; font-weight: bold;  display: block;}
+h { 
+	font-family: monospace; 
+	font-size: 120%; 
+	color: black; 
+	font-weight: bold;  
+	display: block;
+}
 
 sssection { border: solid 2px gray; display: block; clear: both; padding: 1em; margin: 1em;}
 
@@ -52,3 +58,38 @@ p.reprep-credits {
 	font-size: 90%; 
 	font-weight: bold;
 }
+
+div.report-text-node {
+	/*background-color:  #aaa;*/
+	overflow: auto;
+	padding-top: 1em;
+}
+
+span.report-text-node-id {
+	float: left;
+	display: block;
+	font-weight: bold;
+	/*border: solid 1px green;*/
+	padding-left: 1em;
+	padding-right: 2em;
+	padding-top: 1em;
+	padding-bottom: 3em;
+}
+
+div.report-text-node-content {
+	display: block;
+	float: left;
+	padding: 1em;
+	background-color:  #eee;
+	/*border: solid 1px red;*/
+}
+
+p#reprep-head {
+	margin: 0;
+	background-color: #ccc;
+	padding: 0.5em;
+	color: white;
+	font-size: 100%; 
+}
+p#reprep-head A { color: white;}
+
