@@ -1,5 +1,6 @@
 from . import contract, np
 
+
 @contract(M='array[HxWx3](uint8)', K='K,>1',
           returns='array[(H*K)x(W*K)x3](uint8)')
 def rgb_zoom(M, K=10):

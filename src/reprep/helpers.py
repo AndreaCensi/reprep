@@ -2,6 +2,7 @@ from . import RepRepDefaults, MIME_PNG, contract, Node
 import mimetypes
 import tempfile
 
+
 class Attacher:
 
     @contract(node=Node, nid='valid_id', mime='None|str', caption='None|str')
@@ -29,6 +30,7 @@ class Attacher:
                            mime=self.mime,
                            caption=self.caption)
         self.temp_file.close()
+
 
 class PylabAttacher:
 
@@ -70,7 +72,6 @@ class PylabAttacher:
                            bbox_inches='tight', dpi=dpi,
                            pad_inches=0.01) # TODO: make parameters
 
-
         with open(self.temp_file.name) as f:
             data = f.read()
 
@@ -78,18 +79,13 @@ class PylabAttacher:
                                     mime=self.mime, caption=self.caption)
 
         # save a png copy if one is needed
-        if not self.temp_file.name.endswith('png'):
+        if not (self.temp_file.name.endswith('png') or
+                self.temp_file.name.endswith('svg')):
+            # XXX: not elegant
             with image_node.data_file('png', mime=MIME_PNG,
                                       caption=self.caption) as f2:
                 self.pylab.savefig(f2, dpi=dpi,
                                    bbox_inches='tight', pad_inches=0.01)
-
-#            with image_node.data_file('png', mime=MIME_PNG,
-#                                      caption=self.caption) as f2:
-#                density = 300
-#                subprocess.check_call(['convert', '-density', '%s' % density,
-#                                        self.temp_file.name, f2])
-#        
             from . import Figure
             if isinstance(self.node, Figure):
                 self.node.sub(image_node)
@@ -98,11 +94,11 @@ class PylabAttacher:
 
         self.temp_file.close()
 
+
 @contract(parent=Node, nid='valid_id',
           rgb='array[HxWx(3|4)]', caption='None|str')
 def data_rgb_imp(parent, nid, rgb, caption=None):
-    from .graphics import Image_from_array
-    from .graphics import rgb_zoom
+    from .graphics import Image_from_array, rgb_zoom
 
     # zoom images smaller than 50
     if max(rgb.shape[0], rgb.shape[1]) < 50: # XXX config

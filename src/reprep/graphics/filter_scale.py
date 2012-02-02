@@ -1,6 +1,7 @@
 from . import contract, np, skim_top
 from numpy import maximum, minimum, zeros
 
+
 @contract(value='array[HxW],H>0,W>0',
           max_value='None|number',
           min_value='None|number',
@@ -39,15 +40,15 @@ def scale(value, min_value=None, max_value=None,
       
     """
     value = value.astype('float32')
-    
+
     # TODO: copy nx1 code from procgraph 
-    value = value.squeeze().copy() 
-    
+    value = value.squeeze().copy()
+
     isnan = np.logical_not(np.isfinite(value))
-    
+
     if skim != 0:
         value = skim_top(value, skim)
-        
+
     if max_value is None: max_value = np.nanmax(value)
     if min_value is None: min_value = np.nanmin(value)
     # but what about +- inf?
@@ -61,22 +62,22 @@ def scale(value, min_value=None, max_value=None,
         bar_shape = (512, 128)
         bar = np.vstack([np.linspace(0, 1, bar_shape[0])] * bar_shape[1]).T
         properties['color_bar'] = interpolate_colors(bar, min_color, max_color)
-  
+
     if max_value == min_value or \
       (not np.isfinite(min_value)) or \
       (not np.isfinite(max_value)):
         result = zeros((value.shape[0], value.shape[1], 3), dtype='uint8')
         result[:, :, 0] = flat_color[0] # TODO: write something?
-        result[:, :, 1] = flat_color[1] 
-        result[:, :, 2] = flat_color[2] 
+        result[:, :, 1] = flat_color[1]
+        result[:, :, 2] = flat_color[2]
         mark_nan(result, isnan, nan_color)
         return result
-  
+
     assert np.isfinite(min_value)
-    assert np.isfinite(max_value)  
+    assert np.isfinite(max_value)
 
     value01 = (value - min_value) / (max_value - min_value)
-    
+
     # Cut at the thresholds
     value01 = maximum(value01, 0)
     value01 = minimum(value01, 1)

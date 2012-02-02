@@ -1,5 +1,6 @@
 from . import MIME_PNG, MIME_SVG
 
+
 class RepRepDefaults:
 #    default_image_format = MIME_PNG
     default_image_format = MIME_SVG

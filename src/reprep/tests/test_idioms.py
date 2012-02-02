@@ -7,30 +7,30 @@ import numpy
 import unittest
 
 
-class Test(ReprepTest):    
-    
+class Test(ReprepTest):
+
     def testTable(self):
-        
+
         table = Table('mytable',
                       [['Andrea', 'Censi'], ['a', 'b']], ['Name', 'Last'],
                       )
         self.node_serialization_ok(table)
-    
+
     def testTable2(self):
         data = numpy.zeros((2, 2))
         table = Table('mytable', data)
         self.node_serialization_ok(table)
-    
+
     def testTable3(self):
         dtype = numpy.dtype([('field1', 'int32'), ('field2', 'int32')])
         data = numpy.zeros(shape=(5,), dtype=dtype)
         table = Table('mytable', data)
         self.node_serialization_ok(table)
-    
+
     def testTable4(self):
         data = numpy.zeros((2, 2, 3))
         self.assertRaises(ValueError, Table, 'mytable', data)
-        
+
     def testTable5(self):
         dtype = numpy.dtype([('field1', 'int32'), ('field2', 'int32')])
         data = numpy.zeros(shape=(5, 4), dtype=dtype)
@@ -65,22 +65,21 @@ class Test(ReprepTest):
         r = Report('test')
         with r.plot('ciao', caption='my caption') as pylab:
             pylab.plot([0, 1], [0, 1], '-k')
-        
-    
+
     def testText(self):
         r = Report('test')
         r.text('ciao', 'come va?')
-            
+
     def testText2(self):
         r = Report('test')
         r.text('ciao', 'come va?', MIME_PLAIN)
-        
-        
+
+
     def testImage(self):
         C = numpy.random.rand(50, 50)
         information = pinv(C)
         T = numpy.random.rand(50, 50, 3)
-        
+
         report = Node('rangefinder')
         report.data('Tx', T[:, :, 0])
         report.data('Ty', T[:, :, 1])
@@ -93,27 +92,25 @@ class Test(ReprepTest):
             pylab.plot(C)
             pylab.savefig(f)
             pylab.close()
-                
+
         report.table('results',
                          cols=['One', 'Two'],
-                         data=[[1, 2], [3, 4]])        
-        
+                         data=[[1, 2], [3, 4]])
+
         f = report.figure(caption='Covariance and information matrix', cols=3)
         f.sub('covariance', 'should default to plot')
         f.sub('covariance/plot', 'Same as <-')
-            
+
         f = report.figure('Tensors', cols=3)
         f.sub('Tx', display='posneg')
         f.sub('Ty', display='posneg')
         f.sub('Tz', display='posneg')
-        
-        
+
         self.node_serialization_ok(report)
 
     def test_invalid_id(self):
         self.assertRaises((ValueError, ContractNotRespected), Report, 1)
 
-    
     def test_invalid_id_2(self):
         valid = [
             'cioa',
@@ -138,7 +135,7 @@ class Test(ReprepTest):
         for s in invalid:
             print('TRying with %r' % s)
             self.assertRaises((ValueError, ContractNotRespected), Report, s)
-                
+
         for s in valid:
             Report(s)
 

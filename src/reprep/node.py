@@ -1,8 +1,8 @@
-from . import (MIME_PNG, MIME_PYTHON, contract, ReportInterface, describe_value,
+from . import (MIME_PNG, MIME_PYTHON, contract, ReportInterface,
+               describe_value,
     describe_type, colorize_success, scale, posneg, Image_from_array, rgb_zoom,
-    InvalidURL, NotExistent)
+    InvalidURL, NotExistent, MIME_SVG)
 import sys
-from reprep.constants import MIME_SVG
 
 
 class Node(ReportInterface):
@@ -106,12 +106,12 @@ class Node(ReportInterface):
 
         for child in self.children:
             try:
-                return child.resolve_url(url, already_visited=already_visited)
+                return child.resolve_url(url, already_visited)
             except NotExistent:
                 pass
 
         if self.parent:
-            return self.parent.resolve_url(url, already_visited=already_visited)
+            return self.parent.resolve_url(url, already_visited)
         else:
             # in the end, we get here
             raise NotExistent('Could not find url "%s".' % url)
@@ -154,7 +154,8 @@ class Node(ReportInterface):
         closest = common[-1]
         levels = len(all_my_parents) - all_my_parents.index(closest)
         his_remaining = all_his_parents[all_his_parents.index(closest) + 1:]
-        components = ['..'] * levels + [x.nid for x in his_remaining] + [other.nid]
+        components = (['..'] * levels + [x.nid for x in his_remaining]
+                      + [other.nid])
         url = Node.url_join(components)
 
         try:
@@ -196,14 +197,12 @@ class Node(ReportInterface):
                     return res
             return None
 
-
     def get_first_available_name(self, prefix):
         for i in xrange(1, 1000):
             nid = '%s%d' % (prefix, i)
             if not self.has_child(nid):
                 return nid
         assert False
-
 
 
 def just_check_rgb(value):
@@ -224,6 +223,7 @@ class DataNode(Node):
     def __str__(self):
         return 'DataNode(%s,%s,%s)' % (self.nid, self.mime,
                                        describe_value(self.raw_data))
+
     def is_image(self):
         return self.mime in [MIME_PNG, MIME_SVG] # XXX 
 

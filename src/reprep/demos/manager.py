@@ -1,13 +1,16 @@
 import sys
 from reprep import Report
 
+
 class DemoStorage:
     demo_list = []
+
 
 def reprep_demo(f):
     ''' Decorator for declaring a reprep demo. '''
     DemoStorage.demo_list.append(f)
     return f
+
 
 def all_demos(argv):
     r = Report('reprep_demos')

@@ -46,8 +46,8 @@ class ReportInterface:
                     pylab.title('my x-y plot')
                     pylab.savefig(f)
             
-            Omit any file extension from 'id', ("my_plot" and not "my_plot.pdf"), 
-            we will take care of it for you.
+            Omit any file extension from 'id', ("my_plot" and not 
+            "my_plot.pdf"), we will take care of it for you.
             
             This is a more complicated example, where we attach two versions
             of the same image, in different formats. ::
@@ -59,8 +59,9 @@ class ReportInterface:
                         pylab.savefig(f)
                         pylab.close()
                         
-            Note that if you are mainly using pylab plots, there is the function
-            :py:func:`.data_pylab` which offers a shortcut with less ceremony.
+            Note that if you are mainly using pylab plots, there is the 
+            function :py:func:`.plot` which offers a shortcut with less 
+            ceremonies.
         '''
         from .helpers import Attacher
         import mimetypes
@@ -131,17 +132,9 @@ class ReportInterface:
         ''' 
             Attach a table to this node. 
             
-            *data* 
-              must be either a list of lists, or a 2D numpy array.
-            
-            *cols*
-              Labels for the columns. 
-              must be either None, or a list of strings.
-            
-            *rows*
-              Labels for the rows. 
-              must be either None, or a list of strings.
-        
+            :param:data: A list of lists, or a 2D numpy array.
+            :param:colos: Labels for the columns.  
+            :param:rows: Labels for the rows. 
         '''
         from . import Table
         t = Table(nid=nid, data=data, cols=cols, rows=rows, caption=caption)
@@ -163,7 +156,7 @@ class ReportInterface:
 
     def to_html(self, filename, resources_dir=None, **kwargs):
         ''' Creates a HTML representation of this report. '''
-        from reprep.output.html import node_to_html_document
+        from .output.html import node_to_html_document
         node_to_html_document(self, filename, resources_dir, **kwargs)
 
     def add_to(self, figure, caption=None):

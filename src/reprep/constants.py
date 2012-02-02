@@ -6,6 +6,8 @@ MIME_PLAIN = 'text/plain'
 MIME_PYTHON = 'application/python'
 MIME_SVG = 'image/svg+xml'
 
+MIME_IMAGES = [MIME_PDF, MIME_SVG, MIME_PNG]
+
 USE_PNG = 'png' # Plot using png
 USE_PDF = 'pdf' # Plot using pdf
 USE_PDF_PLUS_PNG = 'pdf+png' # also create 

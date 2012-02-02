@@ -2,6 +2,7 @@ from reprep import filter_colormap
 from reprep.graphics import get_solid
 from . import np, reprep_demo
 
+
 def get_test_bar(shape=(100, 10)):
     bar = np.vstack([np.linspace(-0.1, 1.2, shape[0])] * shape[1]).T
     pos = bar > 1
@@ -11,10 +12,12 @@ def get_test_bar(shape=(100, 10)):
     bar[neg] = -np.Inf
     bar[nan] = np.NaN
     return bar
-    
+
+
 def diagflip(x):
     return np.transpose(x, (1, 0, 2))
-    
+
+
 @reprep_demo
 def demo_colormaps(r):
     x = get_test_bar()
@@ -28,4 +31,4 @@ def demo_colormaps(r):
         f.data_rgb('nan_color', get_solid((20, 20), properties['nan_color']))
         f.data_rgb('inf_color', get_solid((20, 20), properties['inf_color']))
         f.data_rgb('flat_color', get_solid((20, 20), properties['flat_color']))
-    
+
