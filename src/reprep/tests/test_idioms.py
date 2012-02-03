@@ -74,7 +74,6 @@ class Test(ReprepTest):
         r = Report('test')
         r.text('ciao', 'come va?', MIME_PLAIN)
 
-
     def testImage(self):
         C = numpy.random.rand(50, 50)
         information = pinv(C)
@@ -140,9 +139,12 @@ class Test(ReprepTest):
             Report(s)
 
     def test_invalid_children(self):
-        self.assertRaises((ValueError, ContractNotRespected), Report, children=1)
-        self.assertRaises((ValueError, ContractNotRespected), Report, children=[1])
-        self.assertRaises((ValueError, ContractNotRespected), Report, children=[None])
+        self.assertRaises((ValueError, ContractNotRespected),
+                          Report, children=1)
+        self.assertRaises((ValueError, ContractNotRespected),
+                          Report, children=[1])
+        self.assertRaises((ValueError, ContractNotRespected),
+                          Report, children=[None])
 
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']

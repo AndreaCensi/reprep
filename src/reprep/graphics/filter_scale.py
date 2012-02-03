@@ -26,17 +26,19 @@ def scale(value, min_value=None, max_value=None,
         
         Configuration:
         
-        - ``min_value``: If specified, this is taken to be the threshold. Everything
-                         below min_value is considered to be equal to min_value.
+        - ``min_value``: If specified, this is taken to be the threshold. 
+                         Everything below min_value is considered to 
+                         be equal to min_value.
         - ``max_value``: Optional upper threshold.
-        - ``min_color``: color associated to minimum value. Default: [1,1,1] .
-        - ``max_color``: color associated to maximum value. Default: [0,0,0].
-        - ``nan_color``: color associated to nan/inf values. Default: light red.
+        - ``min_color``: color associated to minimum value. 
+        - ``max_color``: color associated to maximum value. 
+        - ``nan_color``: color associated to nan/inf values. 
        
         If all valid elements have the same value, their color will be 
         ``flat_color``.
         
-        Returns:  a (W,H,3) numpy array with dtype uint8 representing a RGB image.
+        Returns:  a (W,H,3) numpy array with dtype uint8 
+        representing a RGB image.
       
     """
     value = value.astype('float32')

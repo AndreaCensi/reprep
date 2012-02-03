@@ -7,12 +7,12 @@ class Table(Node):
     @contract(nid='valid_id', caption='None|str')
     def __init__(self, nid, data, cols=None, rows=None, caption=None):
         ''' 
-            :type data:  ( array[R](fields[C]) | array[RxC] | list[R](list[C]) ), R>0, C>0
+            :type data:  (array[R](fields[C]) | array[RxC] | list[R](list[C])
+                 ), R>0, C>0
             :type cols:    None|list[C](str)
             :type rows:    None|list[R](str)
             :type caption: None|str 
         '''
-        # :type data:    ( array[R](fields[C]) | array[RxC] | list[R](list[C]) ), R>0, C>0
 
         Node.__init__(self, nid)
 

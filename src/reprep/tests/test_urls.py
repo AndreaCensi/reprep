@@ -22,7 +22,7 @@ class Test(unittest.TestCase):
         self.assertEqual(self.n2, self.n4.resolve_url('../../../n2'))
         self.assertEqual(self.n2, self.n1.resolve_url('n2'))
         self.assertEqual(self.n3, self.n1.resolve_url('n2/n3'))
-    
+
     def test_smart(self):
         ''' Testing smart cases of resolve_url '''
         self.assertEqual(self.n1.resolve_url('n3'), self.n3bis)
@@ -36,7 +36,7 @@ class Test(unittest.TestCase):
         self.assertEqual(self.n1.resolve_url('n4'), self.n4)
         for n in self.all:
             self.assertEqual(n.resolve_url('n4'), self.n4)
-    
+
     def test_relative(self):
         for A in self.all:
             for B in self.all:
@@ -44,20 +44,19 @@ class Test(unittest.TestCase):
                     continue
                 url = A.get_relative_url(B)
                 self.assertEqual(A.resolve_url_dumb(url), B)
-    
-        
+
     def test_not_existent(self):
         ''' Testing that we warn if not existent '''
         self.assertRaises(NotExistent, self.n1.resolve_url, 'x')
 
     def test_not_found(self):
         self.assertRaises(NotExistent, self.n1.resolve_url, '..')
-        
+
     def test_well_formed(self):
         ''' Testing that we can recognize invalid urls '''
         self.assertRaises(InvalidURL, self.n1.resolve_url, '')
         self.assertRaises(InvalidURL, self.n2.resolve_url, '//')
-        
+
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.test1']
     unittest.main()

@@ -1,4 +1,4 @@
-from . import MIME_PNG, MIME_SVG
+from . import MIME_SVG
 
 
 class RepRepDefaults:

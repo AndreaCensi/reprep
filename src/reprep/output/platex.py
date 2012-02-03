@@ -3,29 +3,31 @@ from StringIO import StringIO
 
 
 class Latex:
-    
+
     @staticmethod
     def document(filename, graphics_path=".", document_class="article",
                  class_options=""):
-        
+
         graphics_path = os.path.relpath(graphics_path, os.path.dirname(filename))
 
         class BodyWrap:
             def __init__(self, filename, document):
                 self.document = document
                 self.filename = filename
+
             def __enter__(self):
                 return self.document
+
             def __exit__(self, type, value, traceback): #@UnusedVariable @ReservedAssignment
                 with open(self.filename, 'w') as f:
                     self.document.dump_stream(f)
-                   
+
         document = LatexDocument(graphics_path=graphics_path,
                                  document_class=document_class,
                                  class_options=class_options)
         return BodyWrap(filename, document)
-   
-    
+
+
     @staticmethod
     def fragment(filename, graphics_path):
         class Attacher:
@@ -42,8 +44,8 @@ class Latex:
                 with open(self.filename, 'w') as f:
                     f.write(self.context.f.getvalue())
         return Attacher(filename, graphics_path)
-    
-    
+
+
 class LatexContext:
     def __init__(self, graphics_path="."):
         self.f = StringIO()
@@ -51,14 +53,14 @@ class LatexContext:
         self.graphics_path = graphics_path
         self.parent = None
         self.count = 0
-        
+
     def generate_file_id(self):
         if self.parent:
             return self.parent.generate_file_id()
         f = "file%s" % self.count
-        self.count += 1 
-        return f 
-    
+        self.count += 1
+        return f
+
     def child(self):
         ''' Generates a child context; sharing some data '''
         c = LatexContext(self.graphics_path)
@@ -69,28 +71,28 @@ class LatexContext:
 class LatexEnvironment:
     def __init__(self, context):
         self.context = context
-                
+
     def hfill(self):
         self.context.f.write('\\hfill\ \n')
     def hspace(self, size):
         self.context.f.write('\\hspace{%s}' % size)
-    
+
     def vspace(self, size):
         self.context.f.write('\\vspace{%s}' % size)
-    
+
     def parbreak(self):
         self.context.f.write('\n\n')
-        
+
     def pagebreak(self):
         self.context.f.write('\\pagebreak\ \n')
 
     def rule(self, width, height, color='gray'):
         self.context.f.write('{\\color{%s}\\rule{%s}{%s}}\n' % \
                              (color, width, height))
-    
+
     def text(self, t):
         self.context.f.write(latexify(t))
-    
+
     #FIXME: make general!
     def tabular_simple(self, data, row_desc, col_desc, write_col_desc=True):
         ''' Writes a tabular environment with very simple options. '''
@@ -99,7 +101,7 @@ class LatexEnvironment:
         def write_row_tex(entries):
             self.context.f.write(" & ".join(entries))
             self.context.f.write(' \\tabularnewline\n')
-            
+
         alignment_string = '|l||' + ('r|' * len(col_desc))
         self.context.f.write('\\begin{tabular}{%s}\n' % alignment_string)
         hline()
@@ -108,28 +110,28 @@ class LatexEnvironment:
             write_row_tex(row_tex)
             hline()
             hline()
-        
+
         for i, row in enumerate(row_desc):
             row_tex = ['\\makebox[2.5cm][r]{%s}' % row] + ['\\makebox[0.8cm]{%s}' % x for x in data[i]]
             write_row_tex(row_tex)
             hline()
-            
+
         self.context.f.write('\\end{tabular}\n')
-        
+
     def tex(self, tex):
         self.context.f.write(tex)
-        
+
     def input(self, filename): #@ReservedAssignment
         self.context.f.write('\\input{%s}\n' % filename)
-    
+
     def use_package(self, name, options=""):
         self.context.preamble.write('\\usepackage[%s]{%s}\n' % (options, name))
-        
+
     def figure(self, caption=None, label=None, placement="t", double=False):
         figure = Figure(caption=caption, label=label, placement=placement,
                         context=self.context.child(), double=double)
         return LatexEnvironment.GenericWrap(figure, self.context)
-    
+
     def graphics_data(self, data, mime, width="3cm", nid=None):
         suffix = mimetypes.guess_extension(mime)
         if nid is None:
@@ -137,7 +139,7 @@ class LatexEnvironment:
         # cannot have '.' in the filename, otherwise latex gets confused
         nid = nid.replace('.', '_')
         nid = nid.replace('/', ':')
-            
+
         filename = os.path.join(self.context.graphics_path, id + suffix)
         # make sure dir exists
         dirname = os.path.dirname(filename)
@@ -147,7 +149,7 @@ class LatexEnvironment:
         with open(filename, 'w') as f:
             f.write(data)
         self.context.f.write('\\includegraphics[width=%s]{%s}%%\n' % (width, id))
-        
+
     class GenericWrap:
         def __init__(self, figure, main_context):
             self.figure = figure
@@ -156,25 +158,26 @@ class LatexEnvironment:
             return self.figure
         def __exit__(self, type, value, traceback): #@UnusedVariable @ReservedAssignment
             self.figure.dump(main_context=self.main_context)
-    
-    
+
+
 class LatexDocument(LatexEnvironment):
     def __init__(self, document_class, class_options, graphics_path="."):
         self.context = LatexContext(graphics_path)
         self.document_class = document_class
-        self.class_options = class_options 
-        
+        self.class_options = class_options
+
     def dump_stream(self, f):
         f.write('\\documentclass[%s]{%s}\n' % (self.class_options,
                                                   self.document_class))
         f.write('\\usepackage{graphicx}\n')
         f.write('\\usepackage{xcolor}\n')
-        f.write('\\usepackage{subfig}\n') 
+        f.write('\\usepackage{subfig}\n')
         f.write('\\graphicspath{{%s/}}\n' % self.context.graphics_path)
         f.write(self.context.preamble.getvalue())
         f.write('\\begin{document}\n')
         f.write(self.context.f.getvalue())
         f.write('\\end{document}\n')
+
 
 class Figure(LatexEnvironment):
     def __init__(self, caption, label, placement, context, double):
@@ -183,15 +186,15 @@ class Figure(LatexEnvironment):
         self.context = context
         self.placement = placement
         self.double = double
-    
+
     def figure(self, *args, **kwargs):
         raise StructureError('Cannot nest figures; use sub().')
-    
+
     def subfigure(self, caption="", label=None):
         figure = SubFigure(caption=caption, label=label,
                            context=self.context.child())
         return LatexEnvironment.GenericWrap(figure, self.context)
-    
+
     def dump(self, main_context):
         # writes everything, and caption delayed
         main_context.preamble.write(self.context.preamble.getvalue())
@@ -201,26 +204,27 @@ class Figure(LatexEnvironment):
         if self.label:
             label = '\\label{%s}' % self.label
         else:
-            label = "" 
+            label = ""
         main_context.f.write('\\caption{%s%s}\n' % (label, self.caption))
         main_context.f.write('\\end{%s}\n' % env)
-        
+
 
 class StructureError(Exception):
     pass
+
 
 class SubFigure(LatexEnvironment):
     def __init__(self, caption, label, context):
         self.caption = caption
         self.label = label
         self.context = context
-    
+
     def figure(self, *args, **kwargs):
         raise StructureError('Cannot nest figures; use sub().')
-    
+
     def subfigure(self, *args, **kwargs):
         raise StructureError('Cannot nest figures; use sub().')
-    
+
     def dump(self, main_context):
         body = self.context.f.getvalue()
         if self.label:
@@ -229,10 +233,8 @@ class SubFigure(LatexEnvironment):
             label = ""
         caption = self.caption
         main_context.preamble.write('\\usepackage{subfig}\n')
-        
-        main_context.f.write('\\subfloat[%s%s]{%s}\n' % (label, caption, body))
 
-        
+        main_context.f.write('\\subfloat[%s%s]{%s}\n' % (label, caption, body))
 
 
 def latexify(s):
