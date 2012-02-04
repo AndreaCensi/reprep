@@ -220,9 +220,15 @@ class DataNode(Node):
         self.mime = mime
         self.caption = caption
 
-    def __str__(self):
+    def __repr__(self):
         return 'DataNode(%s,%s,%s)' % (self.nid, self.mime,
                                        describe_value(self.raw_data))
+
+    def print_tree(self, s=sys.stdout, prefix=""):
+        s.write('%s- %s (%s %s)\n' % (prefix, self.nid,
+                                      self.__class__, self.mime))
+        for child in self.children:
+            child.print_tree(s, prefix + '  ')
 
     def is_image(self):
         return self.mime in [MIME_PNG, MIME_SVG] # XXX 

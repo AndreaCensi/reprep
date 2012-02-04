@@ -1,6 +1,7 @@
 
 
-def set_spines_look_A(pylab, outward_offset=10):
+def set_spines_look_A(pylab, outward_offset=10,
+                      linewidth=2, markersize=3, markeredgewidth=1):
     ''' 
         Taken from 
         http://matplotlib.sourceforge.net/examples/pylab_examples
@@ -21,10 +22,10 @@ def set_spines_look_A(pylab, outward_offset=10):
     ax.yaxis.set_ticks_position('left')
 
     for l in ax.get_xticklines() + ax.get_yticklines():
-        l.set_markersize(3)
-        l.set_markeredgewidth(1)
+        l.set_markersize(markersize)
+        l.set_markeredgewidth(markeredgewidth)
 
-    ax.get_frame().set_linewidth(2)
+    ax.get_frame().set_linewidth(linewidth)
 
 #for l in ax1.yaxis.get_minorticklines()+ax1.xaxis.get_minorticklines():
 #

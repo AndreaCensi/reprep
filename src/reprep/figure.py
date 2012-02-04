@@ -28,6 +28,7 @@ class Figure(Node):
         if (isinstance(child, DataNode) and
             (child.get_suitable_image_representation()
              or child.mime in MIME_IMAGES)):
+            # if pdf, it is here --- but do we have a conversion?
             self.sub(child, child.caption)
             self.automatically_added.add(child)
         else:

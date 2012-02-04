@@ -5,3 +5,4 @@
 from .. import np, contract
 from .axes import *
 from .spines import *
+from .styles import *
