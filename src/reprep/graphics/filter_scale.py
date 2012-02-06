@@ -51,8 +51,10 @@ def scale(value, min_value=None, max_value=None,
     if skim != 0:
         value = skim_top(value, skim)
 
-    if max_value is None: max_value = np.nanmax(value)
-    if min_value is None: min_value = np.nanmin(value)
+    if max_value is None:
+        max_value = np.nanmax(value)
+    if min_value is None:
+        min_value = np.nanmin(value)
     # but what about +- inf?
 
     if properties is not None:
@@ -88,14 +90,17 @@ def scale(value, min_value=None, max_value=None,
     mark_nan(result, isnan, nan_color)
     return result
 
+
 def mark_nan(result, isnan, nan_color):
     for u in [0, 1, 2]:
         col = result[:, :, u]
         col[isnan] = nan_color[u] * 255
         result[:, :, u] = col
 
+
 def interpolate_color(value, a, b):
     return 255 * ((1 - value) * a + value * b)
+
 
 @contract(value='array[HxW]((float32|float64),>=0,<=1)',
           min_colors='color_spec', max_colors='color_spec',

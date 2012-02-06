@@ -72,8 +72,10 @@ class Table(Node):
                 nrows = data.shape[0]
                 ncols = data.shape[1]
 
-                if rows is None: rows = [None] * nrows
-                if cols is None: cols = [None] * ncols
+                if rows is None:
+                    rows = [None] * nrows
+                if cols is None:
+                    cols = [None] * ncols
 
                 data = data.tolist()
 
@@ -81,12 +83,10 @@ class Table(Node):
             raise ValueError('Expected list of lists or ndarray, got %s.' %
                              data.__class__.__name__)
 
-
 #        check_multiple([ (cols, 'list[C](str|None),C>0'),
 #                         (rows, 'list[R](str|None),R>0'),
 #                         (data, 'list[R](list[C])'),
 #                         (caption, 'str|None') ])
-
         self.data = data
         self.cols = cols
         self.rows = rows

@@ -23,6 +23,9 @@ def all_demos(argv):
     r.to_html('reprep_demos_out/index.html')
 
 
-def main(): all_demos(sys.argv)
-if __name__ == '__main__': main()
+def main():
+    all_demos(sys.argv)
+
+if __name__ == '__main__':
+    main()
 
