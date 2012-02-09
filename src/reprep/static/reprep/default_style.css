@@ -62,7 +62,7 @@ p.reprep-credits {
 div.report-text-node {
 	/*background-color:  #aaa;*/
 	overflow: auto;
-	padding-top: 1em;
+	padding: 0;
 }
 
 span.report-text-node-id {
@@ -79,7 +79,7 @@ span.report-text-node-id {
 div.report-text-node-content {
 	display: block;
 	float: left;
-	padding: 1em;
+	padding: 3px;
 	background-color:  #eee;
 	/*border: solid 1px red;*/
 }
