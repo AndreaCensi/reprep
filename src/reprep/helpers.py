@@ -79,8 +79,9 @@ class PylabAttacher:
                                     mime=self.mime, caption=self.caption)
 
         # save a png copy if one is needed
-        if not (self.temp_file.name.endswith('png') or
-                self.temp_file.name.endswith('svg')):
+        if not (self.temp_file.name.endswith('png')
+                #or self.temp_file.name.endswith('svg')
+                ):
             # XXX: not elegant
             with image_node.data_file('png', mime=MIME_PNG,
                                       caption=self.caption) as f2:

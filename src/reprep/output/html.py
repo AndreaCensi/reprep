@@ -97,6 +97,9 @@ def get_node_filename(node, context):
     nid = nid.replace('/', '_')
     nid = nid.replace('.', '_')
     nid = nid.replace(' ', '_')
+    if True:
+        # LaTeX has plenty of problems with '_' in the name
+        nid = nid.replace('_', '-')
     relative = os.path.join(context.rel_resources_dir, nid + suffix)
     absolute = os.path.join(context.resources_dir, nid + suffix)
     return relative, absolute
