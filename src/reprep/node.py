@@ -3,6 +3,7 @@ from . import (MIME_PNG, MIME_PYTHON, contract, ReportInterface,
     describe_type, colorize_success, scale, posneg, Image_from_array, rgb_zoom,
     InvalidURL, NotExistent, MIME_SVG)
 import sys
+from StringIO import StringIO
 
 
 class Node(ReportInterface):
@@ -177,6 +178,11 @@ class Node(ReportInterface):
         for child in self.children:
             child.print_tree(s, prefix + '  ')
 
+    def format_tree(self):
+        s = StringIO()
+        self.print_tree(s)
+        return s.getvalue()
+
     def get_complete_id(self, separator=":"):
         if not self.parent:
             return self.nid
@@ -233,7 +239,9 @@ class DataNode(Node):
     def is_image(self):
         return self.mime in [MIME_PNG, MIME_SVG] # XXX 
 
+    # TODO: move to Figure
     def display(self, display, **kwargs):
+        # TODO: save display parameters
         if display is None:
             display = 'posneg'
         known = {'posneg': posneg,
@@ -256,13 +264,21 @@ class DataNode(Node):
             pil_image.save(f)
 
         return self.resolve_url_dumb(nid)
+#
+#    # TODO: remove
+#    def get_suitable_image_representation(self):
+#        ''' Returns the node if it is an image; otherwise it looks recursively
+#            in the children. '''
+#        def is_image(node):
+#            return isinstance(node, DataNode) and node.is_image()
+#        return self.find_recursively(is_image)
 
-    def get_suitable_image_representation(self):
-        ''' Returns the node if it is an image; otherwise it looks recursively
-            in the children. '''
-        def is_image(node):
-            return isinstance(node, DataNode) and node.is_image()
-        return self.find_recursively(is_image)
+    @contract(mime_types='list(str)')
+    def get_first_child_with_mime(self, mime_types):
+        ''' Search recursively the child with the given mime. '''
+        def choose(node):
+            return isinstance(node, DataNode) and node.mime in mime_types
+        return self.find_recursively(choose)
 
 
 

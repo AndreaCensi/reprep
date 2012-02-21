@@ -1,14 +1,14 @@
+from . import logger
 from .. import MIME_PLAIN, MIME_RST, MIME_PYTHON, Node
 from pkg_resources import (
     resource_filename) #@UnresolvedImport  Eclipse fails here
 from string import Template
 import cPickle
+import datetime
 import mimetypes
 import os
 import shutil
 import sys
-import datetime
-from . import logger
 
 header = """
 <html>
@@ -100,9 +100,23 @@ def get_node_filename(node, context):
     if True:
         # LaTeX has plenty of problems with '_' in the name
         nid = nid.replace('_', '-')
-    relative = os.path.join(context.rel_resources_dir, nid + suffix)
-    absolute = os.path.join(context.resources_dir, nid + suffix)
+
+    f = normalize(nid + suffix)
+
+    relative = os.path.join(context.rel_resources_dir, f)
+    absolute = os.path.join(context.resources_dir, f)
+
     return relative, absolute
+
+
+def normalize(f):
+    # convert '-png.png' to '.png'
+    base, ext = os.path.splitext(f)
+    if len(ext) == 4:
+        w = ext[1:]
+        if base.endswith(w):
+            base = base[:-4]
+    return base + ext
 
 
 def node_to_html_document(node, filename,
@@ -258,11 +272,11 @@ def figure_to_html(node, context):
     for i, sub in enumerate(node.subfigures):
         col = i % ncols
         last_col = col == ncols - 1
-        first_col = col == 0
 
         style = "float:left;"
-        if first_col:
-            style += "clear:left;"
+#        first_col = col == 0
+#        if first_col:
+#            style += "clear:left;"
 
         width = "%d%%" % (95.0 / max(ncols, 2))
         style += 'width:%s' % width
@@ -270,9 +284,9 @@ def figure_to_html(node, context):
         file.write('<div style="%s" class="report-subfigure"> ' % style)
 
         try:
-            actual_resource = node.resolve_url(sub.image)
+            actual_resource = node.resolve_url(sub.web_image)
         except:
-            logger.error("Cannot find sub.image url %s" % sub.image.__repr__())
+            logger.error("Cannot find sub.web_image url %r" % sub.web_image)
             node.parent.print_tree() # XXX
             raise
 

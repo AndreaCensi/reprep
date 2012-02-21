@@ -1,16 +1,12 @@
-from . import MIME_SVG
+from . import MIME_PDF, MIME_SVG, MIME_PNG #@UnusedImport
 
 
 class RepRepDefaults:
-#    default_image_format = MIME_PNG
-    default_image_format = MIME_SVG
-    #MIME_SVG
+    savefig_params = dict(dpi=200, bbox_inches='tight', pad_inches=0.01)
 
-#class ReprepDefaults:
-#    defaults = {
-#        'plot_format': { 'options': ['png', 'pdf', 'png+pdf'],
-#                         'default': 'png'}
-#    }
+    default_image_format = MIME_PDF
 
-
+    save_extra_png = True
+    save_extra_pdf = False
+    save_extra_svg = True
 

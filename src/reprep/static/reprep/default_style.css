@@ -13,19 +13,42 @@ h {
 sssection { border: solid 2px gray; display: block; clear: both; padding: 1em; margin: 1em;}
 
 .report-node { 
-	display: block;padding: 0.2em; margin: 0.2em;
+	display: block; padding: 0.2em; 
+
+    margin-left: 0em;
+    margin-right: 0em;
+    margin-top: 0.2em;
+    margin-bottom: 1em;
+    
+
 	 border-left: solid 0.2em #eee; 
 	 border-top : solid 0.2em #eee;
+     width: 97%;
 }
 
-.report-figure { display: block; padding: 0.2em; margin: 0.2em;
+.report-figure { display: block; 
+    padding: 5px;
+    width: 97%;
+    margin-left: 0em;
+    margin-right: 0em;
+    margin-top: 0.2em;
+    margin-bottom: 0.2em;
 	background-color: #eee;
 }
 
 
 .report-figure-caption { display: block; clear: both;  }
-.report-subfigure {  padding: 5px; padding-bottom: 0; margin: 5px; display: block;}
-.report-subfigure-caption { clear: both; display: block; font-weight: bold; text-align: center;  }
+.report-subfigure {  
+    padding: 5px; 
+    padding-bottom: 0; 
+    margin: 0; 
+    display: block;}
+    
+.report-subfigure-caption { 
+    clear: both; 
+    display: block; 
+    font-weight: bold; text-align: center;  
+}
 
 .node-class { margin:1em; float: right; font-family: monospace; color: blue;}
 .node-id {margin:1em;  float: right; font-family: monospace; font-weight: bold; color: green;}

@@ -1,10 +1,10 @@
-from . import Node, DataNode, contract, describe_type, MIME_PYTHON
+from . import (MIME_IMAGES, logger, Node, DataNode, contract, describe_type,
+    MIME_WEB_IMAGES)
+from .utils import indent
 from collections import namedtuple
 import warnings
-from . import MIME_IMAGES
 
-SubFigure = namedtuple('SubFigure',
-                       'resource image caption display display_args')
+SubFigure = namedtuple('SubFigure', 'resource image web_image caption')
 
 
 class Figure(Node):
@@ -18,24 +18,14 @@ class Figure(Node):
         self.subfigures = []
         self.automatically_added = set()
 
-    @contract(nid='valid_id', mime='None|str', caption='None|str')
-    def data(self, nid, data, mime=MIME_PYTHON, caption=None):
-        ''' Overloaded from Node. Displays the node automatically
-            if it can be displayed.  '''
-
-        child = Node.data(self, nid=nid, data=data, mime=mime, caption=caption)
+    def add_child(self, child):
+        """ Automatically add child if it can be displayed. """
+        Node.add_child(self, child)
 
         if (isinstance(child, DataNode) and
-            (child.get_suitable_image_representation()
-             or child.mime in MIME_IMAGES)):
-            # if pdf, it is here --- but do we have a conversion?
+            child.get_first_child_with_mime(MIME_IMAGES)):
             self.sub(child, child.caption)
             self.automatically_added.add(child)
-        else:
-            # XXX: what to do now?
-            # print('Warning, not adding %s to figure.' % child)
-            pass
-        return child
 
     def sub(self, resource, caption=None, display=None, **kwargs):
         ''' Adds a subfigure displaying the given resource. 
@@ -67,24 +57,33 @@ class Figure(Node):
             msg = ('I expect a DataNode as an argument to sub(), not a %s.'
                    % describe_type(resource))
             raise ValueError(msg)
+
         if display is not None:
             image = data.display(display, **kwargs)
         else:
-            image = data.get_suitable_image_representation()
+            image = data.get_first_child_with_mime(MIME_IMAGES)
 
             if image is None:
-                self.parent.print_tree()
+                self.parent.print_tree() # XXX
                 raise ValueError('Could not find candidate image for resource '
                                  '%r; image node is %r.' %
                                  (resource, data.get_complete_id()))
 
-        resource_url = self.get_relative_url(data)
-        image_url = self.get_relative_url(image)
+        # Get an image that can be shown in a browser
+        web_image = image.get_first_child_with_mime(MIME_WEB_IMAGES)
+        if web_image is None:
+            logger.error('No image with mime %r found in:\n%s' %
+                         (MIME_WEB_IMAGES, indent(image.format_tree(), '>')))
+            # convert the image to web image
+            # TODO: to write
+            web_image = image # XXX
+            logger.error('I need to convert %s into a web image.' %
+                         (image))
 
-        # TODO: check it is not already here
-        sub = SubFigure(resource=resource_url, image=image_url,
-                                caption=caption,
-                               display=display, display_args=kwargs)
+        sub = SubFigure(resource=self.get_relative_url(data),
+                        image=self.get_relative_url(image),
+                        web_image=self.get_relative_url(web_image),
+                        caption=caption)
         self.subfigures.append(sub)
 
     def get_subfigures(self):

@@ -6,13 +6,12 @@ MIME_PLAIN = 'text/plain'
 MIME_PYTHON = 'application/python'
 MIME_SVG = 'image/svg+xml'
 
+# Images 
 MIME_IMAGES = [MIME_PDF, MIME_SVG, MIME_PNG]
+# Images that can be displayed in a browser
+MIME_WEB_IMAGES = [MIME_SVG, MIME_PNG]
 
-USE_PNG = 'png' # Plot using png
-USE_PDF = 'pdf' # Plot using pdf
-USE_PDF_PLUS_PNG = 'pdf+png' # also create 
-
-VALID_ID_REGEXP = '\A\w+\Z'
-VALID_ID_REGEXP = '\A\w(\w|-)*\Z'
+#VALID_ID_REGEXP = '\A\w+\Z'
+#VALID_ID_REGEXP = '\A\w(\w|-)*\Z'
 VALID_ID_REGEXP = '\A\w(\w|-|\.)*\Z'
 

@@ -1,6 +1,7 @@
-from . import RepRepDefaults, MIME_PNG, contract, Node
+from . import MIME_SVG, MIME_PDF, RepRepDefaults, MIME_PNG, contract, Node
 import mimetypes
 import tempfile
+from reprep.node import DataNode
 
 
 class Attacher:
@@ -46,7 +47,8 @@ class PylabAttacher:
 
         suffix = mimetypes.guess_extension(self.mime)
         if not suffix:
-            raise Exception('Cannot guess extension for MIME %r.' % mime)
+            msg = 'Cannot guess extension for MIME %r.' % mime
+            raise ValueError(msg)
 
         self.temp_file = tempfile.NamedTemporaryFile(suffix=suffix)
 
@@ -66,34 +68,32 @@ class PylabAttacher:
         if not self.figure.axes:
             raise Exception('You did not draw anything in the image.')
 
-        dpi = 300
-
         self.pylab.savefig(self.temp_file.name,
-                           bbox_inches='tight', dpi=dpi,
-                           pad_inches=0.01) # TODO: make parameters
+                           **RepRepDefaults.savefig_params)
 
         with open(self.temp_file.name) as f:
             data = f.read()
+        self.temp_file.close()
 
-        image_node = self.node.data(nid=self.nid, data=data,
-                                    mime=self.mime, caption=self.caption)
+        image_node = DataNode(nid=self.nid, data=data,
+                              mime=self.mime, caption=self.caption)
 
-        # save a png copy if one is needed
-        if not (self.temp_file.name.endswith('png')
-                #or self.temp_file.name.endswith('svg')
-                ):
-            # XXX: not elegant
-            with image_node.data_file('png', mime=MIME_PNG,
-                                      caption=self.caption) as f2:
-                self.pylab.savefig(f2, dpi=dpi,
-                                   bbox_inches='tight', pad_inches=0.01)
-            from . import Figure
-            if isinstance(self.node, Figure):
-                self.node.sub(image_node)
+        # save other versions if needed
+        if (self.mime != MIME_PNG) and RepRepDefaults.save_extra_png:
+            with image_node.data_file('png', mime=MIME_PNG) as f2:
+                self.pylab.savefig(f2, **RepRepDefaults.savefig_params)
+
+        if (self.mime != MIME_SVG) and RepRepDefaults.save_extra_svg:
+            with image_node.data_file('svg', mime=MIME_SVG) as f2:
+                self.pylab.savefig(f2, **RepRepDefaults.savefig_params)
+
+        if (self.mime != MIME_PDF) and RepRepDefaults.save_extra_pdf:
+            with image_node.data_file('pdf', mime=MIME_PDF) as f2:
+                self.pylab.savefig(f2, **RepRepDefaults.savefig_params)
 
         self.pylab.close()
 
-        self.temp_file.close()
+        self.node.add_child(image_node)
 
 
 @contract(parent=Node, nid='valid_id',

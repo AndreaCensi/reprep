@@ -1,5 +1,6 @@
 __version__ = '2.0'
 
+# TODO: move these away and only import if necessary
 import matplotlib
 if matplotlib.get_backend() != 'agg':
     matplotlib.use('agg')
@@ -19,6 +20,7 @@ logger = logging.getLogger(__name__)
 # XXX only import things explicitely
 from .structures import *
 from .constants import *
+from .repcontracts import *
 from .config import *
 from .utils import *
 from .interface import *
