@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>reprep.graphics.filter_scale</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="reprep-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://github.com/AndreaCensi/reprep">Reprep</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="reprep-module.html">Package&nbsp;reprep</a> ::
+        <a href="reprep.graphics-module.html">Package&nbsp;graphics</a> ::
+        Module&nbsp;filter_scale
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="reprep.graphics.filter_scale-pysrc.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<h1 class="epydoc">Source Code for <a href="reprep.graphics.filter_scale-module.html">Module reprep.graphics.filter_scale</a></h1>
+<pre class="py-src">
+<a name="L1"></a><tt class="py-lineno">  1</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-op">.</tt> <tt class="py-keyword">import</tt> <tt class="py-name">contract</tt><tt class="py-op">,</tt> <tt class="py-name">np</tt><tt class="py-op">,</tt> <tt id="link-0" class="py-name" targets="Function reprep.graphics.scaling.skim_top()=reprep.graphics.scaling-module.html#skim_top"><a title="reprep.graphics.scaling.skim_top" class="py-name" href="#" onclick="return doclink('link-0', 'skim_top', 'link-0');">skim_top</a></tt> </tt>
+<a name="L2"></a><tt class="py-lineno">  2</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">numpy</tt> <tt class="py-keyword">import</tt> <tt id="link-1" class="py-name" targets="Variable reprep.graphics.filter_posneg.maximum=reprep.graphics.filter_posneg-module.html#maximum,Variable reprep.graphics.filter_scale.maximum=reprep.graphics.filter_scale-module.html#maximum"><a title="reprep.graphics.filter_posneg.maximum
+reprep.graphics.filter_scale.maximum" class="py-name" href="#" onclick="return doclink('link-1', 'maximum', 'link-1');">maximum</a></tt><tt class="py-op">,</tt> <tt id="link-2" class="py-name" targets="Variable reprep.graphics.filter_posneg.minimum=reprep.graphics.filter_posneg-module.html#minimum,Variable reprep.graphics.filter_scale.minimum=reprep.graphics.filter_scale-module.html#minimum"><a title="reprep.graphics.filter_posneg.minimum
+reprep.graphics.filter_scale.minimum" class="py-name" href="#" onclick="return doclink('link-2', 'minimum', 'link-2');">minimum</a></tt><tt class="py-op">,</tt> <tt class="py-name">zeros</tt> </tt>
+<a name="L3"></a><tt class="py-lineno">  3</tt>  <tt class="py-line"> </tt>
+<a name="L4"></a><tt class="py-lineno">  4</tt>  <tt class="py-line"> </tt>
+<a name="L5"></a><tt class="py-lineno">  5</tt>  <tt class="py-line"><tt class="py-decorator">@</tt><tt class="py-decorator">contract</tt><tt class="py-op">(</tt><tt class="py-name">value</tt><tt class="py-op">=</tt><tt class="py-string">'array[HxW],H&gt;0,W&gt;0'</tt><tt class="py-op">,</tt> </tt>
+<a name="L6"></a><tt class="py-lineno">  6</tt>  <tt class="py-line">          <tt class="py-name">max_value</tt><tt class="py-op">=</tt><tt class="py-string">'None|number'</tt><tt class="py-op">,</tt> </tt>
+<a name="L7"></a><tt class="py-lineno">  7</tt>  <tt class="py-line">          <tt class="py-name">min_value</tt><tt class="py-op">=</tt><tt class="py-string">'None|number'</tt><tt class="py-op">,</tt> </tt>
+<a name="L8"></a><tt class="py-lineno">  8</tt>  <tt class="py-line">          <tt class="py-name">skim</tt><tt class="py-op">=</tt><tt class="py-string">'&gt;=0,&lt;=90'</tt><tt class="py-op">,</tt> </tt>
+<a name="L9"></a><tt class="py-lineno">  9</tt>  <tt class="py-line">          <tt class="py-name">min_color</tt><tt class="py-op">=</tt><tt class="py-string">'color_spec'</tt><tt class="py-op">,</tt> </tt>
+<a name="L10"></a><tt class="py-lineno"> 10</tt>  <tt class="py-line">          <tt class="py-name">nan_color</tt><tt class="py-op">=</tt><tt class="py-string">'color_spec'</tt><tt class="py-op">,</tt> </tt>
+<a name="L11"></a><tt class="py-lineno"> 11</tt>  <tt class="py-line">          <tt class="py-name">max_color</tt><tt class="py-op">=</tt><tt class="py-string">'color_spec'</tt><tt class="py-op">,</tt> </tt>
+<a name="L12"></a><tt class="py-lineno"> 12</tt>  <tt class="py-line">          <tt class="py-name">flat_color</tt><tt class="py-op">=</tt><tt class="py-string">'color_spec'</tt><tt class="py-op">,</tt> </tt>
+<a name="L13"></a><tt class="py-lineno"> 13</tt>  <tt class="py-line">          <tt class="py-name">properties</tt><tt class="py-op">=</tt><tt class="py-string">'None|map'</tt><tt class="py-op">)</tt> </tt>
+<a name="scale"></a><div id="scale-def"><a name="L14"></a><tt class="py-lineno"> 14</tt> <a class="py-toggle" href="#" id="scale-toggle" onclick="return toggle('scale');">-</a><tt class="py-line"><tt class="py-keyword">def</tt> <a class="py-def-name" href="reprep.graphics.filter_scale-module.html#scale">scale</a><tt class="py-op">(</tt><tt class="py-param">value</tt><tt class="py-op">,</tt> <tt class="py-param">min_value</tt><tt class="py-op">=</tt><tt class="py-name">None</tt><tt class="py-op">,</tt> <tt class="py-param">max_value</tt><tt class="py-op">=</tt><tt class="py-name">None</tt><tt class="py-op">,</tt> </tt>
+<a name="L15"></a><tt class="py-lineno"> 15</tt>  <tt class="py-line">                 <tt class="py-param">min_color</tt><tt class="py-op">=</tt><tt class="py-op">[</tt><tt class="py-number">1</tt><tt class="py-op">,</tt> <tt class="py-number">1</tt><tt class="py-op">,</tt> <tt class="py-number">1</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> </tt>
+<a name="L16"></a><tt class="py-lineno"> 16</tt>  <tt class="py-line">                 <tt class="py-param">max_color</tt><tt class="py-op">=</tt><tt class="py-op">[</tt><tt class="py-number">0</tt><tt class="py-op">,</tt> <tt class="py-number">0</tt><tt class="py-op">,</tt> <tt class="py-number">0</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> </tt>
+<a name="L17"></a><tt class="py-lineno"> 17</tt>  <tt class="py-line">                 <tt class="py-param">nan_color</tt><tt class="py-op">=</tt><tt class="py-op">[</tt><tt class="py-number">1</tt><tt class="py-op">,</tt> <tt class="py-number">0.6</tt><tt class="py-op">,</tt> <tt class="py-number">0.6</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> </tt>
+<a name="L18"></a><tt class="py-lineno"> 18</tt>  <tt class="py-line">                 <tt class="py-param">flat_color</tt><tt class="py-op">=</tt><tt class="py-op">[</tt><tt class="py-number">0.5</tt><tt class="py-op">,</tt> <tt class="py-number">0.5</tt><tt class="py-op">,</tt> <tt class="py-number">0.5</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> </tt>
+<a name="L19"></a><tt class="py-lineno"> 19</tt>  <tt class="py-line">                 <tt class="py-param">skim</tt><tt class="py-op">=</tt><tt class="py-number">0</tt><tt class="py-op">,</tt> </tt>
+<a name="L20"></a><tt class="py-lineno"> 20</tt>  <tt class="py-line">                 <tt class="py-param">properties</tt><tt class="py-op">=</tt><tt class="py-name">None</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="scale-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="scale-expanded"><a name="L21"></a><tt class="py-lineno"> 21</tt>  <tt class="py-line">    <tt class="py-docstring">""" </tt> </tt>
+<a name="L22"></a><tt class="py-lineno"> 22</tt>  <tt class="py-line"><tt class="py-docstring">        Provides a RGB representation of the values by interpolating the range </tt> </tt>
+<a name="L23"></a><tt class="py-lineno"> 23</tt>  <tt class="py-line"><tt class="py-docstring">        [min(value),max(value)] into the colorspace [min_color, max_color].</tt> </tt>
+<a name="L24"></a><tt class="py-lineno"> 24</tt>  <tt class="py-line"><tt class="py-docstring">        </tt> </tt>
+<a name="L25"></a><tt class="py-lineno"> 25</tt>  <tt class="py-line"><tt class="py-docstring">        Input: a numpy array with finite values squeeze()able to (W,H).</tt> </tt>
+<a name="L26"></a><tt class="py-lineno"> 26</tt>  <tt class="py-line"><tt class="py-docstring">        </tt> </tt>
+<a name="L27"></a><tt class="py-lineno"> 27</tt>  <tt class="py-line"><tt class="py-docstring">        Configuration:</tt> </tt>
+<a name="L28"></a><tt class="py-lineno"> 28</tt>  <tt class="py-line"><tt class="py-docstring">        </tt> </tt>
+<a name="L29"></a><tt class="py-lineno"> 29</tt>  <tt class="py-line"><tt class="py-docstring">        - ``min_value``: If specified, this is taken to be the threshold. </tt> </tt>
+<a name="L30"></a><tt class="py-lineno"> 30</tt>  <tt class="py-line"><tt class="py-docstring">                         Everything below min_value is considered to </tt> </tt>
+<a name="L31"></a><tt class="py-lineno"> 31</tt>  <tt class="py-line"><tt class="py-docstring">                         be equal to min_value.</tt> </tt>
+<a name="L32"></a><tt class="py-lineno"> 32</tt>  <tt class="py-line"><tt class="py-docstring">        - ``max_value``: Optional upper threshold.</tt> </tt>
+<a name="L33"></a><tt class="py-lineno"> 33</tt>  <tt class="py-line"><tt class="py-docstring">        - ``min_color``: color associated to minimum value. </tt> </tt>
+<a name="L34"></a><tt class="py-lineno"> 34</tt>  <tt class="py-line"><tt class="py-docstring">        - ``max_color``: color associated to maximum value. </tt> </tt>
+<a name="L35"></a><tt class="py-lineno"> 35</tt>  <tt class="py-line"><tt class="py-docstring">        - ``nan_color``: color associated to nan/inf values. </tt> </tt>
+<a name="L36"></a><tt class="py-lineno"> 36</tt>  <tt class="py-line"><tt class="py-docstring">       </tt> </tt>
+<a name="L37"></a><tt class="py-lineno"> 37</tt>  <tt class="py-line"><tt class="py-docstring">        If all valid elements have the same value, their color will be </tt> </tt>
+<a name="L38"></a><tt class="py-lineno"> 38</tt>  <tt class="py-line"><tt class="py-docstring">        ``flat_color``.</tt> </tt>
+<a name="L39"></a><tt class="py-lineno"> 39</tt>  <tt class="py-line"><tt class="py-docstring">        </tt> </tt>
+<a name="L40"></a><tt class="py-lineno"> 40</tt>  <tt class="py-line"><tt class="py-docstring">        Returns:  a (W,H,3) numpy array with dtype uint8 </tt> </tt>
+<a name="L41"></a><tt class="py-lineno"> 41</tt>  <tt class="py-line"><tt class="py-docstring">        representing a RGB image.</tt> </tt>
+<a name="L42"></a><tt class="py-lineno"> 42</tt>  <tt class="py-line"><tt class="py-docstring">      </tt> </tt>
+<a name="L43"></a><tt class="py-lineno"> 43</tt>  <tt class="py-line"><tt class="py-docstring">    """</tt> </tt>
+<a name="L44"></a><tt class="py-lineno"> 44</tt>  <tt class="py-line">    <tt class="py-name">value</tt> <tt class="py-op">=</tt> <tt class="py-name">value</tt><tt class="py-op">.</tt><tt class="py-name">astype</tt><tt class="py-op">(</tt><tt class="py-string">'float32'</tt><tt class="py-op">)</tt> </tt>
+<a name="L45"></a><tt class="py-lineno"> 45</tt>  <tt class="py-line"> </tt>
+<a name="L46"></a><tt class="py-lineno"> 46</tt>  <tt class="py-line">    <tt class="py-comment"># TODO: copy nx1 code from procgraph </tt> </tt>
+<a name="L47"></a><tt class="py-lineno"> 47</tt>  <tt class="py-line">    <tt class="py-name">value</tt> <tt class="py-op">=</tt> <tt class="py-name">value</tt><tt class="py-op">.</tt><tt class="py-name">squeeze</tt><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">.</tt><tt class="py-name">copy</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L48"></a><tt class="py-lineno"> 48</tt>  <tt class="py-line"> </tt>
+<a name="L49"></a><tt class="py-lineno"> 49</tt>  <tt class="py-line">    <tt id="link-3" class="py-name" targets="Variable reprep.graphics.numpy_utils.isnan=reprep.graphics.numpy_utils-module.html#isnan"><a title="reprep.graphics.numpy_utils.isnan" class="py-name" href="#" onclick="return doclink('link-3', 'isnan', 'link-3');">isnan</a></tt> <tt class="py-op">=</tt> <tt class="py-name">np</tt><tt class="py-op">.</tt><tt class="py-name">logical_not</tt><tt class="py-op">(</tt><tt class="py-name">np</tt><tt class="py-op">.</tt><tt id="link-4" class="py-name" targets="Variable reprep.graphics.numpy_utils.isfinite=reprep.graphics.numpy_utils-module.html#isfinite"><a title="reprep.graphics.numpy_utils.isfinite" class="py-name" href="#" onclick="return doclink('link-4', 'isfinite', 'link-4');">isfinite</a></tt><tt class="py-op">(</tt><tt class="py-name">value</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+<a name="L50"></a><tt class="py-lineno"> 50</tt>  <tt class="py-line"> </tt>
+<a name="L51"></a><tt class="py-lineno"> 51</tt>  <tt class="py-line">    <tt class="py-keyword">if</tt> <tt class="py-name">skim</tt> <tt class="py-op">!=</tt> <tt class="py-number">0</tt><tt class="py-op">:</tt> </tt>
+<a name="L52"></a><tt class="py-lineno"> 52</tt>  <tt class="py-line">        <tt class="py-name">value</tt> <tt class="py-op">=</tt> <tt id="link-5" class="py-name"><a title="reprep.graphics.scaling.skim_top" class="py-name" href="#" onclick="return doclink('link-5', 'skim_top', 'link-0');">skim_top</a></tt><tt class="py-op">(</tt><tt class="py-name">value</tt><tt class="py-op">,</tt> <tt class="py-name">skim</tt><tt class="py-op">)</tt> </tt>
+<a name="L53"></a><tt class="py-lineno"> 53</tt>  <tt class="py-line"> </tt>
+<a name="L54"></a><tt class="py-lineno"> 54</tt>  <tt class="py-line">    <tt class="py-keyword">if</tt> <tt class="py-name">max_value</tt> <tt class="py-keyword">is</tt> <tt class="py-name">None</tt><tt class="py-op">:</tt> </tt>
+<a name="L55"></a><tt class="py-lineno"> 55</tt>  <tt class="py-line">        <tt class="py-name">max_value</tt> <tt class="py-op">=</tt> <tt class="py-name">np</tt><tt class="py-op">.</tt><tt class="py-name">nanmax</tt><tt class="py-op">(</tt><tt class="py-name">value</tt><tt class="py-op">)</tt> </tt>
+<a name="L56"></a><tt class="py-lineno"> 56</tt>  <tt class="py-line">    <tt class="py-keyword">if</tt> <tt class="py-name">min_value</tt> <tt class="py-keyword">is</tt> <tt class="py-name">None</tt><tt class="py-op">:</tt> </tt>
+<a name="L57"></a><tt class="py-lineno"> 57</tt>  <tt class="py-line">        <tt class="py-name">min_value</tt> <tt class="py-op">=</tt> <tt class="py-name">np</tt><tt class="py-op">.</tt><tt class="py-name">nanmin</tt><tt class="py-op">(</tt><tt class="py-name">value</tt><tt class="py-op">)</tt> </tt>
+<a name="L58"></a><tt class="py-lineno"> 58</tt>  <tt class="py-line">    <tt class="py-comment"># but what about +- inf?</tt> </tt>
+<a name="L59"></a><tt class="py-lineno"> 59</tt>  <tt class="py-line"> </tt>
+<a name="L60"></a><tt class="py-lineno"> 60</tt>  <tt class="py-line">    <tt class="py-keyword">if</tt> <tt class="py-name">properties</tt> <tt class="py-keyword">is</tt> <tt class="py-keyword">not</tt> <tt class="py-name">None</tt><tt class="py-op">:</tt> </tt>
+<a name="L61"></a><tt class="py-lineno"> 61</tt>  <tt class="py-line">        <tt class="py-name">properties</tt><tt class="py-op">[</tt><tt class="py-string">'min_value'</tt><tt class="py-op">]</tt> <tt class="py-op">=</tt> <tt class="py-name">min_value</tt> </tt>
+<a name="L62"></a><tt class="py-lineno"> 62</tt>  <tt class="py-line">        <tt class="py-name">properties</tt><tt class="py-op">[</tt><tt class="py-string">'max_value'</tt><tt class="py-op">]</tt> <tt class="py-op">=</tt> <tt class="py-name">max_value</tt> </tt>
+<a name="L63"></a><tt class="py-lineno"> 63</tt>  <tt class="py-line">        <tt class="py-name">properties</tt><tt class="py-op">[</tt><tt class="py-string">'min_color'</tt><tt class="py-op">]</tt> <tt class="py-op">=</tt> <tt class="py-name">min_color</tt> </tt>
+<a name="L64"></a><tt class="py-lineno"> 64</tt>  <tt class="py-line">        <tt class="py-name">properties</tt><tt class="py-op">[</tt><tt class="py-string">'max_color'</tt><tt class="py-op">]</tt> <tt class="py-op">=</tt> <tt class="py-name">max_color</tt> </tt>
+<a name="L65"></a><tt class="py-lineno"> 65</tt>  <tt class="py-line">        <tt class="py-name">properties</tt><tt class="py-op">[</tt><tt class="py-string">'nan_color'</tt><tt class="py-op">]</tt> <tt class="py-op">=</tt> <tt class="py-name">nan_color</tt> </tt>
+<a name="L66"></a><tt class="py-lineno"> 66</tt>  <tt class="py-line">        <tt class="py-name">bar_shape</tt> <tt class="py-op">=</tt> <tt class="py-op">(</tt><tt class="py-number">512</tt><tt class="py-op">,</tt> <tt class="py-number">128</tt><tt class="py-op">)</tt> </tt>
+<a name="L67"></a><tt class="py-lineno"> 67</tt>  <tt class="py-line">        <tt class="py-name">bar</tt> <tt class="py-op">=</tt> <tt class="py-name">np</tt><tt class="py-op">.</tt><tt class="py-name">vstack</tt><tt class="py-op">(</tt><tt class="py-op">[</tt><tt class="py-name">np</tt><tt class="py-op">.</tt><tt class="py-name">linspace</tt><tt class="py-op">(</tt><tt class="py-number">0</tt><tt class="py-op">,</tt> <tt class="py-number">1</tt><tt class="py-op">,</tt> <tt class="py-name">bar_shape</tt><tt class="py-op">[</tt><tt class="py-number">0</tt><tt class="py-op">]</tt><tt class="py-op">)</tt><tt class="py-op">]</tt> <tt class="py-op">*</tt> <tt class="py-name">bar_shape</tt><tt class="py-op">[</tt><tt class="py-number">1</tt><tt class="py-op">]</tt><tt class="py-op">)</tt><tt class="py-op">.</tt><tt class="py-name">T</tt> </tt>
+<a name="L68"></a><tt class="py-lineno"> 68</tt>  <tt class="py-line">        <tt class="py-name">properties</tt><tt class="py-op">[</tt><tt class="py-string">'color_bar'</tt><tt class="py-op">]</tt> <tt class="py-op">=</tt> <tt id="link-6" class="py-name" targets="Function reprep.graphics.filter_scale.interpolate_colors()=reprep.graphics.filter_scale-module.html#interpolate_colors"><a title="reprep.graphics.filter_scale.interpolate_colors" class="py-name" href="#" onclick="return doclink('link-6', 'interpolate_colors', 'link-6');">interpolate_colors</a></tt><tt class="py-op">(</tt><tt class="py-name">bar</tt><tt class="py-op">,</tt> <tt class="py-name">min_color</tt><tt class="py-op">,</tt> <tt class="py-name">max_color</tt><tt class="py-op">)</tt> </tt>
+<a name="L69"></a><tt class="py-lineno"> 69</tt>  <tt class="py-line"> </tt>
+<a name="L70"></a><tt class="py-lineno"> 70</tt>  <tt class="py-line">    <tt class="py-keyword">if</tt> <tt class="py-name">max_value</tt> <tt class="py-op">==</tt> <tt class="py-name">min_value</tt> <tt class="py-keyword">or</tt> \ </tt>
+<a name="L71"></a><tt class="py-lineno"> 71</tt>  <tt class="py-line">      <tt class="py-op">(</tt><tt class="py-keyword">not</tt> <tt class="py-name">np</tt><tt class="py-op">.</tt><tt id="link-7" class="py-name"><a title="reprep.graphics.numpy_utils.isfinite" class="py-name" href="#" onclick="return doclink('link-7', 'isfinite', 'link-4');">isfinite</a></tt><tt class="py-op">(</tt><tt class="py-name">min_value</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> <tt class="py-keyword">or</tt> \ </tt>
+<a name="L72"></a><tt class="py-lineno"> 72</tt>  <tt class="py-line">      <tt class="py-op">(</tt><tt class="py-keyword">not</tt> <tt class="py-name">np</tt><tt class="py-op">.</tt><tt id="link-8" class="py-name"><a title="reprep.graphics.numpy_utils.isfinite" class="py-name" href="#" onclick="return doclink('link-8', 'isfinite', 'link-4');">isfinite</a></tt><tt class="py-op">(</tt><tt class="py-name">max_value</tt><tt class="py-op">)</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L73"></a><tt class="py-lineno"> 73</tt>  <tt class="py-line">        <tt class="py-name">result</tt> <tt class="py-op">=</tt> <tt class="py-name">zeros</tt><tt class="py-op">(</tt><tt class="py-op">(</tt><tt class="py-name">value</tt><tt class="py-op">.</tt><tt class="py-name">shape</tt><tt class="py-op">[</tt><tt class="py-number">0</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt class="py-name">value</tt><tt class="py-op">.</tt><tt class="py-name">shape</tt><tt class="py-op">[</tt><tt class="py-number">1</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt class="py-number">3</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> <tt class="py-name">dtype</tt><tt class="py-op">=</tt><tt class="py-string">'uint8'</tt><tt class="py-op">)</tt> </tt>
+<a name="L74"></a><tt class="py-lineno"> 74</tt>  <tt class="py-line">        <tt class="py-name">result</tt><tt class="py-op">[</tt><tt class="py-op">:</tt><tt class="py-op">,</tt> <tt class="py-op">:</tt><tt class="py-op">,</tt> <tt class="py-number">0</tt><tt class="py-op">]</tt> <tt class="py-op">=</tt> <tt class="py-name">flat_color</tt><tt class="py-op">[</tt><tt class="py-number">0</tt><tt class="py-op">]</tt> <tt class="py-comment"># TODO: write something?</tt> </tt>
+<a name="L75"></a><tt class="py-lineno"> 75</tt>  <tt class="py-line">        <tt class="py-name">result</tt><tt class="py-op">[</tt><tt class="py-op">:</tt><tt class="py-op">,</tt> <tt class="py-op">:</tt><tt class="py-op">,</tt> <tt class="py-number">1</tt><tt class="py-op">]</tt> <tt class="py-op">=</tt> <tt class="py-name">flat_color</tt><tt class="py-op">[</tt><tt class="py-number">1</tt><tt class="py-op">]</tt> </tt>
+<a name="L76"></a><tt class="py-lineno"> 76</tt>  <tt class="py-line">        <tt class="py-name">result</tt><tt class="py-op">[</tt><tt class="py-op">:</tt><tt class="py-op">,</tt> <tt class="py-op">:</tt><tt class="py-op">,</tt> <tt class="py-number">2</tt><tt class="py-op">]</tt> <tt class="py-op">=</tt> <tt class="py-name">flat_color</tt><tt class="py-op">[</tt><tt class="py-number">2</tt><tt class="py-op">]</tt> </tt>
+<a name="L77"></a><tt class="py-lineno"> 77</tt>  <tt class="py-line">        <tt id="link-9" class="py-name" targets="Function reprep.graphics.filter_scale.mark_nan()=reprep.graphics.filter_scale-module.html#mark_nan"><a title="reprep.graphics.filter_scale.mark_nan" class="py-name" href="#" onclick="return doclink('link-9', 'mark_nan', 'link-9');">mark_nan</a></tt><tt class="py-op">(</tt><tt class="py-name">result</tt><tt class="py-op">,</tt> <tt id="link-10" class="py-name"><a title="reprep.graphics.numpy_utils.isnan" class="py-name" href="#" onclick="return doclink('link-10', 'isnan', 'link-3');">isnan</a></tt><tt class="py-op">,</tt> <tt class="py-name">nan_color</tt><tt class="py-op">)</tt> </tt>
+<a name="L78"></a><tt class="py-lineno"> 78</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">result</tt> </tt>
+<a name="L79"></a><tt class="py-lineno"> 79</tt>  <tt class="py-line"> </tt>
+<a name="L80"></a><tt class="py-lineno"> 80</tt>  <tt class="py-line">    <tt class="py-keyword">assert</tt> <tt class="py-name">np</tt><tt class="py-op">.</tt><tt id="link-11" class="py-name"><a title="reprep.graphics.numpy_utils.isfinite" class="py-name" href="#" onclick="return doclink('link-11', 'isfinite', 'link-4');">isfinite</a></tt><tt class="py-op">(</tt><tt class="py-name">min_value</tt><tt class="py-op">)</tt> </tt>
+<a name="L81"></a><tt class="py-lineno"> 81</tt>  <tt class="py-line">    <tt class="py-keyword">assert</tt> <tt class="py-name">np</tt><tt class="py-op">.</tt><tt id="link-12" class="py-name"><a title="reprep.graphics.numpy_utils.isfinite" class="py-name" href="#" onclick="return doclink('link-12', 'isfinite', 'link-4');">isfinite</a></tt><tt class="py-op">(</tt><tt class="py-name">max_value</tt><tt class="py-op">)</tt> </tt>
+<a name="L82"></a><tt class="py-lineno"> 82</tt>  <tt class="py-line"> </tt>
+<a name="L83"></a><tt class="py-lineno"> 83</tt>  <tt class="py-line">    <tt class="py-name">value01</tt> <tt class="py-op">=</tt> <tt class="py-op">(</tt><tt class="py-name">value</tt> <tt class="py-op">-</tt> <tt class="py-name">min_value</tt><tt class="py-op">)</tt> <tt class="py-op">/</tt> <tt class="py-op">(</tt><tt class="py-name">max_value</tt> <tt class="py-op">-</tt> <tt class="py-name">min_value</tt><tt class="py-op">)</tt> </tt>
+<a name="L84"></a><tt class="py-lineno"> 84</tt>  <tt class="py-line"> </tt>
+<a name="L85"></a><tt class="py-lineno"> 85</tt>  <tt class="py-line">    <tt class="py-comment"># Cut at the thresholds</tt> </tt>
+<a name="L86"></a><tt class="py-lineno"> 86</tt>  <tt class="py-line">    <tt class="py-name">value01</tt> <tt class="py-op">=</tt> <tt id="link-13" class="py-name"><a title="reprep.graphics.filter_posneg.maximum
+reprep.graphics.filter_scale.maximum" class="py-name" href="#" onclick="return doclink('link-13', 'maximum', 'link-1');">maximum</a></tt><tt class="py-op">(</tt><tt class="py-name">value01</tt><tt class="py-op">,</tt> <tt class="py-number">0</tt><tt class="py-op">)</tt> </tt>
+<a name="L87"></a><tt class="py-lineno"> 87</tt>  <tt class="py-line">    <tt class="py-name">value01</tt> <tt class="py-op">=</tt> <tt id="link-14" class="py-name"><a title="reprep.graphics.filter_posneg.minimum
+reprep.graphics.filter_scale.minimum" class="py-name" href="#" onclick="return doclink('link-14', 'minimum', 'link-2');">minimum</a></tt><tt class="py-op">(</tt><tt class="py-name">value01</tt><tt class="py-op">,</tt> <tt class="py-number">1</tt><tt class="py-op">)</tt> </tt>
+<a name="L88"></a><tt class="py-lineno"> 88</tt>  <tt class="py-line">    <tt class="py-name">value01</tt><tt class="py-op">[</tt><tt id="link-15" class="py-name"><a title="reprep.graphics.numpy_utils.isnan" class="py-name" href="#" onclick="return doclink('link-15', 'isnan', 'link-3');">isnan</a></tt><tt class="py-op">]</tt> <tt class="py-op">=</tt> <tt class="py-number">0.5</tt> <tt class="py-comment"># any value</tt> </tt>
+<a name="L89"></a><tt class="py-lineno"> 89</tt>  <tt class="py-line">    <tt class="py-name">result</tt> <tt class="py-op">=</tt> <tt id="link-16" class="py-name"><a title="reprep.graphics.filter_scale.interpolate_colors" class="py-name" href="#" onclick="return doclink('link-16', 'interpolate_colors', 'link-6');">interpolate_colors</a></tt><tt class="py-op">(</tt><tt class="py-name">value01</tt><tt class="py-op">,</tt> <tt class="py-name">min_color</tt><tt class="py-op">,</tt> <tt class="py-name">max_color</tt><tt class="py-op">)</tt> </tt>
+<a name="L90"></a><tt class="py-lineno"> 90</tt>  <tt class="py-line">    <tt id="link-17" class="py-name"><a title="reprep.graphics.filter_scale.mark_nan" class="py-name" href="#" onclick="return doclink('link-17', 'mark_nan', 'link-9');">mark_nan</a></tt><tt class="py-op">(</tt><tt class="py-name">result</tt><tt class="py-op">,</tt> <tt id="link-18" class="py-name"><a title="reprep.graphics.numpy_utils.isnan" class="py-name" href="#" onclick="return doclink('link-18', 'isnan', 'link-3');">isnan</a></tt><tt class="py-op">,</tt> <tt class="py-name">nan_color</tt><tt class="py-op">)</tt> </tt>
+<a name="L91"></a><tt class="py-lineno"> 91</tt>  <tt class="py-line">    <tt class="py-keyword">return</tt> <tt class="py-name">result</tt> </tt>
+</div><a name="L92"></a><tt class="py-lineno"> 92</tt>  <tt class="py-line"> </tt>
+<a name="mark_nan"></a><div id="mark_nan-def"><a name="L93"></a><tt class="py-lineno"> 93</tt>  <tt class="py-line"> </tt>
+<a name="L94"></a><tt class="py-lineno"> 94</tt> <a class="py-toggle" href="#" id="mark_nan-toggle" onclick="return toggle('mark_nan');">-</a><tt class="py-line"><tt class="py-keyword">def</tt> <a class="py-def-name" href="reprep.graphics.filter_scale-module.html#mark_nan">mark_nan</a><tt class="py-op">(</tt><tt class="py-param">result</tt><tt class="py-op">,</tt> <tt class="py-param">isnan</tt><tt class="py-op">,</tt> <tt class="py-param">nan_color</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="mark_nan-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="mark_nan-expanded"><a name="L95"></a><tt class="py-lineno"> 95</tt>  <tt class="py-line">    <tt class="py-keyword">for</tt> <tt class="py-name">u</tt> <tt class="py-keyword">in</tt> <tt class="py-op">[</tt><tt class="py-number">0</tt><tt class="py-op">,</tt> <tt class="py-number">1</tt><tt class="py-op">,</tt> <tt class="py-number">2</tt><tt class="py-op">]</tt><tt class="py-op">:</tt> </tt>
+<a name="L96"></a><tt class="py-lineno"> 96</tt>  <tt class="py-line">        <tt class="py-name">col</tt> <tt class="py-op">=</tt> <tt class="py-name">result</tt><tt class="py-op">[</tt><tt class="py-op">:</tt><tt class="py-op">,</tt> <tt class="py-op">:</tt><tt class="py-op">,</tt> <tt class="py-name">u</tt><tt class="py-op">]</tt> </tt>
+<a name="L97"></a><tt class="py-lineno"> 97</tt>  <tt class="py-line">        <tt class="py-name">col</tt><tt class="py-op">[</tt><tt id="link-19" class="py-name"><a title="reprep.graphics.numpy_utils.isnan" class="py-name" href="#" onclick="return doclink('link-19', 'isnan', 'link-3');">isnan</a></tt><tt class="py-op">]</tt> <tt class="py-op">=</tt> <tt class="py-name">nan_color</tt><tt class="py-op">[</tt><tt class="py-name">u</tt><tt class="py-op">]</tt> <tt class="py-op">*</tt> <tt class="py-number">255</tt> </tt>
+<a name="L98"></a><tt class="py-lineno"> 98</tt>  <tt class="py-line">        <tt class="py-name">result</tt><tt class="py-op">[</tt><tt class="py-op">:</tt><tt class="py-op">,</tt> <tt class="py-op">:</tt><tt class="py-op">,</tt> <tt class="py-name">u</tt><tt class="py-op">]</tt> <tt class="py-op">=</tt> <tt class="py-name">col</tt> </tt>
+</div><a name="L99"></a><tt class="py-lineno"> 99</tt>  <tt class="py-line"> </tt>
+<a name="interpolate_color"></a><div id="interpolate_color-def"><a name="L100"></a><tt class="py-lineno">100</tt>  <tt class="py-line"> </tt>
+<a name="L101"></a><tt class="py-lineno">101</tt> <a class="py-toggle" href="#" id="interpolate_color-toggle" onclick="return toggle('interpolate_color');">-</a><tt class="py-line"><tt class="py-keyword">def</tt> <a class="py-def-name" href="reprep.graphics.filter_scale-module.html#interpolate_color">interpolate_color</a><tt class="py-op">(</tt><tt class="py-param">value</tt><tt class="py-op">,</tt> <tt class="py-param">a</tt><tt class="py-op">,</tt> <tt class="py-param">b</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="interpolate_color-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="interpolate_color-expanded"><a name="L102"></a><tt class="py-lineno">102</tt>  <tt class="py-line">    <tt class="py-keyword">return</tt> <tt class="py-number">255</tt> <tt class="py-op">*</tt> <tt class="py-op">(</tt><tt class="py-op">(</tt><tt class="py-number">1</tt> <tt class="py-op">-</tt> <tt class="py-name">value</tt><tt class="py-op">)</tt> <tt class="py-op">*</tt> <tt class="py-name">a</tt> <tt class="py-op">+</tt> <tt class="py-name">value</tt> <tt class="py-op">*</tt> <tt class="py-name">b</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L103"></a><tt class="py-lineno">103</tt>  <tt class="py-line"> </tt>
+<a name="L104"></a><tt class="py-lineno">104</tt>  <tt class="py-line"> </tt>
+<a name="L105"></a><tt class="py-lineno">105</tt>  <tt class="py-line"><tt class="py-decorator">@</tt><tt class="py-decorator">contract</tt><tt class="py-op">(</tt><tt class="py-name">value</tt><tt class="py-op">=</tt><tt class="py-string">'array[HxW]((float32|float64),&gt;=0,&lt;=1)'</tt><tt class="py-op">,</tt> </tt>
+<a name="L106"></a><tt class="py-lineno">106</tt>  <tt class="py-line">          <tt class="py-name">min_colors</tt><tt class="py-op">=</tt><tt class="py-string">'color_spec'</tt><tt class="py-op">,</tt> <tt class="py-name">max_colors</tt><tt class="py-op">=</tt><tt class="py-string">'color_spec'</tt><tt class="py-op">,</tt> </tt>
+<a name="L107"></a><tt class="py-lineno">107</tt>  <tt class="py-line">          <tt class="py-name">returns</tt><tt class="py-op">=</tt><tt class="py-string">'array[HxWx3](uint8)'</tt><tt class="py-op">)</tt> </tt>
+<a name="interpolate_colors"></a><div id="interpolate_colors-def"><a name="L108"></a><tt class="py-lineno">108</tt> <a class="py-toggle" href="#" id="interpolate_colors-toggle" onclick="return toggle('interpolate_colors');">-</a><tt class="py-line"><tt class="py-keyword">def</tt> <a class="py-def-name" href="reprep.graphics.filter_scale-module.html#interpolate_colors">interpolate_colors</a><tt class="py-op">(</tt><tt class="py-param">value</tt><tt class="py-op">,</tt> <tt class="py-param">min_colors</tt><tt class="py-op">,</tt> <tt class="py-param">max_colors</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="interpolate_colors-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="interpolate_colors-expanded"><a name="L109"></a><tt class="py-lineno">109</tt>  <tt class="py-line">    <tt class="py-name">result</tt> <tt class="py-op">=</tt> <tt class="py-name">zeros</tt><tt class="py-op">(</tt><tt class="py-op">(</tt><tt class="py-name">value</tt><tt class="py-op">.</tt><tt class="py-name">shape</tt><tt class="py-op">[</tt><tt class="py-number">0</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt class="py-name">value</tt><tt class="py-op">.</tt><tt class="py-name">shape</tt><tt class="py-op">[</tt><tt class="py-number">1</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt class="py-number">3</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> <tt class="py-name">dtype</tt><tt class="py-op">=</tt><tt class="py-string">'uint8'</tt><tt class="py-op">)</tt> </tt>
+<a name="L110"></a><tt class="py-lineno">110</tt>  <tt class="py-line">    <tt class="py-keyword">for</tt> <tt class="py-name">u</tt> <tt class="py-keyword">in</tt> <tt class="py-op">[</tt><tt class="py-number">0</tt><tt class="py-op">,</tt> <tt class="py-number">1</tt><tt class="py-op">,</tt> <tt class="py-number">2</tt><tt class="py-op">]</tt><tt class="py-op">:</tt> </tt>
+<a name="L111"></a><tt class="py-lineno">111</tt>  <tt class="py-line">        <tt class="py-name">result</tt><tt class="py-op">[</tt><tt class="py-op">:</tt><tt class="py-op">,</tt> <tt class="py-op">:</tt><tt class="py-op">,</tt> <tt class="py-name">u</tt><tt class="py-op">]</tt> <tt class="py-op">=</tt> <tt id="link-20" class="py-name" targets="Function reprep.graphics.filter_scale.interpolate_color()=reprep.graphics.filter_scale-module.html#interpolate_color"><a title="reprep.graphics.filter_scale.interpolate_color" class="py-name" href="#" onclick="return doclink('link-20', 'interpolate_color', 'link-20');">interpolate_color</a></tt><tt class="py-op">(</tt><tt class="py-name">value</tt><tt class="py-op">,</tt> <tt class="py-name">min_colors</tt><tt class="py-op">[</tt><tt class="py-name">u</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> </tt>
+<a name="L112"></a><tt class="py-lineno">112</tt>  <tt class="py-line">                                            <tt class="py-name">max_colors</tt><tt class="py-op">[</tt><tt class="py-name">u</tt><tt class="py-op">]</tt><tt class="py-op">)</tt> </tt>
+<a name="L113"></a><tt class="py-lineno">113</tt>  <tt class="py-line">    <tt class="py-keyword">return</tt> <tt class="py-name">result</tt> </tt>
+</div><a name="L114"></a><tt class="py-lineno">114</tt>  <tt class="py-line"> </tt><script type="text/javascript">
+<!--
+expandto(location.href);
+// -->
+</script>
+</pre>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="reprep-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://github.com/AndreaCensi/reprep">Reprep</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Sat Feb 25 23:27:56 2012
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

@@ -1,0 +1,401 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>reprep.figure.Figure</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="reprep-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://github.com/AndreaCensi/reprep">Reprep</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="reprep-module.html">Package&nbsp;reprep</a> ::
+        <a href="reprep.figure-module.html">Module&nbsp;figure</a> ::
+        Class&nbsp;Figure
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="reprep.figure.Figure-class.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS DESCRIPTION ==================== -->
+<h1 class="epydoc">Class Figure</h1><p class="nomargin-top"><span class="codelink"><a href="reprep.figure-pysrc.html#Figure">source&nbsp;code</a></span></p>
+<center>
+<center>  <map id="uml_class_diagram_for_reprep_f" name="uml_class_diagram_for_reprep_f">
+<area shape="rect" href="reprep.figure.Figure-class.html#__init__" title="reprep.figure.Figure.__init__" alt="" coords="111,633,457,652"/>
+<area shape="rect" href="reprep.figure.Figure-class.html#add_child" title="Automatically add child if it can be displayed." alt="" coords="111,652,457,671"/>
+<area shape="rect" href="reprep.figure.Figure-class.html#get_subfigures" title="reprep.figure.Figure.get_subfigures" alt="" coords="111,671,457,689"/>
+<area shape="rect" href="reprep.figure.Figure-class.html#sub" title="Adds a subfigure displaying the given resource." alt="" coords="111,689,457,708"/>
+<area shape="rect" href="reprep.figure.Figure-class.html" title="reprep.figure.Figure" alt="" coords="109,608,459,709"/>
+<area shape="rect" href="reprep.node.Node-class.html#__getitem__" title="reprep.node.Node.__getitem__" alt="" coords="17,297,551,316"/>
+<area shape="rect" href="reprep.node.Node-class.html#find_recursively" title="Finds the closest node in the family passing the criterium, or None if none can be found." alt="" coords="17,316,551,335"/>
+<area shape="rect" href="reprep.node.Node-class.html#format_tree" title="reprep.node.Node.format_tree" alt="" coords="17,335,551,353"/>
+<area shape="rect" href="reprep.node.Node-class.html#get_all_parents" title="Returns a list of all parents." alt="" coords="17,353,551,372"/>
+<area shape="rect" href="reprep.node.Node-class.html#get_complete_id" title="reprep.node.Node.get_complete_id" alt="" coords="17,372,551,391"/>
+<area shape="rect" href="reprep.node.Node-class.html#get_first_available_name" title="reprep.node.Node.get_first_available_name" alt="" coords="17,391,551,409"/>
+<area shape="rect" href="reprep.node.Node-class.html#get_relative_url" title="reprep.node.Node.get_relative_url" alt="" coords="17,409,551,428"/>
+<area shape="rect" href="reprep.node.Node-class.html#has_child" title="reprep.node.Node.has_child" alt="" coords="17,428,551,447"/>
+<area shape="rect" href="reprep.node.Node-class.html#last" title="Returns the last added child Node." alt="" coords="17,447,551,465"/>
+<area shape="rect" href="reprep.node.Node-class.html#node" title="Creates a simple child node." alt="" coords="17,465,551,484"/>
+<area shape="rect" href="reprep.node.Node-class.html#print_tree" title="reprep.node.Node.print_tree" alt="" coords="17,484,551,503"/>
+<area shape="rect" href="reprep.node.Node-class.html#resolve_url" title="reprep.node.Node.resolve_url" alt="" coords="17,503,551,521"/>
+<area shape="rect" href="reprep.node.Node-class.html#resolve_url_dumb" title="reprep.node.Node.resolve_url_dumb" alt="" coords="17,521,551,540"/>
+<area shape="rect" href="reprep.node.Node-class.html#url_join" title="reprep.node.Node.url_join" alt="" coords="17,540,551,559"/>
+<area shape="rect" href="reprep.node.Node-class.html#url_split" title="reprep.node.Node.url_split" alt="" coords="17,559,551,577"/>
+<area shape="rect" href="reprep.node.Node-class.html" title="reprep.node.Node" alt="" coords="16,272,552,579"/>
+<area shape="rect" href="reprep.interface.ReportInterface-class.html#add_to" title="reprep.interface.ReportInterface.add_to" alt="" coords="100,36,468,55"/>
+<area shape="rect" href="reprep.interface.ReportInterface-class.html#data" title="Attaches a data child to this node." alt="" coords="100,55,468,73"/>
+<area shape="rect" href="reprep.interface.ReportInterface-class.html#data_file" title="Support for attaching data from a file." alt="" coords="100,73,468,92"/>
+<area shape="rect" href="reprep.interface.ReportInterface-class.html#data_pylab" title="Same as plot(), but deprecated." alt="" coords="100,92,468,111"/>
+<area shape="rect" href="reprep.interface.ReportInterface-class.html#data_rgb" title="Create a node containing an image from a RGB[a] array." alt="" coords="100,111,468,129"/>
+<area shape="rect" href="reprep.interface.ReportInterface-class.html#figure" title="Attach a figure to this node." alt="" coords="100,129,468,148"/>
+<area shape="rect" href="reprep.interface.ReportInterface-class.html#plot" title="Easy support for creating a node consisting of a pylab plot." alt="" coords="100,148,468,167"/>
+<area shape="rect" href="reprep.interface.ReportInterface-class.html#section" title="Creates a subsection of the report." alt="" coords="100,167,468,185"/>
+<area shape="rect" href="reprep.interface.ReportInterface-class.html#table" title="Attach a table to this node." alt="" coords="100,185,468,204"/>
+<area shape="rect" href="reprep.interface.ReportInterface-class.html#text" title="Adds a text node with the given id." alt="" coords="100,204,468,223"/>
+<area shape="rect" href="reprep.interface.ReportInterface-class.html#to_html" title="Creates a HTML representation of this report." alt="" coords="100,223,468,241"/>
+<area shape="rect" href="reprep.interface.ReportInterface-class.html" title="reprep.interface.ReportInterface" alt="" coords="99,11,469,243"/>
+</map>
+  <img src="uml_class_diagram_for_reprep_f.gif" alt='' usemap="#uml_class_diagram_for_reprep_f" ismap="ismap" class="graph-without-title" />
+</center>
+</center>
+<hr />
+<!-- ==================== INSTANCE METHODS ==================== -->
+<a name="section-InstanceMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="reprep.figure.Figure-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">nid</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">caption</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">cols</span>=<span class="summary-sig-default">None</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="reprep.figure-pysrc.html#Figure.__init__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="reprep.figure.Figure-class.html#add_child" class="summary-sig-name">add_child</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">child</span>)</span><br />
+      Automatically add child if it can be displayed.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="reprep.figure-pysrc.html#Figure.add_child">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="get_subfigures"></a><span class="summary-sig-name">get_subfigures</span>(<span class="summary-sig-arg">self</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="reprep.figure-pysrc.html#Figure.get_subfigures">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="reprep.figure.Figure-class.html#sub" class="summary-sig-name">sub</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">resource</span>,
+        <span class="summary-sig-arg">caption</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">display</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">**kwargs</span>)</span><br />
+      Adds a subfigure displaying the given resource.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="reprep.figure-pysrc.html#Figure.sub">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="reprep.node.Node-class.html">node.Node</a></code></b>:
+      <code><a href="reprep.node.Node-class.html#__getitem__">__getitem__</a></code>,
+      <code><a href="reprep.node.Node-class.html#find_recursively">find_recursively</a></code>,
+      <code><a href="reprep.node.Node-class.html#format_tree">format_tree</a></code>,
+      <code><a href="reprep.node.Node-class.html#get_all_parents">get_all_parents</a></code>,
+      <code><a href="reprep.node.Node-class.html#get_complete_id">get_complete_id</a></code>,
+      <code><a href="reprep.node.Node-class.html#get_first_available_name">get_first_available_name</a></code>,
+      <code><a href="reprep.node.Node-class.html#get_relative_url">get_relative_url</a></code>,
+      <code><a href="reprep.node.Node-class.html#has_child">has_child</a></code>,
+      <code><a href="reprep.node.Node-class.html#last">last</a></code>,
+      <code><a href="reprep.node.Node-class.html#node">node</a></code>,
+      <code><a href="reprep.node.Node-class.html#print_tree">print_tree</a></code>,
+      <code><a href="reprep.node.Node-class.html#resolve_url">resolve_url</a></code>,
+      <code><a href="reprep.node.Node-class.html#resolve_url_dumb">resolve_url_dumb</a></code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="reprep.interface.ReportInterface-class.html">interface.ReportInterface</a></code></b>:
+      <code><a href="reprep.interface.ReportInterface-class.html#add_to">add_to</a></code>,
+      <code><a href="reprep.interface.ReportInterface-class.html#data">data</a></code>,
+      <code><a href="reprep.interface.ReportInterface-class.html#data_file">data_file</a></code>,
+      <code><a href="reprep.interface.ReportInterface-class.html#data_pylab">data_pylab</a></code>,
+      <code><a href="reprep.interface.ReportInterface-class.html#data_rgb">data_rgb</a></code>,
+      <code><a href="reprep.interface.ReportInterface-class.html#figure">figure</a></code>,
+      <code><a href="reprep.interface.ReportInterface-class.html#plot">plot</a></code>,
+      <code><a href="reprep.interface.ReportInterface-class.html#section">section</a></code>,
+      <code><a href="reprep.interface.ReportInterface-class.html#table">table</a></code>,
+      <code><a href="reprep.interface.ReportInterface-class.html#text">text</a></code>,
+      <code><a href="reprep.interface.ReportInterface-class.html#to_html">to_html</a></code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== STATIC METHODS ==================== -->
+<a name="section-StaticMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Static Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-StaticMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="reprep.node.Node-class.html">node.Node</a></code></b>:
+      <code><a href="reprep.node.Node-class.html#url_join">url_join</a></code>,
+      <code><a href="reprep.node.Node-class.html#url_split">url_split</a></code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== METHOD DETAILS ==================== -->
+<a name="section-MethodDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Method Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-MethodDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="__init__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__init__</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">nid</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">caption</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">cols</span>=<span class="sig-default">None</span>)</span>
+    <br /><em class="fname">(Constructor)</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="reprep.figure-pysrc.html#Figure.__init__">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>cols</code></strong> (<tt class="rst-docutils literal"><span class="pre">None|int,&gt;0</span></tt>)</li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="reprep.node.Node-class.html#__init__">node.Node.__init__</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="add_child"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">add_child</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">child</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="reprep.figure-pysrc.html#Figure.add_child">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  Automatically add child if it can be displayed.
+  <dl class="fields">
+    <dt>Overrides:
+        <a href="reprep.node.Node-class.html#add_child">node.Node.add_child</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="sub"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">sub</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">resource</span>,
+        <span class="sig-arg">caption</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">display</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">**kwargs</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="reprep.figure-pysrc.html#Figure.sub">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Adds a subfigure displaying the given resource.</p>
+<p>resource can either be a string or a data node.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="reprep-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://github.com/AndreaCensi/reprep">Reprep</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Sat Feb 25 23:27:55 2012
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

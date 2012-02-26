@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>reprep.graphics.filter_colormap'</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="reprep-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://github.com/AndreaCensi/reprep">Reprep</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="reprep-module.html">Package&nbsp;reprep</a> ::
+        <a href="reprep.graphics-module.html">Package&nbsp;graphics</a> ::
+        Module&nbsp;filter_colormap'
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="reprep.graphics.filter_colormap%27-pysrc.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<h1 class="epydoc">Source Code for <a href="reprep.graphics.filter_colormap%27-module.html">Module reprep.graphics.filter_colormap'</a></h1>
+<pre class="py-src">
+<a name="L1"></a><tt class="py-lineno"> 1</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-op">.</tt> <tt class="py-keyword">import</tt> <tt class="py-name">contract</tt><tt class="py-op">,</tt> <tt class="py-name">np</tt><tt class="py-op">,</tt> <tt id="link-0" class="py-name" targets="Function reprep.graphics.scaling.get_scaled_values()=reprep.graphics.scaling-module.html#get_scaled_values"><a title="reprep.graphics.scaling.get_scaled_values" class="py-name" href="#" onclick="return doclink('link-0', 'get_scaled_values', 'link-0');">get_scaled_values</a></tt> </tt>
+<a name="L2"></a><tt class="py-lineno"> 2</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-op">.</tt><tt class="py-op">.</tt> <tt class="py-keyword">import</tt> <tt class="py-name">matplotlib</tt> </tt>
+<a name="L3"></a><tt class="py-lineno"> 3</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">matplotlib</tt> <tt class="py-keyword">import</tt> <tt class="py-name">pyplot</tt> </tt>
+<a name="value2rgb"></a><div id="value2rgb-def"><a name="L4"></a><tt class="py-lineno"> 4</tt>  <tt class="py-line"> </tt>
+<a name="L5"></a><tt class="py-lineno"> 5</tt>  <tt class="py-line"> </tt>
+<a name="L6"></a><tt class="py-lineno"> 6</tt>  <tt class="py-line"><tt class="py-decorator">@</tt><tt class="py-decorator">contract</tt><tt class="py-op">(</tt><tt class="py-name">returns</tt><tt class="py-op">=</tt><tt class="py-string">'array[HxWx4](uint8)'</tt><tt class="py-op">)</tt> </tt>
+<a name="L7"></a><tt class="py-lineno"> 7</tt> <a class="py-toggle" href="#" id="value2rgb-toggle" onclick="return toggle('value2rgb');">-</a><tt class="py-line"><tt class="py-keyword">def</tt> <a class="py-def-name" href="reprep.graphics.filter_colormap'-module.html#value2rgb">value2rgb</a><tt class="py-op">(</tt><tt class="py-param">x</tt><tt class="py-op">,</tt> <tt class="py-param">vmin</tt><tt class="py-op">=</tt><tt class="py-number">0</tt><tt class="py-op">,</tt> <tt class="py-param">vmax</tt><tt class="py-op">=</tt><tt class="py-number">1</tt><tt class="py-op">,</tt> <tt class="py-param">cmap</tt><tt class="py-op">=</tt><tt class="py-string">'jet'</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="value2rgb-collapsed" style="display:none;" pad="++" indent="++++"></div><div id="value2rgb-expanded"><a name="L8"></a><tt class="py-lineno"> 8</tt>  <tt class="py-line">    <tt class="py-docstring">''' Asssumes x is in [0,1]. '''</tt> </tt>
+<a name="L9"></a><tt class="py-lineno"> 9</tt>  <tt class="py-line">    <tt class="py-name">isint</tt> <tt class="py-op">=</tt> <tt class="py-name">matplotlib</tt><tt class="py-op">.</tt><tt class="py-name">is_interactive</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L10"></a><tt class="py-lineno">10</tt>  <tt class="py-line">    <tt class="py-keyword">if</tt> <tt class="py-name">isint</tt><tt class="py-op">:</tt> </tt>
+<a name="L11"></a><tt class="py-lineno">11</tt>  <tt class="py-line">        <tt class="py-name">matplotlib</tt><tt class="py-op">.</tt><tt class="py-name">set_interactive</tt><tt class="py-op">(</tt><tt class="py-name">False</tt><tt class="py-op">)</tt> <tt class="py-comment">#@UndefinedVariable</tt> </tt>
+<a name="L12"></a><tt class="py-lineno">12</tt>  <tt class="py-line">    <tt class="py-name">f</tt> <tt class="py-op">=</tt> <tt class="py-name">pyplot</tt><tt class="py-op">.</tt><tt id="link-1" class="py-name" targets="Module reprep.figure=reprep.figure-module.html,Method reprep.interface.ReportInterface.figure()=reprep.interface.ReportInterface-class.html#figure,Method reprep.output.platex.Figure.figure()=reprep.output.platex.Figure-class.html#figure,Method reprep.output.platex.LatexEnvironment.figure()=reprep.output.platex.LatexEnvironment-class.html#figure,Method reprep.output.platex.SubFigure.figure()=reprep.output.platex.SubFigure-class.html#figure"><a title="reprep.figure
+reprep.interface.ReportInterface.figure
+reprep.output.platex.Figure.figure
+reprep.output.platex.LatexEnvironment.figure
+reprep.output.platex.SubFigure.figure" class="py-name" href="#" onclick="return doclink('link-1', 'figure', 'link-1');">figure</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L13"></a><tt class="py-lineno">13</tt>  <tt class="py-line">    <tt class="py-comment"># m = f.gca().imshow(x, vmin=vmin, vmax=vmax, </tt> </tt>
+<a name="L14"></a><tt class="py-lineno">14</tt>  <tt class="py-line">    <tt class="py-comment"># cmap=pyplot.cm.get_cmap(cmap))</tt> </tt>
+<a name="L15"></a><tt class="py-lineno">15</tt>  <tt class="py-line">    <tt class="py-name">mcmap</tt> <tt class="py-op">=</tt> <tt class="py-name">pyplot</tt><tt class="py-op">.</tt><tt class="py-name">cm</tt><tt class="py-op">.</tt><tt class="py-name">get_cmap</tt><tt class="py-op">(</tt><tt class="py-name">cmap</tt><tt class="py-op">)</tt> </tt>
+<a name="L16"></a><tt class="py-lineno">16</tt>  <tt class="py-line">    <tt class="py-keyword">if</tt> <tt class="py-name">mcmap</tt> <tt class="py-keyword">is</tt> <tt class="py-name">None</tt><tt class="py-op">:</tt> </tt>
+<a name="L17"></a><tt class="py-lineno">17</tt>  <tt class="py-line">        <tt class="py-keyword">raise</tt> <tt class="py-name">Exception</tt><tt class="py-op">(</tt><tt class="py-string">'Unknown cmap %r.'</tt> <tt class="py-op">%</tt> <tt class="py-name">cmap</tt><tt class="py-op">)</tt> </tt>
+<a name="L18"></a><tt class="py-lineno">18</tt>  <tt class="py-line">    <tt class="py-name">m</tt> <tt class="py-op">=</tt> <tt class="py-name">pyplot</tt><tt class="py-op">.</tt><tt class="py-name">figimage</tt><tt class="py-op">(</tt><tt class="py-name">x</tt><tt class="py-op">,</tt> <tt class="py-number">0</tt><tt class="py-op">,</tt> <tt class="py-number">0</tt><tt class="py-op">,</tt> <tt class="py-name">vmin</tt><tt class="py-op">=</tt><tt class="py-name">vmin</tt><tt class="py-op">,</tt> <tt class="py-name">vmax</tt><tt class="py-op">=</tt><tt class="py-name">vmax</tt><tt class="py-op">,</tt> <tt class="py-name">cmap</tt><tt class="py-op">=</tt><tt class="py-name">mcmap</tt><tt class="py-op">)</tt> </tt>
+<a name="L19"></a><tt class="py-lineno">19</tt>  <tt class="py-line">    <tt class="py-name">m</tt><tt class="py-op">.</tt><tt class="py-name">set_cmap</tt><tt class="py-op">(</tt><tt class="py-name">mcmap</tt><tt class="py-op">)</tt> </tt>
+<a name="L20"></a><tt class="py-lineno">20</tt>  <tt class="py-line">    <tt class="py-name">rgb</tt> <tt class="py-op">=</tt> <tt class="py-name">m</tt><tt class="py-op">.</tt><tt class="py-name">to_rgba</tt><tt class="py-op">(</tt><tt class="py-name">x</tt><tt class="py-op">)</tt> </tt>
+<a name="L21"></a><tt class="py-lineno">21</tt>  <tt class="py-line">    <tt class="py-name">rgb</tt> <tt class="py-op">=</tt> <tt class="py-op">(</tt><tt class="py-name">rgb</tt> <tt class="py-op">*</tt> <tt class="py-number">255</tt><tt class="py-op">)</tt><tt class="py-op">.</tt><tt class="py-name">astype</tt><tt class="py-op">(</tt><tt class="py-string">'uint8'</tt><tt class="py-op">)</tt> </tt>
+<a name="L22"></a><tt class="py-lineno">22</tt>  <tt class="py-line">    <tt class="py-name">pyplot</tt><tt class="py-op">.</tt><tt class="py-name">close</tt><tt class="py-op">(</tt><tt class="py-name">f</tt><tt class="py-op">)</tt> </tt>
+<a name="L23"></a><tt class="py-lineno">23</tt>  <tt class="py-line">    <tt class="py-keyword">return</tt> <tt class="py-name">rgb</tt> </tt>
+</div><a name="L24"></a><tt class="py-lineno">24</tt>  <tt class="py-line"> </tt>
+<a name="L25"></a><tt class="py-lineno">25</tt>  <tt class="py-line"> </tt>
+<a name="L26"></a><tt class="py-lineno">26</tt>  <tt class="py-line"><tt class="py-decorator">@</tt><tt class="py-decorator">contract</tt><tt class="py-op">(</tt><tt class="py-name">value</tt><tt class="py-op">=</tt><tt class="py-string">'array[HxW],H&gt;0,W&gt;0'</tt><tt class="py-op">,</tt> </tt>
+<a name="L27"></a><tt class="py-lineno">27</tt>  <tt class="py-line">          <tt class="py-name">max_value</tt><tt class="py-op">=</tt><tt class="py-string">'None|number'</tt><tt class="py-op">,</tt> </tt>
+<a name="L28"></a><tt class="py-lineno">28</tt>  <tt class="py-line">          <tt class="py-name">min_value</tt><tt class="py-op">=</tt><tt class="py-string">'None|number'</tt><tt class="py-op">,</tt> </tt>
+<a name="L29"></a><tt class="py-lineno">29</tt>  <tt class="py-line">          <tt class="py-name">skim</tt><tt class="py-op">=</tt><tt class="py-string">'&gt;=0,&lt;=90'</tt><tt class="py-op">,</tt> </tt>
+<a name="L30"></a><tt class="py-lineno">30</tt>  <tt class="py-line">          <tt class="py-name">nan_color</tt><tt class="py-op">=</tt><tt class="py-string">'color_spec'</tt><tt class="py-op">,</tt> </tt>
+<a name="L31"></a><tt class="py-lineno">31</tt>  <tt class="py-line">          <tt class="py-name">inf_color</tt><tt class="py-op">=</tt><tt class="py-string">'color_spec'</tt><tt class="py-op">,</tt> </tt>
+<a name="L32"></a><tt class="py-lineno">32</tt>  <tt class="py-line">          <tt class="py-name">flat_color</tt><tt class="py-op">=</tt><tt class="py-string">'color_spec'</tt><tt class="py-op">,</tt> </tt>
+<a name="L33"></a><tt class="py-lineno">33</tt>  <tt class="py-line">          <tt class="py-name">properties</tt><tt class="py-op">=</tt><tt class="py-string">'None|map'</tt><tt class="py-op">)</tt> </tt>
+<a name="filter_colormap"></a><div id="filter_colormap-def"><a name="L34"></a><tt class="py-lineno">34</tt> <a class="py-toggle" href="#" id="filter_colormap-toggle" onclick="return toggle('filter_colormap');">-</a><tt class="py-line"><tt class="py-keyword">def</tt> <a class="py-def-name" href="reprep.graphics.filter_colormap'-module.html#filter_colormap">filter_colormap</a><tt class="py-op">(</tt><tt class="py-param">value</tt><tt class="py-op">,</tt> </tt>
+<a name="L35"></a><tt class="py-lineno">35</tt>  <tt class="py-line">                   <tt class="py-param">cmap</tt><tt class="py-op">=</tt><tt class="py-string">'jet'</tt><tt class="py-op">,</tt> </tt>
+<a name="L36"></a><tt class="py-lineno">36</tt>  <tt class="py-line">                   <tt class="py-param">min_value</tt><tt class="py-op">=</tt><tt class="py-name">None</tt><tt class="py-op">,</tt> <tt class="py-param">max_value</tt><tt class="py-op">=</tt><tt class="py-name">None</tt><tt class="py-op">,</tt> </tt>
+<a name="L37"></a><tt class="py-lineno">37</tt>  <tt class="py-line">                   <tt class="py-param">nan_color</tt><tt class="py-op">=</tt><tt class="py-op">[</tt><tt class="py-number">1</tt><tt class="py-op">,</tt> <tt class="py-number">0.6</tt><tt class="py-op">,</tt> <tt class="py-number">0.6</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> </tt>
+<a name="L38"></a><tt class="py-lineno">38</tt>  <tt class="py-line">                   <tt class="py-param">inf_color</tt><tt class="py-op">=</tt><tt class="py-op">[</tt><tt class="py-number">0.6</tt><tt class="py-op">,</tt> <tt class="py-number">1</tt><tt class="py-op">,</tt> <tt class="py-number">0.6</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> </tt>
+<a name="L39"></a><tt class="py-lineno">39</tt>  <tt class="py-line">                   <tt class="py-param">flat_color</tt><tt class="py-op">=</tt><tt class="py-op">[</tt><tt class="py-number">0.5</tt><tt class="py-op">,</tt> <tt class="py-number">0.5</tt><tt class="py-op">,</tt> <tt class="py-number">0.5</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> </tt>
+<a name="L40"></a><tt class="py-lineno">40</tt>  <tt class="py-line">                   <tt class="py-param">skim</tt><tt class="py-op">=</tt><tt class="py-number">0</tt><tt class="py-op">,</tt> </tt>
+<a name="L41"></a><tt class="py-lineno">41</tt>  <tt class="py-line">                   <tt class="py-param">properties</tt><tt class="py-op">=</tt><tt class="py-name">None</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="filter_colormap-collapsed" style="display:none;" pad="++" indent="++++"></div><div id="filter_colormap-expanded"><a name="L42"></a><tt class="py-lineno">42</tt>  <tt class="py-line">    <tt class="py-name">scaled</tt> <tt class="py-op">=</tt> <tt id="link-2" class="py-name"><a title="reprep.graphics.scaling.get_scaled_values" class="py-name" href="#" onclick="return doclink('link-2', 'get_scaled_values', 'link-0');">get_scaled_values</a></tt><tt class="py-op">(</tt><tt class="py-name">value</tt><tt class="py-op">,</tt> </tt>
+<a name="L43"></a><tt class="py-lineno">43</tt>  <tt class="py-line">                               <tt class="py-name">min_value</tt><tt class="py-op">=</tt><tt class="py-name">min_value</tt><tt class="py-op">,</tt> <tt class="py-name">max_value</tt><tt class="py-op">=</tt><tt class="py-name">max_value</tt><tt class="py-op">,</tt> </tt>
+<a name="L44"></a><tt class="py-lineno">44</tt>  <tt class="py-line">                               <tt class="py-name">skim</tt><tt class="py-op">=</tt><tt class="py-name">skim</tt><tt class="py-op">)</tt> </tt>
+<a name="L45"></a><tt class="py-lineno">45</tt>  <tt class="py-line"> </tt>
+<a name="L46"></a><tt class="py-lineno">46</tt>  <tt class="py-line">    <tt class="py-keyword">if</tt> <tt class="py-name">scaled</tt><tt class="py-op">[</tt><tt class="py-string">'flat'</tt><tt class="py-op">]</tt><tt class="py-op">:</tt> </tt>
+<a name="L47"></a><tt class="py-lineno">47</tt>  <tt class="py-line">        <tt class="py-name">rgb</tt> <tt class="py-op">=</tt> <tt id="link-3" class="py-name" targets="Function reprep.graphics.filter_colormap'.get_solid()=reprep.graphics.filter_colormap%27-module.html#get_solid"><a title="reprep.graphics.filter_colormap'.get_solid" class="py-name" href="#" onclick="return doclink('link-3', 'get_solid', 'link-3');">get_solid</a></tt><tt class="py-op">(</tt><tt class="py-name">value</tt><tt class="py-op">.</tt><tt class="py-name">shape</tt><tt class="py-op">,</tt> <tt class="py-name">flat_color</tt><tt class="py-op">)</tt> </tt>
+<a name="L48"></a><tt class="py-lineno">48</tt>  <tt class="py-line">    <tt class="py-keyword">else</tt><tt class="py-op">:</tt> </tt>
+<a name="L49"></a><tt class="py-lineno">49</tt>  <tt class="py-line">        <tt class="py-name">rgba</tt> <tt class="py-op">=</tt> <tt id="link-4" class="py-name" targets="Function reprep.graphics.filter_colormap'.value2rgb()=reprep.graphics.filter_colormap%27-module.html#value2rgb"><a title="reprep.graphics.filter_colormap'.value2rgb" class="py-name" href="#" onclick="return doclink('link-4', 'value2rgb', 'link-4');">value2rgb</a></tt><tt class="py-op">(</tt><tt class="py-name">scaled</tt><tt class="py-op">[</tt><tt class="py-string">'scaled01'</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt class="py-name">cmap</tt><tt class="py-op">=</tt><tt class="py-name">cmap</tt><tt class="py-op">)</tt> </tt>
+<a name="L50"></a><tt class="py-lineno">50</tt>  <tt class="py-line">        <tt class="py-name">rgb</tt> <tt class="py-op">=</tt> <tt class="py-name">rgba</tt><tt class="py-op">[</tt><tt class="py-op">:</tt><tt class="py-op">,</tt> <tt class="py-op">:</tt><tt class="py-op">,</tt> <tt class="py-op">:</tt><tt class="py-number">3</tt><tt class="py-op">]</tt> </tt>
+<a name="L51"></a><tt class="py-lineno">51</tt>  <tt class="py-line">        <tt class="py-comment"># TODO: clip?</tt> </tt>
+<a name="L52"></a><tt class="py-lineno">52</tt>  <tt class="py-line">        <tt id="link-5" class="py-name" targets="Function reprep.graphics.filter_colormap'.mark_values()=reprep.graphics.filter_colormap%27-module.html#mark_values"><a title="reprep.graphics.filter_colormap'.mark_values" class="py-name" href="#" onclick="return doclink('link-5', 'mark_values', 'link-5');">mark_values</a></tt><tt class="py-op">(</tt><tt class="py-name">rgb</tt><tt class="py-op">,</tt> <tt class="py-name">scaled</tt><tt class="py-op">[</tt><tt class="py-string">'isinf'</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt class="py-name">inf_color</tt><tt class="py-op">)</tt> </tt>
+<a name="L53"></a><tt class="py-lineno">53</tt>  <tt class="py-line">        <tt id="link-6" class="py-name"><a title="reprep.graphics.filter_colormap'.mark_values" class="py-name" href="#" onclick="return doclink('link-6', 'mark_values', 'link-5');">mark_values</a></tt><tt class="py-op">(</tt><tt class="py-name">rgb</tt><tt class="py-op">,</tt> <tt class="py-name">scaled</tt><tt class="py-op">[</tt><tt class="py-string">'isnan'</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt class="py-name">nan_color</tt><tt class="py-op">)</tt> </tt>
+<a name="L54"></a><tt class="py-lineno">54</tt>  <tt class="py-line"> </tt>
+<a name="L55"></a><tt class="py-lineno">55</tt>  <tt class="py-line">    <tt class="py-keyword">if</tt> <tt class="py-name">properties</tt> <tt class="py-keyword">is</tt> <tt class="py-keyword">not</tt> <tt class="py-name">None</tt><tt class="py-op">:</tt> </tt>
+<a name="L56"></a><tt class="py-lineno">56</tt>  <tt class="py-line">        <tt class="py-name">properties</tt><tt class="py-op">[</tt><tt class="py-string">'min_value'</tt><tt class="py-op">]</tt> <tt class="py-op">=</tt> <tt class="py-name">scaled</tt><tt class="py-op">[</tt><tt class="py-string">'min_value'</tt><tt class="py-op">]</tt> </tt>
+<a name="L57"></a><tt class="py-lineno">57</tt>  <tt class="py-line">        <tt class="py-name">properties</tt><tt class="py-op">[</tt><tt class="py-string">'max_value'</tt><tt class="py-op">]</tt> <tt class="py-op">=</tt> <tt class="py-name">scaled</tt><tt class="py-op">[</tt><tt class="py-string">'max_value'</tt><tt class="py-op">]</tt> </tt>
+<a name="L58"></a><tt class="py-lineno">58</tt>  <tt class="py-line">        <tt class="py-name">properties</tt><tt class="py-op">[</tt><tt class="py-string">'nan_color'</tt><tt class="py-op">]</tt> <tt class="py-op">=</tt> <tt class="py-name">nan_color</tt> </tt>
+<a name="L59"></a><tt class="py-lineno">59</tt>  <tt class="py-line">        <tt class="py-name">properties</tt><tt class="py-op">[</tt><tt class="py-string">'flat_color'</tt><tt class="py-op">]</tt> <tt class="py-op">=</tt> <tt class="py-name">flat_color</tt> </tt>
+<a name="L60"></a><tt class="py-lineno">60</tt>  <tt class="py-line">        <tt class="py-name">properties</tt><tt class="py-op">[</tt><tt class="py-string">'inf_color'</tt><tt class="py-op">]</tt> <tt class="py-op">=</tt> <tt class="py-name">inf_color</tt> </tt>
+<a name="L61"></a><tt class="py-lineno">61</tt>  <tt class="py-line">        <tt class="py-name">properties</tt><tt class="py-op">.</tt><tt class="py-name">update</tt><tt class="py-op">(</tt><tt class="py-name">scaled</tt><tt class="py-op">)</tt> </tt>
+<a name="L62"></a><tt class="py-lineno">62</tt>  <tt class="py-line">        <tt class="py-name">bar_shape</tt> <tt class="py-op">=</tt> <tt class="py-op">(</tt><tt class="py-number">512</tt><tt class="py-op">,</tt> <tt class="py-number">128</tt><tt class="py-op">)</tt> </tt>
+<a name="L63"></a><tt class="py-lineno">63</tt>  <tt class="py-line">        <tt class="py-name">bar</tt> <tt class="py-op">=</tt> <tt class="py-name">np</tt><tt class="py-op">.</tt><tt class="py-name">vstack</tt><tt class="py-op">(</tt><tt class="py-op">[</tt><tt class="py-name">np</tt><tt class="py-op">.</tt><tt class="py-name">linspace</tt><tt class="py-op">(</tt><tt class="py-number">0</tt><tt class="py-op">,</tt> <tt class="py-number">1</tt><tt class="py-op">,</tt> <tt class="py-name">bar_shape</tt><tt class="py-op">[</tt><tt class="py-number">0</tt><tt class="py-op">]</tt><tt class="py-op">)</tt><tt class="py-op">]</tt> <tt class="py-op">*</tt> <tt class="py-name">bar_shape</tt><tt class="py-op">[</tt><tt class="py-number">1</tt><tt class="py-op">]</tt><tt class="py-op">)</tt><tt class="py-op">.</tt><tt class="py-name">T</tt> </tt>
+<a name="L64"></a><tt class="py-lineno">64</tt>  <tt class="py-line">        <tt class="py-name">properties</tt><tt class="py-op">[</tt><tt class="py-string">'color_bar'</tt><tt class="py-op">]</tt> <tt class="py-op">=</tt> <tt id="link-7" class="py-name"><a title="reprep.graphics.filter_colormap'.value2rgb" class="py-name" href="#" onclick="return doclink('link-7', 'value2rgb', 'link-4');">value2rgb</a></tt><tt class="py-op">(</tt><tt class="py-name">bar</tt><tt class="py-op">,</tt> <tt class="py-name">cmap</tt><tt class="py-op">=</tt><tt class="py-name">cmap</tt><tt class="py-op">)</tt> </tt>
+<a name="L65"></a><tt class="py-lineno">65</tt>  <tt class="py-line"> </tt>
+<a name="L66"></a><tt class="py-lineno">66</tt>  <tt class="py-line">    <tt class="py-keyword">return</tt> <tt class="py-name">rgb</tt> </tt>
+</div><a name="L67"></a><tt class="py-lineno">67</tt>  <tt class="py-line"> </tt>
+<a name="mark_values"></a><div id="mark_values-def"><a name="L68"></a><tt class="py-lineno">68</tt>  <tt class="py-line"> </tt>
+<a name="L69"></a><tt class="py-lineno">69</tt>  <tt class="py-line"><tt class="py-decorator">@</tt><tt class="py-decorator">contract</tt><tt class="py-op">(</tt><tt class="py-name">rgb</tt><tt class="py-op">=</tt><tt class="py-string">'array[HxWx3](uint8)'</tt><tt class="py-op">,</tt> <tt class="py-name">which</tt><tt class="py-op">=</tt><tt class="py-string">'array[HxW]'</tt><tt class="py-op">,</tt> <tt class="py-name">color</tt><tt class="py-op">=</tt><tt class="py-string">'color_spec'</tt><tt class="py-op">)</tt> </tt>
+<a name="L70"></a><tt class="py-lineno">70</tt> <a class="py-toggle" href="#" id="mark_values-toggle" onclick="return toggle('mark_values');">-</a><tt class="py-line"><tt class="py-keyword">def</tt> <a class="py-def-name" href="reprep.graphics.filter_colormap'-module.html#mark_values">mark_values</a><tt class="py-op">(</tt><tt class="py-param">rgb</tt><tt class="py-op">,</tt> <tt class="py-param">which</tt><tt class="py-op">,</tt> <tt class="py-param">color</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="mark_values-collapsed" style="display:none;" pad="++" indent="++++"></div><div id="mark_values-expanded"><a name="L71"></a><tt class="py-lineno">71</tt>  <tt class="py-line">    <tt class="py-keyword">for</tt> <tt class="py-name">u</tt> <tt class="py-keyword">in</tt> <tt class="py-op">[</tt><tt class="py-number">0</tt><tt class="py-op">,</tt> <tt class="py-number">1</tt><tt class="py-op">,</tt> <tt class="py-number">2</tt><tt class="py-op">]</tt><tt class="py-op">:</tt> </tt>
+<a name="L72"></a><tt class="py-lineno">72</tt>  <tt class="py-line">        <tt class="py-name">col</tt> <tt class="py-op">=</tt> <tt class="py-name">rgb</tt><tt class="py-op">[</tt><tt class="py-op">:</tt><tt class="py-op">,</tt> <tt class="py-op">:</tt><tt class="py-op">,</tt> <tt class="py-name">u</tt><tt class="py-op">]</tt> </tt>
+<a name="L73"></a><tt class="py-lineno">73</tt>  <tt class="py-line">        <tt class="py-name">col</tt><tt class="py-op">[</tt><tt class="py-name">which</tt><tt class="py-op">]</tt> <tt class="py-op">=</tt> <tt class="py-name">color</tt><tt class="py-op">[</tt><tt class="py-name">u</tt><tt class="py-op">]</tt> <tt class="py-op">*</tt> <tt class="py-number">255</tt> </tt>
+<a name="L74"></a><tt class="py-lineno">74</tt>  <tt class="py-line">        <tt class="py-name">rgb</tt><tt class="py-op">[</tt><tt class="py-op">:</tt><tt class="py-op">,</tt> <tt class="py-op">:</tt><tt class="py-op">,</tt> <tt class="py-name">u</tt><tt class="py-op">]</tt> <tt class="py-op">=</tt> <tt class="py-name">col</tt> </tt>
+</div><a name="L75"></a><tt class="py-lineno">75</tt>  <tt class="py-line"> </tt>
+<a name="L76"></a><tt class="py-lineno">76</tt>  <tt class="py-line"> </tt>
+<a name="L77"></a><tt class="py-lineno">77</tt>  <tt class="py-line"><tt class="py-decorator">@</tt><tt class="py-decorator">contract</tt><tt class="py-op">(</tt><tt class="py-name">shape</tt><tt class="py-op">=</tt><tt class="py-string">'tuple((int,H),(int,W))'</tt><tt class="py-op">,</tt> <tt class="py-name">color</tt><tt class="py-op">=</tt><tt class="py-string">'color_spec'</tt><tt class="py-op">,</tt> </tt>
+<a name="L78"></a><tt class="py-lineno">78</tt>  <tt class="py-line">          <tt class="py-name">returns</tt><tt class="py-op">=</tt><tt class="py-string">'array[HxWx3](uint8)'</tt><tt class="py-op">)</tt> </tt>
+<a name="get_solid"></a><div id="get_solid-def"><a name="L79"></a><tt class="py-lineno">79</tt> <a class="py-toggle" href="#" id="get_solid-toggle" onclick="return toggle('get_solid');">-</a><tt class="py-line"><tt class="py-keyword">def</tt> <a class="py-def-name" href="reprep.graphics.filter_colormap'-module.html#get_solid">get_solid</a><tt class="py-op">(</tt><tt class="py-param">shape</tt><tt class="py-op">,</tt> <tt class="py-param">color</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="get_solid-collapsed" style="display:none;" pad="++" indent="++++"></div><div id="get_solid-expanded"><a name="L80"></a><tt class="py-lineno">80</tt>  <tt class="py-line">    <tt class="py-name">res</tt> <tt class="py-op">=</tt> <tt class="py-name">np</tt><tt class="py-op">.</tt><tt class="py-name">zeros</tt><tt class="py-op">(</tt><tt class="py-op">(</tt><tt class="py-name">shape</tt><tt class="py-op">[</tt><tt class="py-number">0</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt class="py-name">shape</tt><tt class="py-op">[</tt><tt class="py-number">1</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt class="py-number">3</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> <tt class="py-name">dtype</tt><tt class="py-op">=</tt><tt class="py-string">'uint8'</tt><tt class="py-op">)</tt> </tt>
+<a name="L81"></a><tt class="py-lineno">81</tt>  <tt class="py-line">    <tt class="py-keyword">for</tt> <tt class="py-name">u</tt> <tt class="py-keyword">in</tt> <tt class="py-op">[</tt><tt class="py-number">0</tt><tt class="py-op">,</tt> <tt class="py-number">1</tt><tt class="py-op">,</tt> <tt class="py-number">2</tt><tt class="py-op">]</tt><tt class="py-op">:</tt> </tt>
+<a name="L82"></a><tt class="py-lineno">82</tt>  <tt class="py-line">        <tt class="py-name">res</tt><tt class="py-op">[</tt><tt class="py-op">:</tt><tt class="py-op">,</tt> <tt class="py-op">:</tt><tt class="py-op">,</tt> <tt class="py-name">u</tt><tt class="py-op">]</tt> <tt class="py-op">=</tt> <tt class="py-name">color</tt><tt class="py-op">[</tt><tt class="py-name">u</tt><tt class="py-op">]</tt> <tt class="py-op">*</tt> <tt class="py-number">255</tt> </tt>
+<a name="L83"></a><tt class="py-lineno">83</tt>  <tt class="py-line">    <tt class="py-keyword">return</tt> <tt class="py-name">res</tt> </tt>
+</div><a name="L84"></a><tt class="py-lineno">84</tt>  <tt class="py-line"> </tt><script type="text/javascript">
+<!--
+expandto(location.href);
+// -->
+</script>
+</pre>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="reprep-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://github.com/AndreaCensi/reprep">Reprep</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Sat Feb 25 23:27:56 2012
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

@@ -1,0 +1,433 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>reprep.output.platex.LatexEnvironment</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="reprep-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://github.com/AndreaCensi/reprep">Reprep</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="reprep-module.html">Package&nbsp;reprep</a> ::
+        <a href="reprep.output-module.html">Package&nbsp;output</a> ::
+        <a href="reprep.output.platex-module.html">Module&nbsp;platex</a> ::
+        Class&nbsp;LatexEnvironment
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="reprep.output.platex.LatexEnvironment-class.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS DESCRIPTION ==================== -->
+<h1 class="epydoc">Class LatexEnvironment</h1><p class="nomargin-top"><span class="codelink"><a href="reprep.output.platex-pysrc.html#LatexEnvironment">source&nbsp;code</a></span></p>
+<center>
+<center>  <map id="uml_class_diagram_for_reprep_o_3" name="uml_class_diagram_for_reprep_o_3">
+<area shape="rect" href="reprep.output.platex.LatexEnvironment.GenericWrap-class.html" title="reprep.output.platex.LatexEnvironment.GenericWrap" alt="" coords="17,28,417,47"/>
+<area shape="rect" href="reprep.output.platex.LatexEnvironment-class.html#__init__" title="reprep.output.platex.LatexEnvironment.__init__" alt="" coords="17,49,417,68"/>
+<area shape="rect" href="reprep.output.platex.LatexEnvironment-class.html#figure" title="reprep.output.platex.LatexEnvironment.figure" alt="" coords="17,68,417,87"/>
+<area shape="rect" href="reprep.output.platex.LatexEnvironment-class.html#graphics_data" title="reprep.output.platex.LatexEnvironment.graphics_data" alt="" coords="17,87,417,105"/>
+<area shape="rect" href="reprep.output.platex.LatexEnvironment-class.html#hfill" title="reprep.output.platex.LatexEnvironment.hfill" alt="" coords="17,105,417,124"/>
+<area shape="rect" href="reprep.output.platex.LatexEnvironment-class.html#hspace" title="reprep.output.platex.LatexEnvironment.hspace" alt="" coords="17,124,417,143"/>
+<area shape="rect" href="reprep.output.platex.LatexEnvironment-class.html#input" title="reprep.output.platex.LatexEnvironment.input" alt="" coords="17,143,417,161"/>
+<area shape="rect" href="reprep.output.platex.LatexEnvironment-class.html#pagebreak" title="reprep.output.platex.LatexEnvironment.pagebreak" alt="" coords="17,161,417,180"/>
+<area shape="rect" href="reprep.output.platex.LatexEnvironment-class.html#parbreak" title="reprep.output.platex.LatexEnvironment.parbreak" alt="" coords="17,180,417,199"/>
+<area shape="rect" href="reprep.output.platex.LatexEnvironment-class.html#rule" title="reprep.output.platex.LatexEnvironment.rule" alt="" coords="17,199,417,217"/>
+<area shape="rect" href="reprep.output.platex.LatexEnvironment-class.html#tabular_simple" title="Writes a tabular environment with very simple options." alt="" coords="17,217,417,236"/>
+<area shape="rect" href="reprep.output.platex.LatexEnvironment-class.html#tex" title="reprep.output.platex.LatexEnvironment.tex" alt="" coords="17,236,417,255"/>
+<area shape="rect" href="reprep.output.platex.LatexEnvironment-class.html#text" title="reprep.output.platex.LatexEnvironment.text" alt="" coords="17,255,417,273"/>
+<area shape="rect" href="reprep.output.platex.LatexEnvironment-class.html#use_package" title="reprep.output.platex.LatexEnvironment.use_package" alt="" coords="17,273,417,292"/>
+<area shape="rect" href="reprep.output.platex.LatexEnvironment-class.html#vspace" title="reprep.output.platex.LatexEnvironment.vspace" alt="" coords="17,292,417,311"/>
+<area shape="rect" href="reprep.output.platex.LatexEnvironment-class.html" title="reprep.output.platex.LatexEnvironment" alt="" coords="16,11,419,312"/>
+<area shape="rect" href="reprep.output.platex.Figure-class.html" title="reprep.output.platex.Figure" alt="" coords="80,341,131,368"/>
+<area shape="rect" href="reprep.output.platex.SubFigure-class.html" title="reprep.output.platex.SubFigure" alt="" coords="181,341,253,368"/>
+<area shape="rect" href="reprep.output.platex.LatexDocument-class.html" title="reprep.output.platex.LatexDocument" alt="" coords="304,341,408,368"/>
+</map>
+  <img src="uml_class_diagram_for_reprep_o_3.gif" alt='' usemap="#uml_class_diagram_for_reprep_o_3" ismap="ismap" class="graph-without-title" />
+</center>
+</center>
+<hr />
+<!-- ==================== NESTED CLASSES ==================== -->
+<a name="section-NestedClasses"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Nested Classes</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-NestedClasses"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="reprep.output.platex.LatexEnvironment.GenericWrap-class.html" class="summary-name">GenericWrap</a>
+    </td>
+  </tr>
+</table>
+<!-- ==================== INSTANCE METHODS ==================== -->
+<a name="section-InstanceMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="__init__"></a><span class="summary-sig-name">__init__</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">context</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="reprep.output.platex-pysrc.html#LatexEnvironment.__init__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="figure"></a><span class="summary-sig-name">figure</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">caption</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">label</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">placement</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">t</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">double</span>=<span class="summary-sig-default">False</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="reprep.output.platex-pysrc.html#LatexEnvironment.figure">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="graphics_data"></a><span class="summary-sig-name">graphics_data</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">data</span>,
+        <span class="summary-sig-arg">mime</span>,
+        <span class="summary-sig-arg">width</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">3cm</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">nid</span>=<span class="summary-sig-default">None</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="reprep.output.platex-pysrc.html#LatexEnvironment.graphics_data">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="hfill"></a><span class="summary-sig-name">hfill</span>(<span class="summary-sig-arg">self</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="reprep.output.platex-pysrc.html#LatexEnvironment.hfill">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="hspace"></a><span class="summary-sig-name">hspace</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">size</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="reprep.output.platex-pysrc.html#LatexEnvironment.hspace">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="input"></a><span class="summary-sig-name">input</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">filename</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="reprep.output.platex-pysrc.html#LatexEnvironment.input">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="pagebreak"></a><span class="summary-sig-name">pagebreak</span>(<span class="summary-sig-arg">self</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="reprep.output.platex-pysrc.html#LatexEnvironment.pagebreak">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="parbreak"></a><span class="summary-sig-name">parbreak</span>(<span class="summary-sig-arg">self</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="reprep.output.platex-pysrc.html#LatexEnvironment.parbreak">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="rule"></a><span class="summary-sig-name">rule</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">width</span>,
+        <span class="summary-sig-arg">height</span>,
+        <span class="summary-sig-arg">color</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">gray</code><code class="variable-quote">'</code></span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="reprep.output.platex-pysrc.html#LatexEnvironment.rule">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="tabular_simple"></a><span class="summary-sig-name">tabular_simple</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">data</span>,
+        <span class="summary-sig-arg">row_desc</span>,
+        <span class="summary-sig-arg">col_desc</span>,
+        <span class="summary-sig-arg">write_col_desc</span>=<span class="summary-sig-default">True</span>)</span><br />
+      Writes a tabular environment with very simple options.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="reprep.output.platex-pysrc.html#LatexEnvironment.tabular_simple">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="tex"></a><span class="summary-sig-name">tex</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">tex</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="reprep.output.platex-pysrc.html#LatexEnvironment.tex">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="text"></a><span class="summary-sig-name">text</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">t</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="reprep.output.platex-pysrc.html#LatexEnvironment.text">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="use_package"></a><span class="summary-sig-name">use_package</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">name</span>,
+        <span class="summary-sig-arg">options</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string"></code><code class="variable-quote">'</code></span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="reprep.output.platex-pysrc.html#LatexEnvironment.use_package">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="vspace"></a><span class="summary-sig-name">vspace</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">size</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="reprep.output.platex-pysrc.html#LatexEnvironment.vspace">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+</table>
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="reprep-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://github.com/AndreaCensi/reprep">Reprep</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Sat Feb 25 23:27:55 2012
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>reprep.demos.manager</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="reprep-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://github.com/AndreaCensi/reprep">Reprep</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="reprep-module.html">Package&nbsp;reprep</a> ::
+        <a href="reprep.demos-module.html">Package&nbsp;demos</a> ::
+        Module&nbsp;manager
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="reprep.demos.manager-pysrc.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<h1 class="epydoc">Source Code for <a href="reprep.demos.manager-module.html">Module reprep.demos.manager</a></h1>
+<pre class="py-src">
+<a name="L1"></a><tt class="py-lineno"> 1</tt>  <tt class="py-line"><tt class="py-keyword">import</tt> <tt class="py-name">sys</tt> </tt>
+<a name="L2"></a><tt class="py-lineno"> 2</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-0" class="py-name" targets="Package reprep=reprep-module.html"><a title="reprep" class="py-name" href="#" onclick="return doclink('link-0', 'reprep', 'link-0');">reprep</a></tt> <tt class="py-keyword">import</tt> <tt class="py-name">Report</tt> </tt>
+<a name="L3"></a><tt class="py-lineno"> 3</tt>  <tt class="py-line"> </tt>
+<a name="L4"></a><tt class="py-lineno"> 4</tt>  <tt class="py-line"> </tt>
+<a name="DemoStorage"></a><div id="DemoStorage-def"><a name="L5"></a><tt class="py-lineno"> 5</tt> <a class="py-toggle" href="#" id="DemoStorage-toggle" onclick="return toggle('DemoStorage');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="reprep.demos.manager.DemoStorage-class.html">DemoStorage</a><tt class="py-op">:</tt> </tt>
+</div><div id="DemoStorage-collapsed" style="display:none;" pad="++" indent="++++"></div><div id="DemoStorage-expanded"><a name="L6"></a><tt class="py-lineno"> 6</tt>  <tt class="py-line">    <tt id="link-1" class="py-name" targets="Variable reprep.demos.manager.DemoStorage.demo_list=reprep.demos.manager.DemoStorage-class.html#demo_list"><a title="reprep.demos.manager.DemoStorage.demo_list" class="py-name" href="#" onclick="return doclink('link-1', 'demo_list', 'link-1');">demo_list</a></tt> <tt class="py-op">=</tt> <tt class="py-op">[</tt><tt class="py-op">]</tt> </tt>
+</div><a name="L7"></a><tt class="py-lineno"> 7</tt>  <tt class="py-line"> </tt>
+<a name="L8"></a><tt class="py-lineno"> 8</tt>  <tt class="py-line"> </tt>
+<a name="reprep_demo"></a><div id="reprep_demo-def"><a name="L9"></a><tt class="py-lineno"> 9</tt> <a class="py-toggle" href="#" id="reprep_demo-toggle" onclick="return toggle('reprep_demo');">-</a><tt class="py-line"><tt class="py-keyword">def</tt> <a class="py-def-name" href="reprep.demos.manager-module.html#reprep_demo">reprep_demo</a><tt class="py-op">(</tt><tt class="py-param">f</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="reprep_demo-collapsed" style="display:none;" pad="++" indent="++++"></div><div id="reprep_demo-expanded"><a name="L10"></a><tt class="py-lineno">10</tt>  <tt class="py-line">    <tt class="py-docstring">''' Decorator for declaring a reprep demo. '''</tt> </tt>
+<a name="L11"></a><tt class="py-lineno">11</tt>  <tt class="py-line">    <tt id="link-2" class="py-name" targets="Class reprep.demos.manager.DemoStorage=reprep.demos.manager.DemoStorage-class.html"><a title="reprep.demos.manager.DemoStorage" class="py-name" href="#" onclick="return doclink('link-2', 'DemoStorage', 'link-2');">DemoStorage</a></tt><tt class="py-op">.</tt><tt id="link-3" class="py-name"><a title="reprep.demos.manager.DemoStorage.demo_list" class="py-name" href="#" onclick="return doclink('link-3', 'demo_list', 'link-1');">demo_list</a></tt><tt class="py-op">.</tt><tt class="py-name">append</tt><tt class="py-op">(</tt><tt class="py-name">f</tt><tt class="py-op">)</tt> </tt>
+<a name="L12"></a><tt class="py-lineno">12</tt>  <tt class="py-line">    <tt class="py-keyword">return</tt> <tt class="py-name">f</tt> </tt>
+</div><a name="L13"></a><tt class="py-lineno">13</tt>  <tt class="py-line"> </tt>
+<a name="L14"></a><tt class="py-lineno">14</tt>  <tt class="py-line"> </tt>
+<a name="all_demos"></a><div id="all_demos-def"><a name="L15"></a><tt class="py-lineno">15</tt> <a class="py-toggle" href="#" id="all_demos-toggle" onclick="return toggle('all_demos');">-</a><tt class="py-line"><tt class="py-keyword">def</tt> <a class="py-def-name" href="reprep.demos.manager-module.html#all_demos">all_demos</a><tt class="py-op">(</tt><tt class="py-param">argv</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="all_demos-collapsed" style="display:none;" pad="++" indent="++++"></div><div id="all_demos-expanded"><a name="L16"></a><tt class="py-lineno">16</tt>  <tt class="py-line">    <tt class="py-name">r</tt> <tt class="py-op">=</tt> <tt class="py-name">Report</tt><tt class="py-op">(</tt><tt class="py-string">'reprep_demos'</tt><tt class="py-op">)</tt> </tt>
+<a name="L17"></a><tt class="py-lineno">17</tt>  <tt class="py-line">    <tt class="py-keyword">for</tt> <tt class="py-name">demo</tt> <tt class="py-keyword">in</tt> <tt id="link-4" class="py-name"><a title="reprep.demos.manager.DemoStorage" class="py-name" href="#" onclick="return doclink('link-4', 'DemoStorage', 'link-2');">DemoStorage</a></tt><tt class="py-op">.</tt><tt id="link-5" class="py-name"><a title="reprep.demos.manager.DemoStorage.demo_list" class="py-name" href="#" onclick="return doclink('link-5', 'demo_list', 'link-1');">demo_list</a></tt><tt class="py-op">:</tt> </tt>
+<a name="L18"></a><tt class="py-lineno">18</tt>  <tt class="py-line">        <tt class="py-name">ri</tt> <tt class="py-op">=</tt> <tt class="py-name">r</tt><tt class="py-op">.</tt><tt id="link-6" class="py-name" targets="Method reprep.interface.ReportInterface.section()=reprep.interface.ReportInterface-class.html#section"><a title="reprep.interface.ReportInterface.section" class="py-name" href="#" onclick="return doclink('link-6', 'section', 'link-6');">section</a></tt><tt class="py-op">(</tt><tt class="py-name">nid</tt><tt class="py-op">=</tt><tt class="py-string">'%s'</tt> <tt class="py-op">%</tt> <tt class="py-name">demo</tt><tt class="py-op">.</tt><tt class="py-name">__name__</tt><tt class="py-op">,</tt> </tt>
+<a name="L19"></a><tt class="py-lineno">19</tt>  <tt class="py-line">                       <tt id="link-7" class="py-name" targets="Variable reprep.figure.SubFigure.caption=reprep.figure.SubFigure-class.html#caption"><a title="reprep.figure.SubFigure.caption" class="py-name" href="#" onclick="return doclink('link-7', 'caption', 'link-7');">caption</a></tt><tt class="py-op">=</tt><tt class="py-name">demo</tt><tt class="py-op">.</tt><tt class="py-name">__doc__</tt> </tt>
+<a name="L20"></a><tt class="py-lineno">20</tt>  <tt class="py-line">                       <tt class="py-op">)</tt> </tt>
+<a name="L21"></a><tt class="py-lineno">21</tt>  <tt class="py-line">        <tt class="py-name">demo</tt><tt class="py-op">(</tt><tt class="py-name">ri</tt><tt class="py-op">)</tt> </tt>
+<a name="L22"></a><tt class="py-lineno">22</tt>  <tt class="py-line"> </tt>
+<a name="L23"></a><tt class="py-lineno">23</tt>  <tt class="py-line">    <tt class="py-name">r</tt><tt class="py-op">.</tt><tt id="link-8" class="py-name" targets="Method reprep.interface.ReportInterface.to_html()=reprep.interface.ReportInterface-class.html#to_html"><a title="reprep.interface.ReportInterface.to_html" class="py-name" href="#" onclick="return doclink('link-8', 'to_html', 'link-8');">to_html</a></tt><tt class="py-op">(</tt><tt class="py-string">'reprep_demos_out/index.html'</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L24"></a><tt class="py-lineno">24</tt>  <tt class="py-line"> </tt>
+<a name="L25"></a><tt class="py-lineno">25</tt>  <tt class="py-line"> </tt>
+<a name="main"></a><div id="main-def"><a name="L26"></a><tt class="py-lineno">26</tt> <a class="py-toggle" href="#" id="main-toggle" onclick="return toggle('main');">-</a><tt class="py-line"><tt class="py-keyword">def</tt> <a class="py-def-name" href="reprep.demos.manager-module.html#main">main</a><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="main-collapsed" style="display:none;" pad="++" indent="++++"></div><div id="main-expanded"><a name="L27"></a><tt class="py-lineno">27</tt>  <tt class="py-line">    <tt id="link-9" class="py-name" targets="Function reprep.demos.manager.all_demos()=reprep.demos.manager-module.html#all_demos"><a title="reprep.demos.manager.all_demos" class="py-name" href="#" onclick="return doclink('link-9', 'all_demos', 'link-9');">all_demos</a></tt><tt class="py-op">(</tt><tt class="py-name">sys</tt><tt class="py-op">.</tt><tt class="py-name">argv</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L28"></a><tt class="py-lineno">28</tt>  <tt class="py-line"> </tt>
+<a name="L29"></a><tt class="py-lineno">29</tt>  <tt class="py-line"><tt class="py-keyword">if</tt> <tt class="py-name">__name__</tt> <tt class="py-op">==</tt> <tt class="py-string">'__main__'</tt><tt class="py-op">:</tt> </tt>
+<a name="L30"></a><tt class="py-lineno">30</tt>  <tt class="py-line">    <tt id="link-10" class="py-name" targets="Function reprep.demos.manager.main()=reprep.demos.manager-module.html#main"><a title="reprep.demos.manager.main" class="py-name" href="#" onclick="return doclink('link-10', 'main', 'link-10');">main</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L31"></a><tt class="py-lineno">31</tt>  <tt class="py-line"> </tt><script type="text/javascript">
+<!--
+expandto(location.href);
+// -->
+</script>
+</pre>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="reprep-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://github.com/AndreaCensi/reprep">Reprep</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Sat Feb 25 23:27:56 2012
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>
