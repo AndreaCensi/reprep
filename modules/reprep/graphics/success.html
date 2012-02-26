@@ -1,0 +1,120 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>reprep.graphics.success &mdash; RepRep 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../../static/haiku.css" type="text/css" />
+    <link rel="stylesheet" href="../../../static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/print.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../static/jquery.js"></script>
+    <script type="text/javascript" src="../../../static/underscore.js"></script>
+    <script type="text/javascript" src="../../../static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/theme_extras.js"></script>
+    <link rel="top" title="RepRep 0.1 documentation" href="../../../index.html" />
+    <link rel="up" title="reprep" href="../../reprep.html" />
+	 
+	
+    <link type="text/css" rel="stylesheet" href="static/generic.css" />
+    <link type="text/css" rel="stylesheet" href="static/custom.css" />
+
+	<link  href="http://fonts.googleapis.com/css?family=Lobster" rel="stylesheet" type="text/css" >
+	<link  href="http://fonts.googleapis.com/css?family=Droid+Serif" rel="stylesheet" type="text/css" >
+
+
+  </head>
+  <body>
+      <div class="header"><h1 class="heading"><a href="../../../index.html">
+          <span>RepRep 0.1 documentation</span></a></h1>
+        <h2 class="heading"><span>reprep.graphics.success</span></h2>
+      </div>
+      <div class="topnav">
+      
+        <p>
+        <a class="uplink" href="../../../index.html">Contents</a>
+        </p>
+
+      </div>
+      <div class="content">
+        
+        
+  <h1>Source code for reprep.graphics.success</h1><div class="highlight"><pre>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">contract</span><span class="p">,</span> <span class="n">np</span>
+
+
+<span class="nd">@contract</span><span class="p">(</span><span class="n">values</span><span class="o">=</span><span class="s">&#39;array[HxW]&#39;</span><span class="p">,</span>
+          <span class="n">colors</span><span class="o">=</span><span class="s">&#39;list[&gt;=1](tuple(a,(b,b&gt;a),seq[4](number)))&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="colormap_rgba"><a class="viewcode-back" href="../../../api/reprep.graphics.html#reprep.graphics.success.colormap_rgba">[docs]</a><span class="k">def</span> <span class="nf">colormap_rgba</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">colors</span><span class="p">,</span>
+                  <span class="n">invalid_color</span><span class="o">=</span><span class="p">[</span><span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">],</span>
+                  <span class="n">nan_color</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]):</span>
+    <span class="sd">&#39;&#39;&#39; colors = [ (min, max, [r,g,b,a]),... ] &#39;&#39;&#39;</span>
+    <span class="n">h</span><span class="p">,</span> <span class="n">w</span> <span class="o">=</span> <span class="n">values</span><span class="o">.</span><span class="n">shape</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="s">&#39;uint8&#39;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">h</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">w</span><span class="p">):</span>
+            <span class="n">chosen</span> <span class="o">=</span> <span class="n">invalid_color</span>
+            <span class="n">val</span> <span class="o">=</span> <span class="n">values</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span>
+            <span class="k">for</span> <span class="n">vmin</span><span class="p">,</span> <span class="n">vmax</span><span class="p">,</span> <span class="n">color</span> <span class="ow">in</span> <span class="n">colors</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">vmin</span> <span class="o">&lt;=</span> <span class="n">val</span> <span class="o">&lt;=</span> <span class="n">vmax</span><span class="p">:</span>
+                    <span class="n">chosen</span> <span class="o">=</span> <span class="n">color</span>
+                    <span class="k">break</span>
+            <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">val</span><span class="p">):</span>
+                <span class="n">chosen</span> <span class="o">=</span> <span class="n">nan_color</span>
+            <span class="n">res</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">chosen</span>
+    <span class="k">return</span> <span class="n">res</span>
+
+</div>
+<span class="nd">@contract</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="s">&#39;array[HxW](&gt;=0,&lt;=1)&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="colorize_success"><a class="viewcode-back" href="../../../api/reprep.graphics.html#reprep.graphics.success.colorize_success">[docs]</a><span class="k">def</span> <span class="nf">colorize_success</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+    <span class="n">red</span> <span class="o">=</span> <span class="p">[</span><span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">]</span>
+    <span class="n">magenta</span> <span class="o">=</span> <span class="p">[</span><span class="mi">186</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">255</span><span class="p">]</span>
+    <span class="n">yellow</span> <span class="o">=</span> <span class="p">[</span><span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">]</span>
+    <span class="n">orange</span> <span class="o">=</span> <span class="p">[</span><span class="mi">255</span><span class="p">,</span> <span class="mi">164</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">255</span><span class="p">]</span>
+    <span class="n">blue</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">]</span>
+    <span class="n">bluegreen</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">150</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">255</span><span class="p">]</span>
+    <span class="n">darkgreen</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">]</span>
+    <span class="n">green</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">]</span>
+
+    <span class="n">colors</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.001</span><span class="p">,</span> <span class="n">red</span><span class="p">),</span> <span class="p">(</span><span class="mf">0.001</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">,</span> <span class="n">magenta</span><span class="p">),</span> <span class="p">(</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">,</span> <span class="n">yellow</span><span class="p">),</span>
+              <span class="p">(</span><span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.50</span><span class="p">,</span> <span class="n">orange</span><span class="p">),</span> <span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.75</span><span class="p">,</span> <span class="n">blue</span><span class="p">),</span> <span class="p">(</span><span class="mf">0.75</span><span class="p">,</span> <span class="mf">0.95</span><span class="p">,</span> <span class="n">bluegreen</span><span class="p">),</span>
+              <span class="p">(</span><span class="mf">0.95</span><span class="p">,</span> <span class="mf">0.99</span><span class="p">,</span> <span class="n">darkgreen</span><span class="p">),</span> <span class="p">(</span><span class="mf">0.99</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">green</span><span class="p">)]</span>
+    <span class="n">rgba</span> <span class="o">=</span> <span class="n">colormap_rgba</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">colors</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">rgba</span></div>
+</pre></div>
+
+      </div>
+      <div class="bottomnav">
+      
+        <p>
+        <a class="uplink" href="../../../index.html">Contents</a>
+        </p>
+
+      </div>
+
+	
+    <div class="footer">
+        &copy; Copyright 2010, Andrea Censi.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+		
+    <script type="text/javascript" src="static/analytics.js"></script> 
+
+
+  </body>
+</html>

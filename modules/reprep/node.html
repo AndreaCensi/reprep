@@ -1,0 +1,360 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>reprep.node &mdash; RepRep 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../static/haiku.css" type="text/css" />
+    <link rel="stylesheet" href="../../static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/print.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../static/jquery.js"></script>
+    <script type="text/javascript" src="../../static/underscore.js"></script>
+    <script type="text/javascript" src="../../static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/theme_extras.js"></script>
+    <link rel="top" title="RepRep 0.1 documentation" href="../../index.html" />
+    <link rel="up" title="reprep" href="../reprep.html" />
+	 
+	
+    <link type="text/css" rel="stylesheet" href="static/generic.css" />
+    <link type="text/css" rel="stylesheet" href="static/custom.css" />
+
+	<link  href="http://fonts.googleapis.com/css?family=Lobster" rel="stylesheet" type="text/css" >
+	<link  href="http://fonts.googleapis.com/css?family=Droid+Serif" rel="stylesheet" type="text/css" >
+
+
+  </head>
+  <body>
+      <div class="header"><h1 class="heading"><a href="../../index.html">
+          <span>RepRep 0.1 documentation</span></a></h1>
+        <h2 class="heading"><span>reprep.node</span></h2>
+      </div>
+      <div class="topnav">
+      
+        <p>
+        <a class="uplink" href="../../index.html">Contents</a>
+        </p>
+
+      </div>
+      <div class="content">
+        
+        
+  <h1>Source code for reprep.node</h1><div class="highlight"><pre>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="p">(</span><span class="n">MIME_PNG</span><span class="p">,</span> <span class="n">MIME_PYTHON</span><span class="p">,</span> <span class="n">contract</span><span class="p">,</span> <span class="n">ReportInterface</span><span class="p">,</span>
+               <span class="n">describe_value</span><span class="p">,</span>
+    <span class="n">describe_type</span><span class="p">,</span> <span class="n">colorize_success</span><span class="p">,</span> <span class="n">scale</span><span class="p">,</span> <span class="n">posneg</span><span class="p">,</span> <span class="n">Image_from_array</span><span class="p">,</span> <span class="n">rgb_zoom</span><span class="p">,</span>
+    <span class="n">InvalidURL</span><span class="p">,</span> <span class="n">NotExistent</span><span class="p">,</span> <span class="n">MIME_SVG</span><span class="p">)</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">StringIO</span> <span class="kn">import</span> <span class="n">StringIO</span>
+
+
+<div class="viewcode-block" id="Node"><a class="viewcode-back" href="../../api/reprep.html#reprep.node.Node">[docs]</a><span class="k">class</span> <span class="nc">Node</span><span class="p">(</span><span class="n">ReportInterface</span><span class="p">):</span>
+
+    <span class="nd">@contract</span><span class="p">(</span><span class="n">nid</span><span class="o">=</span><span class="s">&#39;valid_id|None&#39;</span><span class="p">,</span> <span class="n">children</span><span class="o">=</span><span class="s">&#39;None|list&#39;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nid</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">children</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+
+        <span class="k">if</span> <span class="n">children</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">children</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&#39;Received a </span><span class="si">%s</span><span class="s"> object as children list, should&#39;</span>
+                             <span class="s">&#39; be None or list.&#39;</span> <span class="o">%</span> <span class="n">describe_type</span><span class="p">(</span><span class="n">children</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">nid</span> <span class="o">=</span> <span class="n">nid</span>
+
+        <span class="k">if</span> <span class="n">children</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">children</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">childid2node</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">children</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">children</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">Node</span><span class="p">):</span>
+                <span class="n">msg</span> <span class="o">=</span> <span class="s">&#39;Expected Node, got </span><span class="si">%s</span><span class="s">.&#39;</span> <span class="o">%</span> <span class="n">describe_type</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">add_child</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="bp">None</span>
+
+<div class="viewcode-block" id="Node.add_child"><a class="viewcode-back" href="../../api/reprep.html#reprep.node.Node.add_child">[docs]</a>    <span class="k">def</span> <span class="nf">add_child</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; </span>
+<span class="sd">            Adds a child to this node. Usually you would not use this</span>
+<span class="sd">            method directly. </span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">assert</span> <span class="n">n</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span>
+        <span class="k">if</span> <span class="n">n</span><span class="o">.</span><span class="n">nid</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">n</span><span class="o">.</span><span class="n">nid</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">childid2node</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&#39;Already have child with same id </span><span class="si">%r</span><span class="s">.&#39;</span> <span class="o">%</span> <span class="n">n</span><span class="o">.</span><span class="n">nid</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c"># give it a name</span>
+            <span class="n">n</span><span class="o">.</span><span class="n">nid</span> <span class="o">=</span> <span class="s">&quot;</span><span class="si">%s%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">n</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">children</span><span class="p">))</span>
+            <span class="k">assert</span> <span class="ow">not</span> <span class="n">n</span><span class="o">.</span><span class="n">nid</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">childid2node</span>
+
+        <span class="n">n</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="bp">self</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">childid2node</span><span class="p">[</span><span class="n">n</span><span class="o">.</span><span class="n">nid</span><span class="p">]</span> <span class="o">=</span> <span class="n">n</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">children</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="Node.has_child"><a class="viewcode-back" href="../../api/reprep.html#reprep.node.Node.has_child">[docs]</a>    <span class="k">def</span> <span class="nf">has_child</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nid</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">nid</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">childid2node</span>
+</div>
+<div class="viewcode-block" id="Node.last"><a class="viewcode-back" href="../../api/reprep.html#reprep.node.Node.last">[docs]</a>    <span class="k">def</span> <span class="nf">last</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Returns the last added child Node. &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">children</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</div>
+<div class="viewcode-block" id="Node.node"><a class="viewcode-back" href="../../api/reprep.html#reprep.node.Node.node">[docs]</a>    <span class="k">def</span> <span class="nf">node</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nid</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Creates a simple child node. &#39;&#39;&#39;</span>
+        <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">Node</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">nid</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_child</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">n</span>
+</div>
+<div class="viewcode-block" id="Node.resolve_url_dumb"><a class="viewcode-back" href="../../api/reprep.html#reprep.node.Node.resolve_url_dumb">[docs]</a>    <span class="k">def</span> <span class="nf">resolve_url_dumb</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span>
+
+        <span class="n">components</span> <span class="o">=</span> <span class="n">Node</span><span class="o">.</span><span class="n">url_split</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">components</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">child</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">resolve_url_dumb</span><span class="p">(</span><span class="n">components</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="k">return</span> <span class="n">child</span><span class="o">.</span><span class="n">resolve_url_dumb</span><span class="p">(</span><span class="n">Node</span><span class="o">.</span><span class="n">url_join</span><span class="p">(</span><span class="n">components</span><span class="p">[</span><span class="mi">1</span><span class="p">:]))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">nid</span> <span class="o">=</span> <span class="n">components</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">nid</span> <span class="o">==</span> <span class="s">&#39;&#39;</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">InvalidURL</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">nid</span> <span class="o">==</span> <span class="s">&#39;..&#39;</span><span class="p">:</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="n">NotExistent</span><span class="p">(</span><span class="s">&#39;No parent.&#39;</span><span class="p">)</span>
+
+            <span class="n">l</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">([(</span><span class="n">child</span><span class="o">.</span><span class="n">nid</span><span class="p">,</span> <span class="n">child</span><span class="p">)</span> <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">children</span><span class="p">])</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">nid</span> <span class="ow">in</span> <span class="n">l</span><span class="p">:</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">nid</span> <span class="o">==</span> <span class="n">nid</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="bp">self</span>
+
+                <span class="k">raise</span> <span class="n">NotExistent</span><span class="p">(</span><span class="s">&#39;Could not find child </span><span class="si">%r</span><span class="s">.&#39;</span> <span class="o">%</span> <span class="n">nid</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">l</span><span class="p">[</span><span class="n">nid</span><span class="p">]</span>
+</div>
+    <span class="nd">@contract</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="s">&#39;str&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="Node.resolve_url"><a class="viewcode-back" href="../../api/reprep.html#reprep.node.Node.resolve_url">[docs]</a>    <span class="k">def</span> <span class="nf">resolve_url</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">already_visited</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">already_visited</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">already_visited</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span> <span class="ow">in</span> <span class="n">already_visited</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">NotExistent</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+            <span class="n">already_visited</span> <span class="o">+=</span> <span class="p">[</span><span class="bp">self</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">url</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&#39;..&#39;</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="c"># if it starts with .. we assume it&#39;s a precise url</span>
+            <span class="c"># and we don&#39;t do anything smart to find it</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">resolve_url_dumb</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">resolve_url_dumb</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">NotExistent</span><span class="p">:</span>
+            <span class="k">pass</span>
+
+        <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">child</span><span class="o">.</span><span class="n">resolve_url</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">already_visited</span><span class="p">)</span>
+            <span class="k">except</span> <span class="n">NotExistent</span><span class="p">:</span>
+                <span class="k">pass</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">resolve_url</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">already_visited</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c"># in the end, we get here</span>
+            <span class="k">raise</span> <span class="n">NotExistent</span><span class="p">(</span><span class="s">&#39;Could not find url &quot;</span><span class="si">%s</span><span class="s">&quot;.&#39;</span> <span class="o">%</span> <span class="n">url</span><span class="p">)</span>
+</div>
+    <span class="k">def</span> <span class="nf">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">relative_url</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">resolve_url</span><span class="p">(</span><span class="n">relative_url</span><span class="p">)</span>
+
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="Node.url_split"><a class="viewcode-back" href="../../api/reprep.html#reprep.node.Node.url_split">[docs]</a>    <span class="k">def</span> <span class="nf">url_split</span><span class="p">(</span><span class="n">u</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">u</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">)</span>
+</div>
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="Node.url_join"><a class="viewcode-back" href="../../api/reprep.html#reprep.node.Node.url_join">[docs]</a>    <span class="k">def</span> <span class="nf">url_join</span><span class="p">(</span><span class="n">l</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&#39;I expect a list, got &quot;</span><span class="si">%s</span><span class="s">&quot; (</span><span class="si">%s</span><span class="s">).&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">l</span><span class="p">)))</span>
+        <span class="k">return</span> <span class="s">&quot;/&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="Node.get_relative_url"><a class="viewcode-back" href="../../api/reprep.html#reprep.node.Node.get_relative_url">[docs]</a>    <span class="k">def</span> <span class="nf">get_relative_url</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">Node</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span> <span class="o">==</span> <span class="n">other</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&#39;I will not give you a relative url for myself.&#39;</span><span class="p">)</span>
+        <span class="n">all_my_parents</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_all_parents</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">other</span> <span class="ow">in</span> <span class="n">all_my_parents</span><span class="p">:</span>
+            <span class="n">levels</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">all_my_parents</span><span class="p">)</span> <span class="o">-</span> <span class="n">all_my_parents</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+            <span class="n">url</span> <span class="o">=</span> <span class="n">Node</span><span class="o">.</span><span class="n">url_join</span><span class="p">([</span><span class="s">&#39;..&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">levels</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">url</span>
+
+        <span class="n">all_his_parents</span> <span class="o">=</span> <span class="n">other</span><span class="o">.</span><span class="n">get_all_parents</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="bp">self</span> <span class="ow">in</span> <span class="n">all_his_parents</span><span class="p">:</span>
+            <span class="n">his_remaining</span> <span class="o">=</span> <span class="n">all_his_parents</span><span class="p">[</span><span class="n">all_his_parents</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:]</span>
+            <span class="n">components</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">nid</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">his_remaining</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="n">other</span><span class="o">.</span><span class="n">nid</span><span class="p">]</span>
+            <span class="n">url</span> <span class="o">=</span> <span class="n">Node</span><span class="o">.</span><span class="n">url_join</span><span class="p">(</span><span class="n">components</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">url</span>
+
+        <span class="n">common</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">all_my_parents</span> <span class="k">if</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">all_his_parents</span><span class="p">]</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">common</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&#39;The two nodes have no parents in common.&#39;</span><span class="p">)</span>
+        <span class="n">closest</span> <span class="o">=</span> <span class="n">common</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">levels</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">all_my_parents</span><span class="p">)</span> <span class="o">-</span> <span class="n">all_my_parents</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">closest</span><span class="p">)</span>
+        <span class="n">his_remaining</span> <span class="o">=</span> <span class="n">all_his_parents</span><span class="p">[</span><span class="n">all_his_parents</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">closest</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:]</span>
+        <span class="n">components</span> <span class="o">=</span> <span class="p">([</span><span class="s">&#39;..&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">levels</span> <span class="o">+</span> <span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">nid</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">his_remaining</span><span class="p">]</span>
+                      <span class="o">+</span> <span class="p">[</span><span class="n">other</span><span class="o">.</span><span class="n">nid</span><span class="p">])</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="n">Node</span><span class="o">.</span><span class="n">url_join</span><span class="p">(</span><span class="n">components</span><span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">resolve_url_dumb</span><span class="p">(</span><span class="n">url</span><span class="p">)</span> <span class="o">==</span> <span class="n">other</span>
+        <span class="k">except</span> <span class="n">NotExistent</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="s">&#39;Produced url &quot;</span><span class="si">%s</span><span class="s">&quot; but does not work.&#39;</span> <span class="o">%</span> <span class="n">url</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">url</span>
+</div>
+<div class="viewcode-block" id="Node.get_all_parents"><a class="viewcode-back" href="../../api/reprep.html#reprep.node.Node.get_all_parents">[docs]</a>    <span class="k">def</span> <span class="nf">get_all_parents</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Returns a list of all parents. &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">get_all_parents</span><span class="p">()</span> <span class="o">+</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[]</span>
+</div>
+<div class="viewcode-block" id="Node.print_tree"><a class="viewcode-back" href="../../api/reprep.html#reprep.node.Node.print_tree">[docs]</a>    <span class="k">def</span> <span class="nf">print_tree</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">):</span>
+        <span class="n">s</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;</span><span class="si">%s</span><span class="s">- </span><span class="si">%s</span><span class="s"> (</span><span class="si">%s</span><span class="s">)</span><span class="se">\n</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">prefix</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">nid</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
+            <span class="n">child</span><span class="o">.</span><span class="n">print_tree</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">prefix</span> <span class="o">+</span> <span class="s">&#39;  &#39;</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="Node.format_tree"><a class="viewcode-back" href="../../api/reprep.html#reprep.node.Node.format_tree">[docs]</a>    <span class="k">def</span> <span class="nf">format_tree</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">StringIO</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">print_tree</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">s</span><span class="o">.</span><span class="n">getvalue</span><span class="p">()</span>
+</div>
+<div class="viewcode-block" id="Node.get_complete_id"><a class="viewcode-back" href="../../api/reprep.html#reprep.node.Node.get_complete_id">[docs]</a>    <span class="k">def</span> <span class="nf">get_complete_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">separator</span><span class="o">=</span><span class="s">&quot;:&quot;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">nid</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">get_complete_id</span><span class="p">()</span> <span class="o">+</span> <span class="n">separator</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">nid</span>
+</div>
+<div class="viewcode-block" id="Node.find_recursively"><a class="viewcode-back" href="../../api/reprep.html#reprep.node.Node.find_recursively">[docs]</a>    <span class="k">def</span> <span class="nf">find_recursively</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">criterium</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; </span>
+<span class="sd">            Finds the closest node in the family passing the criterium, </span>
+<span class="sd">            or None if none can be found. </span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="n">criterium</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
+                <span class="n">res</span> <span class="o">=</span> <span class="n">child</span><span class="o">.</span><span class="n">find_recursively</span><span class="p">(</span><span class="n">criterium</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">res</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">res</span>
+            <span class="k">return</span> <span class="bp">None</span>
+</div>
+<div class="viewcode-block" id="Node.get_first_available_name"><a class="viewcode-back" href="../../api/reprep.html#reprep.node.Node.get_first_available_name">[docs]</a>    <span class="k">def</span> <span class="nf">get_first_available_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prefix</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1000</span><span class="p">):</span>
+            <span class="n">nid</span> <span class="o">=</span> <span class="s">&#39;</span><span class="si">%s%d</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">prefix</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_child</span><span class="p">(</span><span class="n">nid</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">nid</span>
+        <span class="k">assert</span> <span class="bp">False</span>
+
+</div></div>
+<div class="viewcode-block" id="just_check_rgb"><a class="viewcode-back" href="../../api/reprep.html#reprep.node.just_check_rgb">[docs]</a><span class="k">def</span> <span class="nf">just_check_rgb</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39; return value, checking it&#39;s a rgb image &#39;&#39;&#39;</span>
+    <span class="c"># TODO</span>
+    <span class="k">return</span> <span class="n">value</span>
+
+</div>
+<div class="viewcode-block" id="DataNode"><a class="viewcode-back" href="../../api/reprep.html#reprep.node.DataNode">[docs]</a><span class="k">class</span> <span class="nc">DataNode</span><span class="p">(</span><span class="n">Node</span><span class="p">):</span>
+
+    <span class="nd">@contract</span><span class="p">(</span><span class="n">nid</span><span class="o">=</span><span class="s">&#39;valid_id&#39;</span><span class="p">,</span> <span class="n">mime</span><span class="o">=</span><span class="s">&#39;str&#39;</span><span class="p">,</span> <span class="n">caption</span><span class="o">=</span><span class="s">&#39;None|str&#39;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nid</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">mime</span><span class="o">=</span><span class="n">MIME_PYTHON</span><span class="p">,</span> <span class="n">caption</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="n">Node</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nid</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">raw_data</span> <span class="o">=</span> <span class="n">data</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mime</span> <span class="o">=</span> <span class="n">mime</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">caption</span> <span class="o">=</span> <span class="n">caption</span>
+
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s">&#39;DataNode(</span><span class="si">%s</span><span class="s">,</span><span class="si">%s</span><span class="s">,</span><span class="si">%s</span><span class="s">)&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nid</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">mime</span><span class="p">,</span>
+                                       <span class="n">describe_value</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">raw_data</span><span class="p">))</span>
+
+<div class="viewcode-block" id="DataNode.print_tree"><a class="viewcode-back" href="../../api/reprep.html#reprep.node.DataNode.print_tree">[docs]</a>    <span class="k">def</span> <span class="nf">print_tree</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">):</span>
+        <span class="n">s</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;</span><span class="si">%s</span><span class="s">- </span><span class="si">%s</span><span class="s"> (</span><span class="si">%s</span><span class="s"> </span><span class="si">%s</span><span class="s">)</span><span class="se">\n</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">prefix</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">nid</span><span class="p">,</span>
+                                      <span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">mime</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
+            <span class="n">child</span><span class="o">.</span><span class="n">print_tree</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">prefix</span> <span class="o">+</span> <span class="s">&#39;  &#39;</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="DataNode.is_image"><a class="viewcode-back" href="../../api/reprep.html#reprep.node.DataNode.is_image">[docs]</a>    <span class="k">def</span> <span class="nf">is_image</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">mime</span> <span class="ow">in</span> <span class="p">[</span><span class="n">MIME_PNG</span><span class="p">,</span> <span class="n">MIME_SVG</span><span class="p">]</span> <span class="c"># XXX </span>
+
+    <span class="c"># TODO: move to Figure</span></div>
+<div class="viewcode-block" id="DataNode.display"><a class="viewcode-back" href="../../api/reprep.html#reprep.node.DataNode.display">[docs]</a>    <span class="k">def</span> <span class="nf">display</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">display</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="c"># TODO: save display parameters</span>
+        <span class="k">if</span> <span class="n">display</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">display</span> <span class="o">=</span> <span class="s">&#39;posneg&#39;</span>
+        <span class="n">known</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;posneg&#39;</span><span class="p">:</span> <span class="n">posneg</span><span class="p">,</span>
+                 <span class="s">&#39;success&#39;</span><span class="p">:</span> <span class="n">colorize_success</span><span class="p">,</span>
+                 <span class="s">&#39;scale&#39;</span><span class="p">:</span> <span class="n">scale</span><span class="p">,</span>
+                 <span class="s">&#39;rgb&#39;</span><span class="p">:</span> <span class="n">just_check_rgb</span><span class="p">}</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">display</span> <span class="ow">in</span> <span class="n">known</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&#39;No known converter </span><span class="si">%r</span><span class="s">. &#39;</span> <span class="o">%</span> <span class="n">display</span><span class="p">)</span>
+        <span class="n">nid</span> <span class="o">=</span> <span class="n">display</span> <span class="c"># TODO: check; add args in the name</span>
+
+        <span class="n">image</span> <span class="o">=</span> <span class="n">known</span><span class="p">[</span><span class="n">display</span><span class="p">](</span><span class="bp">self</span><span class="o">.</span><span class="n">raw_data</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="c"># TODO: add options somewhere for minimum size and zoom factor        </span>
+        <span class="k">if</span> <span class="n">image</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">50</span><span class="p">:</span>
+            <span class="n">image</span> <span class="o">=</span> <span class="n">rgb_zoom</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+
+        <span class="n">pil_image</span> <span class="o">=</span> <span class="n">Image_from_array</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_file</span><span class="p">(</span><span class="n">nid</span><span class="p">,</span> <span class="n">MIME_PNG</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">pil_image</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">resolve_url_dumb</span><span class="p">(</span><span class="n">nid</span><span class="p">)</span>
+<span class="c">#</span>
+<span class="c">#    # TODO: remove</span>
+<span class="c">#    def get_suitable_image_representation(self):</span>
+<span class="c">#        &#39;&#39;&#39; Returns the node if it is an image; otherwise it looks recursively</span>
+<span class="c">#            in the children. &#39;&#39;&#39;</span>
+<span class="c">#        def is_image(node):</span>
+<span class="c">#            return isinstance(node, DataNode) and node.is_image()</span>
+<span class="c">#        return self.find_recursively(is_image)</span>
+</div>
+    <span class="nd">@contract</span><span class="p">(</span><span class="n">mime_types</span><span class="o">=</span><span class="s">&#39;list(str)&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="DataNode.get_first_child_with_mime"><a class="viewcode-back" href="../../api/reprep.html#reprep.node.DataNode.get_first_child_with_mime">[docs]</a>    <span class="k">def</span> <span class="nf">get_first_child_with_mime</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mime_types</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Search recursively the child with the given mime. &#39;&#39;&#39;</span>
+        <span class="k">def</span> <span class="nf">choose</span><span class="p">(</span><span class="n">node</span><span class="p">):</span>
+            <span class="k">return</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">DataNode</span><span class="p">)</span> <span class="ow">and</span> <span class="n">node</span><span class="o">.</span><span class="n">mime</span> <span class="ow">in</span> <span class="n">mime_types</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_recursively</span><span class="p">(</span><span class="n">choose</span><span class="p">)</span>
+</pre></div></div></div>
+
+      </div>
+      <div class="bottomnav">
+      
+        <p>
+        <a class="uplink" href="../../index.html">Contents</a>
+        </p>
+
+      </div>
+
+	
+    <div class="footer">
+        &copy; Copyright 2010, Andrea Censi.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+		
+    <script type="text/javascript" src="static/analytics.js"></script> 
+
+
+  </body>
+</html>

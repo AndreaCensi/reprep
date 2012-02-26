@@ -1,0 +1,497 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>reprep.output.html &mdash; RepRep 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../../static/haiku.css" type="text/css" />
+    <link rel="stylesheet" href="../../../static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/print.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../static/jquery.js"></script>
+    <script type="text/javascript" src="../../../static/underscore.js"></script>
+    <script type="text/javascript" src="../../../static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/theme_extras.js"></script>
+    <link rel="top" title="RepRep 0.1 documentation" href="../../../index.html" />
+    <link rel="up" title="reprep" href="../../reprep.html" />
+	 
+	
+    <link type="text/css" rel="stylesheet" href="static/generic.css" />
+    <link type="text/css" rel="stylesheet" href="static/custom.css" />
+
+	<link  href="http://fonts.googleapis.com/css?family=Lobster" rel="stylesheet" type="text/css" >
+	<link  href="http://fonts.googleapis.com/css?family=Droid+Serif" rel="stylesheet" type="text/css" >
+
+
+  </head>
+  <body>
+      <div class="header"><h1 class="heading"><a href="../../../index.html">
+          <span>RepRep 0.1 documentation</span></a></h1>
+        <h2 class="heading"><span>reprep.output.html</span></h2>
+      </div>
+      <div class="topnav">
+      
+        <p>
+        <a class="uplink" href="../../../index.html">Contents</a>
+        </p>
+
+      </div>
+      <div class="content">
+        
+        
+  <h1>Source code for reprep.output.html</h1><div class="highlight"><pre>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">logger</span>
+<span class="kn">from</span> <span class="nn">..</span> <span class="kn">import</span> <span class="n">MIME_PLAIN</span><span class="p">,</span> <span class="n">MIME_RST</span><span class="p">,</span> <span class="n">MIME_PYTHON</span><span class="p">,</span> <span class="n">Node</span>
+<span class="kn">from</span> <span class="nn">pkg_resources</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">resource_filename</span><span class="p">)</span> <span class="c">#@UnresolvedImport  Eclipse fails here</span>
+<span class="kn">from</span> <span class="nn">string</span> <span class="kn">import</span> <span class="n">Template</span>
+<span class="kn">import</span> <span class="nn">cPickle</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">import</span> <span class="nn">mimetypes</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">shutil</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="n">header</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;</span>
+<span class="s">&lt;html&gt;</span>
+<span class="s">&lt;head&gt;  </span>
+<span class="s">    &lt;script type=&quot;text/javascript&quot; </span>
+<span class="s">        src=&quot;${resources}/static/jquery/jquery.js&quot;&gt;&lt;/script&gt;</span>
+<span class="s">    </span>
+<span class="s">    &lt;!-- Use imagezoom plugin --&gt; </span>
+<span class="s">    &lt;script type=&quot;text/javascript&quot; </span>
+<span class="s">        src=&quot;${resources}/static/jquery/jquery.imageZoom.js&quot;&gt;&lt;/script&gt;</span>
+<span class="s">    &lt;link rel=&quot;stylesheet&quot; </span>
+<span class="s">          href=&quot;${resources}/static/jquery/jquery.imageZoom.css&quot;/&gt;</span>
+<span class="s">    &lt;script type=&quot;text/javascript&quot;&gt; </span>
+<span class="s">        $$(document).ready( function () {</span>
+<span class="s">            $$(&#39;.zoomable&#39;).imageZoom();</span>
+<span class="s">        });       </span>
+<span class="s">    &lt;/script&gt;</span>
+<span class="s">    </span>
+<span class="s">    &lt;style type=&quot;text/css&quot;&gt;</span>
+<span class="s">    /* Extra CSS passed by user. */</span>
+<span class="s">        ${extra_css}</span>
+<span class="s">    &lt;/style&gt;</span>
+
+<span class="s">    &lt;link rel=&quot;stylesheet&quot; </span>
+<span class="s">          href=&quot;${resources}/static/reprep/default_style.css&quot;/&gt;</span>
+
+<span class="s">    &lt;title&gt; ${title} &lt;/title&gt;</span>
+<span class="s">&lt;body&gt;</span>
+
+<span class="s">&lt;p id=&quot;reprep-head&quot;&gt; </span>
+<span class="s">    Report created on ${date}</span>
+<span class="s">    by &lt;a href=&quot;http://purl.org/censi/2010/RepRep&quot;&gt;RepRep&lt;/a&gt;.</span>
+<span class="s">    Show:</span>
+<span class="s">    &lt;input type=&quot;submit&quot; name=&quot;datanode_toggle&quot; </span>
+<span class="s">           value=&quot;data nodes&quot; id=&quot;datanode_toggle&quot; /&gt; </span>
+<span class="s">&lt;/p&gt;</span>
+
+
+<span class="s">&lt;script type=&quot;text/javascript&quot;&gt;</span>
+<span class="s"> $$(document).ready(function() {</span>
+<span class="s">   $$(&#39;.datanode&#39;).hide();</span>
+<span class="s">   $$(&#39;#datanode_toggle&#39;).click(function(){</span>
+<span class="s">     $$(&#39;.datanode&#39;).toggle();</span>
+<span class="s">   });</span>
+<span class="s"> });</span>
+<span class="s">&lt;/script&gt;</span>
+
+
+<span class="s">&quot;&quot;&quot;</span>
+
+<span class="n">footer</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;</span>
+<span class="s"> </span>
+
+<span class="s">&lt;/body&gt;</span>
+<span class="s">&lt;/html&gt;</span>
+<span class="s">&quot;&quot;&quot;</span>
+
+
+<div class="viewcode-block" id="html_context"><a class="viewcode-back" href="../../../api/reprep.output.html#reprep.output.html.html_context">[docs]</a><span class="k">class</span> <span class="nc">html_context</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">file</span><span class="p">,</span> <span class="c">#@ReservedAssignment</span>
+                 <span class="n">rel_resources_dir</span><span class="p">,</span> <span class="n">resources_dir</span><span class="p">,</span> <span class="n">write_pickle</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">file</span> <span class="o">=</span> <span class="nb">file</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rel_resources_dir</span> <span class="o">=</span> <span class="n">rel_resources_dir</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">resources_dir</span> <span class="o">=</span> <span class="n">resources_dir</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">write_pickle</span> <span class="o">=</span> <span class="n">write_pickle</span>
+
+</div>
+<div class="viewcode-block" id="htmlfy"><a class="viewcode-back" href="../../../api/reprep.output.html#reprep.output.html.htmlfy">[docs]</a><span class="k">def</span> <span class="nf">htmlfy</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="c"># XXX to write</span>
+    <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="get_complete_id"><a class="viewcode-back" href="../../../api/reprep.output.html#reprep.output.html.get_complete_id">[docs]</a><span class="k">def</span> <span class="nf">get_complete_id</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">separator</span><span class="o">=</span><span class="s">&#39;-&#39;</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">node</span><span class="o">.</span><span class="n">nid</span> <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">nid</span> <span class="k">else</span> <span class="s">&#39;anonymous&#39;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">get_complete_id</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="p">)</span> <span class="o">+</span> <span class="n">separator</span> <span class="o">+</span> <span class="n">node</span><span class="o">.</span><span class="n">nid</span>
+
+</div>
+<div class="viewcode-block" id="get_node_filename"><a class="viewcode-back" href="../../../api/reprep.output.html#reprep.output.html.get_node_filename">[docs]</a><span class="k">def</span> <span class="nf">get_node_filename</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39; Returns a tuple (relative_from_file, absolute) &#39;&#39;&#39;</span>
+    <span class="n">suffix</span> <span class="o">=</span> <span class="n">mimetypes</span><span class="o">.</span><span class="n">guess_extension</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">mime</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">suffix</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">suffix</span> <span class="o">=</span> <span class="s">&#39;.pickle&#39;</span>
+    <span class="n">nid</span> <span class="o">=</span> <span class="n">get_complete_id</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+    <span class="n">nid</span> <span class="o">=</span> <span class="n">nid</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">,</span> <span class="s">&#39;_&#39;</span><span class="p">)</span>
+    <span class="n">nid</span> <span class="o">=</span> <span class="n">nid</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&#39;.&#39;</span><span class="p">,</span> <span class="s">&#39;_&#39;</span><span class="p">)</span>
+    <span class="n">nid</span> <span class="o">=</span> <span class="n">nid</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&#39; &#39;</span><span class="p">,</span> <span class="s">&#39;_&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="bp">True</span><span class="p">:</span>
+        <span class="c"># LaTeX has plenty of problems with &#39;_&#39; in the name</span>
+        <span class="n">nid</span> <span class="o">=</span> <span class="n">nid</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&#39;_&#39;</span><span class="p">,</span> <span class="s">&#39;-&#39;</span><span class="p">)</span>
+
+    <span class="n">f</span> <span class="o">=</span> <span class="n">normalize</span><span class="p">(</span><span class="n">nid</span> <span class="o">+</span> <span class="n">suffix</span><span class="p">)</span>
+
+    <span class="n">relative</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">context</span><span class="o">.</span><span class="n">rel_resources_dir</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
+    <span class="n">absolute</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">context</span><span class="o">.</span><span class="n">resources_dir</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">relative</span><span class="p">,</span> <span class="n">absolute</span>
+
+</div>
+<div class="viewcode-block" id="normalize"><a class="viewcode-back" href="../../../api/reprep.output.html#reprep.output.html.normalize">[docs]</a><span class="k">def</span> <span class="nf">normalize</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
+    <span class="c"># convert &#39;-png.png&#39; to &#39;.png&#39;</span>
+    <span class="n">base</span><span class="p">,</span> <span class="n">ext</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">ext</span><span class="p">)</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
+        <span class="n">w</span> <span class="o">=</span> <span class="n">ext</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+        <span class="k">if</span> <span class="n">base</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="n">w</span><span class="p">):</span>
+            <span class="n">base</span> <span class="o">=</span> <span class="n">base</span><span class="p">[:</span><span class="o">-</span><span class="mi">4</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">base</span> <span class="o">+</span> <span class="n">ext</span>
+
+</div>
+<div class="viewcode-block" id="node_to_html_document"><a class="viewcode-back" href="../../../api/reprep.output.html#reprep.output.html.node_to_html_document">[docs]</a><span class="k">def</span> <span class="nf">node_to_html_document</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span>
+                          <span class="n">resources_dir</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+                          <span class="n">extra_css</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+                          <span class="n">write_pickle</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+    <span class="n">basename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+    <span class="n">dirname</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">resources_dir</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">resources_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dirname</span><span class="p">,</span> <span class="n">basename</span> <span class="o">+</span> <span class="s">&#39;_resources&#39;</span><span class="p">)</span>
+
+    <span class="n">rel_resources_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">relpath</span><span class="p">(</span><span class="n">resources_dir</span><span class="p">,</span> <span class="n">dirname</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">dirname</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">dirname</span><span class="p">):</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">dirname</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">resources_dir</span><span class="p">):</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">resources_dir</span><span class="p">)</span>
+
+    <span class="c"># look for static data</span>
+    <span class="n">static</span> <span class="o">=</span> <span class="n">resource_filename</span><span class="p">(</span><span class="s">&quot;reprep&quot;</span><span class="p">,</span> <span class="s">&quot;static&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">static</span><span class="p">):</span>
+        <span class="c"># XXX:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s">&#39;Warning: resource dir </span><span class="si">%s</span><span class="s"> not found&#39;</span> <span class="o">%</span> <span class="n">static</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">dst</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">resources_dir</span><span class="p">,</span> <span class="s">&#39;static&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">dst</span><span class="p">):</span>
+            <span class="c"># XXX: does not work if updated</span>
+            <span class="n">shutil</span><span class="o">.</span><span class="n">copytree</span><span class="p">(</span><span class="n">static</span><span class="p">,</span> <span class="n">dst</span><span class="p">)</span>
+
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">mapping</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;resources&#39;</span><span class="p">:</span> <span class="n">rel_resources_dir</span><span class="p">,</span>
+                   <span class="s">&#39;title&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">nid</span><span class="p">),</span>
+                   <span class="s">&#39;extra_css&#39;</span><span class="p">:</span> <span class="n">extra_css</span> <span class="k">if</span> <span class="n">extra_css</span> <span class="k">else</span> <span class="s">&quot;&quot;</span><span class="p">,</span>
+                   <span class="s">&#39;date&#39;</span><span class="p">:</span> <span class="n">isodate_with_secs</span><span class="p">()}</span>
+
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">Template</span><span class="p">(</span><span class="n">header</span><span class="p">)</span><span class="o">.</span><span class="n">substitute</span><span class="p">(</span><span class="n">mapping</span><span class="p">))</span>
+
+        <span class="n">context</span> <span class="o">=</span> <span class="n">html_context</span><span class="p">(</span><span class="n">f</span><span class="p">,</span>
+                    <span class="n">resources_dir</span><span class="o">=</span><span class="n">resources_dir</span><span class="p">,</span>
+                    <span class="n">rel_resources_dir</span><span class="o">=</span><span class="n">rel_resources_dir</span><span class="p">,</span>
+                    <span class="n">write_pickle</span><span class="o">=</span><span class="n">write_pickle</span><span class="p">)</span>
+        <span class="n">node_to_html</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span>
+
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">Template</span><span class="p">(</span><span class="n">footer</span><span class="p">)</span><span class="o">.</span><span class="n">substitute</span><span class="p">(</span><span class="n">mapping</span><span class="p">))</span>
+
+</div>
+<div class="viewcode-block" id="isodate_with_secs"><a class="viewcode-back" href="../../../api/reprep.output.html#reprep.output.html.isodate_with_secs">[docs]</a><span class="k">def</span> <span class="nf">isodate_with_secs</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot; E.g., &#39;2011-10-06-22:54:33&#39; &quot;&quot;&quot;</span>
+    <span class="n">now</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+    <span class="n">date</span> <span class="o">=</span> <span class="n">now</span><span class="o">.</span><span class="n">isoformat</span><span class="p">(</span><span class="s">&#39;-&#39;</span><span class="p">)[:</span><span class="mi">19</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">date</span>
+
+</div>
+<div class="viewcode-block" id="children_to_html"><a class="viewcode-back" href="../../../api/reprep.output.html#reprep.output.html.children_to_html">[docs]</a><span class="k">def</span> <span class="nf">children_to_html</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+    <span class="kn">from</span> <span class="nn">reprep</span> <span class="kn">import</span> <span class="n">Figure</span><span class="p">,</span> <span class="n">Table</span>
+    <span class="c"># First figure and tables</span>
+    <span class="c">#priority = (Table, Figure, Node)</span>
+    <span class="n">priority</span> <span class="o">=</span> <span class="p">(</span><span class="n">Table</span><span class="p">,</span> <span class="n">Figure</span><span class="p">)</span>
+
+    <span class="n">first</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">children</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">priority</span><span class="p">)]</span>
+    <span class="n">second</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">children</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">first</span><span class="p">]</span>
+
+    <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">first</span><span class="p">:</span>
+        <span class="n">node_to_html</span><span class="p">(</span><span class="n">child</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">second</span><span class="p">:</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="n">file</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;&lt;div class=&quot;report-nongui-nodes&quot;&gt;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">second</span><span class="p">:</span>
+            <span class="n">node_to_html</span><span class="p">(</span><span class="n">child</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;&lt;/div&gt;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="node_to_html"><a class="viewcode-back" href="../../../api/reprep.output.html#reprep.output.html.node_to_html">[docs]</a><span class="k">def</span> <span class="nf">node_to_html</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+    <span class="kn">from</span> <span class="nn">reprep</span> <span class="kn">import</span> <span class="n">Figure</span><span class="p">,</span> <span class="n">Table</span><span class="p">,</span> <span class="n">DataNode</span>
+
+    <span class="n">functions</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="n">DataNode</span><span class="p">:</span> <span class="n">datanode_to_html</span><span class="p">,</span>
+        <span class="n">Table</span><span class="p">:</span> <span class="n">table_to_html</span><span class="p">,</span>
+        <span class="n">Figure</span><span class="p">:</span> <span class="n">figure_to_html</span><span class="p">,</span>
+        <span class="n">Node</span><span class="p">:</span> <span class="n">simple_node_to_html</span>
+    <span class="p">}</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">__class__</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">functions</span><span class="p">:</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;Could not find type of </span><span class="si">%s</span><span class="s"> (</span><span class="si">%s</span><span class="s">) in </span><span class="si">%s</span><span class="s">.&#39;</span> <span class="o">%</span>
+               <span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">functions</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+    <span class="n">functions</span><span class="p">[</span><span class="n">t</span><span class="p">](</span><span class="n">node</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="table_to_html"><a class="viewcode-back" href="../../../api/reprep.output.html#reprep.output.html.table_to_html">[docs]</a><span class="k">def</span> <span class="nf">table_to_html</span><span class="p">(</span><span class="n">table</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="n">file</span>
+
+    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;&lt;table class=&quot;report-table&quot;&gt;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+
+    <span class="n">caption</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">caption</span> <span class="k">if</span> <span class="n">table</span><span class="o">.</span><span class="n">caption</span> <span class="k">else</span> <span class="n">table</span><span class="o">.</span><span class="n">nid</span>
+
+    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;&lt;caption&gt;</span><span class="si">%s</span><span class="s">&lt;/caption&gt;</span><span class="se">\n</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">caption</span><span class="p">)</span>
+
+    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;&lt;tbody&gt;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+
+    <span class="n">has_row_labels</span> <span class="o">=</span> <span class="nb">filter</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="n">table</span><span class="o">.</span><span class="n">rows</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="nb">filter</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="n">table</span><span class="o">.</span><span class="n">cols</span><span class="p">):</span> <span class="c"># at least one not None</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;&lt;tr&gt;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">has_row_labels</span><span class="p">:</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;&lt;th&gt;&lt;/th&gt;&#39;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">table</span><span class="o">.</span><span class="n">cols</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">field</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\t</span><span class="s">&lt;th&gt;</span><span class="si">%s</span><span class="s">&lt;/th&gt;</span><span class="se">\n</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">field</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\t</span><span class="s">&lt;th&gt;&lt;/th&gt;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;&lt;/tr&gt;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">table</span><span class="o">.</span><span class="n">data</span><span class="p">):</span>
+        <span class="n">html_class</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="s">&#39;even&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span> <span class="s">&#39;odd&#39;</span><span class="p">}[</span><span class="n">i</span> <span class="o">%</span> <span class="mi">2</span><span class="p">]</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;&lt;tr class=&quot;</span><span class="si">%s</span><span class="s">&quot;&gt;</span><span class="se">\n</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">html_class</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">table</span><span class="o">.</span><span class="n">rows</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;&lt;th&gt;</span><span class="si">%s</span><span class="s">&lt;/th&gt;</span><span class="se">\n</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">table</span><span class="o">.</span><span class="n">rows</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="c"># FIXME html escaping</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">has_row_labels</span><span class="p">:</span>
+                <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;&lt;th&gt;&lt;/th&gt;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+
+        <span class="c">#for field in row.dtype.names:</span>
+        <span class="c">#  value = row[field]</span>
+        <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">row</span><span class="p">:</span>
+            <span class="n">rep</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\t</span><span class="s">&lt;td&gt;</span><span class="si">%s</span><span class="s">&lt;/td&gt;</span><span class="se">\n</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">rep</span><span class="p">)</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;&lt;/tr&gt;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;&lt;/tbody&gt;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;&lt;/table&gt;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="figure_to_html"><a class="viewcode-back" href="../../../api/reprep.output.html#reprep.output.html.figure_to_html">[docs]</a><span class="k">def</span> <span class="nf">figure_to_html</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+    <span class="n">complete_id</span> <span class="o">=</span> <span class="n">get_complete_id</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+    <span class="nb">file</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="n">file</span>  <span class="c">#@ReservedAssignment # XXX</span>
+    <span class="nb">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;&#39;&#39;&lt;div style=&quot;clear:left&quot; class=&#39;report-figure </span><span class="si">%s</span><span class="s">&#39; id=&#39;</span><span class="si">%s</span><span class="s">&#39;&gt;</span>
+<span class="s">    &#39;&#39;&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="n">complete_id</span><span class="p">))</span>
+
+    <span class="c">#file.write(&#39;&#39;&#39;&lt;span class=&#39;node-id&#39;&gt;%s&lt;/span&gt;&#39;&#39;&#39; % node.nid)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="s">&#39;figure&#39;</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">nid</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
+        <span class="c"># Do not write if name is autogenerated  </span>
+        <span class="nb">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;&lt;h&gt;</span><span class="si">%s</span><span class="s">&lt;/h&gt;&#39;</span> <span class="o">%</span> <span class="n">node</span><span class="o">.</span><span class="n">nid</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">cols</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">ncols</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">subfigures</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">ncols</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">cols</span>
+
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">sub</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">subfigures</span><span class="p">):</span>
+        <span class="n">col</span> <span class="o">=</span> <span class="n">i</span> <span class="o">%</span> <span class="n">ncols</span>
+        <span class="n">last_col</span> <span class="o">=</span> <span class="n">col</span> <span class="o">==</span> <span class="n">ncols</span> <span class="o">-</span> <span class="mi">1</span>
+
+        <span class="n">style</span> <span class="o">=</span> <span class="s">&quot;float:left;&quot;</span>
+<span class="c">#        first_col = col == 0</span>
+<span class="c">#        if first_col:</span>
+<span class="c">#            style += &quot;clear:left;&quot;</span>
+
+        <span class="n">width</span> <span class="o">=</span> <span class="s">&quot;</span><span class="si">%d%%</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="mf">95.0</span> <span class="o">/</span> <span class="nb">max</span><span class="p">(</span><span class="n">ncols</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+        <span class="n">style</span> <span class="o">+=</span> <span class="s">&#39;width:</span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">width</span>
+
+        <span class="nb">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;&lt;div style=&quot;</span><span class="si">%s</span><span class="s">&quot; class=&quot;report-subfigure&quot;&gt; &#39;</span> <span class="o">%</span> <span class="n">style</span><span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">actual_resource</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">resolve_url</span><span class="p">(</span><span class="n">sub</span><span class="o">.</span><span class="n">web_image</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s">&quot;Cannot find sub.web_image url </span><span class="si">%r</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">sub</span><span class="o">.</span><span class="n">web_image</span><span class="p">)</span>
+            <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">print_tree</span><span class="p">()</span> <span class="c"># XXX</span>
+            <span class="k">raise</span>
+
+        <span class="n">image_filename</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">get_node_filename</span><span class="p">(</span><span class="n">actual_resource</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span>
+
+        <span class="nb">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span>
+            <span class="n">Template</span><span class="p">(</span><span class="s">&#39;&#39;&#39;</span>
+<span class="s">                &lt;a href=&quot;${src}&quot; class=&quot;zoomable&quot;&gt;</span>
+<span class="s">                    &lt;img style=&quot;width:95%&quot; src=&quot;${src}&quot;/&gt;</span>
+<span class="s">                &lt;/a&gt;    </span>
+<span class="s">            &#39;&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">substitute</span><span class="p">(</span><span class="n">src</span><span class="o">=</span><span class="n">image_filename</span><span class="p">)</span>
+        <span class="p">)</span>
+
+        <span class="nb">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;&lt;p class=&quot;report-subfigure-caption&quot;&gt;</span><span class="si">%s</span><span class="s">&lt;/p&gt;&#39;</span> <span class="o">%</span>
+                 <span class="n">htmlfy</span><span class="p">(</span><span class="n">sub</span><span class="o">.</span><span class="n">caption</span><span class="p">))</span>
+        <span class="nb">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;&lt;/div&gt; &#39;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">last_col</span><span class="p">:</span>
+            <span class="nb">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n\n</span><span class="s">&#39;</span><span class="p">)</span>
+
+    <span class="n">caption</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">caption</span> <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">caption</span> <span class="k">else</span> <span class="s">&quot;&quot;</span>
+
+    <span class="nb">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;&lt;p class=&quot;report-figure-caption&quot;&gt;</span><span class="si">%s</span><span class="s">&lt;/p&gt;&#39;</span> <span class="o">%</span>
+             <span class="n">htmlfy</span><span class="p">(</span><span class="n">caption</span><span class="p">))</span>
+
+    <span class="n">children_to_html</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span>
+
+    <span class="nb">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;&#39;&#39;&lt;/div&gt;&#39;&#39;&#39;</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="rst2htmlfragment"><a class="viewcode-back" href="../../../api/reprep.output.html#reprep.output.html.rst2htmlfragment">[docs]</a><span class="k">def</span> <span class="nf">rst2htmlfragment</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+    <span class="kn">from</span> <span class="nn">docutils.core</span> <span class="kn">import</span> <span class="n">publish_string</span> <span class="c">#@UnresolvedImport</span>
+
+    <span class="n">html</span> <span class="o">=</span> <span class="n">publish_string</span><span class="p">(</span>
+           <span class="n">source</span><span class="o">=</span><span class="n">text</span><span class="p">,</span>
+           <span class="n">writer_name</span><span class="o">=</span><span class="s">&#39;html&#39;</span><span class="p">)</span>
+    <span class="n">html</span> <span class="o">=</span> <span class="n">html</span><span class="p">[</span><span class="n">html</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&#39;&lt;body&gt;&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="mi">6</span><span class="p">:</span><span class="n">html</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&#39;&lt;/body&gt;&#39;</span><span class="p">)]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">html</span>
+
+</div>
+<div class="viewcode-block" id="text2html"><a class="viewcode-back" href="../../../api/reprep.output.html#reprep.output.html.text2html">[docs]</a><span class="k">def</span> <span class="nf">text2html</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">mime</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39; Converts rst to HTML element. &#39;&#39;&#39;</span>
+
+    <span class="k">if</span> <span class="n">mime</span> <span class="o">==</span> <span class="n">MIME_PLAIN</span><span class="p">:</span>
+        <span class="c"># FIXME: add escaping here</span>
+        <span class="k">return</span> <span class="p">(</span><span class="s">&#39;&lt;pre class=&quot;report-text report-text-plain&quot;&gt;</span><span class="si">%s</span><span class="s">&lt;/pre&gt;&#39;</span> <span class="o">%</span>
+                 <span class="nb">str</span><span class="p">(</span><span class="n">text</span><span class="p">))</span>
+    <span class="k">elif</span> <span class="n">mime</span> <span class="o">==</span> <span class="n">MIME_RST</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">rst2htmlfragment</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">assert</span><span class="p">(</span><span class="s">&#39;Unknown mime </span><span class="si">%r</span><span class="s"> for text.&#39;</span> <span class="o">%</span> <span class="n">mime</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="datanode_to_html"><a class="viewcode-back" href="../../../api/reprep.output.html#reprep.output.html.datanode_to_html">[docs]</a><span class="k">def</span> <span class="nf">datanode_to_html</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39; Writes the data on the file &#39;&#39;&#39;</span>
+    <span class="n">relative</span><span class="p">,</span> <span class="n">filename</span> <span class="o">=</span> <span class="n">get_node_filename</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span> <span class="c">#@UnusedVariable</span>
+
+    <span class="n">text_mimes</span> <span class="o">=</span> <span class="p">[</span><span class="n">MIME_PLAIN</span><span class="p">,</span> <span class="n">MIME_RST</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">mime</span> <span class="ow">in</span> <span class="n">text_mimes</span><span class="p">:</span>
+        <span class="n">content</span> <span class="o">=</span> <span class="n">text2html</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">raw_data</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">mime</span><span class="p">)</span>
+        <span class="n">context</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&quot;&quot;&quot;</span>
+<span class="s">&lt;div class=&quot;textnode report-text-node&quot;&gt; </span>
+
+<span class="s">    &lt;span class=&quot;textid report-text-node-id&quot;&gt; {id} &lt;/span&gt; </span>
+<span class="s">   </span>
+<span class="s">   &lt;div class=&quot;report-text-node-content&quot;&gt;</span>
+<span class="s">     {content}</span>
+<span class="s">   &lt;/div&gt;</span>
+<span class="s">     </span>
+<span class="s">&lt;/div&gt;  </span>
+<span class="s">&quot;&quot;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">node</span><span class="o">.</span><span class="n">nid</span><span class="p">,</span> <span class="n">content</span><span class="o">=</span><span class="n">content</span><span class="p">))</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">mime</span> <span class="o">==</span> <span class="n">MIME_PYTHON</span><span class="p">:</span>
+            <span class="c">#print &quot;Ignoring %s&quot; % filename</span>
+            <span class="k">if</span> <span class="n">context</span><span class="o">.</span><span class="n">write_pickle</span><span class="p">:</span>
+                <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                    <span class="n">cPickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">raw_data</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
+            <span class="c"># TODO: add other representations for numpy array</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">raw_data</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+                <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&quot;Ignoring </span><span class="si">%s</span><span class="s"> because raw_data is </span><span class="si">%s</span><span class="se">\n</span><span class="s">&quot;</span> <span class="o">%</span> \
+                    <span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">raw_data</span><span class="o">.</span><span class="n">__class__</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c"># print &quot;Writing on %s&quot; % filename</span>
+                <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">raw_data</span><span class="p">)</span>
+
+        <span class="n">inline</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">mime</span> <span class="o">==</span> <span class="n">MIME_PYTHON</span><span class="p">:</span>
+            <span class="n">s</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">raw_data</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">128</span><span class="p">:</span>
+                <span class="n">inline</span> <span class="o">=</span> <span class="s">&quot;&lt;code&gt;</span><span class="si">%s</span><span class="s">&lt;/code&gt;&quot;</span> <span class="o">%</span> <span class="n">s</span> <span class="c"># TODO: escape</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">inline</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+
+        <span class="n">s</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;&lt;p class=&quot;datanode&quot;&gt;Resource: &lt;a href=&quot;</span><span class="si">%s</span><span class="s">&quot;&gt;</span><span class="si">%s</span><span class="s">&lt;/a&gt; </span><span class="si">%s</span><span class="s">&lt;/p&gt;</span><span class="se">\n</span><span class="s">&#39;</span> <span class="o">%</span>
+                           <span class="p">(</span><span class="n">relative</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">nid</span><span class="p">,</span> <span class="n">inline</span><span class="p">))</span>
+        <span class="n">context</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
+        <span class="n">context</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;&lt;div class=&quot;datanode-children&quot;&gt;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+        <span class="n">children_to_html</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span>
+        <span class="n">context</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;&lt;/div&gt;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="simple_node_to_html"><a class="viewcode-back" href="../../../api/reprep.output.html#reprep.output.html.simple_node_to_html">[docs]</a><span class="k">def</span> <span class="nf">simple_node_to_html</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+    <span class="n">complete_id</span> <span class="o">=</span> <span class="n">get_complete_id</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+
+    <span class="n">f</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="n">file</span>
+
+    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;&#39;&#39;</span>
+<span class="s">    &lt;div class=&#39;report-node&#39; id=&quot;</span><span class="si">%s</span><span class="s">&quot;&gt;</span>
+<span class="s">    &#39;&#39;&#39;</span> <span class="o">%</span> <span class="n">complete_id</span><span class="p">)</span>
+
+    <span class="c">#file.write(&#39;&#39;&#39; </span>
+    <span class="c">#&lt;span class=&#39;node-id&#39;&gt;%s &lt;/span&gt;</span>
+    <span class="c">#&#39;&#39;&#39; % (node.nid))</span>
+
+    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;&lt;h&gt;</span><span class="si">%s</span><span class="s">&lt;/h&gt;&#39;</span> <span class="o">%</span> <span class="n">node</span><span class="o">.</span><span class="n">nid</span><span class="p">)</span>
+
+    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;&lt;section&gt; </span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+
+    <span class="n">children_to_html</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span>
+
+    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;&lt;/section&gt; </span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;&lt;/div&gt; </span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+</pre></div></div>
+
+      </div>
+      <div class="bottomnav">
+      
+        <p>
+        <a class="uplink" href="../../../index.html">Contents</a>
+        </p>
+
+      </div>
+
+	
+    <div class="footer">
+        &copy; Copyright 2010, Andrea Censi.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+		
+    <script type="text/javascript" src="static/analytics.js"></script> 
+
+
+  </body>
+</html>

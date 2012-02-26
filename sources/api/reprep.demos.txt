@@ -1,0 +1,43 @@
+demos Package
+=============
+
+:mod:`demos` Package
+--------------------
+
+.. automodule:: reprep.demos
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+:mod:`colormaps` Module
+-----------------------
+
+.. automodule:: reprep.demos.colormaps
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+:mod:`manager` Module
+---------------------
+
+.. automodule:: reprep.demos.manager
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+:mod:`report_layout` Module
+---------------------------
+
+.. automodule:: reprep.demos.report_layout
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+:mod:`spines` Module
+--------------------
+
+.. automodule:: reprep.demos.spines
+    :members:
+    :undoc-members:
+    :show-inheritance:
+

@@ -1,0 +1,169 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>reprep.figure &mdash; RepRep 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../static/haiku.css" type="text/css" />
+    <link rel="stylesheet" href="../../static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/print.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../static/jquery.js"></script>
+    <script type="text/javascript" src="../../static/underscore.js"></script>
+    <script type="text/javascript" src="../../static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/theme_extras.js"></script>
+    <link rel="top" title="RepRep 0.1 documentation" href="../../index.html" />
+    <link rel="up" title="reprep" href="../reprep.html" />
+	 
+	
+    <link type="text/css" rel="stylesheet" href="static/generic.css" />
+    <link type="text/css" rel="stylesheet" href="static/custom.css" />
+
+	<link  href="http://fonts.googleapis.com/css?family=Lobster" rel="stylesheet" type="text/css" >
+	<link  href="http://fonts.googleapis.com/css?family=Droid+Serif" rel="stylesheet" type="text/css" >
+
+
+  </head>
+  <body>
+      <div class="header"><h1 class="heading"><a href="../../index.html">
+          <span>RepRep 0.1 documentation</span></a></h1>
+        <h2 class="heading"><span>reprep.figure</span></h2>
+      </div>
+      <div class="topnav">
+      
+        <p>
+        <a class="uplink" href="../../index.html">Contents</a>
+        </p>
+
+      </div>
+      <div class="content">
+        
+        
+  <h1>Source code for reprep.figure</h1><div class="highlight"><pre>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="p">(</span><span class="n">MIME_IMAGES</span><span class="p">,</span> <span class="n">logger</span><span class="p">,</span> <span class="n">Node</span><span class="p">,</span> <span class="n">DataNode</span><span class="p">,</span> <span class="n">contract</span><span class="p">,</span> <span class="n">describe_type</span><span class="p">,</span>
+    <span class="n">MIME_WEB_IMAGES</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">.utils</span> <span class="kn">import</span> <span class="n">indent</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">namedtuple</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+
+<span class="n">SubFigure</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s">&#39;SubFigure&#39;</span><span class="p">,</span> <span class="s">&#39;resource image web_image caption&#39;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="Figure"><a class="viewcode-back" href="../../api/reprep.html#reprep.figure.Figure">[docs]</a><span class="k">class</span> <span class="nc">Figure</span><span class="p">(</span><span class="n">Node</span><span class="p">):</span>
+
+    <span class="nd">@contract</span><span class="p">(</span><span class="n">cols</span><span class="o">=</span><span class="s">&#39;None|(int,&gt;0)&#39;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nid</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">caption</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">cols</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="n">Node</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nid</span><span class="o">=</span><span class="n">nid</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">caption</span> <span class="o">=</span> <span class="n">caption</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cols</span> <span class="o">=</span> <span class="n">cols</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">subfigures</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">automatically_added</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+
+<div class="viewcode-block" id="Figure.add_child"><a class="viewcode-back" href="../../api/reprep.html#reprep.figure.Figure.add_child">[docs]</a>    <span class="k">def</span> <span class="nf">add_child</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">child</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Automatically add child if it can be displayed. &quot;&quot;&quot;</span>
+        <span class="n">Node</span><span class="o">.</span><span class="n">add_child</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">child</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">child</span><span class="p">,</span> <span class="n">DataNode</span><span class="p">)</span> <span class="ow">and</span>
+            <span class="n">child</span><span class="o">.</span><span class="n">get_first_child_with_mime</span><span class="p">(</span><span class="n">MIME_IMAGES</span><span class="p">)):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="n">child</span><span class="p">,</span> <span class="n">child</span><span class="o">.</span><span class="n">caption</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">automatically_added</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">child</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="Figure.sub"><a class="viewcode-back" href="../../api/reprep.html#reprep.figure.Figure.sub">[docs]</a>    <span class="k">def</span> <span class="nf">sub</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">caption</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">display</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Adds a subfigure displaying the given resource. </span>
+<span class="sd">        </span>
+<span class="sd">            resource can either be a string or a data node.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">resource</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">resolve_url</span><span class="p">(</span><span class="n">resource</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">resource</span><span class="p">,</span> <span class="n">Node</span><span class="p">):</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">resource</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&#39;The first parameter to sub() must be either&#39;</span>
+                             <span class="s">&#39; a string (url) or a reference to a Node, &#39;</span>
+                             <span class="s">&#39; not a </span><span class="si">%s</span><span class="s">.&#39;</span> <span class="o">%</span> <span class="n">describe_type</span><span class="p">(</span><span class="n">resource</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="n">caption</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">caption</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">caption</span>
+            <span class="k">if</span> <span class="n">caption</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="n">caption</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">nid</span>
+
+        <span class="k">if</span> <span class="n">data</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">automatically_added</span><span class="p">:</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s">&#39;Node </span><span class="si">%r</span><span class="s"> was automatically added to figure (new &#39;</span>
+                          <span class="s">&#39;behavior in 1.0).&#39;</span> <span class="o">%</span>
+                          <span class="bp">self</span><span class="o">.</span><span class="n">get_relative_url</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="n">stacklevel</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+            <span class="k">return</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">DataNode</span><span class="p">):</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;I expect a DataNode as an argument to sub(), not a </span><span class="si">%s</span><span class="s">.&#39;</span>
+                   <span class="o">%</span> <span class="n">describe_type</span><span class="p">(</span><span class="n">resource</span><span class="p">))</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">display</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">image</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">display</span><span class="p">(</span><span class="n">display</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">image</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_first_child_with_mime</span><span class="p">(</span><span class="n">MIME_IMAGES</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">image</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">print_tree</span><span class="p">()</span> <span class="c"># XXX</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&#39;Could not find candidate image for resource &#39;</span>
+                                 <span class="s">&#39;</span><span class="si">%r</span><span class="s">; image node is </span><span class="si">%r</span><span class="s">.&#39;</span> <span class="o">%</span>
+                                 <span class="p">(</span><span class="n">resource</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">get_complete_id</span><span class="p">()))</span>
+
+        <span class="c"># Get an image that can be shown in a browser</span>
+        <span class="n">web_image</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">get_first_child_with_mime</span><span class="p">(</span><span class="n">MIME_WEB_IMAGES</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">web_image</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s">&#39;No image with mime </span><span class="si">%r</span><span class="s"> found in:</span><span class="se">\n</span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span>
+                         <span class="p">(</span><span class="n">MIME_WEB_IMAGES</span><span class="p">,</span> <span class="n">indent</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">format_tree</span><span class="p">(),</span> <span class="s">&#39;&gt;&#39;</span><span class="p">)))</span>
+            <span class="c"># convert the image to web image</span>
+            <span class="c"># TODO: to write</span>
+            <span class="n">web_image</span> <span class="o">=</span> <span class="n">image</span> <span class="c"># XXX</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s">&#39;I need to convert </span><span class="si">%s</span><span class="s"> into a web image.&#39;</span> <span class="o">%</span>
+                         <span class="p">(</span><span class="n">image</span><span class="p">))</span>
+
+        <span class="n">sub</span> <span class="o">=</span> <span class="n">SubFigure</span><span class="p">(</span><span class="n">resource</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">get_relative_url</span><span class="p">(</span><span class="n">data</span><span class="p">),</span>
+                        <span class="n">image</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">get_relative_url</span><span class="p">(</span><span class="n">image</span><span class="p">),</span>
+                        <span class="n">web_image</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">get_relative_url</span><span class="p">(</span><span class="n">web_image</span><span class="p">),</span>
+                        <span class="n">caption</span><span class="o">=</span><span class="n">caption</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">subfigures</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sub</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="Figure.get_subfigures"><a class="viewcode-back" href="../../api/reprep.html#reprep.figure.Figure.get_subfigures">[docs]</a>    <span class="k">def</span> <span class="nf">get_subfigures</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">subfigures</span>
+</pre></div></div></div>
+
+      </div>
+      <div class="bottomnav">
+      
+        <p>
+        <a class="uplink" href="../../index.html">Contents</a>
+        </p>
+
+      </div>
+
+	
+    <div class="footer">
+        &copy; Copyright 2010, Andrea Censi.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+		
+    <script type="text/javascript" src="static/analytics.js"></script> 
+
+
+  </body>
+</html>

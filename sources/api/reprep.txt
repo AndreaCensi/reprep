@@ -1,0 +1,103 @@
+reprep Package
+==============
+
+:mod:`reprep` Package
+---------------------
+
+.. automodule:: reprep
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+:mod:`config` Module
+--------------------
+
+.. automodule:: reprep.config
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+:mod:`constants` Module
+-----------------------
+
+.. automodule:: reprep.constants
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+:mod:`figure` Module
+--------------------
+
+.. automodule:: reprep.figure
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+:mod:`helpers` Module
+---------------------
+
+.. automodule:: reprep.helpers
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+:mod:`interface` Module
+-----------------------
+
+.. automodule:: reprep.interface
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+:mod:`mpl` Module
+-----------------
+
+.. automodule:: reprep.mpl
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+:mod:`node` Module
+------------------
+
+.. automodule:: reprep.node
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+:mod:`repcontracts` Module
+--------------------------
+
+.. automodule:: reprep.repcontracts
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+:mod:`structures` Module
+------------------------
+
+.. automodule:: reprep.structures
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+:mod:`table` Module
+-------------------
+
+.. automodule:: reprep.table
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+Subpackages
+-----------
+
+.. toctree::
+
+    reprep.demos
+    reprep.graphics
+    reprep.output
+    reprep.plot_utils
+    reprep.tests
+    reprep.utils
+

@@ -1,0 +1,165 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>reprep.graphics.scaling &mdash; RepRep 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../../static/haiku.css" type="text/css" />
+    <link rel="stylesheet" href="../../../static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/print.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../static/jquery.js"></script>
+    <script type="text/javascript" src="../../../static/underscore.js"></script>
+    <script type="text/javascript" src="../../../static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/theme_extras.js"></script>
+    <link rel="top" title="RepRep 0.1 documentation" href="../../../index.html" />
+    <link rel="up" title="reprep" href="../../reprep.html" />
+	 
+	
+    <link type="text/css" rel="stylesheet" href="static/generic.css" />
+    <link type="text/css" rel="stylesheet" href="static/custom.css" />
+
+	<link  href="http://fonts.googleapis.com/css?family=Lobster" rel="stylesheet" type="text/css" >
+	<link  href="http://fonts.googleapis.com/css?family=Droid+Serif" rel="stylesheet" type="text/css" >
+
+
+  </head>
+  <body>
+      <div class="header"><h1 class="heading"><a href="../../../index.html">
+          <span>RepRep 0.1 documentation</span></a></h1>
+        <h2 class="heading"><span>reprep.graphics.scaling</span></h2>
+      </div>
+      <div class="topnav">
+      
+        <p>
+        <a class="uplink" href="../../../index.html">Contents</a>
+        </p>
+
+      </div>
+      <div class="content">
+        
+        
+  <h1>Source code for reprep.graphics.scaling</h1><div class="highlight"><pre>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">contract</span><span class="p">,</span> <span class="n">np</span>
+
+
+<span class="nd">@contract</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="s">&#39;array&#39;</span><span class="p">,</span> <span class="n">top_percent</span><span class="o">=</span><span class="s">&#39;&gt;=0,&lt;=90&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="skim_top"><a class="viewcode-back" href="../../../api/reprep.graphics.html#reprep.graphics.scaling.skim_top">[docs]</a><span class="k">def</span> <span class="nf">skim_top</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">top_percent</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39; Cuts off the top percentile &#39;&#39;&#39;</span>
+    <span class="n">threshold</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">flat</span><span class="p">,</span> <span class="mi">100</span> <span class="o">-</span> <span class="n">top_percent</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">threshold</span><span class="p">)</span>
+
+</div>
+<span class="nd">@contract</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="s">&#39;array[HxW],H&gt;0,W&gt;0&#39;</span><span class="p">,</span>
+          <span class="n">max_value</span><span class="o">=</span><span class="s">&#39;None|number&#39;</span><span class="p">,</span>
+          <span class="n">min_value</span><span class="o">=</span><span class="s">&#39;None|number&#39;</span><span class="p">,</span>
+          <span class="n">skim</span><span class="o">=</span><span class="s">&#39;&gt;=0,&lt;=90&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="get_scaled_values"><a class="viewcode-back" href="../../../api/reprep.graphics.html#reprep.graphics.scaling.get_scaled_values">[docs]</a><span class="k">def</span> <span class="nf">get_scaled_values</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">min_value</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">max_value</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">skim</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Returns dictionary with entries:</span>
+<span class="sd">        - value01       Values in [0, 1], no inf, nan, where it is set 0.5.</span>
+<span class="sd">        - isnan         Values were NaN.</span>
+<span class="sd">        - isinf         Values were +-Inf</span>
+<span class="sd">        - isfin         Values weren&#39;t Inf or NaN</span>
+<span class="sd">        - clipped_ub    Values were clipped </span>
+<span class="sd">        - clipped_lb</span>
+<span class="sd">        - flat          Boolean if there wasn&#39;t a range</span>
+<span class="sd">        - min_value</span>
+<span class="sd">        - max_value</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s">&#39;float32&#39;</span><span class="p">)</span>
+
+    <span class="n">isfin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+    <span class="n">isnan</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+    <span class="n">isinf</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">isinf</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">skim</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="c"># TODO: skim bottom?</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">skim_top</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">skim</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">max_value</span> <span class="ow">is</span> <span class="bp">None</span> <span class="ow">or</span> <span class="n">min_value</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">value</span><span class="p">[</span><span class="n">value</span> <span class="o">==</span> <span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">Inf</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">Inf</span>
+        <span class="n">value</span><span class="p">[</span><span class="n">value</span> <span class="o">==</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">Inf</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">Inf</span>
+        <span class="n">vmax</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmax</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="n">value</span><span class="p">[</span><span class="n">value</span> <span class="o">==</span> <span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">Inf</span><span class="p">]</span> <span class="o">=</span> <span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">Inf</span>
+        <span class="n">value</span><span class="p">[</span><span class="n">value</span> <span class="o">==</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">Inf</span><span class="p">]</span> <span class="o">=</span> <span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">Inf</span>
+        <span class="n">vmin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmin</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="n">bounds</span> <span class="o">=</span> <span class="p">(</span><span class="n">vmin</span><span class="p">,</span> <span class="n">vmax</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">max_value</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">max_value</span> <span class="o">=</span> <span class="n">bounds</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">min_value</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">min_value</span> <span class="o">=</span> <span class="n">bounds</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="c"># but what about +- inf?</span>
+
+    <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">min_value</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">max_value</span><span class="p">)</span>
+
+    <span class="c"># Put values for filling in</span>
+    <span class="n">a_value</span> <span class="o">=</span> <span class="n">min_value</span>
+    <span class="n">value</span><span class="p">[</span><span class="n">isinf</span><span class="p">]</span> <span class="o">=</span> <span class="n">a_value</span>
+    <span class="n">value</span><span class="p">[</span><span class="n">isnan</span><span class="p">]</span> <span class="o">=</span> <span class="n">a_value</span>
+
+    <span class="k">if</span> <span class="n">max_value</span> <span class="o">==</span> <span class="n">min_value</span><span class="p">:</span>
+        <span class="n">scaled</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty_like</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="n">scaled</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="n">a_value</span><span class="p">)</span>
+        <span class="n">flat</span> <span class="o">=</span> <span class="bp">True</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">scaled</span> <span class="o">=</span> <span class="p">(</span><span class="n">value</span> <span class="o">-</span> <span class="n">min_value</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">/</span> <span class="p">(</span><span class="n">max_value</span> <span class="o">-</span> <span class="n">min_value</span><span class="p">))</span>
+        <span class="n">flat</span> <span class="o">=</span> <span class="bp">False</span>
+
+    <span class="n">clipped_ub</span> <span class="o">=</span> <span class="n">scaled</span> <span class="o">&gt;</span> <span class="mi">1</span>
+    <span class="n">clipped_lb</span> <span class="o">=</span> <span class="n">scaled</span> <span class="o">&lt;</span> <span class="mi">0</span>
+
+    <span class="c"># Cut at the thresholds</span>
+    <span class="n">scaled01</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">scaled</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">scaled01</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span><span class="n">scaled01</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span>
+                <span class="n">scaled01</span><span class="o">=</span><span class="n">scaled01</span><span class="p">,</span>
+                <span class="n">isnan</span><span class="o">=</span><span class="n">isnan</span><span class="p">,</span>
+                <span class="n">isinf</span><span class="o">=</span><span class="n">isinf</span><span class="p">,</span>
+                <span class="n">isfin</span><span class="o">=</span><span class="n">isfin</span><span class="p">,</span>
+                <span class="n">flat</span><span class="o">=</span><span class="n">flat</span><span class="p">,</span>
+                <span class="n">min_value</span><span class="o">=</span><span class="n">min_value</span><span class="p">,</span>
+                <span class="n">max_value</span><span class="o">=</span><span class="n">max_value</span><span class="p">,</span>
+                <span class="n">clipped_ub</span><span class="o">=</span><span class="n">clipped_ub</span><span class="p">,</span>
+                <span class="n">clipped_lb</span><span class="o">=</span><span class="n">clipped_lb</span>
+                <span class="p">)</span>
+</pre></div></div>
+
+      </div>
+      <div class="bottomnav">
+      
+        <p>
+        <a class="uplink" href="../../../index.html">Contents</a>
+        </p>
+
+      </div>
+
+	
+    <div class="footer">
+        &copy; Copyright 2010, Andrea Censi.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+		
+    <script type="text/javascript" src="static/analytics.js"></script> 
+
+
+  </body>
+</html>

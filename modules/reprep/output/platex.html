@@ -1,0 +1,343 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>reprep.output.platex &mdash; RepRep 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../../static/haiku.css" type="text/css" />
+    <link rel="stylesheet" href="../../../static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/print.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../static/jquery.js"></script>
+    <script type="text/javascript" src="../../../static/underscore.js"></script>
+    <script type="text/javascript" src="../../../static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/theme_extras.js"></script>
+    <link rel="top" title="RepRep 0.1 documentation" href="../../../index.html" />
+    <link rel="up" title="reprep" href="../../reprep.html" />
+	 
+	
+    <link type="text/css" rel="stylesheet" href="static/generic.css" />
+    <link type="text/css" rel="stylesheet" href="static/custom.css" />
+
+	<link  href="http://fonts.googleapis.com/css?family=Lobster" rel="stylesheet" type="text/css" >
+	<link  href="http://fonts.googleapis.com/css?family=Droid+Serif" rel="stylesheet" type="text/css" >
+
+
+  </head>
+  <body>
+      <div class="header"><h1 class="heading"><a href="../../../index.html">
+          <span>RepRep 0.1 documentation</span></a></h1>
+        <h2 class="heading"><span>reprep.output.platex</span></h2>
+      </div>
+      <div class="topnav">
+      
+        <p>
+        <a class="uplink" href="../../../index.html">Contents</a>
+        </p>
+
+      </div>
+      <div class="content">
+        
+        
+  <h1>Source code for reprep.output.platex</h1><div class="highlight"><pre>
+<span class="kn">from</span> <span class="nn">StringIO</span> <span class="kn">import</span> <span class="n">StringIO</span>
+<span class="kn">import</span> <span class="nn">mimetypes</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+
+<div class="viewcode-block" id="Latex"><a class="viewcode-back" href="../../../api/reprep.output.html#reprep.output.platex.Latex">[docs]</a><span class="k">class</span> <span class="nc">Latex</span><span class="p">:</span>
+
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="Latex.document"><a class="viewcode-back" href="../../../api/reprep.output.html#reprep.output.platex.Latex.document">[docs]</a>    <span class="k">def</span> <span class="nf">document</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">graphics_path</span><span class="o">=</span><span class="s">&quot;.&quot;</span><span class="p">,</span> <span class="n">document_class</span><span class="o">=</span><span class="s">&quot;article&quot;</span><span class="p">,</span>
+                 <span class="n">class_options</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">):</span>
+
+        <span class="n">graphics_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">relpath</span><span class="p">(</span><span class="n">graphics_path</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">filename</span><span class="p">))</span>
+
+        <span class="k">class</span> <span class="nc">BodyWrap</span><span class="p">:</span>
+            <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">document</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">document</span> <span class="o">=</span> <span class="n">document</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">filename</span>
+
+            <span class="k">def</span> <span class="nf">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">document</span>
+
+            <span class="k">def</span> <span class="nf">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">type</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">traceback</span><span class="p">):</span> <span class="c">#@UnusedVariable @ReservedAssignment</span>
+                <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">dump_stream</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+        <span class="n">document</span> <span class="o">=</span> <span class="n">LatexDocument</span><span class="p">(</span><span class="n">graphics_path</span><span class="o">=</span><span class="n">graphics_path</span><span class="p">,</span>
+                                 <span class="n">document_class</span><span class="o">=</span><span class="n">document_class</span><span class="p">,</span>
+                                 <span class="n">class_options</span><span class="o">=</span><span class="n">class_options</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">BodyWrap</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">document</span><span class="p">)</span>
+
+</div>
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="Latex.fragment"><a class="viewcode-back" href="../../../api/reprep.output.html#reprep.output.platex.Latex.fragment">[docs]</a>    <span class="k">def</span> <span class="nf">fragment</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">graphics_path</span><span class="p">):</span>
+        <span class="k">class</span> <span class="nc">Attacher</span><span class="p">:</span>
+            <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">graphics_path</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">context</span> <span class="o">=</span> <span class="n">LatexContext</span><span class="p">(</span><span class="n">graphics_path</span><span class="o">=</span><span class="n">graphics_path</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">filename</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">environment</span> <span class="o">=</span> <span class="n">LatexEnvironment</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="p">)</span>
+            <span class="k">def</span> <span class="nf">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">environment</span>
+            <span class="k">def</span> <span class="nf">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">type</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">traceback</span><span class="p">):</span> <span class="c">#@UnusedVariable @ReservedAssignment</span>
+                <span class="nb">dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">)</span> <span class="c">#@ReservedAssignment</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="nb">dir</span><span class="p">):</span>
+                    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="nb">dir</span><span class="p">)</span>
+                <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">f</span><span class="o">.</span><span class="n">getvalue</span><span class="p">())</span>
+        <span class="k">return</span> <span class="n">Attacher</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">graphics_path</span><span class="p">)</span>
+
+</div></div>
+<div class="viewcode-block" id="LatexContext"><a class="viewcode-back" href="../../../api/reprep.output.html#reprep.output.platex.LatexContext">[docs]</a><span class="k">class</span> <span class="nc">LatexContext</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">graphics_path</span><span class="o">=</span><span class="s">&quot;.&quot;</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">f</span> <span class="o">=</span> <span class="n">StringIO</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">preamble</span> <span class="o">=</span> <span class="n">StringIO</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">graphics_path</span> <span class="o">=</span> <span class="n">graphics_path</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+
+<div class="viewcode-block" id="LatexContext.generate_file_id"><a class="viewcode-back" href="../../../api/reprep.output.html#reprep.output.platex.LatexContext.generate_file_id">[docs]</a>    <span class="k">def</span> <span class="nf">generate_file_id</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">generate_file_id</span><span class="p">()</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="s">&quot;file</span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">count</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="n">f</span>
+</div>
+<div class="viewcode-block" id="LatexContext.child"><a class="viewcode-back" href="../../../api/reprep.output.html#reprep.output.platex.LatexContext.child">[docs]</a>    <span class="k">def</span> <span class="nf">child</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Generates a child context; sharing some data &#39;&#39;&#39;</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="n">LatexContext</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">graphics_path</span><span class="p">)</span>
+        <span class="n">c</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="bp">self</span>
+        <span class="k">return</span> <span class="n">c</span>
+
+</div></div>
+<div class="viewcode-block" id="LatexEnvironment"><a class="viewcode-back" href="../../../api/reprep.output.html#reprep.output.platex.LatexEnvironment">[docs]</a><span class="k">class</span> <span class="nc">LatexEnvironment</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">context</span> <span class="o">=</span> <span class="n">context</span>
+
+<div class="viewcode-block" id="LatexEnvironment.hfill"><a class="viewcode-back" href="../../../api/reprep.output.html#reprep.output.platex.LatexEnvironment.hfill">[docs]</a>    <span class="k">def</span> <span class="nf">hfill</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\\</span><span class="s">hfill\ </span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span></div>
+<div class="viewcode-block" id="LatexEnvironment.hspace"><a class="viewcode-back" href="../../../api/reprep.output.html#reprep.output.platex.LatexEnvironment.hspace">[docs]</a>    <span class="k">def</span> <span class="nf">hspace</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\\</span><span class="s">hspace{</span><span class="si">%s</span><span class="s">}&#39;</span> <span class="o">%</span> <span class="n">size</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="LatexEnvironment.vspace"><a class="viewcode-back" href="../../../api/reprep.output.html#reprep.output.platex.LatexEnvironment.vspace">[docs]</a>    <span class="k">def</span> <span class="nf">vspace</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\\</span><span class="s">vspace{</span><span class="si">%s</span><span class="s">}&#39;</span> <span class="o">%</span> <span class="n">size</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="LatexEnvironment.parbreak"><a class="viewcode-back" href="../../../api/reprep.output.html#reprep.output.platex.LatexEnvironment.parbreak">[docs]</a>    <span class="k">def</span> <span class="nf">parbreak</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n\n</span><span class="s">&#39;</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="LatexEnvironment.pagebreak"><a class="viewcode-back" href="../../../api/reprep.output.html#reprep.output.platex.LatexEnvironment.pagebreak">[docs]</a>    <span class="k">def</span> <span class="nf">pagebreak</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\\</span><span class="s">pagebreak\ </span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="LatexEnvironment.rule"><a class="viewcode-back" href="../../../api/reprep.output.html#reprep.output.platex.LatexEnvironment.rule">[docs]</a>    <span class="k">def</span> <span class="nf">rule</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">&#39;gray&#39;</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;{</span><span class="se">\\</span><span class="s">color{</span><span class="si">%s</span><span class="s">}</span><span class="se">\\</span><span class="s">rule{</span><span class="si">%s</span><span class="s">}{</span><span class="si">%s</span><span class="s">}}</span><span class="se">\n</span><span class="s">&#39;</span> <span class="o">%</span> \
+                             <span class="p">(</span><span class="n">color</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">))</span>
+</div>
+<div class="viewcode-block" id="LatexEnvironment.text"><a class="viewcode-back" href="../../../api/reprep.output.html#reprep.output.platex.LatexEnvironment.text">[docs]</a>    <span class="k">def</span> <span class="nf">text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">latexify</span><span class="p">(</span><span class="n">t</span><span class="p">))</span>
+
+    <span class="c">#FIXME: make general!</span></div>
+<div class="viewcode-block" id="LatexEnvironment.tabular_simple"><a class="viewcode-back" href="../../../api/reprep.output.html#reprep.output.platex.LatexEnvironment.tabular_simple">[docs]</a>    <span class="k">def</span> <span class="nf">tabular_simple</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">row_desc</span><span class="p">,</span> <span class="n">col_desc</span><span class="p">,</span> <span class="n">write_col_desc</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Writes a tabular environment with very simple options. &#39;&#39;&#39;</span>
+        <span class="k">def</span> <span class="nf">hline</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\\</span><span class="s">hline</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+        <span class="k">def</span> <span class="nf">write_row_tex</span><span class="p">(</span><span class="n">entries</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&quot; &amp; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">entries</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39; </span><span class="se">\\</span><span class="s">tabularnewline</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+
+        <span class="n">alignment_string</span> <span class="o">=</span> <span class="s">&#39;|l||&#39;</span> <span class="o">+</span> <span class="p">(</span><span class="s">&#39;r|&#39;</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">col_desc</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\\</span><span class="s">begin{tabular}{</span><span class="si">%s</span><span class="s">}</span><span class="se">\n</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">alignment_string</span><span class="p">)</span>
+        <span class="n">hline</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">write_col_desc</span><span class="p">:</span>
+            <span class="n">row_tex</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="s">&#39;</span><span class="se">\\</span><span class="s">makebox[0.8cm]{</span><span class="si">%s</span><span class="s">}&#39;</span> <span class="o">%</span> <span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">col_desc</span><span class="p">]</span>
+            <span class="n">write_row_tex</span><span class="p">(</span><span class="n">row_tex</span><span class="p">)</span>
+            <span class="n">hline</span><span class="p">()</span>
+            <span class="n">hline</span><span class="p">()</span>
+
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">row_desc</span><span class="p">):</span>
+            <span class="n">row_tex</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;</span><span class="se">\\</span><span class="s">makebox[2.5cm][r]{</span><span class="si">%s</span><span class="s">}&#39;</span> <span class="o">%</span> <span class="n">row</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="s">&#39;</span><span class="se">\\</span><span class="s">makebox[0.8cm]{</span><span class="si">%s</span><span class="s">}&#39;</span> <span class="o">%</span> <span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span>
+            <span class="n">write_row_tex</span><span class="p">(</span><span class="n">row_tex</span><span class="p">)</span>
+            <span class="n">hline</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\\</span><span class="s">end{tabular}</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="LatexEnvironment.tex"><a class="viewcode-back" href="../../../api/reprep.output.html#reprep.output.platex.LatexEnvironment.tex">[docs]</a>    <span class="k">def</span> <span class="nf">tex</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tex</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">tex</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="LatexEnvironment.input"><a class="viewcode-back" href="../../../api/reprep.output.html#reprep.output.platex.LatexEnvironment.input">[docs]</a>    <span class="k">def</span> <span class="nf">input</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span> <span class="c">#@ReservedAssignment</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\\</span><span class="s">input{</span><span class="si">%s</span><span class="s">}</span><span class="se">\n</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">filename</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="LatexEnvironment.use_package"><a class="viewcode-back" href="../../../api/reprep.output.html#reprep.output.platex.LatexEnvironment.use_package">[docs]</a>    <span class="k">def</span> <span class="nf">use_package</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">preamble</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\\</span><span class="s">usepackage[</span><span class="si">%s</span><span class="s">]{</span><span class="si">%s</span><span class="s">}</span><span class="se">\n</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">options</span><span class="p">,</span> <span class="n">name</span><span class="p">))</span>
+</div>
+<div class="viewcode-block" id="LatexEnvironment.figure"><a class="viewcode-back" href="../../../api/reprep.output.html#reprep.output.platex.LatexEnvironment.figure">[docs]</a>    <span class="k">def</span> <span class="nf">figure</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">caption</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">placement</span><span class="o">=</span><span class="s">&quot;t&quot;</span><span class="p">,</span> <span class="n">double</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+        <span class="n">figure</span> <span class="o">=</span> <span class="n">Figure</span><span class="p">(</span><span class="n">caption</span><span class="o">=</span><span class="n">caption</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">,</span> <span class="n">placement</span><span class="o">=</span><span class="n">placement</span><span class="p">,</span>
+                        <span class="n">context</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">child</span><span class="p">(),</span> <span class="n">double</span><span class="o">=</span><span class="n">double</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">LatexEnvironment</span><span class="o">.</span><span class="n">GenericWrap</span><span class="p">(</span><span class="n">figure</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="LatexEnvironment.graphics_data"><a class="viewcode-back" href="../../../api/reprep.output.html#reprep.output.platex.LatexEnvironment.graphics_data">[docs]</a>    <span class="k">def</span> <span class="nf">graphics_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">mime</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="s">&quot;3cm&quot;</span><span class="p">,</span> <span class="n">nid</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="n">suffix</span> <span class="o">=</span> <span class="n">mimetypes</span><span class="o">.</span><span class="n">guess_extension</span><span class="p">(</span><span class="n">mime</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">nid</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">nid</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">generate_file_id</span><span class="p">()</span>
+        <span class="c"># cannot have &#39;.&#39; in the filename, otherwise latex gets confused</span>
+        <span class="n">nid</span> <span class="o">=</span> <span class="n">nid</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&#39;.&#39;</span><span class="p">,</span> <span class="s">&#39;_&#39;</span><span class="p">)</span>
+        <span class="n">nid</span> <span class="o">=</span> <span class="n">nid</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">,</span> <span class="s">&#39;:&#39;</span><span class="p">)</span>
+
+        <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">graphics_path</span><span class="p">,</span> <span class="nb">id</span> <span class="o">+</span> <span class="n">suffix</span><span class="p">)</span>
+        <span class="c"># make sure dir exists</span>
+        <span class="n">dirname</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">dirname</span><span class="p">):</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">dirname</span><span class="p">)</span>
+
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\\</span><span class="s">includegraphics[width=</span><span class="si">%s</span><span class="s">]{</span><span class="si">%s</span><span class="s">}</span><span class="si">%%</span><span class="se">\n</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">width</span><span class="p">,</span> <span class="nb">id</span><span class="p">))</span>
+</div>
+<div class="viewcode-block" id="LatexEnvironment.GenericWrap"><a class="viewcode-back" href="../../../api/reprep.output.html#reprep.output.platex.LatexEnvironment.GenericWrap">[docs]</a>    <span class="k">class</span> <span class="nc">GenericWrap</span><span class="p">:</span>
+        <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">figure</span><span class="p">,</span> <span class="n">main_context</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">figure</span> <span class="o">=</span> <span class="n">figure</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">main_context</span> <span class="o">=</span> <span class="n">main_context</span>
+        <span class="k">def</span> <span class="nf">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">figure</span>
+        <span class="k">def</span> <span class="nf">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">type</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">traceback</span><span class="p">):</span> <span class="c">#@UnusedVariable @ReservedAssignment</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">figure</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">main_context</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">main_context</span><span class="p">)</span>
+
+</div></div>
+<div class="viewcode-block" id="LatexDocument"><a class="viewcode-back" href="../../../api/reprep.output.html#reprep.output.platex.LatexDocument">[docs]</a><span class="k">class</span> <span class="nc">LatexDocument</span><span class="p">(</span><span class="n">LatexEnvironment</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">document_class</span><span class="p">,</span> <span class="n">class_options</span><span class="p">,</span> <span class="n">graphics_path</span><span class="o">=</span><span class="s">&quot;.&quot;</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">context</span> <span class="o">=</span> <span class="n">LatexContext</span><span class="p">(</span><span class="n">graphics_path</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">document_class</span> <span class="o">=</span> <span class="n">document_class</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">class_options</span> <span class="o">=</span> <span class="n">class_options</span>
+
+<div class="viewcode-block" id="LatexDocument.dump_stream"><a class="viewcode-back" href="../../../api/reprep.output.html#reprep.output.platex.LatexDocument.dump_stream">[docs]</a>    <span class="k">def</span> <span class="nf">dump_stream</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">f</span><span class="p">):</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\\</span><span class="s">documentclass[</span><span class="si">%s</span><span class="s">]{</span><span class="si">%s</span><span class="s">}</span><span class="se">\n</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">class_options</span><span class="p">,</span>
+                                                  <span class="bp">self</span><span class="o">.</span><span class="n">document_class</span><span class="p">))</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\\</span><span class="s">usepackage{graphicx}</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\\</span><span class="s">usepackage{xcolor}</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\\</span><span class="s">usepackage{subfig}</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\\</span><span class="s">graphicspath{{</span><span class="si">%s</span><span class="s">/}}</span><span class="se">\n</span><span class="s">&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">graphics_path</span><span class="p">)</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">preamble</span><span class="o">.</span><span class="n">getvalue</span><span class="p">())</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\\</span><span class="s">begin{document}</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">f</span><span class="o">.</span><span class="n">getvalue</span><span class="p">())</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\\</span><span class="s">end{document}</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+
+</div></div>
+<div class="viewcode-block" id="Figure"><a class="viewcode-back" href="../../../api/reprep.output.html#reprep.output.platex.Figure">[docs]</a><span class="k">class</span> <span class="nc">Figure</span><span class="p">(</span><span class="n">LatexEnvironment</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">caption</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">placement</span><span class="p">,</span> <span class="n">context</span><span class="p">,</span> <span class="n">double</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">caption</span> <span class="o">=</span> <span class="n">caption</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="n">label</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">context</span> <span class="o">=</span> <span class="n">context</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">placement</span> <span class="o">=</span> <span class="n">placement</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">double</span> <span class="o">=</span> <span class="n">double</span>
+
+<div class="viewcode-block" id="Figure.figure"><a class="viewcode-back" href="../../../api/reprep.output.html#reprep.output.platex.Figure.figure">[docs]</a>    <span class="k">def</span> <span class="nf">figure</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="n">StructureError</span><span class="p">(</span><span class="s">&#39;Cannot nest figures; use sub().&#39;</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="Figure.subfigure"><a class="viewcode-back" href="../../../api/reprep.output.html#reprep.output.platex.Figure.subfigure">[docs]</a>    <span class="k">def</span> <span class="nf">subfigure</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">caption</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="n">figure</span> <span class="o">=</span> <span class="n">SubFigure</span><span class="p">(</span><span class="n">caption</span><span class="o">=</span><span class="n">caption</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">,</span>
+                           <span class="n">context</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">child</span><span class="p">())</span>
+        <span class="k">return</span> <span class="n">LatexEnvironment</span><span class="o">.</span><span class="n">GenericWrap</span><span class="p">(</span><span class="n">figure</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="Figure.dump"><a class="viewcode-back" href="../../../api/reprep.output.html#reprep.output.platex.Figure.dump">[docs]</a>    <span class="k">def</span> <span class="nf">dump</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">main_context</span><span class="p">):</span>
+        <span class="c"># writes everything, and caption delayed</span>
+        <span class="n">main_context</span><span class="o">.</span><span class="n">preamble</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">preamble</span><span class="o">.</span><span class="n">getvalue</span><span class="p">())</span>
+        <span class="n">env</span> <span class="o">=</span> <span class="s">&quot;figure*&quot;</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">double</span> <span class="k">else</span> <span class="s">&quot;figure&quot;</span>
+        <span class="n">main_context</span><span class="o">.</span><span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\\</span><span class="s">begin{</span><span class="si">%s</span><span class="s">}[</span><span class="si">%s</span><span class="s">]</span><span class="se">\n</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">placement</span><span class="p">))</span>
+        <span class="n">main_context</span><span class="o">.</span><span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">f</span><span class="o">.</span><span class="n">getvalue</span><span class="p">())</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">label</span><span class="p">:</span>
+            <span class="n">label</span> <span class="o">=</span> <span class="s">&#39;</span><span class="se">\\</span><span class="s">label{</span><span class="si">%s</span><span class="s">}&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">label</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">label</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+        <span class="n">main_context</span><span class="o">.</span><span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\\</span><span class="s">caption{</span><span class="si">%s%s</span><span class="s">}</span><span class="se">\n</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">caption</span><span class="p">))</span>
+        <span class="n">main_context</span><span class="o">.</span><span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\\</span><span class="s">end{</span><span class="si">%s</span><span class="s">}</span><span class="se">\n</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">env</span><span class="p">)</span>
+
+</div></div>
+<div class="viewcode-block" id="StructureError"><a class="viewcode-back" href="../../../api/reprep.output.html#reprep.output.platex.StructureError">[docs]</a><span class="k">class</span> <span class="nc">StructureError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+</div>
+<div class="viewcode-block" id="SubFigure"><a class="viewcode-back" href="../../../api/reprep.output.html#reprep.output.platex.SubFigure">[docs]</a><span class="k">class</span> <span class="nc">SubFigure</span><span class="p">(</span><span class="n">LatexEnvironment</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">caption</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">caption</span> <span class="o">=</span> <span class="n">caption</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="n">label</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">context</span> <span class="o">=</span> <span class="n">context</span>
+
+<div class="viewcode-block" id="SubFigure.figure"><a class="viewcode-back" href="../../../api/reprep.output.html#reprep.output.platex.SubFigure.figure">[docs]</a>    <span class="k">def</span> <span class="nf">figure</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="n">StructureError</span><span class="p">(</span><span class="s">&#39;Cannot nest figures; use sub().&#39;</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="SubFigure.subfigure"><a class="viewcode-back" href="../../../api/reprep.output.html#reprep.output.platex.SubFigure.subfigure">[docs]</a>    <span class="k">def</span> <span class="nf">subfigure</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="n">StructureError</span><span class="p">(</span><span class="s">&#39;Cannot nest figures; use sub().&#39;</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="SubFigure.dump"><a class="viewcode-back" href="../../../api/reprep.output.html#reprep.output.platex.SubFigure.dump">[docs]</a>    <span class="k">def</span> <span class="nf">dump</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">main_context</span><span class="p">):</span>
+        <span class="n">body</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">f</span><span class="o">.</span><span class="n">getvalue</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">label</span><span class="p">:</span>
+            <span class="n">label</span> <span class="o">=</span> <span class="s">&quot;</span><span class="se">\\</span><span class="s">label{</span><span class="si">%s</span><span class="s">}&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">label</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">label</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+        <span class="n">caption</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">caption</span>
+        <span class="n">main_context</span><span class="o">.</span><span class="n">preamble</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\\</span><span class="s">usepackage{subfig}</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+
+        <span class="n">main_context</span><span class="o">.</span><span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\\</span><span class="s">subfloat[</span><span class="si">%s%s</span><span class="s">]{</span><span class="si">%s</span><span class="s">}</span><span class="se">\n</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="n">caption</span><span class="p">,</span> <span class="n">body</span><span class="p">))</span>
+
+</div></div>
+<div class="viewcode-block" id="latexify"><a class="viewcode-back" href="../../../api/reprep.output.html#reprep.output.platex.latexify">[docs]</a><span class="k">def</span> <span class="nf">latexify</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="c"># XXX TO WRITE and use</span>
+    <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&#39;_&#39;</span><span class="p">,</span> <span class="s">&#39;</span><span class="se">\\</span><span class="s">_&#39;</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="texif"><a class="viewcode-back" href="../../../api/reprep.output.html#reprep.output.platex.texif">[docs]</a><span class="k">def</span> <span class="nf">texif</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="n">use</span><span class="p">,</span> <span class="n">otherwise</span><span class="p">):</span>
+    <span class="k">return</span> <span class="s">&quot;</span><span class="se">\\</span><span class="s">ifx </span><span class="si">%s</span><span class="se">\\</span><span class="s">undefined </span><span class="si">%s</span><span class="se">\\</span><span class="s">else </span><span class="si">%s</span><span class="se">\\</span><span class="s">fi&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="n">otherwise</span><span class="p">,</span> <span class="n">use</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="makeupcmd"><a class="viewcode-back" href="../../../api/reprep.output.html#reprep.output.platex.makeupcmd">[docs]</a><span class="k">def</span> <span class="nf">makeupcmd</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">texif</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\\</span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">name</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">,</span> <span class="s">&quot;</span><span class="se">\\</span><span class="s">newcommand{</span><span class="se">\\</span><span class="si">%s</span><span class="s">}{</span><span class="si">%s</span><span class="s">}&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">name</span><span class="p">))</span> <span class="o">+</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span>
+
+</div>
+<div class="viewcode-block" id="makecmd"><a class="viewcode-back" href="../../../api/reprep.output.html#reprep.output.platex.makecmd">[docs]</a><span class="k">def</span> <span class="nf">makecmd</span><span class="p">(</span><span class="n">frag</span><span class="p">,</span> <span class="n">desired</span><span class="p">):</span>
+    <span class="n">actual</span> <span class="o">=</span> <span class="n">safecmd</span><span class="p">(</span><span class="n">desired</span><span class="p">)</span>
+    <span class="n">frag</span><span class="o">.</span><span class="n">tex</span><span class="p">(</span><span class="n">makeupcmd</span><span class="p">(</span><span class="n">actual</span><span class="p">))</span>
+    <span class="k">return</span> <span class="s">&#39;</span><span class="se">\\</span><span class="s">&#39;</span> <span class="o">+</span> <span class="n">actual</span>
+
+</div>
+<div class="viewcode-block" id="safecmd"><a class="viewcode-back" href="../../../api/reprep.output.html#reprep.output.platex.safecmd">[docs]</a><span class="k">def</span> <span class="nf">safecmd</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="n">rep</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;-&#39;</span><span class="p">:</span><span class="s">&#39;&#39;</span><span class="p">,</span> <span class="s">&#39;_&#39;</span><span class="p">:</span><span class="s">&#39;&#39;</span><span class="p">,</span> <span class="s">&#39;:&#39;</span><span class="p">:</span> <span class="s">&#39;&#39;</span><span class="p">,</span> <span class="s">&#39;.&#39;</span><span class="p">:</span><span class="s">&#39;&#39;</span><span class="p">,</span>
+           <span class="s">&#39;0&#39;</span><span class="p">:</span><span class="s">&#39;Z&#39;</span><span class="p">,</span> <span class="s">&#39;1&#39;</span><span class="p">:</span><span class="s">&#39;O&#39;</span><span class="p">,</span> <span class="s">&#39;2&#39;</span><span class="p">:</span><span class="s">&#39;t&#39;</span><span class="p">,</span> <span class="s">&#39;3&#39;</span><span class="p">:</span><span class="s">&#39;T&#39;</span><span class="p">,</span> <span class="s">&#39;4&#39;</span><span class="p">:</span><span class="s">&#39;f&#39;</span><span class="p">,</span> <span class="s">&#39;5&#39;</span><span class="p">:</span><span class="s">&#39;F&#39;</span><span class="p">,</span> <span class="s">&#39;6&#39;</span><span class="p">:</span><span class="s">&#39;s&#39;</span><span class="p">,</span> <span class="s">&#39;7&#39;</span><span class="p">:</span><span class="s">&#39;S&#39;</span><span class="p">,</span> <span class="s">&#39;8&#39;</span><span class="p">:</span><span class="s">&#39;E&#39;</span><span class="p">,</span>
+           <span class="s">&#39;9&#39;</span><span class="p">:</span><span class="s">&#39;N&#39;</span><span class="p">}</span>
+    <span class="k">for</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">rep</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">s</span></div>
+</pre></div>
+
+      </div>
+      <div class="bottomnav">
+      
+        <p>
+        <a class="uplink" href="../../../index.html">Contents</a>
+        </p>
+
+      </div>
+
+	
+    <div class="footer">
+        &copy; Copyright 2010, Andrea Censi.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+		
+    <script type="text/javascript" src="static/analytics.js"></script> 
+
+
+  </body>
+</html>

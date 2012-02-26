@@ -1,0 +1,703 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>reprep Package &mdash; RepRep 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../static/haiku.css" type="text/css" />
+    <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/print.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../static/jquery.js"></script>
+    <script type="text/javascript" src="../static/underscore.js"></script>
+    <script type="text/javascript" src="../static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/theme_extras.js"></script>
+    <link rel="top" title="RepRep 0.1 documentation" href="../index.html" />
+	 
+	
+    <link type="text/css" rel="stylesheet" href="static/generic.css" />
+    <link type="text/css" rel="stylesheet" href="static/custom.css" />
+
+	<link  href="http://fonts.googleapis.com/css?family=Lobster" rel="stylesheet" type="text/css" >
+	<link  href="http://fonts.googleapis.com/css?family=Droid+Serif" rel="stylesheet" type="text/css" >
+
+
+  </head>
+  <body>
+      <div class="header"><h1 class="heading"><a href="../index.html">
+          <span>RepRep 0.1 documentation</span></a></h1>
+        <h2 class="heading"><span>reprep Package</span></h2>
+      </div>
+      <div class="topnav">
+      
+        <p>
+        <a class="uplink" href="../index.html">Contents</a>
+        </p>
+
+      </div>
+      <div class="content">
+        
+        
+  <div class="section" id="reprep-package">
+<h1>reprep Package<a class="headerlink" href="#reprep-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id1">
+<h2><a class="reference internal" href="#module-reprep" title="reprep"><tt class="xref py py-mod docutils literal"><span class="pre">reprep</span></tt></a> Package<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="module-reprep"></span></div>
+<div class="section" id="module-reprep.config">
+<span id="config-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">config</span></tt> Module<a class="headerlink" href="#module-reprep.config" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="reprep.config.RepRepDefaults">
+<em class="property">class </em><tt class="descclassname">reprep.config.</tt><tt class="descname">RepRepDefaults</tt><a class="reference internal" href="../modules/reprep/config.html#RepRepDefaults"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.config.RepRepDefaults" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="reprep.config.RepRepDefaults.default_image_format">
+<tt class="descname">default_image_format</tt><em class="property"> = 'application/pdf'</em><a class="headerlink" href="#reprep.config.RepRepDefaults.default_image_format" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="reprep.config.RepRepDefaults.save_extra_pdf">
+<tt class="descname">save_extra_pdf</tt><em class="property"> = False</em><a class="headerlink" href="#reprep.config.RepRepDefaults.save_extra_pdf" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="reprep.config.RepRepDefaults.save_extra_png">
+<tt class="descname">save_extra_png</tt><em class="property"> = True</em><a class="headerlink" href="#reprep.config.RepRepDefaults.save_extra_png" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="reprep.config.RepRepDefaults.save_extra_svg">
+<tt class="descname">save_extra_svg</tt><em class="property"> = True</em><a class="headerlink" href="#reprep.config.RepRepDefaults.save_extra_svg" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="reprep.config.RepRepDefaults.savefig_params">
+<tt class="descname">savefig_params</tt><em class="property"> = {'pad_inches': 0.01, 'dpi': 200, 'bbox_inches': 'tight'}</em><a class="headerlink" href="#reprep.config.RepRepDefaults.savefig_params" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-reprep.constants">
+<span id="constants-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">constants</span></tt> Module<a class="headerlink" href="#module-reprep.constants" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-reprep.figure">
+<span id="figure-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">figure</span></tt> Module<a class="headerlink" href="#module-reprep.figure" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="reprep.figure.Figure">
+<em class="property">class </em><tt class="descclassname">reprep.figure.</tt><tt class="descname">Figure</tt><big>(</big><em>nid=None</em>, <em>caption=None</em>, <em>cols=None</em><big>)</big><a class="reference internal" href="../modules/reprep/figure.html#Figure"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.figure.Figure" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#reprep.node.Node" title="reprep.node.Node"><tt class="xref py py-class docutils literal"><span class="pre">reprep.node.Node</span></tt></a></p>
+<dl class="method">
+<dt id="reprep.figure.Figure.add_child">
+<tt class="descname">add_child</tt><big>(</big><em>child</em><big>)</big><a class="reference internal" href="../modules/reprep/figure.html#Figure.add_child"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.figure.Figure.add_child" title="Permalink to this definition">¶</a></dt>
+<dd><p>Automatically add child if it can be displayed.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="reprep.figure.Figure.get_subfigures">
+<tt class="descname">get_subfigures</tt><big>(</big><big>)</big><a class="reference internal" href="../modules/reprep/figure.html#Figure.get_subfigures"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.figure.Figure.get_subfigures" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="reprep.figure.Figure.sub">
+<tt class="descname">sub</tt><big>(</big><em>resource</em>, <em>caption=None</em>, <em>display=None</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../modules/reprep/figure.html#Figure.sub"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.figure.Figure.sub" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds a subfigure displaying the given resource.</p>
+<p>resource can either be a string or a data node.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="reprep.figure.SubFigure">
+<em class="property">class </em><tt class="descclassname">reprep.figure.</tt><tt class="descname">SubFigure</tt><a class="headerlink" href="#reprep.figure.SubFigure" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">tuple</span></tt></p>
+<p>SubFigure(resource, image, web_image, caption)</p>
+<dl class="attribute">
+<dt id="reprep.figure.SubFigure.caption">
+<tt class="descname">caption</tt><a class="headerlink" href="#reprep.figure.SubFigure.caption" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 3</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="reprep.figure.SubFigure.image">
+<tt class="descname">image</tt><a class="headerlink" href="#reprep.figure.SubFigure.image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 1</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="reprep.figure.SubFigure.resource">
+<tt class="descname">resource</tt><a class="headerlink" href="#reprep.figure.SubFigure.resource" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 0</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="reprep.figure.SubFigure.web_image">
+<tt class="descname">web_image</tt><a class="headerlink" href="#reprep.figure.SubFigure.web_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 2</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-reprep.helpers">
+<span id="helpers-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">helpers</span></tt> Module<a class="headerlink" href="#module-reprep.helpers" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="reprep.helpers.Attacher">
+<em class="property">class </em><tt class="descclassname">reprep.helpers.</tt><tt class="descname">Attacher</tt><big>(</big><em>node</em>, <em>nid</em>, <em>mime</em>, <em>caption</em><big>)</big><a class="reference internal" href="../modules/reprep/helpers.html#Attacher"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.helpers.Attacher" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="reprep.helpers.PylabAttacher">
+<em class="property">class </em><tt class="descclassname">reprep.helpers.</tt><tt class="descname">PylabAttacher</tt><big>(</big><em>node</em>, <em>nid</em>, <em>mime</em>, <em>caption</em>, <em>**figure_args</em><big>)</big><a class="reference internal" href="../modules/reprep/helpers.html#PylabAttacher"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.helpers.PylabAttacher" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="reprep.helpers.data_rgb_imp">
+<tt class="descclassname">reprep.helpers.</tt><tt class="descname">data_rgb_imp</tt><big>(</big><em>parent</em>, <em>nid</em>, <em>rgb</em>, <em>caption=None</em><big>)</big><a class="reference internal" href="../modules/reprep/helpers.html#data_rgb_imp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.helpers.data_rgb_imp" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>caption</strong> (<tt class="docutils literal"><span class="pre">None|str</span></tt>) &#8211; </li>
+<li><strong>rgb</strong> (<tt class="docutils literal"><span class="pre">array[HxWx(3|4)]</span></tt>) &#8211; </li>
+<li><strong>nid</strong> (<tt class="docutils literal"><span class="pre">valid_id</span></tt>) &#8211; </li>
+<li><strong>parent</strong> (<tt class="docutils literal"><span class="pre">Node</span></tt>) &#8211; </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-reprep.interface">
+<span id="interface-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">interface</span></tt> Module<a class="headerlink" href="#module-reprep.interface" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="reprep.interface.ReportInterface">
+<em class="property">class </em><tt class="descclassname">reprep.interface.</tt><tt class="descname">ReportInterface</tt><a class="reference internal" href="../modules/reprep/interface.html#ReportInterface"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.interface.ReportInterface" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="reprep.interface.ReportInterface.add_to">
+<tt class="descname">add_to</tt><big>(</big><em>figure</em>, <em>caption=None</em><big>)</big><a class="reference internal" href="../modules/reprep/interface.html#ReportInterface.add_to"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.interface.ReportInterface.add_to" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="reprep.interface.ReportInterface.data">
+<tt class="descname">data</tt><big>(</big><em>nid</em>, <em>data</em>, <em>mime='application/python'</em>, <em>caption=None</em><big>)</big><a class="reference internal" href="../modules/reprep/interface.html#ReportInterface.data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.interface.ReportInterface.data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Attaches a data child to this node.</p>
+<blockquote>
+<div><p>&#8220;data&#8221; is assumed to be a raw python structure. 
+Or, if data is a string representing a file, 
+pass a proper mime type (mime=&#8217;image/png&#8217;).</p>
+<p>Returns a reference to the node being created.</p>
+</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>caption</strong> (<tt class="docutils literal"><span class="pre">None|str</span></tt>) &#8211; </li>
+<li><strong>mime</strong> (<tt class="docutils literal"><span class="pre">None|str</span></tt>) &#8211; </li>
+<li><strong>nid</strong> (<tt class="docutils literal"><span class="pre">valid_id</span></tt>) &#8211; </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="reprep.interface.ReportInterface.data_file">
+<tt class="descname">data_file</tt><big>(</big><em>nid</em>, <em>mime</em>, <em>caption=None</em><big>)</big><a class="reference internal" href="../modules/reprep/interface.html#ReportInterface.data_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.interface.ReportInterface.data_file" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Support for attaching data from a file. Note: this method is </dt>
+<dd><p class="first">supposed to be used in conjunction with the &#8220;with&#8221; construct.</p>
+<p>For example, the following is the concise way to attach a pdf
+plot to a node.:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">with</span> <span class="n">report</span><span class="o">.</span><span class="n">data_file</span><span class="p">(</span><span class="s">&#39;my_plot&#39;</span><span class="p">,</span> <span class="n">MIME_PDF</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">pylab</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+    <span class="n">pylab</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+    <span class="n">pylab</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s">&#39;my x-y plot&#39;</span><span class="p">)</span>
+    <span class="n">pylab</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Omit any file extension from &#8216;id&#8217;, (&#8220;my_plot&#8221; and not 
+&#8220;my_plot.pdf&#8221;), we will take care of it for you.</p>
+<p>This is a more complicated example, where we attach two versions
+of the same image, in different formats.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">for</span> <span class="n">format</span> <span class="ow">in</span> <span class="p">[</span><span class="n">MIME_PDF</span><span class="p">,</span> <span class="n">MIME_PNG</span><span class="p">]:</span>
+    <span class="k">with</span> <span class="n">report</span><span class="o">.</span><span class="n">data_file</span><span class="p">(</span><span class="s">&#39;plot&#39;</span><span class="p">,</span> <span class="n">format</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">pylab</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+        <span class="n">pylab</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+        <span class="n">pylab</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+        <span class="n">pylab</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<p class="last">Note that if you are mainly using pylab plots, there is the 
+function <tt class="xref py py-func docutils literal"><span class="pre">plot()</span></tt> which offers a shortcut with less 
+ceremonies.</p>
+</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>caption</strong> (<tt class="docutils literal"><span class="pre">None|str</span></tt>) &#8211; </li>
+<li><strong>mime</strong> (<tt class="docutils literal"><span class="pre">str</span></tt>) &#8211; </li>
+<li><strong>nid</strong> (<tt class="docutils literal"><span class="pre">valid_id</span></tt>) &#8211; </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="reprep.interface.ReportInterface.data_pylab">
+<tt class="descname">data_pylab</tt><big>(</big><em>nid</em>, <em>mime=None</em>, <em>caption=None</em>, <em>**figure_args</em><big>)</big><a class="reference internal" href="../modules/reprep/interface.html#ReportInterface.data_pylab"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.interface.ReportInterface.data_pylab" title="Permalink to this definition">¶</a></dt>
+<dd><p>Same as plot(), but deprecated.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>caption</strong> (<tt class="docutils literal"><span class="pre">None|str</span></tt>) &#8211; </li>
+<li><strong>mime</strong> (<tt class="docutils literal"><span class="pre">None|str</span></tt>) &#8211; </li>
+<li><strong>nid</strong> (<tt class="docutils literal"><span class="pre">None|valid_id</span></tt>) &#8211; </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="reprep.interface.ReportInterface.data_rgb">
+<tt class="descname">data_rgb</tt><big>(</big><em>nid</em>, <em>rgb</em>, <em>caption=None</em><big>)</big><a class="reference internal" href="../modules/reprep/interface.html#ReportInterface.data_rgb"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.interface.ReportInterface.data_rgb" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Create a node containing an image from a RGB[a] array.</dt>
+<dd><p class="first">(internally, it will be saved as PNG)</p>
+<p class="last"><tt class="docutils literal"><span class="pre">rgb</span></tt> must be a height x width x 3 uint8 numpy array.</p>
+</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>caption</strong> (<tt class="docutils literal"><span class="pre">None|str</span></tt>) &#8211; </li>
+<li><strong>rgb</strong> (<tt class="docutils literal"><span class="pre">array[HxWx(3|4)](uint8)</span></tt>) &#8211; </li>
+<li><strong>nid</strong> (<tt class="docutils literal"><span class="pre">valid_id|None</span></tt>) &#8211; </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="reprep.interface.ReportInterface.figure">
+<tt class="descname">figure</tt><big>(</big><em>nid=None</em>, <em>cols=None</em>, <em>caption=None</em><big>)</big><a class="reference internal" href="../modules/reprep/interface.html#ReportInterface.figure"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.interface.ReportInterface.figure" title="Permalink to this definition">¶</a></dt>
+<dd><p>Attach a figure to this node.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>caption</strong> (<tt class="docutils literal"><span class="pre">None|str</span></tt>) &#8211; </li>
+<li><strong>cols</strong> (<tt class="docutils literal"><span class="pre">None|int,&gt;=1</span></tt>) &#8211; </li>
+<li><strong>nid</strong> (<tt class="docutils literal"><span class="pre">valid_id|None</span></tt>) &#8211; </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="reprep.interface.ReportInterface.plot">
+<tt class="descname">plot</tt><big>(</big><em>nid=None</em>, <em>mime=None</em>, <em>caption=None</em>, <em>**figure_args</em><big>)</big><a class="reference internal" href="../modules/reprep/interface.html#ReportInterface.plot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.interface.ReportInterface.plot" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Easy support for creating a node consisting of a pylab plot.</dt>
+<dd><p class="first">Note: this method is supposed to be used in conjunction with 
+the &#8220;with&#8221; construct.</p>
+<p>For example, the following is the concise way to attach a plot:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">with</span> <span class="n">report</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="s">&#39;my_plot&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">pylab</span><span class="p">:</span>
+    <span class="n">pylab</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+    <span class="n">pylab</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s">&#39;my x-y plot&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Basically, data_pylab allows you to save some lines of code 
+more than with <tt class="xref py py-func docutils literal"><span class="pre">data_file()</span></tt>.</p>
+<p class="last">You can pass <a href="#id2"><span class="problematic" id="id3">**</span></a>figure_args to pylab.figure().</p>
+</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>caption</strong> (<tt class="docutils literal"><span class="pre">None|str</span></tt>) &#8211; </li>
+<li><strong>mime</strong> (<tt class="docutils literal"><span class="pre">None|str</span></tt>) &#8211; </li>
+<li><strong>nid</strong> (<tt class="docutils literal"><span class="pre">None|valid_id</span></tt>) &#8211; </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="reprep.interface.ReportInterface.section">
+<tt class="descname">section</tt><big>(</big><em>nid=None</em>, <em>caption=None</em><big>)</big><a class="reference internal" href="../modules/reprep/interface.html#ReportInterface.section"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.interface.ReportInterface.section" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a subsection of the report. Returns a reference.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>nid</strong> (<tt class="docutils literal"><span class="pre">None|valid_id</span></tt>) &#8211; </td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="reprep.interface.ReportInterface.table">
+<tt class="descname">table</tt><big>(</big><em>nid</em>, <em>data</em>, <em>cols=None</em>, <em>rows=None</em>, <em>caption=None</em><big>)</big><a class="reference internal" href="../modules/reprep/interface.html#ReportInterface.table"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.interface.ReportInterface.table" title="Permalink to this definition">¶</a></dt>
+<dd><p>Attach a table to this node.</p>
+<blockquote>
+<div>:param:data: A list of lists, or a 2D numpy array.
+:param:colos: Labels for the columns.  
+:param:rows: Labels for the rows.</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>caption</strong> (<tt class="docutils literal"><span class="pre">None|str</span></tt>) &#8211; </li>
+<li><strong>data</strong> (<tt class="docutils literal"><span class="pre">list(list)|array[HxW]</span></tt>) &#8211; </li>
+<li><strong>nid</strong> (<tt class="docutils literal"><span class="pre">valid_id</span></tt>) &#8211; </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="reprep.interface.ReportInterface.text">
+<tt class="descname">text</tt><big>(</big><em>nid</em>, <em>text</em>, <em>mime='text/plain'</em><big>)</big><a class="reference internal" href="../modules/reprep/interface.html#ReportInterface.text"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.interface.ReportInterface.text" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds a text node with the given id.</p>
+<blockquote>
+<div><p>This is a very thin wrapper around data() that 
+provides a default mime type (MIME_PLAIN).</p>
+<p>For now, only restructured text is converted to HTML,
+the rest is displayed as plain text.</p>
+</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>text</strong> (<tt class="docutils literal"><span class="pre">str</span></tt>) &#8211; </li>
+<li><strong>mime</strong> (<tt class="docutils literal"><span class="pre">None|str</span></tt>) &#8211; </li>
+<li><strong>nid</strong> (<tt class="docutils literal"><span class="pre">valid_id</span></tt>) &#8211; </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="reprep.interface.ReportInterface.to_html">
+<tt class="descname">to_html</tt><big>(</big><em>filename</em>, <em>resources_dir=None</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../modules/reprep/interface.html#ReportInterface.to_html"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.interface.ReportInterface.to_html" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a HTML representation of this report.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-reprep.mpl">
+<span id="mpl-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">mpl</span></tt> Module<a class="headerlink" href="#module-reprep.mpl" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="reprep.mpl.get_matplotlib">
+<tt class="descclassname">reprep.mpl.</tt><tt class="descname">get_matplotlib</tt><big>(</big><big>)</big><a class="reference internal" href="../modules/reprep/mpl.html#get_matplotlib"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.mpl.get_matplotlib" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="reprep.mpl.get_pylab_instance">
+<tt class="descclassname">reprep.mpl.</tt><tt class="descname">get_pylab_instance</tt><big>(</big><big>)</big><a class="reference internal" href="../modules/reprep/mpl.html#get_pylab_instance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.mpl.get_pylab_instance" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-reprep.node">
+<span id="node-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">node</span></tt> Module<a class="headerlink" href="#module-reprep.node" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="reprep.node.DataNode">
+<em class="property">class </em><tt class="descclassname">reprep.node.</tt><tt class="descname">DataNode</tt><big>(</big><em>nid</em>, <em>data</em>, <em>mime='application/python'</em>, <em>caption=None</em><big>)</big><a class="reference internal" href="../modules/reprep/node.html#DataNode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.node.DataNode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#reprep.node.Node" title="reprep.node.Node"><tt class="xref py py-class docutils literal"><span class="pre">reprep.node.Node</span></tt></a></p>
+<dl class="method">
+<dt id="reprep.node.DataNode.display">
+<tt class="descname">display</tt><big>(</big><em>display</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../modules/reprep/node.html#DataNode.display"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.node.DataNode.display" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="reprep.node.DataNode.get_first_child_with_mime">
+<tt class="descname">get_first_child_with_mime</tt><big>(</big><em>mime_types</em><big>)</big><a class="reference internal" href="../modules/reprep/node.html#DataNode.get_first_child_with_mime"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.node.DataNode.get_first_child_with_mime" title="Permalink to this definition">¶</a></dt>
+<dd><p>Search recursively the child with the given mime.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>mime_types</strong> (<tt class="docutils literal"><span class="pre">list(str)</span></tt>) &#8211; </td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="reprep.node.DataNode.is_image">
+<tt class="descname">is_image</tt><big>(</big><big>)</big><a class="reference internal" href="../modules/reprep/node.html#DataNode.is_image"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.node.DataNode.is_image" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="reprep.node.DataNode.print_tree">
+<tt class="descname">print_tree</tt><big>(</big><em>s=&lt;open file '&lt;stdout&gt;'</em>, <em>mode 'w' at 0x2b0273caf1e0&gt;</em>, <em>prefix=''</em><big>)</big><a class="reference internal" href="../modules/reprep/node.html#DataNode.print_tree"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.node.DataNode.print_tree" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="reprep.node.Node">
+<em class="property">class </em><tt class="descclassname">reprep.node.</tt><tt class="descname">Node</tt><big>(</big><em>nid=None</em>, <em>children=None</em><big>)</big><a class="reference internal" href="../modules/reprep/node.html#Node"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.node.Node" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#reprep.interface.ReportInterface" title="reprep.interface.ReportInterface"><tt class="xref py py-class docutils literal"><span class="pre">reprep.interface.ReportInterface</span></tt></a></p>
+<dl class="method">
+<dt id="reprep.node.Node.add_child">
+<tt class="descname">add_child</tt><big>(</big><em>n</em><big>)</big><a class="reference internal" href="../modules/reprep/node.html#Node.add_child"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.node.Node.add_child" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds a child to this node. Usually you would not use this
+method directly.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="reprep.node.Node.find_recursively">
+<tt class="descname">find_recursively</tt><big>(</big><em>criterium</em><big>)</big><a class="reference internal" href="../modules/reprep/node.html#Node.find_recursively"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.node.Node.find_recursively" title="Permalink to this definition">¶</a></dt>
+<dd><p>Finds the closest node in the family passing the criterium, 
+or None if none can be found.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="reprep.node.Node.format_tree">
+<tt class="descname">format_tree</tt><big>(</big><big>)</big><a class="reference internal" href="../modules/reprep/node.html#Node.format_tree"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.node.Node.format_tree" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="reprep.node.Node.get_all_parents">
+<tt class="descname">get_all_parents</tt><big>(</big><big>)</big><a class="reference internal" href="../modules/reprep/node.html#Node.get_all_parents"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.node.Node.get_all_parents" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of all parents.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="reprep.node.Node.get_complete_id">
+<tt class="descname">get_complete_id</tt><big>(</big><em>separator=':'</em><big>)</big><a class="reference internal" href="../modules/reprep/node.html#Node.get_complete_id"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.node.Node.get_complete_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="reprep.node.Node.get_first_available_name">
+<tt class="descname">get_first_available_name</tt><big>(</big><em>prefix</em><big>)</big><a class="reference internal" href="../modules/reprep/node.html#Node.get_first_available_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.node.Node.get_first_available_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="reprep.node.Node.get_relative_url">
+<tt class="descname">get_relative_url</tt><big>(</big><em>other</em><big>)</big><a class="reference internal" href="../modules/reprep/node.html#Node.get_relative_url"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.node.Node.get_relative_url" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="reprep.node.Node.has_child">
+<tt class="descname">has_child</tt><big>(</big><em>nid</em><big>)</big><a class="reference internal" href="../modules/reprep/node.html#Node.has_child"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.node.Node.has_child" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="reprep.node.Node.last">
+<tt class="descname">last</tt><big>(</big><big>)</big><a class="reference internal" href="../modules/reprep/node.html#Node.last"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.node.Node.last" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the last added child Node.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="reprep.node.Node.node">
+<tt class="descname">node</tt><big>(</big><em>nid</em><big>)</big><a class="reference internal" href="../modules/reprep/node.html#Node.node"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.node.Node.node" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a simple child node.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="reprep.node.Node.print_tree">
+<tt class="descname">print_tree</tt><big>(</big><em>s=&lt;open file '&lt;stdout&gt;'</em>, <em>mode 'w' at 0x2b0273caf1e0&gt;</em>, <em>prefix=''</em><big>)</big><a class="reference internal" href="../modules/reprep/node.html#Node.print_tree"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.node.Node.print_tree" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="reprep.node.Node.resolve_url">
+<tt class="descname">resolve_url</tt><big>(</big><em>url</em>, <em>already_visited=None</em><big>)</big><a class="reference internal" href="../modules/reprep/node.html#Node.resolve_url"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.node.Node.resolve_url" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>url</strong> (<tt class="docutils literal"><span class="pre">str</span></tt>) &#8211; </td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="reprep.node.Node.resolve_url_dumb">
+<tt class="descname">resolve_url_dumb</tt><big>(</big><em>url</em><big>)</big><a class="reference internal" href="../modules/reprep/node.html#Node.resolve_url_dumb"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.node.Node.resolve_url_dumb" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="reprep.node.Node.url_join">
+<em class="property">static </em><tt class="descname">url_join</tt><big>(</big><em>l</em><big>)</big><a class="reference internal" href="../modules/reprep/node.html#Node.url_join"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.node.Node.url_join" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="reprep.node.Node.url_split">
+<em class="property">static </em><tt class="descname">url_split</tt><big>(</big><em>u</em><big>)</big><a class="reference internal" href="../modules/reprep/node.html#Node.url_split"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.node.Node.url_split" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="reprep.node.just_check_rgb">
+<tt class="descclassname">reprep.node.</tt><tt class="descname">just_check_rgb</tt><big>(</big><em>value</em><big>)</big><a class="reference internal" href="../modules/reprep/node.html#just_check_rgb"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.node.just_check_rgb" title="Permalink to this definition">¶</a></dt>
+<dd><p>return value, checking it&#8217;s a rgb image</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-reprep.repcontracts">
+<span id="repcontracts-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">repcontracts</span></tt> Module<a class="headerlink" href="#module-reprep.repcontracts" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="reprep.repcontracts.valid_id">
+<tt class="descclassname">reprep.repcontracts.</tt><tt class="descname">valid_id</tt><big>(</big><em>s</em><big>)</big><a class="reference internal" href="../modules/reprep/repcontracts.html#valid_id"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.repcontracts.valid_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-reprep.structures">
+<span id="structures-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">structures</span></tt> Module<a class="headerlink" href="#module-reprep.structures" title="Permalink to this headline">¶</a></h2>
+<dl class="exception">
+<dt id="reprep.structures.InvalidURL">
+<em class="property">exception </em><tt class="descclassname">reprep.structures.</tt><tt class="descname">InvalidURL</tt><a class="reference internal" href="../modules/reprep/structures.html#InvalidURL"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.structures.InvalidURL" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#reprep.structures.ReprepException" title="reprep.structures.ReprepException"><tt class="xref py py-class docutils literal"><span class="pre">reprep.structures.ReprepException</span></tt></a></p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="reprep.structures.NotExistent">
+<em class="property">exception </em><tt class="descclassname">reprep.structures.</tt><tt class="descname">NotExistent</tt><a class="reference internal" href="../modules/reprep/structures.html#NotExistent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.structures.NotExistent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#reprep.structures.ReprepException" title="reprep.structures.ReprepException"><tt class="xref py py-class docutils literal"><span class="pre">reprep.structures.ReprepException</span></tt></a></p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="reprep.structures.ReprepException">
+<em class="property">exception </em><tt class="descclassname">reprep.structures.</tt><tt class="descname">ReprepException</tt><a class="reference internal" href="../modules/reprep/structures.html#ReprepException"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.structures.ReprepException" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">exceptions.Exception</span></tt></p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-reprep.table">
+<span id="table-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">table</span></tt> Module<a class="headerlink" href="#module-reprep.table" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="reprep.table.Table">
+<em class="property">class </em><tt class="descclassname">reprep.table.</tt><tt class="descname">Table</tt><big>(</big><em>nid</em>, <em>data</em>, <em>cols=None</em>, <em>rows=None</em>, <em>caption=None</em><big>)</big><a class="reference internal" href="../modules/reprep/table.html#Table"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.table.Table" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#reprep.node.Node" title="reprep.node.Node"><tt class="xref py py-class docutils literal"><span class="pre">reprep.node.Node</span></tt></a></p>
+</dd></dl>
+
+</div>
+<div class="section" id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="reprep.demos.html">demos Package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="reprep.demos.html#id1"><tt class="docutils literal"><span class="pre">demos</span></tt> Package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reprep.demos.html#module-reprep.demos.colormaps"><tt class="docutils literal"><span class="pre">colormaps</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reprep.demos.html#module-reprep.demos.manager"><tt class="docutils literal"><span class="pre">manager</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reprep.demos.html#module-reprep.demos.report_layout"><tt class="docutils literal"><span class="pre">report_layout</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reprep.demos.html#module-reprep.demos.spines"><tt class="docutils literal"><span class="pre">spines</span></tt> Module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="reprep.graphics.html">graphics Package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="reprep.graphics.html#id1"><tt class="docutils literal"><span class="pre">graphics</span></tt> Package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reprep.graphics.html#module-reprep.graphics.conversions"><tt class="docutils literal"><span class="pre">conversions</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reprep.graphics.html#module-reprep.graphics.conversions_tests"><tt class="docutils literal"><span class="pre">conversions_tests</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reprep.graphics.html#module-reprep.graphics.filter_colormap"><tt class="docutils literal"><span class="pre">filter_colormap</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reprep.graphics.html#module-reprep.graphics.filter_posneg"><tt class="docutils literal"><span class="pre">filter_posneg</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reprep.graphics.html#module-reprep.graphics.filter_posneg_test"><tt class="docutils literal"><span class="pre">filter_posneg_test</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reprep.graphics.html#module-reprep.graphics.filter_scale"><tt class="docutils literal"><span class="pre">filter_scale</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reprep.graphics.html#module-reprep.graphics.numpy_utils"><tt class="docutils literal"><span class="pre">numpy_utils</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reprep.graphics.html#module-reprep.graphics.scaling"><tt class="docutils literal"><span class="pre">scaling</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reprep.graphics.html#module-reprep.graphics.success"><tt class="docutils literal"><span class="pre">success</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reprep.graphics.html#module-reprep.graphics.zoom"><tt class="docutils literal"><span class="pre">zoom</span></tt> Module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="reprep.output.html">output Package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="reprep.output.html#id1"><tt class="docutils literal"><span class="pre">output</span></tt> Package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reprep.output.html#module-reprep.output.html"><tt class="docutils literal"><span class="pre">html</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reprep.output.html#module-reprep.output.platex"><tt class="docutils literal"><span class="pre">platex</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reprep.output.html#module-reprep.output.platex_test"><tt class="docutils literal"><span class="pre">platex_test</span></tt> Module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="reprep.plot_utils.html">plot_utils Package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="reprep.plot_utils.html#id1"><tt class="docutils literal"><span class="pre">plot_utils</span></tt> Package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reprep.plot_utils.html#module-reprep.plot_utils.axes"><tt class="docutils literal"><span class="pre">axes</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reprep.plot_utils.html#module-reprep.plot_utils.spines"><tt class="docutils literal"><span class="pre">spines</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reprep.plot_utils.html#module-reprep.plot_utils.styles"><tt class="docutils literal"><span class="pre">styles</span></tt> Module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="reprep.tests.html">tests Package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="reprep.tests.html#module-reprep.tests.test_colormaps"><tt class="docutils literal"><span class="pre">test_colormaps</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reprep.tests.html#module-reprep.tests.test_idioms"><tt class="docutils literal"><span class="pre">test_idioms</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reprep.tests.html#module-reprep.tests.test_urls"><tt class="docutils literal"><span class="pre">test_urls</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reprep.tests.html#module-reprep.tests.utils"><tt class="docutils literal"><span class="pre">utils</span></tt> Module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="reprep.utils.html">utils Package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="reprep.utils.html#id1"><tt class="docutils literal"><span class="pre">utils</span></tt> Package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reprep.utils.html#module-reprep.utils.indent"><tt class="docutils literal"><span class="pre">indent</span></tt> Module</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+      </div>
+      <div class="bottomnav">
+      
+        <p>
+        <a class="uplink" href="../index.html">Contents</a>
+        </p>
+
+      </div>
+
+	
+    <div class="footer">
+        &copy; Copyright 2010, Andrea Censi.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+		
+    <script type="text/javascript" src="static/analytics.js"></script> 
+
+
+  </body>
+</html>

@@ -107,6 +107,13 @@ reprep.interface	reprep.interface-module.html
 reprep.interface.__package__	reprep.interface-module.html#__package__
 reprep.interface.MIME_PYTHON	reprep.interface-module.html#MIME_PYTHON
 reprep.interface.MIME_PLAIN	reprep.interface-module.html#MIME_PLAIN
+reprep.mpl	reprep.mpl-module.html
+reprep.mpl.get_matplotlib	reprep.mpl-module.html#get_matplotlib
+reprep.mpl.raise_error	reprep.mpl-module.html#raise_error
+reprep.mpl.get_pylab_instance	reprep.mpl-module.html#get_pylab_instance
+reprep.mpl.matplotlib_error	reprep.mpl-module.html#matplotlib_error
+reprep.mpl.logger	reprep.mpl-module.html#logger
+reprep.mpl.__package__	reprep.mpl-module.html#__package__
 reprep.node	reprep.node-module.html
 reprep.node.MIME_PNG	reprep.node-module.html#MIME_PNG
 reprep.node.MIME_SVG	reprep.node-module.html#MIME_SVG

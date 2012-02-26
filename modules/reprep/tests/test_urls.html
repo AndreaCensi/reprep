@@ -1,0 +1,141 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>reprep.tests.test_urls &mdash; RepRep 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../../static/haiku.css" type="text/css" />
+    <link rel="stylesheet" href="../../../static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/print.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../static/jquery.js"></script>
+    <script type="text/javascript" src="../../../static/underscore.js"></script>
+    <script type="text/javascript" src="../../../static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/theme_extras.js"></script>
+    <link rel="top" title="RepRep 0.1 documentation" href="../../../index.html" />
+    <link rel="up" title="reprep" href="../../reprep.html" />
+	 
+	
+    <link type="text/css" rel="stylesheet" href="static/generic.css" />
+    <link type="text/css" rel="stylesheet" href="static/custom.css" />
+
+	<link  href="http://fonts.googleapis.com/css?family=Lobster" rel="stylesheet" type="text/css" >
+	<link  href="http://fonts.googleapis.com/css?family=Droid+Serif" rel="stylesheet" type="text/css" >
+
+
+  </head>
+  <body>
+      <div class="header"><h1 class="heading"><a href="../../../index.html">
+          <span>RepRep 0.1 documentation</span></a></h1>
+        <h2 class="heading"><span>reprep.tests.test_urls</span></h2>
+      </div>
+      <div class="topnav">
+      
+        <p>
+        <a class="uplink" href="../../../index.html">Contents</a>
+        </p>
+
+      </div>
+      <div class="content">
+        
+        
+  <h1>Source code for reprep.tests.test_urls</h1><div class="highlight"><pre>
+<span class="kn">import</span> <span class="nn">unittest</span>
+<span class="kn">from</span> <span class="nn">reprep</span> <span class="kn">import</span> <span class="n">Node</span><span class="p">,</span> <span class="n">NotExistent</span><span class="p">,</span> <span class="n">InvalidURL</span>
+
+
+<div class="viewcode-block" id="Test"><a class="viewcode-back" href="../../../api/reprep.tests.html#reprep.tests.test_urls.Test">[docs]</a><span class="k">class</span> <span class="nc">Test</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+
+<div class="viewcode-block" id="Test.setUp"><a class="viewcode-back" href="../../../api/reprep.tests.html#reprep.tests.test_urls.Test.setUp">[docs]</a>    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c"># n1 -- n2 -- n3 -- n4</span>
+        <span class="c">#    \_ n3bis</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n1</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="s">&#39;n1&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n3bis</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">n1</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s">&#39;n3&#39;</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">n1</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s">&#39;n2&#39;</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n3</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">n2</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s">&#39;n3&#39;</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n4</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">n3</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s">&#39;n4&#39;</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">all</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">n1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n3</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n4</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n3bis</span><span class="p">]</span>
+</div>
+<div class="viewcode-block" id="Test.test_normal"><a class="viewcode-back" href="../../../api/reprep.tests.html#reprep.tests.test_urls.Test.test_normal">[docs]</a>    <span class="k">def</span> <span class="nf">test_normal</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Testing normal cases of resolve_url &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n2</span><span class="o">.</span><span class="n">resolve_url</span><span class="p">(</span><span class="s">&#39;..&#39;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n3</span><span class="o">.</span><span class="n">resolve_url</span><span class="p">(</span><span class="s">&#39;../..&#39;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n4</span><span class="o">.</span><span class="n">resolve_url</span><span class="p">(</span><span class="s">&#39;../../..&#39;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n4</span><span class="o">.</span><span class="n">resolve_url</span><span class="p">(</span><span class="s">&#39;../../../n2&#39;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n1</span><span class="o">.</span><span class="n">resolve_url</span><span class="p">(</span><span class="s">&#39;n2&#39;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n3</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n1</span><span class="o">.</span><span class="n">resolve_url</span><span class="p">(</span><span class="s">&#39;n2/n3&#39;</span><span class="p">))</span>
+</div>
+<div class="viewcode-block" id="Test.test_smart"><a class="viewcode-back" href="../../../api/reprep.tests.html#reprep.tests.test_urls.Test.test_smart">[docs]</a>    <span class="k">def</span> <span class="nf">test_smart</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Testing smart cases of resolve_url &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n1</span><span class="o">.</span><span class="n">resolve_url</span><span class="p">(</span><span class="s">&#39;n3&#39;</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">n3bis</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n2</span><span class="o">.</span><span class="n">resolve_url</span><span class="p">(</span><span class="s">&#39;n3&#39;</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">n3</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n3</span><span class="o">.</span><span class="n">resolve_url</span><span class="p">(</span><span class="s">&#39;n3&#39;</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">n3</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n2</span><span class="o">.</span><span class="n">resolve_url</span><span class="p">(</span><span class="s">&#39;n1/n3&#39;</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">n3bis</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n3</span><span class="o">.</span><span class="n">resolve_url</span><span class="p">(</span><span class="s">&#39;n1/n3&#39;</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">n3bis</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n4</span><span class="o">.</span><span class="n">resolve_url</span><span class="p">(</span><span class="s">&#39;n4&#39;</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">n4</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n3</span><span class="o">.</span><span class="n">resolve_url</span><span class="p">(</span><span class="s">&#39;n4&#39;</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">n4</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n2</span><span class="o">.</span><span class="n">resolve_url</span><span class="p">(</span><span class="s">&#39;n4&#39;</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">n4</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n1</span><span class="o">.</span><span class="n">resolve_url</span><span class="p">(</span><span class="s">&#39;n4&#39;</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">n4</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">all</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">n</span><span class="o">.</span><span class="n">resolve_url</span><span class="p">(</span><span class="s">&#39;n4&#39;</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">n4</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="Test.test_relative"><a class="viewcode-back" href="../../../api/reprep.tests.html#reprep.tests.test_urls.Test.test_relative">[docs]</a>    <span class="k">def</span> <span class="nf">test_relative</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">A</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">all</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">B</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">all</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">A</span> <span class="o">==</span> <span class="n">B</span><span class="p">:</span>
+                    <span class="k">continue</span>
+                <span class="n">url</span> <span class="o">=</span> <span class="n">A</span><span class="o">.</span><span class="n">get_relative_url</span><span class="p">(</span><span class="n">B</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">resolve_url_dumb</span><span class="p">(</span><span class="n">url</span><span class="p">),</span> <span class="n">B</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="Test.test_not_existent"><a class="viewcode-back" href="../../../api/reprep.tests.html#reprep.tests.test_urls.Test.test_not_existent">[docs]</a>    <span class="k">def</span> <span class="nf">test_not_existent</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Testing that we warn if not existent &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertRaises</span><span class="p">(</span><span class="n">NotExistent</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n1</span><span class="o">.</span><span class="n">resolve_url</span><span class="p">,</span> <span class="s">&#39;x&#39;</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="Test.test_not_found"><a class="viewcode-back" href="../../../api/reprep.tests.html#reprep.tests.test_urls.Test.test_not_found">[docs]</a>    <span class="k">def</span> <span class="nf">test_not_found</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertRaises</span><span class="p">(</span><span class="n">NotExistent</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n1</span><span class="o">.</span><span class="n">resolve_url</span><span class="p">,</span> <span class="s">&#39;..&#39;</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="Test.test_well_formed"><a class="viewcode-back" href="../../../api/reprep.tests.html#reprep.tests.test_urls.Test.test_well_formed">[docs]</a>    <span class="k">def</span> <span class="nf">test_well_formed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Testing that we can recognize invalid urls &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertRaises</span><span class="p">(</span><span class="n">InvalidURL</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n1</span><span class="o">.</span><span class="n">resolve_url</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertRaises</span><span class="p">(</span><span class="n">InvalidURL</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n2</span><span class="o">.</span><span class="n">resolve_url</span><span class="p">,</span> <span class="s">&#39;//&#39;</span><span class="p">)</span>
+</div></div>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="c">#import sys;sys.argv = [&#39;&#39;, &#39;Test.test1&#39;]</span>
+    <span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+      </div>
+      <div class="bottomnav">
+      
+        <p>
+        <a class="uplink" href="../../../index.html">Contents</a>
+        </p>
+
+      </div>
+
+	
+    <div class="footer">
+        &copy; Copyright 2010, Andrea Censi.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+		
+    <script type="text/javascript" src="static/analytics.js"></script> 
+
+
+  </body>
+</html>

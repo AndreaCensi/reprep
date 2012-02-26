@@ -1,0 +1,479 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>graphics Package &mdash; RepRep 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../static/haiku.css" type="text/css" />
+    <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/print.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../static/jquery.js"></script>
+    <script type="text/javascript" src="../static/underscore.js"></script>
+    <script type="text/javascript" src="../static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/theme_extras.js"></script>
+    <link rel="top" title="RepRep 0.1 documentation" href="../index.html" />
+	 
+	
+    <link type="text/css" rel="stylesheet" href="static/generic.css" />
+    <link type="text/css" rel="stylesheet" href="static/custom.css" />
+
+	<link  href="http://fonts.googleapis.com/css?family=Lobster" rel="stylesheet" type="text/css" >
+	<link  href="http://fonts.googleapis.com/css?family=Droid+Serif" rel="stylesheet" type="text/css" >
+
+
+  </head>
+  <body>
+      <div class="header"><h1 class="heading"><a href="../index.html">
+          <span>RepRep 0.1 documentation</span></a></h1>
+        <h2 class="heading"><span>graphics Package</span></h2>
+      </div>
+      <div class="topnav">
+      
+        <p>
+        <a class="uplink" href="../index.html">Contents</a>
+        </p>
+
+      </div>
+      <div class="content">
+        
+        
+  <div class="section" id="graphics-package">
+<h1>graphics Package<a class="headerlink" href="#graphics-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id1">
+<h2><tt class="xref py py-mod docutils literal"><span class="pre">graphics</span></tt> Package<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="module-reprep.graphics"></span></div>
+<div class="section" id="module-reprep.graphics.conversions">
+<span id="conversions-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">conversions</span></tt> Module<a class="headerlink" href="#module-reprep.graphics.conversions" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="reprep.graphics.conversions.Image_from_array">
+<tt class="descclassname">reprep.graphics.conversions.</tt><tt class="descname">Image_from_array</tt><big>(</big><em>a</em><big>)</big><a class="reference internal" href="../modules/reprep/graphics/conversions.html#Image_from_array"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.graphics.conversions.Image_from_array" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Converts an image in a numpy array to an Image instance.</dt>
+<dd>Accepts:  h x w      255  interpreted as grayscale
+Accepts:  h x w x 3  255  RGB  
+Accepts:  h x w x 4  255  RGBA</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>a</strong> (<tt class="docutils literal"><span class="pre">(array[HxW](uint8)|array[HxWx3](uint8)|array[HxWx4](uint8)),H&gt;0,W&gt;0</span></tt>) &#8211; </td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-reprep.graphics.conversions_tests">
+<span id="conversions-tests-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">conversions_tests</span></tt> Module<a class="headerlink" href="#module-reprep.graphics.conversions_tests" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="reprep.graphics.conversions_tests.Test">
+<em class="property">class </em><tt class="descclassname">reprep.graphics.conversions_tests.</tt><tt class="descname">Test</tt><big>(</big><em>methodName='runTest'</em><big>)</big><a class="reference internal" href="../modules/reprep/graphics/conversions_tests.html#Test"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.graphics.conversions_tests.Test" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">unittest.case.TestCase</span></tt></p>
+<dl class="attribute">
+<dt id="reprep.graphics.conversions_tests.Test.invalid_shapes">
+<tt class="descname">invalid_shapes</tt><em class="property"> = [(10, 0), (0, 10, 3), (10, 0, 4), (10, 10, 5), (), 10]</em><a class="headerlink" href="#reprep.graphics.conversions_tests.Test.invalid_shapes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="reprep.graphics.conversions_tests.Test.testInvalidShapes">
+<tt class="descname">testInvalidShapes</tt><big>(</big><big>)</big><a class="reference internal" href="../modules/reprep/graphics/conversions_tests.html#Test.testInvalidShapes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.graphics.conversions_tests.Test.testInvalidShapes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="reprep.graphics.conversions_tests.Test.testValid">
+<tt class="descname">testValid</tt><big>(</big><big>)</big><a class="reference internal" href="../modules/reprep/graphics/conversions_tests.html#Test.testValid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.graphics.conversions_tests.Test.testValid" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="reprep.graphics.conversions_tests.Test.valid_shapes">
+<tt class="descname">valid_shapes</tt><em class="property"> = [(10, 10), (10, 10, 3), (10, 10, 4)]</em><a class="headerlink" href="#reprep.graphics.conversions_tests.Test.valid_shapes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-reprep.graphics.filter_colormap">
+<span id="filter-colormap-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">filter_colormap</span></tt> Module<a class="headerlink" href="#module-reprep.graphics.filter_colormap" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="reprep.graphics.filter_colormap.filter_colormap">
+<tt class="descclassname">reprep.graphics.filter_colormap.</tt><tt class="descname">filter_colormap</tt><big>(</big><em>value, cmap='jet', min_value=None, max_value=None, nan_color=[1, 0.6, 0.6], inf_color=[0.6, 1, 0.6], flat_color=[0.5, 0.5, 0.5], skim=0, properties=None</em><big>)</big><a class="reference internal" href="../modules/reprep/graphics/filter_colormap.html#filter_colormap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.graphics.filter_colormap.filter_colormap" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>max_value</strong> (<tt class="docutils literal"><span class="pre">None|number</span></tt>) &#8211; </li>
+<li><strong>nan_color</strong> (<tt class="docutils literal"><span class="pre">color_spec</span></tt>) &#8211; </li>
+<li><strong>min_value</strong> (<tt class="docutils literal"><span class="pre">None|number</span></tt>) &#8211; </li>
+<li><strong>value</strong> (<tt class="docutils literal"><span class="pre">array[HxW],H&gt;0,W&gt;0</span></tt>) &#8211; </li>
+<li><strong>skim</strong> (<tt class="docutils literal"><span class="pre">&gt;=0,&lt;=90</span></tt>) &#8211; </li>
+<li><strong>flat_color</strong> (<tt class="docutils literal"><span class="pre">color_spec</span></tt>) &#8211; </li>
+<li><strong>inf_color</strong> (<tt class="docutils literal"><span class="pre">color_spec</span></tt>) &#8211; </li>
+<li><strong>properties</strong> (<tt class="docutils literal"><span class="pre">None|map</span></tt>) &#8211; </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="reprep.graphics.filter_colormap.get_solid">
+<tt class="descclassname">reprep.graphics.filter_colormap.</tt><tt class="descname">get_solid</tt><big>(</big><em>shape</em>, <em>color</em><big>)</big><a class="reference internal" href="../modules/reprep/graphics/filter_colormap.html#get_solid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.graphics.filter_colormap.get_solid" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>color</strong> (<tt class="docutils literal"><span class="pre">color_spec</span></tt>) &#8211; </li>
+<li><strong>shape</strong> (<tt class="docutils literal"><span class="pre">tuple((int,H),(int,W))</span></tt>) &#8211; </li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><tt class="docutils literal"><span class="pre">array[HxWx3](uint8)</span></tt></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="reprep.graphics.filter_colormap.mark_values">
+<tt class="descclassname">reprep.graphics.filter_colormap.</tt><tt class="descname">mark_values</tt><big>(</big><em>rgb</em>, <em>which</em>, <em>color</em><big>)</big><a class="reference internal" href="../modules/reprep/graphics/filter_colormap.html#mark_values"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.graphics.filter_colormap.mark_values" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>color</strong> (<tt class="docutils literal"><span class="pre">color_spec</span></tt>) &#8211; </li>
+<li><strong>rgb</strong> (<tt class="docutils literal"><span class="pre">array[HxWx3](uint8)</span></tt>) &#8211; </li>
+<li><strong>which</strong> (<tt class="docutils literal"><span class="pre">array[HxW]</span></tt>) &#8211; </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="reprep.graphics.filter_colormap.value2rgb">
+<tt class="descclassname">reprep.graphics.filter_colormap.</tt><tt class="descname">value2rgb</tt><big>(</big><em>x</em>, <em>vmin=0</em>, <em>vmax=1</em>, <em>cmap='jet'</em><big>)</big><a class="reference internal" href="../modules/reprep/graphics/filter_colormap.html#value2rgb"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.graphics.filter_colormap.value2rgb" title="Permalink to this definition">¶</a></dt>
+<dd><p>Asssumes x is in [0,1].</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="docutils literal"><span class="pre">array[HxWx4](uint8)</span></tt></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-reprep.graphics.filter_posneg">
+<span id="filter-posneg-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">filter_posneg</span></tt> Module<a class="headerlink" href="#module-reprep.graphics.filter_posneg" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="reprep.graphics.filter_posneg.posneg">
+<tt class="descclassname">reprep.graphics.filter_posneg.</tt><tt class="descname">posneg</tt><big>(</big><em>value, max_value=None, skim=0, nan_color=[0.5, 0.5, 0.5], properties=None</em><big>)</big><a class="reference internal" href="../modules/reprep/graphics/filter_posneg.html#posneg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.graphics.filter_posneg.posneg" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Converts a 2D value to normalized display.</dt>
+<dd>(red=positive, blue=negative)</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>max_value</strong> (<tt class="docutils literal"><span class="pre">None|number</span></tt>) &#8211; </li>
+<li><strong>nan_color</strong> (<tt class="docutils literal"><span class="pre">color_spec</span></tt>) &#8211; </li>
+<li><strong>skim</strong> (<tt class="docutils literal"><span class="pre">&gt;=0,&lt;=90</span></tt>) &#8211; </li>
+<li><strong>value</strong> (<tt class="docutils literal"><span class="pre">array[HxW],H&gt;0,W&gt;0</span></tt>) &#8211; </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-reprep.graphics.filter_posneg_test">
+<span id="filter-posneg-test-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">filter_posneg_test</span></tt> Module<a class="headerlink" href="#module-reprep.graphics.filter_posneg_test" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="reprep.graphics.filter_posneg_test.Test">
+<em class="property">class </em><tt class="descclassname">reprep.graphics.filter_posneg_test.</tt><tt class="descname">Test</tt><big>(</big><em>methodName='runTest'</em><big>)</big><a class="reference internal" href="../modules/reprep/graphics/filter_posneg_test.html#Test"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.graphics.filter_posneg_test.Test" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">unittest.case.TestCase</span></tt></p>
+<dl class="attribute">
+<dt id="reprep.graphics.filter_posneg_test.Test.invalid_shapes">
+<tt class="descname">invalid_shapes</tt><em class="property"> = [(10,), (0, 10, 3), ()]</em><a class="headerlink" href="#reprep.graphics.filter_posneg_test.Test.invalid_shapes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="reprep.graphics.filter_posneg_test.Test.testInvalidNumbers">
+<tt class="descname">testInvalidNumbers</tt><big>(</big><big>)</big><a class="reference internal" href="../modules/reprep/graphics/filter_posneg_test.html#Test.testInvalidNumbers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.graphics.filter_posneg_test.Test.testInvalidNumbers" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="reprep.graphics.filter_posneg_test.Test.testInvalidShapes">
+<tt class="descname">testInvalidShapes</tt><big>(</big><big>)</big><a class="reference internal" href="../modules/reprep/graphics/filter_posneg_test.html#Test.testInvalidShapes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.graphics.filter_posneg_test.Test.testInvalidShapes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="reprep.graphics.filter_posneg_test.Test.testValid">
+<tt class="descname">testValid</tt><big>(</big><big>)</big><a class="reference internal" href="../modules/reprep/graphics/filter_posneg_test.html#Test.testValid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.graphics.filter_posneg_test.Test.testValid" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="reprep.graphics.filter_posneg_test.Test.valid_shapes">
+<tt class="descname">valid_shapes</tt><em class="property"> = [(10, 10)]</em><a class="headerlink" href="#reprep.graphics.filter_posneg_test.Test.valid_shapes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-reprep.graphics.filter_scale">
+<span id="filter-scale-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">filter_scale</span></tt> Module<a class="headerlink" href="#module-reprep.graphics.filter_scale" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="reprep.graphics.filter_scale.interpolate_color">
+<tt class="descclassname">reprep.graphics.filter_scale.</tt><tt class="descname">interpolate_color</tt><big>(</big><em>value</em>, <em>a</em>, <em>b</em><big>)</big><a class="reference internal" href="../modules/reprep/graphics/filter_scale.html#interpolate_color"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.graphics.filter_scale.interpolate_color" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="reprep.graphics.filter_scale.interpolate_colors">
+<tt class="descclassname">reprep.graphics.filter_scale.</tt><tt class="descname">interpolate_colors</tt><big>(</big><em>value</em>, <em>min_colors</em>, <em>max_colors</em><big>)</big><a class="reference internal" href="../modules/reprep/graphics/filter_scale.html#interpolate_colors"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.graphics.filter_scale.interpolate_colors" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>max_colors</strong> (<tt class="docutils literal"><span class="pre">color_spec</span></tt>) &#8211; </li>
+<li><strong>min_colors</strong> (<tt class="docutils literal"><span class="pre">color_spec</span></tt>) &#8211; </li>
+<li><strong>value</strong> (<tt class="docutils literal"><span class="pre">array[HxW]((float32|float64),&gt;=0,&lt;=1)</span></tt>) &#8211; </li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><tt class="docutils literal"><span class="pre">array[HxWx3](uint8)</span></tt></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="reprep.graphics.filter_scale.mark_nan">
+<tt class="descclassname">reprep.graphics.filter_scale.</tt><tt class="descname">mark_nan</tt><big>(</big><em>result</em>, <em>isnan</em>, <em>nan_color</em><big>)</big><a class="reference internal" href="../modules/reprep/graphics/filter_scale.html#mark_nan"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.graphics.filter_scale.mark_nan" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="reprep.graphics.filter_scale.scale">
+<tt class="descclassname">reprep.graphics.filter_scale.</tt><tt class="descname">scale</tt><big>(</big><em>value, min_value=None, max_value=None, min_color=[1, 1, 1], max_color=[0, 0, 0], nan_color=[1, 0.6, 0.6], flat_color=[0.5, 0.5, 0.5], skim=0, properties=None</em><big>)</big><a class="reference internal" href="../modules/reprep/graphics/filter_scale.html#scale"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.graphics.filter_scale.scale" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Provides a RGB representation of the values by interpolating the range </dt>
+<dd><p class="first">[min(value),max(value)] into the colorspace [min_color, max_color].</p>
+<p>Input: a numpy array with finite values squeeze()able to (W,H).</p>
+<p>Configuration:</p>
+<ul>
+<li><dl class="first docutils">
+<dt><tt class="docutils literal"><span class="pre">min_value</span></tt>: If specified, this is taken to be the threshold. </dt>
+<dd><p class="first last">Everything below min_value is considered to 
+be equal to min_value.</p>
+</dd>
+</dl>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">max_value</span></tt>: Optional upper threshold.</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">min_color</span></tt>: color associated to minimum value.</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">max_color</span></tt>: color associated to maximum value.</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">nan_color</span></tt>: color associated to nan/inf values.</p>
+</li>
+</ul>
+<p>If all valid elements have the same value, their color will be 
+<tt class="docutils literal"><span class="pre">flat_color</span></tt>.</p>
+<p class="last">Returns:  a (W,H,3) numpy array with dtype uint8 
+representing a RGB image.</p>
+</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>max_value</strong> (<tt class="docutils literal"><span class="pre">None|number</span></tt>) &#8211; </li>
+<li><strong>nan_color</strong> (<tt class="docutils literal"><span class="pre">color_spec</span></tt>) &#8211; </li>
+<li><strong>min_value</strong> (<tt class="docutils literal"><span class="pre">None|number</span></tt>) &#8211; </li>
+<li><strong>value</strong> (<tt class="docutils literal"><span class="pre">array[HxW],H&gt;0,W&gt;0</span></tt>) &#8211; </li>
+<li><strong>properties</strong> (<tt class="docutils literal"><span class="pre">None|map</span></tt>) &#8211; </li>
+<li><strong>skim</strong> (<tt class="docutils literal"><span class="pre">&gt;=0,&lt;=90</span></tt>) &#8211; </li>
+<li><strong>flat_color</strong> (<tt class="docutils literal"><span class="pre">color_spec</span></tt>) &#8211; </li>
+<li><strong>min_color</strong> (<tt class="docutils literal"><span class="pre">color_spec</span></tt>) &#8211; </li>
+<li><strong>max_color</strong> (<tt class="docutils literal"><span class="pre">color_spec</span></tt>) &#8211; </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-reprep.graphics.numpy_utils">
+<span id="numpy-utils-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">numpy_utils</span></tt> Module<a class="headerlink" href="#module-reprep.graphics.numpy_utils" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="reprep.graphics.numpy_utils.assert_finite">
+<tt class="descclassname">reprep.graphics.numpy_utils.</tt><tt class="descname">assert_finite</tt><big>(</big><em>a</em><big>)</big><a class="reference internal" href="../modules/reprep/graphics/numpy_utils.html#assert_finite"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.graphics.numpy_utils.assert_finite" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-reprep.graphics.scaling">
+<span id="scaling-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">scaling</span></tt> Module<a class="headerlink" href="#module-reprep.graphics.scaling" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="reprep.graphics.scaling.get_scaled_values">
+<tt class="descclassname">reprep.graphics.scaling.</tt><tt class="descname">get_scaled_values</tt><big>(</big><em>value</em>, <em>min_value=None</em>, <em>max_value=None</em>, <em>skim=0</em><big>)</big><a class="reference internal" href="../modules/reprep/graphics/scaling.html#get_scaled_values"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.graphics.scaling.get_scaled_values" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Returns dictionary with entries:</dt>
+<dd><ul class="first last simple">
+<li>value01       Values in [0, 1], no inf, nan, where it is set 0.5.</li>
+<li>isnan         Values were NaN.</li>
+<li>isinf         Values were +-Inf</li>
+<li>isfin         Values weren&#8217;t Inf or NaN</li>
+<li>clipped_ub    Values were clipped</li>
+<li>clipped_lb</li>
+<li>flat          Boolean if there wasn&#8217;t a range</li>
+<li>min_value</li>
+<li>max_value</li>
+</ul>
+</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>max_value</strong> (<tt class="docutils literal"><span class="pre">None|number</span></tt>) &#8211; </li>
+<li><strong>min_value</strong> (<tt class="docutils literal"><span class="pre">None|number</span></tt>) &#8211; </li>
+<li><strong>skim</strong> (<tt class="docutils literal"><span class="pre">&gt;=0,&lt;=90</span></tt>) &#8211; </li>
+<li><strong>value</strong> (<tt class="docutils literal"><span class="pre">array[HxW],H&gt;0,W&gt;0</span></tt>) &#8211; </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="reprep.graphics.scaling.skim_top">
+<tt class="descclassname">reprep.graphics.scaling.</tt><tt class="descname">skim_top</tt><big>(</big><em>a</em>, <em>top_percent</em><big>)</big><a class="reference internal" href="../modules/reprep/graphics/scaling.html#skim_top"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.graphics.scaling.skim_top" title="Permalink to this definition">¶</a></dt>
+<dd><p>Cuts off the top percentile</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>a</strong> (<tt class="docutils literal"><span class="pre">array</span></tt>) &#8211; </li>
+<li><strong>top_percent</strong> (<tt class="docutils literal"><span class="pre">&gt;=0,&lt;=90</span></tt>) &#8211; </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-reprep.graphics.success">
+<span id="success-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">success</span></tt> Module<a class="headerlink" href="#module-reprep.graphics.success" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="reprep.graphics.success.colorize_success">
+<tt class="descclassname">reprep.graphics.success.</tt><tt class="descname">colorize_success</tt><big>(</big><em>value</em><big>)</big><a class="reference internal" href="../modules/reprep/graphics/success.html#colorize_success"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.graphics.success.colorize_success" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>value</strong> (<tt class="docutils literal"><span class="pre">array[HxW](&gt;=0,&lt;=1)</span></tt>) &#8211; </td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="reprep.graphics.success.colormap_rgba">
+<tt class="descclassname">reprep.graphics.success.</tt><tt class="descname">colormap_rgba</tt><big>(</big><em>values, colors, invalid_color=[255, 255, 0, 255], nan_color=[0, 0, 0, 0]</em><big>)</big><a class="reference internal" href="../modules/reprep/graphics/success.html#colormap_rgba"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.graphics.success.colormap_rgba" title="Permalink to this definition">¶</a></dt>
+<dd><p>colors = [ (min, max, [r,g,b,a]),... ]</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>colors</strong> (<tt class="docutils literal"><span class="pre">list[&gt;=1](tuple(a,(b,b&gt;a),seq[4](number)))</span></tt>) &#8211; </li>
+<li><strong>values</strong> (<tt class="docutils literal"><span class="pre">array[HxW]</span></tt>) &#8211; </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-reprep.graphics.zoom">
+<span id="zoom-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">zoom</span></tt> Module<a class="headerlink" href="#module-reprep.graphics.zoom" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="reprep.graphics.zoom.rgb_zoom">
+<tt class="descclassname">reprep.graphics.zoom.</tt><tt class="descname">rgb_zoom</tt><big>(</big><em>M</em>, <em>K=10</em><big>)</big><a class="reference internal" href="../modules/reprep/graphics/zoom.html#rgb_zoom"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.graphics.zoom.rgb_zoom" title="Permalink to this definition">¶</a></dt>
+<dd><p>Zooms an RGB image by a fixed factor.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>K</strong> (<tt class="docutils literal"><span class="pre">K,&gt;1</span></tt>) &#8211; </li>
+<li><strong>M</strong> (<tt class="docutils literal"><span class="pre">array[HxWx3](uint8)</span></tt>) &#8211; </li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><tt class="docutils literal"><span class="pre">array[H*KxW*Kx3](uint8)</span></tt></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+
+
+      </div>
+      <div class="bottomnav">
+      
+        <p>
+        <a class="uplink" href="../index.html">Contents</a>
+        </p>
+
+      </div>
+
+	
+    <div class="footer">
+        &copy; Copyright 2010, Andrea Censi.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+		
+    <script type="text/javascript" src="static/analytics.js"></script> 
+
+
+  </body>
+</html>

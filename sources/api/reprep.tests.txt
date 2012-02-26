@@ -1,0 +1,35 @@
+tests Package
+=============
+
+:mod:`test_colormaps` Module
+----------------------------
+
+.. automodule:: reprep.tests.test_colormaps
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+:mod:`test_idioms` Module
+-------------------------
+
+.. automodule:: reprep.tests.test_idioms
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+:mod:`test_urls` Module
+-----------------------
+
+.. automodule:: reprep.tests.test_urls
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+:mod:`utils` Module
+-------------------
+
+.. automodule:: reprep.tests.utils
+    :members:
+    :undoc-members:
+    :show-inheritance:
+

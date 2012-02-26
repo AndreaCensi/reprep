@@ -1,0 +1,242 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>reprep.interface &mdash; RepRep 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../static/haiku.css" type="text/css" />
+    <link rel="stylesheet" href="../../static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/print.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../static/jquery.js"></script>
+    <script type="text/javascript" src="../../static/underscore.js"></script>
+    <script type="text/javascript" src="../../static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/theme_extras.js"></script>
+    <link rel="top" title="RepRep 0.1 documentation" href="../../index.html" />
+    <link rel="up" title="reprep" href="../reprep.html" />
+	 
+	
+    <link type="text/css" rel="stylesheet" href="static/generic.css" />
+    <link type="text/css" rel="stylesheet" href="static/custom.css" />
+
+	<link  href="http://fonts.googleapis.com/css?family=Lobster" rel="stylesheet" type="text/css" >
+	<link  href="http://fonts.googleapis.com/css?family=Droid+Serif" rel="stylesheet" type="text/css" >
+
+
+  </head>
+  <body>
+      <div class="header"><h1 class="heading"><a href="../../index.html">
+          <span>RepRep 0.1 documentation</span></a></h1>
+        <h2 class="heading"><span>reprep.interface</span></h2>
+      </div>
+      <div class="topnav">
+      
+        <p>
+        <a class="uplink" href="../../index.html">Contents</a>
+        </p>
+
+      </div>
+      <div class="content">
+        
+        
+  <h1>Source code for reprep.interface</h1><div class="highlight"><pre>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">MIME_PLAIN</span><span class="p">,</span> <span class="n">contract</span><span class="p">,</span> <span class="n">MIME_PYTHON</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+
+
+<div class="viewcode-block" id="ReportInterface"><a class="viewcode-back" href="../../api/reprep.html#reprep.interface.ReportInterface">[docs]</a><span class="k">class</span> <span class="nc">ReportInterface</span><span class="p">:</span>
+
+    <span class="nd">@contract</span><span class="p">(</span><span class="n">nid</span><span class="o">=</span><span class="s">&#39;None|valid_id&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="ReportInterface.section"><a class="viewcode-back" href="../../api/reprep.html#reprep.interface.ReportInterface.section">[docs]</a>    <span class="k">def</span> <span class="nf">section</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nid</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">caption</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Creates a subsection of the report. Returns a reference. &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="n">nid</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">nid</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_first_available_name</span><span class="p">(</span><span class="n">prefix</span><span class="o">=</span><span class="s">&#39;section&#39;</span><span class="p">)</span>
+        <span class="n">node</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="n">nid</span><span class="p">)</span>
+        <span class="c"># TODO: unify treatment of caption</span>
+        <span class="k">if</span> <span class="n">caption</span><span class="p">:</span>
+            <span class="n">node</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="s">&#39;caption&#39;</span><span class="p">,</span> <span class="n">caption</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">node</span>
+</div>
+    <span class="nd">@contract</span><span class="p">(</span><span class="n">nid</span><span class="o">=</span><span class="s">&#39;valid_id&#39;</span><span class="p">,</span> <span class="n">mime</span><span class="o">=</span><span class="s">&#39;None|str&#39;</span><span class="p">,</span> <span class="n">caption</span><span class="o">=</span><span class="s">&#39;None|str&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="ReportInterface.data"><a class="viewcode-back" href="../../api/reprep.html#reprep.interface.ReportInterface.data">[docs]</a>    <span class="k">def</span> <span class="nf">data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nid</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">mime</span><span class="o">=</span><span class="n">MIME_PYTHON</span><span class="p">,</span> <span class="n">caption</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; </span>
+<span class="sd">            Attaches a data child to this node. </span>
+<span class="sd">        </span>
+<span class="sd">            &quot;data&quot; is assumed to be a raw python structure. </span>
+<span class="sd">            Or, if data is a string representing a file, </span>
+<span class="sd">            pass a proper mime type (mime=&#39;image/png&#39;). </span>
+<span class="sd">            </span>
+<span class="sd">            Returns a reference to the node being created.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">DataNode</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="n">DataNode</span><span class="p">(</span><span class="n">nid</span><span class="o">=</span><span class="n">nid</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">mime</span><span class="o">=</span><span class="n">mime</span><span class="p">,</span> <span class="n">caption</span><span class="o">=</span><span class="n">caption</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_child</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">n</span>
+</div>
+    <span class="nd">@contract</span><span class="p">(</span><span class="n">nid</span><span class="o">=</span><span class="s">&#39;valid_id&#39;</span><span class="p">,</span> <span class="n">mime</span><span class="o">=</span><span class="s">&#39;str&#39;</span><span class="p">,</span> <span class="n">caption</span><span class="o">=</span><span class="s">&#39;None|str&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="ReportInterface.data_file"><a class="viewcode-back" href="../../api/reprep.html#reprep.interface.ReportInterface.data_file">[docs]</a>    <span class="k">def</span> <span class="nf">data_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nid</span><span class="p">,</span> <span class="n">mime</span><span class="p">,</span> <span class="n">caption</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; </span>
+<span class="sd">            Support for attaching data from a file. Note: this method is </span>
+<span class="sd">            supposed to be used in conjunction with the &quot;with&quot; construct. </span>
+<span class="sd">            </span>
+<span class="sd">            For example, the following is the concise way to attach a pdf</span>
+<span class="sd">            plot to a node.::</span>
+<span class="sd">            </span>
+<span class="sd">                with report.data_file(&#39;my_plot&#39;, MIME_PDF) as f:</span>
+<span class="sd">                    pylab.figure()</span>
+<span class="sd">                    pylab.plot(x,y)</span>
+<span class="sd">                    pylab.title(&#39;my x-y plot&#39;)</span>
+<span class="sd">                    pylab.savefig(f)</span>
+<span class="sd">            </span>
+<span class="sd">            Omit any file extension from &#39;id&#39;, (&quot;my_plot&quot; and not </span>
+<span class="sd">            &quot;my_plot.pdf&quot;), we will take care of it for you.</span>
+<span class="sd">            </span>
+<span class="sd">            This is a more complicated example, where we attach two versions</span>
+<span class="sd">            of the same image, in different formats. ::</span>
+<span class="sd">             </span>
+<span class="sd">                for format in [MIME_PDF, MIME_PNG]:</span>
+<span class="sd">                    with report.data_file(&#39;plot&#39;, format) as f:</span>
+<span class="sd">                        pylab.figure()</span>
+<span class="sd">                        pylab.plot(x,y)</span>
+<span class="sd">                        pylab.savefig(f)</span>
+<span class="sd">                        pylab.close()</span>
+<span class="sd">                        </span>
+<span class="sd">            Note that if you are mainly using pylab plots, there is the </span>
+<span class="sd">            function :py:func:`.plot` which offers a shortcut with less </span>
+<span class="sd">            ceremonies.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="kn">from</span> <span class="nn">.helpers</span> <span class="kn">import</span> <span class="n">Attacher</span>
+        <span class="kn">import</span> <span class="nn">mimetypes</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">mimetypes</span><span class="o">.</span><span class="n">guess_extension</span><span class="p">(</span><span class="n">mime</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&#39;Cannot guess extension for MIME &quot;</span><span class="si">%s</span><span class="s">&quot;.&#39;</span> <span class="o">%</span> <span class="n">mime</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">Attacher</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nid</span><span class="o">=</span><span class="n">nid</span><span class="p">,</span> <span class="n">mime</span><span class="o">=</span><span class="n">mime</span><span class="p">,</span> <span class="n">caption</span><span class="o">=</span><span class="n">caption</span><span class="p">)</span>
+</div>
+    <span class="nd">@contract</span><span class="p">(</span><span class="n">nid</span><span class="o">=</span><span class="s">&#39;None|valid_id&#39;</span><span class="p">,</span> <span class="n">mime</span><span class="o">=</span><span class="s">&#39;None|str&#39;</span><span class="p">,</span> <span class="n">caption</span><span class="o">=</span><span class="s">&#39;None|str&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="ReportInterface.data_pylab"><a class="viewcode-back" href="../../api/reprep.html#reprep.interface.ReportInterface.data_pylab">[docs]</a>    <span class="k">def</span> <span class="nf">data_pylab</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nid</span><span class="p">,</span> <span class="n">mime</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">caption</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">figure_args</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Same as plot(), but deprecated. &#39;&#39;&#39;</span>
+        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s">&#39;data_pylab() has been deprecated, use plot().&#39;</span><span class="p">,</span>
+                      <span class="n">stacklevel</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">nid</span><span class="o">=</span><span class="n">nid</span><span class="p">,</span> <span class="n">mime</span><span class="o">=</span><span class="n">mime</span><span class="p">,</span> <span class="n">caption</span><span class="o">=</span><span class="n">caption</span><span class="p">,</span> <span class="o">**</span><span class="n">figure_args</span><span class="p">)</span>
+</div>
+    <span class="nd">@contract</span><span class="p">(</span><span class="n">nid</span><span class="o">=</span><span class="s">&#39;None|valid_id&#39;</span><span class="p">,</span> <span class="n">mime</span><span class="o">=</span><span class="s">&#39;None|str&#39;</span><span class="p">,</span> <span class="n">caption</span><span class="o">=</span><span class="s">&#39;None|str&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="ReportInterface.plot"><a class="viewcode-back" href="../../api/reprep.html#reprep.interface.ReportInterface.plot">[docs]</a>    <span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nid</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">mime</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">caption</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">figure_args</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; </span>
+<span class="sd">            Easy support for creating a node consisting of a pylab plot.</span>
+<span class="sd">            Note: this method is supposed to be used in conjunction with </span>
+<span class="sd">            the &quot;with&quot; construct. </span>
+<span class="sd">            </span>
+<span class="sd">            For example, the following is the concise way to attach a plot: ::</span>
+<span class="sd">            </span>
+<span class="sd">                with report.plot(&#39;my_plot&#39;) as pylab:</span>
+<span class="sd">                    pylab.plot(x,y)</span>
+<span class="sd">                    pylab.title(&#39;my x-y plot&#39;)</span>
+<span class="sd">    </span>
+<span class="sd">            Basically, data_pylab allows you to save some lines of code </span>
+<span class="sd">            more than with :py:func:`.data_file`.</span>
+<span class="sd">            </span>
+<span class="sd">            You can pass **figure_args to pylab.figure().</span>
+<span class="sd">         &#39;&#39;&#39;</span>
+        <span class="kn">from</span> <span class="nn">.helpers</span> <span class="kn">import</span> <span class="n">PylabAttacher</span>
+        <span class="k">if</span> <span class="n">nid</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">nid</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_first_available_name</span><span class="p">(</span><span class="n">prefix</span><span class="o">=</span><span class="s">&#39;plot&#39;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">PylabAttacher</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nid</span><span class="o">=</span><span class="n">nid</span><span class="p">,</span> <span class="n">mime</span><span class="o">=</span><span class="n">mime</span><span class="p">,</span> <span class="n">caption</span><span class="o">=</span><span class="n">caption</span><span class="p">,</span>
+                             <span class="o">**</span><span class="n">figure_args</span><span class="p">)</span>
+</div>
+    <span class="nd">@contract</span><span class="p">(</span><span class="n">nid</span><span class="o">=</span><span class="s">&#39;valid_id|None&#39;</span><span class="p">,</span> <span class="n">rgb</span><span class="o">=</span><span class="s">&#39;array[HxWx(3|4)](uint8)&#39;</span><span class="p">,</span>
+              <span class="n">caption</span><span class="o">=</span><span class="s">&#39;None|str&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="ReportInterface.data_rgb"><a class="viewcode-back" href="../../api/reprep.html#reprep.interface.ReportInterface.data_rgb">[docs]</a>    <span class="k">def</span> <span class="nf">data_rgb</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nid</span><span class="p">,</span> <span class="n">rgb</span><span class="p">,</span> <span class="n">caption</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; </span>
+<span class="sd">            Create a node containing an image from a RGB[a] array.</span>
+<span class="sd">            (internally, it will be saved as PNG)</span>
+<span class="sd">            </span>
+<span class="sd">            ``rgb`` must be a height x width x 3 uint8 numpy array.        </span>
+<span class="sd">         &#39;&#39;&#39;</span>
+        <span class="kn">from</span> <span class="nn">.helpers</span> <span class="kn">import</span> <span class="n">data_rgb_imp</span>
+        <span class="k">return</span> <span class="n">data_rgb_imp</span><span class="p">(</span><span class="n">parent</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span> <span class="n">nid</span><span class="o">=</span><span class="n">nid</span><span class="p">,</span> <span class="n">rgb</span><span class="o">=</span><span class="n">rgb</span><span class="p">,</span> <span class="n">caption</span><span class="o">=</span><span class="n">caption</span><span class="p">)</span>
+</div>
+    <span class="nd">@contract</span><span class="p">(</span><span class="n">nid</span><span class="o">=</span><span class="s">&#39;valid_id|None&#39;</span><span class="p">,</span> <span class="n">cols</span><span class="o">=</span><span class="s">&#39;None|(int,&gt;=1)&#39;</span><span class="p">,</span> <span class="n">caption</span><span class="o">=</span><span class="s">&#39;None|str&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="ReportInterface.figure"><a class="viewcode-back" href="../../api/reprep.html#reprep.interface.ReportInterface.figure">[docs]</a>    <span class="k">def</span> <span class="nf">figure</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nid</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">cols</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">caption</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Attach a figure to this node. &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="n">nid</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">nid</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_first_available_name</span><span class="p">(</span><span class="n">prefix</span><span class="o">=</span><span class="s">&#39;figure&#39;</span><span class="p">)</span>
+
+        <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">Figure</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="n">Figure</span><span class="p">(</span><span class="n">nid</span><span class="o">=</span><span class="n">nid</span><span class="p">,</span> <span class="n">caption</span><span class="o">=</span><span class="n">caption</span><span class="p">,</span> <span class="n">cols</span><span class="o">=</span><span class="n">cols</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_child</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">f</span>
+</div>
+    <span class="nd">@contract</span><span class="p">(</span><span class="n">nid</span><span class="o">=</span><span class="s">&#39;valid_id&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="s">&#39;list(list)|array[HxW]&#39;</span><span class="p">,</span> <span class="n">caption</span><span class="o">=</span><span class="s">&#39;None|str&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="ReportInterface.table"><a class="viewcode-back" href="../../api/reprep.html#reprep.interface.ReportInterface.table">[docs]</a>    <span class="k">def</span> <span class="nf">table</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nid</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">cols</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">rows</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">caption</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; </span>
+<span class="sd">            Attach a table to this node. </span>
+<span class="sd">            </span>
+<span class="sd">            :param:data: A list of lists, or a 2D numpy array.</span>
+<span class="sd">            :param:colos: Labels for the columns.  </span>
+<span class="sd">            :param:rows: Labels for the rows. </span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">Table</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="n">Table</span><span class="p">(</span><span class="n">nid</span><span class="o">=</span><span class="n">nid</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">cols</span><span class="o">=</span><span class="n">cols</span><span class="p">,</span> <span class="n">rows</span><span class="o">=</span><span class="n">rows</span><span class="p">,</span> <span class="n">caption</span><span class="o">=</span><span class="n">caption</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_child</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">t</span>
+</div>
+    <span class="nd">@contract</span><span class="p">(</span><span class="n">nid</span><span class="o">=</span><span class="s">&#39;valid_id&#39;</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s">&#39;str&#39;</span><span class="p">,</span> <span class="n">mime</span><span class="o">=</span><span class="s">&#39;None|str&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="ReportInterface.text"><a class="viewcode-back" href="../../api/reprep.html#reprep.interface.ReportInterface.text">[docs]</a>    <span class="k">def</span> <span class="nf">text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nid</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">mime</span><span class="o">=</span><span class="n">MIME_PLAIN</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; </span>
+<span class="sd">            Adds a text node with the given id.</span>
+<span class="sd">            </span>
+<span class="sd">            This is a very thin wrapper around data() that </span>
+<span class="sd">            provides a default mime type (MIME_PLAIN). </span>
+<span class="sd">            </span>
+<span class="sd">            For now, only restructured text is converted to HTML,</span>
+<span class="sd">            the rest is displayed as plain text.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="n">nid</span><span class="o">=</span><span class="n">nid</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">text</span><span class="p">,</span> <span class="n">mime</span><span class="o">=</span><span class="n">mime</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="ReportInterface.to_html"><a class="viewcode-back" href="../../api/reprep.html#reprep.interface.ReportInterface.to_html">[docs]</a>    <span class="k">def</span> <span class="nf">to_html</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">resources_dir</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Creates a HTML representation of this report. &#39;&#39;&#39;</span>
+        <span class="kn">from</span> <span class="nn">.output.html</span> <span class="kn">import</span> <span class="n">node_to_html_document</span>
+        <span class="n">node_to_html_document</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">resources_dir</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="ReportInterface.add_to"><a class="viewcode-back" href="../../api/reprep.html#reprep.interface.ReportInterface.add_to">[docs]</a>    <span class="k">def</span> <span class="nf">add_to</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">figure</span><span class="p">,</span> <span class="n">caption</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="n">figure</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">caption</span><span class="p">)</span>
+</pre></div></div></div>
+
+      </div>
+      <div class="bottomnav">
+      
+        <p>
+        <a class="uplink" href="../../index.html">Contents</a>
+        </p>
+
+      </div>
+
+	
+    <div class="footer">
+        &copy; Copyright 2010, Andrea Censi.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+		
+    <script type="text/javascript" src="static/analytics.js"></script> 
+
+
+  </body>
+</html>

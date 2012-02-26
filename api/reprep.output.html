@@ -1,0 +1,403 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>output Package &mdash; RepRep 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../static/haiku.css" type="text/css" />
+    <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/print.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../static/jquery.js"></script>
+    <script type="text/javascript" src="../static/underscore.js"></script>
+    <script type="text/javascript" src="../static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/theme_extras.js"></script>
+    <link rel="top" title="RepRep 0.1 documentation" href="../index.html" />
+	 
+	
+    <link type="text/css" rel="stylesheet" href="static/generic.css" />
+    <link type="text/css" rel="stylesheet" href="static/custom.css" />
+
+	<link  href="http://fonts.googleapis.com/css?family=Lobster" rel="stylesheet" type="text/css" >
+	<link  href="http://fonts.googleapis.com/css?family=Droid+Serif" rel="stylesheet" type="text/css" >
+
+
+  </head>
+  <body>
+      <div class="header"><h1 class="heading"><a href="../index.html">
+          <span>RepRep 0.1 documentation</span></a></h1>
+        <h2 class="heading"><span>output Package</span></h2>
+      </div>
+      <div class="topnav">
+      
+        <p>
+        <a class="uplink" href="../index.html">Contents</a>
+        </p>
+
+      </div>
+      <div class="content">
+        
+        
+  <div class="section" id="output-package">
+<h1>output Package<a class="headerlink" href="#output-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id1">
+<h2><tt class="xref py py-mod docutils literal"><span class="pre">output</span></tt> Package<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="module-reprep.output"></span></div>
+<div class="section" id="module-reprep.output.html">
+<span id="html-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">html</span></tt> Module<a class="headerlink" href="#module-reprep.output.html" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="reprep.output.html.children_to_html">
+<tt class="descclassname">reprep.output.html.</tt><tt class="descname">children_to_html</tt><big>(</big><em>node</em>, <em>context</em><big>)</big><a class="reference internal" href="../modules/reprep/output/html.html#children_to_html"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.output.html.children_to_html" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="reprep.output.html.datanode_to_html">
+<tt class="descclassname">reprep.output.html.</tt><tt class="descname">datanode_to_html</tt><big>(</big><em>node</em>, <em>context</em><big>)</big><a class="reference internal" href="../modules/reprep/output/html.html#datanode_to_html"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.output.html.datanode_to_html" title="Permalink to this definition">¶</a></dt>
+<dd><p>Writes the data on the file</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="reprep.output.html.figure_to_html">
+<tt class="descclassname">reprep.output.html.</tt><tt class="descname">figure_to_html</tt><big>(</big><em>node</em>, <em>context</em><big>)</big><a class="reference internal" href="../modules/reprep/output/html.html#figure_to_html"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.output.html.figure_to_html" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="reprep.output.html.get_complete_id">
+<tt class="descclassname">reprep.output.html.</tt><tt class="descname">get_complete_id</tt><big>(</big><em>node</em>, <em>separator='-'</em><big>)</big><a class="reference internal" href="../modules/reprep/output/html.html#get_complete_id"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.output.html.get_complete_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="reprep.output.html.get_node_filename">
+<tt class="descclassname">reprep.output.html.</tt><tt class="descname">get_node_filename</tt><big>(</big><em>node</em>, <em>context</em><big>)</big><a class="reference internal" href="../modules/reprep/output/html.html#get_node_filename"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.output.html.get_node_filename" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a tuple (relative_from_file, absolute)</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="reprep.output.html.html_context">
+<em class="property">class </em><tt class="descclassname">reprep.output.html.</tt><tt class="descname">html_context</tt><big>(</big><em>file</em>, <em>rel_resources_dir</em>, <em>resources_dir</em>, <em>write_pickle</em><big>)</big><a class="reference internal" href="../modules/reprep/output/html.html#html_context"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.output.html.html_context" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="reprep.output.html.htmlfy">
+<tt class="descclassname">reprep.output.html.</tt><tt class="descname">htmlfy</tt><big>(</big><em>s</em><big>)</big><a class="reference internal" href="../modules/reprep/output/html.html#htmlfy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.output.html.htmlfy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="reprep.output.html.isodate_with_secs">
+<tt class="descclassname">reprep.output.html.</tt><tt class="descname">isodate_with_secs</tt><big>(</big><big>)</big><a class="reference internal" href="../modules/reprep/output/html.html#isodate_with_secs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.output.html.isodate_with_secs" title="Permalink to this definition">¶</a></dt>
+<dd><p>E.g., &#8216;2011-10-06-22:54:33&#8217;</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="reprep.output.html.node_to_html">
+<tt class="descclassname">reprep.output.html.</tt><tt class="descname">node_to_html</tt><big>(</big><em>node</em>, <em>context</em><big>)</big><a class="reference internal" href="../modules/reprep/output/html.html#node_to_html"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.output.html.node_to_html" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="reprep.output.html.node_to_html_document">
+<tt class="descclassname">reprep.output.html.</tt><tt class="descname">node_to_html_document</tt><big>(</big><em>node</em>, <em>filename</em>, <em>resources_dir=None</em>, <em>extra_css=None</em>, <em>write_pickle=False</em><big>)</big><a class="reference internal" href="../modules/reprep/output/html.html#node_to_html_document"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.output.html.node_to_html_document" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="reprep.output.html.normalize">
+<tt class="descclassname">reprep.output.html.</tt><tt class="descname">normalize</tt><big>(</big><em>f</em><big>)</big><a class="reference internal" href="../modules/reprep/output/html.html#normalize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.output.html.normalize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="reprep.output.html.rst2htmlfragment">
+<tt class="descclassname">reprep.output.html.</tt><tt class="descname">rst2htmlfragment</tt><big>(</big><em>text</em><big>)</big><a class="reference internal" href="../modules/reprep/output/html.html#rst2htmlfragment"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.output.html.rst2htmlfragment" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="reprep.output.html.simple_node_to_html">
+<tt class="descclassname">reprep.output.html.</tt><tt class="descname">simple_node_to_html</tt><big>(</big><em>node</em>, <em>context</em><big>)</big><a class="reference internal" href="../modules/reprep/output/html.html#simple_node_to_html"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.output.html.simple_node_to_html" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="reprep.output.html.table_to_html">
+<tt class="descclassname">reprep.output.html.</tt><tt class="descname">table_to_html</tt><big>(</big><em>table</em>, <em>context</em><big>)</big><a class="reference internal" href="../modules/reprep/output/html.html#table_to_html"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.output.html.table_to_html" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="reprep.output.html.text2html">
+<tt class="descclassname">reprep.output.html.</tt><tt class="descname">text2html</tt><big>(</big><em>text</em>, <em>mime</em><big>)</big><a class="reference internal" href="../modules/reprep/output/html.html#text2html"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.output.html.text2html" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts rst to HTML element.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-reprep.output.platex">
+<span id="platex-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">platex</span></tt> Module<a class="headerlink" href="#module-reprep.output.platex" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="reprep.output.platex.Figure">
+<em class="property">class </em><tt class="descclassname">reprep.output.platex.</tt><tt class="descname">Figure</tt><big>(</big><em>caption</em>, <em>label</em>, <em>placement</em>, <em>context</em>, <em>double</em><big>)</big><a class="reference internal" href="../modules/reprep/output/platex.html#Figure"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.output.platex.Figure" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#reprep.output.platex.LatexEnvironment" title="reprep.output.platex.LatexEnvironment"><tt class="xref py py-class docutils literal"><span class="pre">reprep.output.platex.LatexEnvironment</span></tt></a></p>
+<dl class="method">
+<dt id="reprep.output.platex.Figure.dump">
+<tt class="descname">dump</tt><big>(</big><em>main_context</em><big>)</big><a class="reference internal" href="../modules/reprep/output/platex.html#Figure.dump"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.output.platex.Figure.dump" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="reprep.output.platex.Figure.figure">
+<tt class="descname">figure</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../modules/reprep/output/platex.html#Figure.figure"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.output.platex.Figure.figure" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="reprep.output.platex.Figure.subfigure">
+<tt class="descname">subfigure</tt><big>(</big><em>caption=''</em>, <em>label=None</em><big>)</big><a class="reference internal" href="../modules/reprep/output/platex.html#Figure.subfigure"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.output.platex.Figure.subfigure" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="reprep.output.platex.Latex">
+<em class="property">class </em><tt class="descclassname">reprep.output.platex.</tt><tt class="descname">Latex</tt><a class="reference internal" href="../modules/reprep/output/platex.html#Latex"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.output.platex.Latex" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="staticmethod">
+<dt id="reprep.output.platex.Latex.document">
+<em class="property">static </em><tt class="descname">document</tt><big>(</big><em>filename</em>, <em>graphics_path='.'</em>, <em>document_class='article'</em>, <em>class_options=''</em><big>)</big><a class="reference internal" href="../modules/reprep/output/platex.html#Latex.document"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.output.platex.Latex.document" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="reprep.output.platex.Latex.fragment">
+<em class="property">static </em><tt class="descname">fragment</tt><big>(</big><em>filename</em>, <em>graphics_path</em><big>)</big><a class="reference internal" href="../modules/reprep/output/platex.html#Latex.fragment"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.output.platex.Latex.fragment" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="reprep.output.platex.LatexContext">
+<em class="property">class </em><tt class="descclassname">reprep.output.platex.</tt><tt class="descname">LatexContext</tt><big>(</big><em>graphics_path='.'</em><big>)</big><a class="reference internal" href="../modules/reprep/output/platex.html#LatexContext"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.output.platex.LatexContext" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="reprep.output.platex.LatexContext.child">
+<tt class="descname">child</tt><big>(</big><big>)</big><a class="reference internal" href="../modules/reprep/output/platex.html#LatexContext.child"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.output.platex.LatexContext.child" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates a child context; sharing some data</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="reprep.output.platex.LatexContext.generate_file_id">
+<tt class="descname">generate_file_id</tt><big>(</big><big>)</big><a class="reference internal" href="../modules/reprep/output/platex.html#LatexContext.generate_file_id"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.output.platex.LatexContext.generate_file_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="reprep.output.platex.LatexDocument">
+<em class="property">class </em><tt class="descclassname">reprep.output.platex.</tt><tt class="descname">LatexDocument</tt><big>(</big><em>document_class</em>, <em>class_options</em>, <em>graphics_path='.'</em><big>)</big><a class="reference internal" href="../modules/reprep/output/platex.html#LatexDocument"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.output.platex.LatexDocument" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#reprep.output.platex.LatexEnvironment" title="reprep.output.platex.LatexEnvironment"><tt class="xref py py-class docutils literal"><span class="pre">reprep.output.platex.LatexEnvironment</span></tt></a></p>
+<dl class="method">
+<dt id="reprep.output.platex.LatexDocument.dump_stream">
+<tt class="descname">dump_stream</tt><big>(</big><em>f</em><big>)</big><a class="reference internal" href="../modules/reprep/output/platex.html#LatexDocument.dump_stream"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.output.platex.LatexDocument.dump_stream" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="reprep.output.platex.LatexEnvironment">
+<em class="property">class </em><tt class="descclassname">reprep.output.platex.</tt><tt class="descname">LatexEnvironment</tt><big>(</big><em>context</em><big>)</big><a class="reference internal" href="../modules/reprep/output/platex.html#LatexEnvironment"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.output.platex.LatexEnvironment" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="class">
+<dt id="reprep.output.platex.LatexEnvironment.GenericWrap">
+<em class="property">class </em><tt class="descname">GenericWrap</tt><big>(</big><em>figure</em>, <em>main_context</em><big>)</big><a class="reference internal" href="../modules/reprep/output/platex.html#LatexEnvironment.GenericWrap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.output.platex.LatexEnvironment.GenericWrap" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="reprep.output.platex.LatexEnvironment.figure">
+<tt class="descclassname">LatexEnvironment.</tt><tt class="descname">figure</tt><big>(</big><em>caption=None</em>, <em>label=None</em>, <em>placement='t'</em>, <em>double=False</em><big>)</big><a class="reference internal" href="../modules/reprep/output/platex.html#LatexEnvironment.figure"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.output.platex.LatexEnvironment.figure" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="reprep.output.platex.LatexEnvironment.graphics_data">
+<tt class="descclassname">LatexEnvironment.</tt><tt class="descname">graphics_data</tt><big>(</big><em>data</em>, <em>mime</em>, <em>width='3cm'</em>, <em>nid=None</em><big>)</big><a class="reference internal" href="../modules/reprep/output/platex.html#LatexEnvironment.graphics_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.output.platex.LatexEnvironment.graphics_data" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="reprep.output.platex.LatexEnvironment.hfill">
+<tt class="descclassname">LatexEnvironment.</tt><tt class="descname">hfill</tt><big>(</big><big>)</big><a class="reference internal" href="../modules/reprep/output/platex.html#LatexEnvironment.hfill"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.output.platex.LatexEnvironment.hfill" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="reprep.output.platex.LatexEnvironment.hspace">
+<tt class="descclassname">LatexEnvironment.</tt><tt class="descname">hspace</tt><big>(</big><em>size</em><big>)</big><a class="reference internal" href="../modules/reprep/output/platex.html#LatexEnvironment.hspace"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.output.platex.LatexEnvironment.hspace" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="reprep.output.platex.LatexEnvironment.input">
+<tt class="descclassname">LatexEnvironment.</tt><tt class="descname">input</tt><big>(</big><em>filename</em><big>)</big><a class="reference internal" href="../modules/reprep/output/platex.html#LatexEnvironment.input"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.output.platex.LatexEnvironment.input" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="reprep.output.platex.LatexEnvironment.pagebreak">
+<tt class="descclassname">LatexEnvironment.</tt><tt class="descname">pagebreak</tt><big>(</big><big>)</big><a class="reference internal" href="../modules/reprep/output/platex.html#LatexEnvironment.pagebreak"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.output.platex.LatexEnvironment.pagebreak" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="reprep.output.platex.LatexEnvironment.parbreak">
+<tt class="descclassname">LatexEnvironment.</tt><tt class="descname">parbreak</tt><big>(</big><big>)</big><a class="reference internal" href="../modules/reprep/output/platex.html#LatexEnvironment.parbreak"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.output.platex.LatexEnvironment.parbreak" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="reprep.output.platex.LatexEnvironment.rule">
+<tt class="descclassname">LatexEnvironment.</tt><tt class="descname">rule</tt><big>(</big><em>width</em>, <em>height</em>, <em>color='gray'</em><big>)</big><a class="reference internal" href="../modules/reprep/output/platex.html#LatexEnvironment.rule"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.output.platex.LatexEnvironment.rule" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="reprep.output.platex.LatexEnvironment.tabular_simple">
+<tt class="descclassname">LatexEnvironment.</tt><tt class="descname">tabular_simple</tt><big>(</big><em>data</em>, <em>row_desc</em>, <em>col_desc</em>, <em>write_col_desc=True</em><big>)</big><a class="reference internal" href="../modules/reprep/output/platex.html#LatexEnvironment.tabular_simple"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.output.platex.LatexEnvironment.tabular_simple" title="Permalink to this definition">¶</a></dt>
+<dd><p>Writes a tabular environment with very simple options.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="reprep.output.platex.LatexEnvironment.tex">
+<tt class="descclassname">LatexEnvironment.</tt><tt class="descname">tex</tt><big>(</big><em>tex</em><big>)</big><a class="reference internal" href="../modules/reprep/output/platex.html#LatexEnvironment.tex"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.output.platex.LatexEnvironment.tex" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="reprep.output.platex.LatexEnvironment.text">
+<tt class="descclassname">LatexEnvironment.</tt><tt class="descname">text</tt><big>(</big><em>t</em><big>)</big><a class="reference internal" href="../modules/reprep/output/platex.html#LatexEnvironment.text"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.output.platex.LatexEnvironment.text" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="reprep.output.platex.LatexEnvironment.use_package">
+<tt class="descclassname">LatexEnvironment.</tt><tt class="descname">use_package</tt><big>(</big><em>name</em>, <em>options=''</em><big>)</big><a class="reference internal" href="../modules/reprep/output/platex.html#LatexEnvironment.use_package"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.output.platex.LatexEnvironment.use_package" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="reprep.output.platex.LatexEnvironment.vspace">
+<tt class="descclassname">LatexEnvironment.</tt><tt class="descname">vspace</tt><big>(</big><em>size</em><big>)</big><a class="reference internal" href="../modules/reprep/output/platex.html#LatexEnvironment.vspace"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.output.platex.LatexEnvironment.vspace" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="exception">
+<dt id="reprep.output.platex.StructureError">
+<em class="property">exception </em><tt class="descclassname">reprep.output.platex.</tt><tt class="descname">StructureError</tt><a class="reference internal" href="../modules/reprep/output/platex.html#StructureError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.output.platex.StructureError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">exceptions.Exception</span></tt></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="reprep.output.platex.SubFigure">
+<em class="property">class </em><tt class="descclassname">reprep.output.platex.</tt><tt class="descname">SubFigure</tt><big>(</big><em>caption</em>, <em>label</em>, <em>context</em><big>)</big><a class="reference internal" href="../modules/reprep/output/platex.html#SubFigure"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.output.platex.SubFigure" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#reprep.output.platex.LatexEnvironment" title="reprep.output.platex.LatexEnvironment"><tt class="xref py py-class docutils literal"><span class="pre">reprep.output.platex.LatexEnvironment</span></tt></a></p>
+<dl class="method">
+<dt id="reprep.output.platex.SubFigure.dump">
+<tt class="descname">dump</tt><big>(</big><em>main_context</em><big>)</big><a class="reference internal" href="../modules/reprep/output/platex.html#SubFigure.dump"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.output.platex.SubFigure.dump" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="reprep.output.platex.SubFigure.figure">
+<tt class="descname">figure</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../modules/reprep/output/platex.html#SubFigure.figure"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.output.platex.SubFigure.figure" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="reprep.output.platex.SubFigure.subfigure">
+<tt class="descname">subfigure</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../modules/reprep/output/platex.html#SubFigure.subfigure"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.output.platex.SubFigure.subfigure" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="reprep.output.platex.latexify">
+<tt class="descclassname">reprep.output.platex.</tt><tt class="descname">latexify</tt><big>(</big><em>s</em><big>)</big><a class="reference internal" href="../modules/reprep/output/platex.html#latexify"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.output.platex.latexify" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="reprep.output.platex.makecmd">
+<tt class="descclassname">reprep.output.platex.</tt><tt class="descname">makecmd</tt><big>(</big><em>frag</em>, <em>desired</em><big>)</big><a class="reference internal" href="../modules/reprep/output/platex.html#makecmd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.output.platex.makecmd" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="reprep.output.platex.makeupcmd">
+<tt class="descclassname">reprep.output.platex.</tt><tt class="descname">makeupcmd</tt><big>(</big><em>name</em><big>)</big><a class="reference internal" href="../modules/reprep/output/platex.html#makeupcmd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.output.platex.makeupcmd" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="reprep.output.platex.safecmd">
+<tt class="descclassname">reprep.output.platex.</tt><tt class="descname">safecmd</tt><big>(</big><em>s</em><big>)</big><a class="reference internal" href="../modules/reprep/output/platex.html#safecmd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.output.platex.safecmd" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="reprep.output.platex.texif">
+<tt class="descclassname">reprep.output.platex.</tt><tt class="descname">texif</tt><big>(</big><em>cmd</em>, <em>use</em>, <em>otherwise</em><big>)</big><a class="reference internal" href="../modules/reprep/output/platex.html#texif"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.output.platex.texif" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-reprep.output.platex_test">
+<span id="platex-test-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">platex_test</span></tt> Module<a class="headerlink" href="#module-reprep.output.platex_test" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="reprep.output.platex_test.Test">
+<em class="property">class </em><tt class="descclassname">reprep.output.platex_test.</tt><tt class="descname">Test</tt><big>(</big><em>methodName='runTest'</em><big>)</big><a class="reference internal" href="../modules/reprep/output/platex_test.html#Test"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.output.platex_test.Test" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">unittest.case.TestCase</span></tt></p>
+<dl class="method">
+<dt id="reprep.output.platex_test.Test.get_random_file">
+<tt class="descname">get_random_file</tt><big>(</big><em>*args</em>, <em>**kwds</em><big>)</big><a class="reference internal" href="../modules/reprep/output/platex_test.html#Test.get_random_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.output.platex_test.Test.get_random_file" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="reprep.output.platex_test.Test.setUp">
+<tt class="descname">setUp</tt><big>(</big><big>)</big><a class="reference internal" href="../modules/reprep/output/platex_test.html#Test.setUp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.output.platex_test.Test.setUp" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="reprep.output.platex_test.Test.tearDown">
+<tt class="descname">tearDown</tt><big>(</big><big>)</big><a class="reference internal" href="../modules/reprep/output/platex_test.html#Test.tearDown"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.output.platex_test.Test.tearDown" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="reprep.output.platex_test.Test.testEmpty">
+<tt class="descname">testEmpty</tt><big>(</big><big>)</big><a class="reference internal" href="../modules/reprep/output/platex_test.html#Test.testEmpty"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.output.platex_test.Test.testEmpty" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="reprep.output.platex_test.Test.testEmptyFigure">
+<tt class="descname">testEmptyFigure</tt><big>(</big><big>)</big><a class="reference internal" href="../modules/reprep/output/platex_test.html#Test.testEmptyFigure"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.output.platex_test.Test.testEmptyFigure" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="reprep.output.platex_test.Test.testSubFigure">
+<tt class="descname">testSubFigure</tt><big>(</big><big>)</big><a class="reference internal" href="../modules/reprep/output/platex_test.html#Test.testSubFigure"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.output.platex_test.Test.testSubFigure" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="reprep.output.platex_test.Test.try_compile">
+<tt class="descname">try_compile</tt><big>(</big><em>filename</em><big>)</big><a class="reference internal" href="../modules/reprep/output/platex_test.html#Test.try_compile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reprep.output.platex_test.Test.try_compile" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+      </div>
+      <div class="bottomnav">
+      
+        <p>
+        <a class="uplink" href="../index.html">Contents</a>
+        </p>
+
+      </div>
+
+	
+    <div class="footer">
+        &copy; Copyright 2010, Andrea Censi.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+		
+    <script type="text/javascript" src="static/analytics.js"></script> 
+
+
+  </body>
+</html>

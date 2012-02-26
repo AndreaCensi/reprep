@@ -1,0 +1,118 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>reprep.mpl &mdash; RepRep 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../static/haiku.css" type="text/css" />
+    <link rel="stylesheet" href="../../static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/print.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../static/jquery.js"></script>
+    <script type="text/javascript" src="../../static/underscore.js"></script>
+    <script type="text/javascript" src="../../static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/theme_extras.js"></script>
+    <link rel="top" title="RepRep 0.1 documentation" href="../../index.html" />
+    <link rel="up" title="reprep" href="../reprep.html" />
+	 
+	
+    <link type="text/css" rel="stylesheet" href="static/generic.css" />
+    <link type="text/css" rel="stylesheet" href="static/custom.css" />
+
+	<link  href="http://fonts.googleapis.com/css?family=Lobster" rel="stylesheet" type="text/css" >
+	<link  href="http://fonts.googleapis.com/css?family=Droid+Serif" rel="stylesheet" type="text/css" >
+
+
+  </head>
+  <body>
+      <div class="header"><h1 class="heading"><a href="../../index.html">
+          <span>RepRep 0.1 documentation</span></a></h1>
+        <h2 class="heading"><span>reprep.mpl</span></h2>
+      </div>
+      <div class="topnav">
+      
+        <p>
+        <a class="uplink" href="../../index.html">Contents</a>
+        </p>
+
+      </div>
+      <div class="content">
+        
+        
+  <h1>Source code for reprep.mpl</h1><div class="highlight"><pre>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">logger</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;get_matplotlib&#39;</span><span class="p">,</span> <span class="s">&#39;get_pylab_instance&#39;</span><span class="p">]</span>
+<span class="n">my_pylab_instance</span> <span class="o">=</span> <span class="bp">None</span>
+<span class="n">matplotlib_error</span> <span class="o">=</span> <span class="bp">None</span>
+<span class="n">my_matplotlib</span> <span class="o">=</span> <span class="bp">None</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">matplotlib</span>
+<span class="k">except</span> <span class="ne">ImportError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;Could not import matplotlib; some functionality will be &#39;</span>
+           <span class="s">&#39;disabled.&#39;</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+    <span class="n">matplotlib_error</span> <span class="o">=</span> <span class="n">e</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="c"># TODO: configure this</span>
+    <span class="k">if</span> <span class="n">matplotlib</span><span class="o">.</span><span class="n">get_backend</span><span class="p">()</span> <span class="o">!=</span> <span class="s">&#39;agg&#39;</span><span class="p">:</span>
+        <span class="n">matplotlib</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s">&#39;agg&#39;</span><span class="p">)</span>
+    <span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pylab</span> <span class="k">as</span> <span class="n">my_pylab_instance</span>
+    <span class="n">my_matplotlib</span> <span class="o">=</span> <span class="n">matplotlib</span>
+
+
+<div class="viewcode-block" id="get_pylab_instance"><a class="viewcode-back" href="../../api/reprep.html#reprep.mpl.get_pylab_instance">[docs]</a><span class="k">def</span> <span class="nf">get_pylab_instance</span><span class="p">():</span>
+    <span class="k">if</span> <span class="n">my_pylab_instance</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">raise_error</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="n">my_pylab_instance</span>
+
+</div>
+<div class="viewcode-block" id="get_matplotlib"><a class="viewcode-back" href="../../api/reprep.html#reprep.mpl.get_matplotlib">[docs]</a><span class="k">def</span> <span class="nf">get_matplotlib</span><span class="p">():</span>
+    <span class="k">if</span> <span class="n">my_matplotlib</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">raise_error</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">my_matplotlib</span>
+
+</div>
+<span class="k">def</span> <span class="nf">raise_error</span><span class="p">():</span>
+    <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;Sorry, this functionality is not enabled because &#39;</span>
+           <span class="s">&#39;I could not import matplotlib (</span><span class="si">%s</span><span class="s">)&#39;</span> <span class="o">%</span> <span class="n">matplotlib_error</span><span class="p">)</span>
+    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+</pre></div>
+
+      </div>
+      <div class="bottomnav">
+      
+        <p>
+        <a class="uplink" href="../../index.html">Contents</a>
+        </p>
+
+      </div>
+
+	
+    <div class="footer">
+        &copy; Copyright 2010, Andrea Censi.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+		
+    <script type="text/javascript" src="static/analytics.js"></script> 
+
+
+  </body>
+</html>
