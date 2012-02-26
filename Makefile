@@ -1,7 +1,5 @@
-
-
-all:
-	python setup.py develop
+package=reprep
+include pypackage.mk
 	
 demos:
 	rm -rf reprep_demos_out
