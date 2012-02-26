@@ -3,8 +3,12 @@
 API documentation
 -----------------
 
-.. autoclass:: reprep.Report
+.. py:module:: reprep
+
+
+.. autoclass:: ReportInterface
    :members:
 
-.. autoclass:: reprep.figure.Figure
-   :members:
+
+
+
