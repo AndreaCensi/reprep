@@ -2,6 +2,7 @@ from . import MIME_SVG, MIME_PDF, RepRepDefaults, MIME_PNG, contract, Node
 import mimetypes
 import tempfile
 from reprep.node import DataNode
+from reprep.mpl import get_pylab_instance
 
 
 class Attacher:
@@ -52,8 +53,7 @@ class PylabAttacher:
 
         self.temp_file = tempfile.NamedTemporaryFile(suffix=suffix)
 
-        from . import reprep_pylab_instance
-        self.pylab = reprep_pylab_instance
+        self.pylab = get_pylab_instance()
         self.figure = self.pylab.figure(**figure_args)
 
     def __enter__(self):

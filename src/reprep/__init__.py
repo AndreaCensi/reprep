@@ -1,11 +1,5 @@
 __version__ = '2.0'
 
-# TODO: move these away and only import if necessary
-import matplotlib
-if matplotlib.get_backend() != 'agg':
-    matplotlib.use('agg')
-from matplotlib import pylab as reprep_pylab_instance
-
 from PIL import Image #@UnresolvedImport
 
 from contracts import contract, new_contract, describe_value, describe_type
@@ -16,6 +10,8 @@ import logging
 logging.basicConfig()
 
 logger = logging.getLogger(__name__)
+
+from .mpl import *
 
 # XXX only import things explicitely
 from .structures import *

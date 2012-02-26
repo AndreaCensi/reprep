@@ -1,25 +1,27 @@
 from . import contract, np, get_scaled_values
-from .. import matplotlib
-from matplotlib import pyplot
+from .. import get_matplotlib
+from .. import get_pylab_instance
 
 
 @contract(returns='array[HxWx4](uint8)')
 def value2rgb(x, vmin=0, vmax=1, cmap='jet'):
     ''' Asssumes x is in [0,1]. '''
+    matplotlib = get_matplotlib()
+    pylab = get_pylab_instance()
     isint = matplotlib.is_interactive()
     if isint:
         matplotlib.set_interactive(False) #@UndefinedVariable
-    f = pyplot.figure()
+    f = pylab.figure()
     # m = f.gca().imshow(x, vmin=vmin, vmax=vmax, 
     # cmap=pyplot.cm.get_cmap(cmap))
-    mcmap = pyplot.cm.get_cmap(cmap)
+    mcmap = pylab.cm.get_cmap(cmap)
     if mcmap is None:
         raise Exception('Unknown cmap %r.' % cmap)
-    m = pyplot.figimage(x, 0, 0, vmin=vmin, vmax=vmax, cmap=mcmap)
+    m = pylab.figimage(x, 0, 0, vmin=vmin, vmax=vmax, cmap=mcmap)
     m.set_cmap(mcmap)
     rgb = m.to_rgba(x)
     rgb = (rgb * 255).astype('uint8')
-    pyplot.close(f)
+    pylab.close(f)
     return rgb
 
 

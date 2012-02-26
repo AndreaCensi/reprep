@@ -1,10 +1,10 @@
 from .utils import ReprepTest
 from contracts import ContractNotRespected
 from numpy.linalg.linalg import pinv
-from reprep import (MIME_PLAIN, Table, Node, Report,
-    reprep_pylab_instance as pylab)
+from reprep import (MIME_PLAIN, Table, Node, Report)
 import numpy
 import unittest
+from reprep.mpl import get_pylab_instance
 
 
 class Test(ReprepTest):
@@ -86,6 +86,7 @@ class Test(ReprepTest):
         cov = report.data('covariance', C)
         report.data('information', information)
 
+        pylab = get_pylab_instance()
         with cov.data_file('plot', 'image/png') as f:
             pylab.figure()
             pylab.plot(C)
