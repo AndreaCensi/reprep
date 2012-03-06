@@ -57,3 +57,18 @@ def x_axis_set(pylab, xmin, xmax):
 def y_axis_set(pylab, ymin, ymax):
     a = pylab.axis()
     pylab.axis((a[0], a[1], ymin, ymax))
+
+
+def turn_all_axes_off(pylab):
+    """ Turns everything off. (TODO) """
+    axes = pylab.gca()
+    axes.set_frame_on(False)
+    pylab.setp(axes.get_xticklabels(), visible=False)
+    pylab.setp(axes.get_yticklabels(), visible=False)
+    axes.xaxis.offsetText.set_visible(False)
+    axes.yaxis.offsetText.set_visible(False)
+    axes.xaxis.set_ticks_position('none')
+    axes.yaxis.set_ticks_position('none')
+    for _, spine in axes.spines.iteritems():
+        spine.set_color('none')
+
