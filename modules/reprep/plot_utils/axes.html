@@ -113,8 +113,22 @@
 </div>
 <div class="viewcode-block" id="y_axis_set"><a class="viewcode-back" href="../../../api/reprep.plot_utils.html#reprep.plot_utils.axes.y_axis_set">[docs]</a><span class="k">def</span> <span class="nf">y_axis_set</span><span class="p">(</span><span class="n">pylab</span><span class="p">,</span> <span class="n">ymin</span><span class="p">,</span> <span class="n">ymax</span><span class="p">):</span>
     <span class="n">a</span> <span class="o">=</span> <span class="n">pylab</span><span class="o">.</span><span class="n">axis</span><span class="p">()</span>
-    <span class="n">pylab</span><span class="o">.</span><span class="n">axis</span><span class="p">((</span><span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">ymin</span><span class="p">,</span> <span class="n">ymax</span><span class="p">))</span></div>
-</pre></div>
+    <span class="n">pylab</span><span class="o">.</span><span class="n">axis</span><span class="p">((</span><span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">ymin</span><span class="p">,</span> <span class="n">ymax</span><span class="p">))</span>
+
+</div>
+<div class="viewcode-block" id="turn_all_axes_off"><a class="viewcode-back" href="../../../api/reprep.plot_utils.html#reprep.plot_utils.axes.turn_all_axes_off">[docs]</a><span class="k">def</span> <span class="nf">turn_all_axes_off</span><span class="p">(</span><span class="n">pylab</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Turns everything off. (TODO) &quot;&quot;&quot;</span>
+    <span class="n">axes</span> <span class="o">=</span> <span class="n">pylab</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span>
+    <span class="n">axes</span><span class="o">.</span><span class="n">set_frame_on</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+    <span class="n">pylab</span><span class="o">.</span><span class="n">setp</span><span class="p">(</span><span class="n">axes</span><span class="o">.</span><span class="n">get_xticklabels</span><span class="p">(),</span> <span class="n">visible</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+    <span class="n">pylab</span><span class="o">.</span><span class="n">setp</span><span class="p">(</span><span class="n">axes</span><span class="o">.</span><span class="n">get_yticklabels</span><span class="p">(),</span> <span class="n">visible</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+    <span class="n">axes</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">offsetText</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+    <span class="n">axes</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">offsetText</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+    <span class="n">axes</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_ticks_position</span><span class="p">(</span><span class="s">&#39;none&#39;</span><span class="p">)</span>
+    <span class="n">axes</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">set_ticks_position</span><span class="p">(</span><span class="s">&#39;none&#39;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">spine</span> <span class="ow">in</span> <span class="n">axes</span><span class="o">.</span><span class="n">spines</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+        <span class="n">spine</span><span class="o">.</span><span class="n">set_color</span><span class="p">(</span><span class="s">&#39;none&#39;</span><span class="p">)</span>
+</pre></div></div>
 
       </div>
       <div class="bottomnav">
