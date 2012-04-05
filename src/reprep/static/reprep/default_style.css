@@ -50,6 +50,14 @@ sssection { border: solid 2px gray; display: block; clear: both; padding: 1em; m
     font-weight: bold; text-align: center;  
 }
 
+div.imgzoom {
+	/*border: solid 2px red;*/
+}
+
+div.imgzoom img { 
+	background-color: white;
+}
+
 .node-class { margin:1em; float: right; font-family: monospace; color: blue;}
 .node-id {margin:1em;  float: right; font-family: monospace; font-weight: bold; color: green;}
 .datanode { font-family: monospace; font-weight: bold; }

@@ -114,7 +114,7 @@ jQuery.fn.imageZoom = function (conf) {
 					opacity:	config.dontFadeIn*/
 				};
 				
-				var imgzoom			= jQuery('<div><img src="' + displayImgSrc + '" alt="" /></div>').css('position', 'absolute').appendTo(document.body); // We don't want any class-name or any other contents part from the image when we calculate the new dimensions of the imgzoom
+				var imgzoom			= jQuery('<div class="imgzoom"><img  class="imgzoom" src="' + displayImgSrc + '" alt="" /></div>').css('position', 'absolute').appendTo(document.body); // We don't want any class-name or any other contents part from the image when we calculate the new dimensions of the imgzoom
 				var imgzoomAfter	= { // The dimensions of the imgzoom _after_ it is zoomed out
 					width:		100, /*imgzoom.outerWidth(), */
 					height:		100 /*imgzoom.outerHeight()/*, 
