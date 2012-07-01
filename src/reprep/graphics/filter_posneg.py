@@ -12,7 +12,8 @@ def posneg(value, max_value=None, skim=0, nan_color=[0.5, 0.5, 0.5],
      
     """
     value = value.astype('float32')
-    value = value.squeeze().copy()
+    #value = value.squeeze().copy() # squeeze: (1,1) -> ()
+    value = value.copy()
 
     isfinite = np.isfinite(value)
     isnan = np.logical_not(isfinite)
