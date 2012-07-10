@@ -12,7 +12,7 @@ def reprep_demo(f):
     return f
 
 
-def all_demos(argv):
+def all_demos(argv): #@UnusedVariable
     r = Report('reprep_demos')
     for demo in DemoStorage.demo_list:
         ri = r.section(nid='%s' % demo.__name__,

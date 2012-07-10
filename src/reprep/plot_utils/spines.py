@@ -1,5 +1,44 @@
 
 
+def turn_off_bottom_and_top(pylab):
+    ax = pylab.gca()
+    for loc, spine in ax.spines.iteritems():
+        if loc in ['bottom', 'top']:
+            spine.set_color('none') # don't draw spine
+            
+    pylab.xticks([], [])
+
+
+def turn_off_right(pylab):
+    ax = pylab.gca()
+    for loc, spine in ax.spines.iteritems():
+        if loc in ['right']:
+            spine.set_color('none') # don't draw spine 
+    ax.yaxis.set_ticks_position('left')
+
+    
+def turn_off_left_and_right(pylab):
+    ax = pylab.gca()
+    for loc, spine in ax.spines.iteritems():
+        if loc in ['left', 'right']:
+            spine.set_color('none') # don't draw spine 
+    pylab.yticks([], [])
+
+
+def set_left_spines_outward(pylab, offset=10):
+    ax = pylab.gca()
+    for loc, spine in ax.spines.iteritems():
+        if loc in ['left']:
+            spine.set_position(('outward', offset))
+    
+    
+def set_thick_ticks(pylab, markersize=3, markeredgewidth=1):
+    ax = pylab.gca()
+    for l in ax.get_xticklines() + ax.get_yticklines():
+        l.set_markersize(markersize)
+        l.set_markeredgewidth(markeredgewidth)
+
+    
 def set_spines_look_A(pylab, outward_offset=10,
                       linewidth=2, markersize=3, markeredgewidth=1):
     ''' 
@@ -21,9 +60,7 @@ def set_spines_look_A(pylab, outward_offset=10,
     ax.xaxis.set_ticks_position('bottom')
     ax.yaxis.set_ticks_position('left')
 
-    for l in ax.get_xticklines() + ax.get_yticklines():
-        l.set_markersize(markersize)
-        l.set_markeredgewidth(markeredgewidth)
+    set_thick_ticks(pylab, markersize, markeredgewidth)
 
     ax.get_frame().set_linewidth(linewidth)
 
