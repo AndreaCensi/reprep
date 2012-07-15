@@ -8,8 +8,8 @@ from StringIO import StringIO
 
 class Node(ReportInterface):
 
-    @contract(nid='valid_id|None', children='None|list')
-    def __init__(self, nid=None, children=None):
+    @contract(nid='valid_id|None', children='None|list', caption='None|str')
+    def __init__(self, nid=None, children=None, caption=None):
 
         if children is not None and not isinstance(children, list):
             raise ValueError('Received a %s object as children list, should'
@@ -28,6 +28,8 @@ class Node(ReportInterface):
                 raise ValueError(msg)
             self.add_child(c)
         self.parent = None
+        
+        self.caption = caption
 
     def add_child(self, n):
         ''' 
@@ -54,10 +56,10 @@ class Node(ReportInterface):
         ''' Returns the last added child Node. '''
         return self.children[-1]
 
-    def node(self, nid):
+    def node(self, nid, caption=None):
         ''' Creates a simple child node. '''
         from . import Node
-        n = Node(nid)
+        n = Node(nid, caption=caption)
         self.add_child(n)
         return n
 
@@ -83,7 +85,8 @@ class Node(ReportInterface):
                 if self.nid == nid:
                     return self
 
-                raise NotExistent('Could not find child %r.' % nid)
+                raise NotExistent('Could not find child %r; I know.' % 
+                                  (nid, l.values()))
             return l[nid]
 
     @contract(url='str')
@@ -115,7 +118,7 @@ class Node(ReportInterface):
             return self.parent.resolve_url(url, already_visited)
         else:
             # in the end, we get here
-            raise NotExistent('Could not find url "%s".' % url)
+            raise NotExistent('Could not find url %r.' % url)
 
     def __getitem__(self, relative_url):
         return self.resolve_url(relative_url)
@@ -247,7 +250,8 @@ class DataNode(Node):
         known = {'posneg': posneg,
                  'success': colorize_success,
                  'scale': scale,
-                 'rgb': just_check_rgb}
+                 'rgb': just_check_rgb,
+                 'posneg_zoom': posneg_zoom}
         if not display in known:
             raise ValueError('No known converter %r. ' % display)
         nid = display # TODO: check; add args in the name
@@ -280,5 +284,13 @@ class DataNode(Node):
             return isinstance(node, DataNode) and node.mime in mime_types
         return self.find_recursively(choose)
 
+
+def posneg_zoom(value, zoom=8, uptowidth=2048, **params):
+    # TODO: add checking the image does not get too large
+    rgb = posneg(value, **params)
+    actual = int(min(zoom, uptowidth / rgb.shape[0]))
+    z = rgb_zoom(rgb, actual)
+    print('scaling %d to %s' % (actual, z.shape))
+    return z
 
 

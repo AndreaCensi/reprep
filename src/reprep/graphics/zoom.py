@@ -8,5 +8,5 @@ def rgb_zoom(M, K=10):
     H, W, _ = M.shape
     Z = np.zeros((H * K, W * K, 3), 'uint8')
     for i in range(3):
-        Z[:, :, i] = np.kron(M[:, :, i], np.ones((10, 10)))
+        Z[:, :, i] = np.kron(M[:, :, i], np.ones((K, K)))
     return Z

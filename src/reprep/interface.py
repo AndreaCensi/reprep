@@ -1,5 +1,6 @@
 from . import MIME_PLAIN, contract, MIME_PYTHON
 import warnings
+from reprep.constants import MIME_PNG
 
 
 class ReportInterface:
@@ -105,7 +106,7 @@ class ReportInterface:
 
     @contract(nid='valid_id|None', rgb='array[HxWx(3|4)](uint8)',
               caption='None|str')
-    def data_rgb(self, nid, rgb, caption=None):
+    def data_rgb(self, nid, rgb, mime=MIME_PNG, caption=None):
         ''' 
             Create a node containing an image from a RGB[a] array.
             (internally, it will be saved as PNG)
@@ -113,7 +114,7 @@ class ReportInterface:
             ``rgb`` must be a height x width x 3 uint8 numpy array.        
          '''
         from .helpers import data_rgb_imp
-        return data_rgb_imp(parent=self, nid=nid, rgb=rgb, caption=caption)
+        return data_rgb_imp(parent=self, nid=nid, rgb=rgb, mime=mime, caption=caption)
 
     @contract(nid='valid_id|None', cols='None|(int,>=1)', caption='None|str')
     def figure(self, nid=None, cols=None, caption=None):

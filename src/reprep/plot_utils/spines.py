@@ -16,7 +16,15 @@ def turn_off_right(pylab):
             spine.set_color('none') # don't draw spine 
     ax.yaxis.set_ticks_position('left')
 
-    
+
+def turn_off_top(pylab):
+    ax = pylab.gca()
+    for loc, spine in ax.spines.iteritems():
+        if loc in ['top']:
+            spine.set_color('none') # don't draw spine 
+    ax.yaxis.set_ticks_position('bottom')
+
+
 def turn_off_left_and_right(pylab):
     ax = pylab.gca()
     for loc, spine in ax.spines.iteritems():

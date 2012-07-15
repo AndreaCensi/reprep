@@ -3,6 +3,7 @@ import mimetypes
 import tempfile
 from reprep.node import DataNode
 from reprep.mpl import get_pylab_instance
+from reprep.constants import MIME_JPG
 
 
 class Attacher:
@@ -17,6 +18,9 @@ class Attacher:
             suffix = mimetypes.guess_extension(self.mime)
             if not suffix:
                 raise Exception('Cannot guess extension for MIME %r.' % mime)
+            
+            if self.mime == MIME_JPG:
+                suffix = '.jpg'
         else:
             suffix = '.bin'
 
@@ -98,7 +102,7 @@ class PylabAttacher:
 
 @contract(parent=Node, nid='valid_id',
           rgb='array[HxWx(3|4)]', caption='None|str')
-def data_rgb_imp(parent, nid, rgb, caption=None):
+def data_rgb_imp(parent, nid, rgb, mime=MIME_PNG, caption=None):
     from .graphics import Image_from_array, rgb_zoom
 
     # zoom images smaller than 50
@@ -107,8 +111,12 @@ def data_rgb_imp(parent, nid, rgb, caption=None):
 
     pil_image = Image_from_array(rgb)
 
-    with parent.data_file(nid=nid, mime=MIME_PNG, caption=caption) as f:
-        pil_image.save(f)
+    with parent.data_file(nid=nid, mime=mime, caption=caption) as f:
+        if mime == MIME_PNG:
+            params = {}
+        if mime == MIME_JPG:
+            params = dict(quality=95, optimize=True)
+        pil_image.save(f, **params)
 
     return parent[nid]
 

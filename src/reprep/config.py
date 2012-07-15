@@ -9,5 +9,5 @@ class RepRepDefaults:
 
     save_extra_png = True
     save_extra_pdf = False
-    save_extra_svg = True
+    save_extra_svg = False
 
