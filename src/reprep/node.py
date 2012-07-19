@@ -85,7 +85,7 @@ class Node(ReportInterface):
                 if self.nid == nid:
                     return self
 
-                raise NotExistent('Could not find child %r; I know.' % 
+                raise NotExistent('Could not find child %r; I know %s.' % 
                                   (nid, l.values()))
             return l[nid]
 
