@@ -19,7 +19,7 @@ def check_hdf_write(r):
         print(r2.format_tree())
         assert False
 
-#    shutil.rmtree(directory)
+    shutil.rmtree(directory)
 
 
 

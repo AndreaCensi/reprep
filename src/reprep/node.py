@@ -1,13 +1,8 @@
-from . import (MIME_PNG, MIME_PYTHON, contract, ReportInterface,
-               describe_value,
-    describe_type, colorize_success, scale, posneg, Image_from_array, rgb_zoom,
-    InvalidURL, NotExistent, MIME_SVG)
-import sys
+from . import (contract, ReportInterface, describe_type, InvalidURL, NotExistent)
 from StringIO import StringIO
-from .utils.equality_mixin import CommonEqualityMixin
-from . import logger
+import sys
 
-class Node(ReportInterface, CommonEqualityMixin):
+class Node(ReportInterface):
 
     @contract(nid='valid_id|None', children='None|list', caption='None|str')
     def __init__(self, nid=None, children=None, caption=None):
@@ -32,27 +27,45 @@ class Node(ReportInterface, CommonEqualityMixin):
         
         self.caption = caption
 
+
     def __eq__(self, other):
-        if type(other) is not type(self):
+        if self is other:
+            return True
+        
+        def err(x):
+            from . import logger
+            logger.error(x)
+        
+        if self.nid != other.nid:
+            #err('Different nid (%s %s)' % (self.nid, other.nid))
+            return False
+        
+        if type(other) != type(self):
+            err('Different type')
+            err('- me: %s' % self)
+            err('- him: %s' % other)
             return False
         if len(self.children) != len(other.children):
-            logger.error('children: %s vs %s' % (len(self.children),
+            err('children: %s vs %s' % (len(self.children),
                                                  len(other.children)))
-            logger.error('his: %s' % other.children)
-            logger.error('mine: %s' % self.children)
+            err('his: %s' % other.children)
+            err('mine: %s' % self.children)
             return False 
         for i in range(len(self.children)):
             if self.children[i] != other.children[i]:
-                logger.error('child %d' % i)
-                logger.error('-mine: %s' % self.children[i])
-                logger.error('- his: %s' % other.children[i])
+                err('child %d' % i)
+                err('-mine: %s' % self.children[i])
+                err('- his: %s' % other.children[i])
                 return False
-            
+                
         if self.caption != other.caption:
-            logger.error('caption')
+            err('caption')
             return False 
         return True
 
+
+    def __ne__(self, other):
+        return not self.__eq__(other)
 
     def add_child(self, n):
         ''' 
@@ -158,8 +171,10 @@ class Node(ReportInterface, CommonEqualityMixin):
 
     def get_relative_url(self, other):
         assert isinstance(other, Node)
-        if self == other:
+        
+        if self is other:
             raise ValueError('I will not give you a relative url for myself.')
+        
         all_my_parents = self.get_all_parents()
 
         if other in all_my_parents:
@@ -199,8 +214,12 @@ class Node(ReportInterface, CommonEqualityMixin):
         else:
             return []
 
+
+    def print_leaf(self, s=sys.stdout, prefix=""):
+        s.write('%s- %s (%s)\n' % (prefix, self.nid, self.__class__.__name__))
+        
     def print_tree(self, s=sys.stdout, prefix=""):
-        s.write('%s- %s (%s)\n' % (prefix, self.nid, self.__class__))
+        self.print_leaf(s, prefix)
         for child in self.children:
             child.print_tree(s, prefix + '  ')
 

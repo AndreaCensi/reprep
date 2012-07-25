@@ -48,8 +48,19 @@ def figures1(r):
     rgb = np.zeros((4, 4, 3), 'uint8')
     f = r.figure()
     f.data_rgb('rgb', rgb, caption='ciao')
+    # FIXME here
     r.data_rgb('rgb', rgb, caption='ciao2')
     r.last().add_to(f)
+
+@ExampleReports.add
+def figures0(r):
+    rgb = np.zeros((4, 4, 3), 'uint8')
+    f = r.figure()
+    f.data_rgb('rgb1', rgb, caption='ciao')
+    r.data_rgb('rgb2', rgb, caption='ciao2')
+    r.data_rgb('rgb0', rgb, caption='ciao2')
+    r.last().add_to(f)
+
 
 @ExampleReports.add
 def plot1(r):

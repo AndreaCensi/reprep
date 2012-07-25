@@ -9,20 +9,24 @@ def node_from_hdf_group_v1(hf, group):
     
     nid = group._v_name
     caption = group._v_title
-    children = []
-    for child in group._f_listNodes('Group'):
-        if 'reprep_format_version' in child._v_attrs:
-            children.append(node_from_hdf_group_v1(hf, child))
+    cgroups = [child for child in group._f_listNodes('Group')
+               if 'reprep_format_version' in child._v_attrs]
+    cgroups.sort(key=lambda x: x._v_attrs['reprep_order'])
+    
+    children = [node_from_hdf_group_v1(hf, child) for child in cgroups]
         
     nodetype = group._v_attrs['reprep_node_type']
     if nodetype == 'Node':
         return Node(nid=nid, children=children, caption=caption)
+    
     elif nodetype == 'Figure':
         cols = group.ncols.read()
         if cols == 0: 
             cols = None
         figure = Figure(nid=nid, caption=caption, cols=cols)
-        for s in group.subfigures._f_listNodes():
+        nsubs = len(group.subfigures._f_listNodes())
+        for i in range(nsubs):
+            s = group.subfigures._v_children['sub%d' % i]
             sub = SubFigure(resource=s.resource.read(),
                             image=s.image.read(),
                             web_image=s.web_image.read(),
@@ -30,6 +34,7 @@ def node_from_hdf_group_v1(hf, group):
             figure.subfigures.append(sub)
         figure.children = children
         return figure
+    
     elif nodetype == 'Table':
         table_data = group.table_data.read()
         rows = group.rows.read()

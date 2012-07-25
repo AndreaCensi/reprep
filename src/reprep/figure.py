@@ -2,16 +2,23 @@ from . import (MIME_IMAGES, logger, Node, DataNode, contract, describe_type,
     MIME_WEB_IMAGES)
 from .utils import indent
 import warnings
-from reprep.utils.equality_mixin import CommonEqualityMixin
+import sys
 
 
-class SubFigure(CommonEqualityMixin):
+class SubFigure:
     def __init__(self, resource, image, web_image, caption):
         self.resource = resource
         self.image = image
         self.web_image = web_image
         self.caption = caption
+  
+    def __eq__(self, other):
+        return ((type(self) == type(other)) and 
+                (self.__dict__ == other.__dict__)) 
 
+    def __repr__(self):
+        return ('Sub(%s,%s,%s,%s)' % 
+                (self.resource, self.image, self.web_image, self.caption))
 
 class Figure(Node):
 
@@ -23,20 +30,36 @@ class Figure(Node):
 
         self.subfigures = []
         self.automatically_added = set()
+        
+    def __repr__(self):
+        return 'Figure(cols=%s,%s)' % (self.cols, self.subfigures)
 
     def __eq__(self, other):
+        if not Node.__eq__(self, other):
+            return False
+        
         if type(self) != type(other):
             return False
+        
         if self.caption != other.caption:
             return False
+
         if self.cols != other.cols:
-            logger.error('Cols: %s %s' % (self.cols, other.cols))
+            #logger.error('Cols: %s %s' % (self.cols, other.cols))
             return False
+
         if self.subfigures != other.subfigures:
-            logger.error('Sub: %s %s' % (self.subfigures, other.subfigures))
+            #logger.error('Sub: %s %s' % (self.subfigures, other.subfigures))
             return False
+        
         return True
 
+    def print_leaf(self, s=sys.stdout, prefix=""):
+        Node.print_leaf(self, s, prefix)
+        for sub in self.subfigures:
+            s.write(prefix + ' sub %s\n' % sub)
+        
+        
     def add_child(self, child):
         """ Automatically add child if it can be displayed. """
         Node.add_child(self, child)
@@ -44,7 +67,8 @@ class Figure(Node):
         if (isinstance(child, DataNode) and
             child.get_first_child_with_mime(MIME_IMAGES)):
             self.sub(child, child.caption)
-            self.automatically_added.add(child)
+            
+            self.automatically_added.add(child.get_complete_id())
 
     def sub(self, resource, caption=None, display=None, **kwargs):
         ''' Adds a subfigure displaying the given resource. 
@@ -66,7 +90,7 @@ class Figure(Node):
             if caption is None:
                 caption = data.nid
 
-        if data in self.automatically_added:
+        if data.get_complete_id() in self.automatically_added:
             warnings.warn('Node %r was automatically added to figure (new '
                           'behavior in 1.0).' % 
                           self.get_relative_url(data), stacklevel=2)

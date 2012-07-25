@@ -7,11 +7,10 @@ import os
 def to_hdf(node, filename):
     """ Writes the report in HDF format. """
     tmp_filename = filename + '.active'
-    hf = tables.openFile(tmp_filename, 'w')
-    node_to_hdf(hf, hf.root, node)
-#    
-#    filters_text = tables.Filters(complevel=1, shuffle=False,
-#                                    fletcher32=False, complib='zlib')
+    filters = tables.Filters(complevel=9, shuffle=False,
+                            fletcher32=True, complib='zlib')
+    hf = tables.openFile(tmp_filename, 'w', filters=filters)
+    node_to_hdf(hf, hf.root, node)    
 
     hf.close()
     if os.path.exists(filename):
@@ -41,23 +40,13 @@ def node_to_hdf(hf, parent, node):
         reprep_version: 2 integers, major and minor.
         reprep_node_type: Type of node (Node, DataNode, Figure, Table)
         reprep_date_created: Current date
+        reprep_order: order in which it appears in the report
         
     Protocol:
     
         [1, 0]:  First protocol.
         
     """
-    
-#    
-#    meta = hf.createGroup(group, '_reprep', title='Meta-information for RepRep')
-#    hf.createArray(meta, 'reprep_version', str(reprep.__version__),
-#                   title='Version of RepRep package')
-#    hf.createArray(meta, 'format_version', [1, 0],
-#                   title='Major and minor version of RepRep protocol')
-#    hf.createArray(meta, 'date_created', datetime.datetime.now().isoformat(),
-#                   title='Current date')
-#    hf.createArray(meta, 'node_type', node.__class__.__name__,
-#                   "Type of node (Node, DataNode, Figure, Table)")
 
     if isinstance(node, DataNode):
         write_python_data(group, 'data', node.mime, node.raw_data)
@@ -78,10 +67,11 @@ def node_to_hdf(hf, parent, node):
             hf.createArray(sgroup, 'web_image', ob2h5(s.web_image))
             hf.createArray(sgroup, 'caption', ob2h5(s.caption))
 
-    for child in node.children:
-        print('Writing %s' % child)
-        node_to_hdf(hf, parent=group, node=child)
+    for i, child in enumerate(node.children):
+        cgroup = node_to_hdf(hf, parent=group, node=child)
+        cgroup._v_attrs['reprep_order'] = i
 
+    return group
 
 # Node: nid, caption
 # DataNode: nid, caption, data, mime

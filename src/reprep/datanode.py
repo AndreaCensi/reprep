@@ -1,6 +1,6 @@
 from . import (MIME_PNG, MIME_PYTHON, contract, describe_value,
     colorize_success, scale, posneg, Image_from_array, rgb_zoom,
-    MIME_SVG, Node, logger)
+    MIME_SVG, Node)
 import sys
 
 
@@ -16,14 +16,12 @@ class DataNode(Node):
         
     def __eq__(self, other):
         if not Node.__eq__(self, other):
-            logger.error('%s, Node decided' % self)
             return False
-        # XXX: cannot compare array
+        # FIXME: cannot compare array
         #if self.raw_data != other.raw_data:
         #    logger.error('%s, raw_data' % self)
         #    return False 
         if self.mime != other.mime:
-            logger.error('%s, mime' % self)
             return False 
         return True
 
