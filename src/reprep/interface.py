@@ -160,6 +160,12 @@ class ReportInterface:
         from .output.html import node_to_html_document
         node_to_html_document(self, filename, resources_dir, **kwargs)
 
+    def to_hdf(self, filename, **kwargs):
+        ''' Creates an HDF representation of this report. '''
+        from .output import to_hdf
+        to_hdf(self, filename, **kwargs)
+
+
     def add_to(self, figure, caption=None):
         figure.sub(self, caption)
 

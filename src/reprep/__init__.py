@@ -22,6 +22,7 @@ from .utils import *
 from .interface import *
 from .graphics import *
 from .node import *
+from .datanode import *
 from .figure import *
 from .table import *
 

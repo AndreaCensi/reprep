@@ -1,9 +1,9 @@
 from . import MIME_SVG, MIME_PDF, RepRepDefaults, MIME_PNG, contract, Node
 import mimetypes
 import tempfile
-from reprep.node import DataNode
-from reprep.mpl import get_pylab_instance
-from reprep.constants import MIME_JPG
+from  . import DataNode
+from . import get_pylab_instance
+from . import MIME_JPG
 
 
 class Attacher:

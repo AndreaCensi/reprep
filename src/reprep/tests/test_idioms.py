@@ -1,4 +1,4 @@
-from .utils import ReprepTest
+from .common import ReprepTest
 from contracts import ContractNotRespected
 from numpy.linalg.linalg import pinv
 from reprep import (MIME_PLAIN, Table, Node, Report)

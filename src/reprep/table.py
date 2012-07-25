@@ -38,10 +38,10 @@ class Table(Node):
                 raise ValueError('At least one column expected')
 
             if cols is None:
-                cols = [None] * ncols
+                cols = [''] * ncols
 
             if rows is None:
-                rows = [None] * nrows
+                rows = [''] * nrows
 
         elif isinstance(data, np.ndarray):
             if not data.ndim in [1, 2]:
@@ -56,7 +56,7 @@ class Table(Node):
                 nrows = len(data)
 
                 if rows is None:
-                    rows = [None] * nrows
+                    rows = [''] * nrows
 
                 lol = []
                 for row in data:
@@ -73,9 +73,9 @@ class Table(Node):
                 ncols = data.shape[1]
 
                 if rows is None:
-                    rows = [None] * nrows
+                    rows = [''] * nrows
                 if cols is None:
-                    cols = [None] * ncols
+                    cols = [''] * ncols
 
                 data = data.tolist()
 
