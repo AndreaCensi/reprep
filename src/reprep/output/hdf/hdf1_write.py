@@ -25,11 +25,12 @@ def ob2h5(x):
     else: 
         return x
     
-    
+import numpy as np
+
 def node_to_hdf(hf, parent, node):
     group = hf.createGroup(where=parent, name=node.nid, title=node.caption)
     attrs = group._v_attrs 
-    attrs['reprep_format_version'] = [1, 0]
+    attrs['reprep_format_version'] = np.array([1, 0], dtype='int8')
     attrs['reprep_version'] = str(__version__)
     attrs['reprep_date_created'] = datetime.datetime.now().isoformat()
     attrs['reprep_node_type'] = node.__class__.__name__
