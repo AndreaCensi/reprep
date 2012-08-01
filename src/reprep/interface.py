@@ -1,6 +1,5 @@
-from . import MIME_PLAIN, contract, MIME_PYTHON
+from . import MIME_PLAIN, contract, MIME_PYTHON, MIME_PNG
 import warnings
-from reprep.constants import MIME_PNG
 
 
 class ReportInterface:
@@ -164,7 +163,6 @@ class ReportInterface:
         ''' Creates an HDF representation of this report. '''
         from .output import to_hdf
         to_hdf(self, filename, **kwargs)
-
 
     def add_to(self, figure, caption=None):
         figure.sub(self, caption)

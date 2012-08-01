@@ -32,34 +32,35 @@ class Node(ReportInterface):
         if self is other:
             return True
         
-        def err(x):
-            from . import logger
-            logger.error(x)
+        #def err(x):
+            #from . import logger
+            #logger.error(x)
+            #pass
         
         if self.nid != other.nid:
             #err('Different nid (%s %s)' % (self.nid, other.nid))
             return False
         
         if type(other) != type(self):
-            err('Different type')
-            err('- me: %s' % self)
-            err('- him: %s' % other)
+            #err('Different type')
+            #err('- me: %s' % self)
+            #err('- him: %s' % other)
             return False
         if len(self.children) != len(other.children):
-            err('children: %s vs %s' % (len(self.children),
-                                                 len(other.children)))
-            err('his: %s' % other.children)
-            err('mine: %s' % self.children)
+            #err('children: %s vs %s' % (len(self.children),
+            #                                     len(other.children)))
+            #err('his: %s' % other.children)
+            #err('mine: %s' % self.children)
             return False 
         for i in range(len(self.children)):
             if self.children[i] != other.children[i]:
-                err('child %d' % i)
-                err('-mine: %s' % self.children[i])
-                err('- his: %s' % other.children[i])
+                #err('child %d' % i)
+                #err('-mine: %s' % self.children[i])
+                #err('- his: %s' % other.children[i])
                 return False
                 
         if self.caption != other.caption:
-            err('caption')
+            #err('caption')
             return False 
         return True
 
@@ -120,9 +121,9 @@ class Node(ReportInterface):
             if not nid in l:
                 if self.nid == nid:
                     return self
-
-                raise NotExistent('Could not find child %r; I know %s.' % 
-                                  (nid, l.values()))
+                msg = ('Could not find child %r; I know %s.' % 
+                        (nid, self.childid2node.keys()))
+                raise NotExistent(msg)
             return l[nid]
 
     @contract(url='str')
@@ -154,7 +155,9 @@ class Node(ReportInterface):
             return self.parent.resolve_url(url, already_visited)
         else:
             # in the end, we get here
-            raise NotExistent('Could not find url %r.' % url)
+            # raise again the  error
+            return self.resolve_url_dumb(url)
+            # raise NotExistent('Could not find url %r.' % url)
 
     def __getitem__(self, relative_url):
         return self.resolve_url(relative_url)
@@ -203,7 +206,7 @@ class Node(ReportInterface):
         try:
             assert self.resolve_url_dumb(url) == other
         except NotExistent:
-            raise AssertionError('Produced url "%s" but does not work.' % url)
+            raise AssertionError('Produced url %r but does not work.' % url)
 
         return url
 
@@ -213,7 +216,6 @@ class Node(ReportInterface):
             return self.parent.get_all_parents() + [self.parent]
         else:
             return []
-
 
     def print_leaf(self, s=sys.stdout, prefix=""):
         s.write('%s- %s (%s)\n' % (prefix, self.nid, self.__class__.__name__))
