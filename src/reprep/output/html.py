@@ -9,6 +9,7 @@ import mimetypes
 import os
 import shutil
 import sys
+from types import NoneType
 
 header = """
 <html>
@@ -176,7 +177,8 @@ def children_to_html(node, context):
     from reprep import Figure, Table
     # First figure and tables
     #priority = (Table, Figure, Node)
-    priority = (Table, Figure)
+    #priority = (Table, Figure)
+    priority = (NoneType,)
 
     first = [x for x in node.children if isinstance(x, priority)]
     second = [x for x in node.children if not x in first]
@@ -348,7 +350,22 @@ def datanode_to_html(node, context):
 
     if node.mime in text_mimes:
         content = text2html(node.raw_data, node.mime)
-        context.file.write("""
+        
+        if node.nid == 'caption':
+            context.file.write("""
+<div class="textnode report-text-node"> 
+
+    <span class="textid report-text-node-id"></span> 
+   
+   <div class="report-text-node-content">
+     {content}
+   </div>
+     
+</div>  
+""".format(content=content))
+            
+        else:
+            context.file.write("""
 <div class="textnode report-text-node"> 
 
     <span class="textid report-text-node-id"> {id} </span> 
@@ -369,7 +386,7 @@ def datanode_to_html(node, context):
             # TODO: add other representations for numpy array
         else:
             if not isinstance(node.raw_data, str):
-                sys.stderr.write("Ignoring %s because raw_data is %s\n" % \
+                sys.stderr.write("Ignoring %s because raw_data is %s\n" % 
                     (filename, node.raw_data.__class__))
             else:
                 # print "Writing on %s" % filename
@@ -383,10 +400,17 @@ def datanode_to_html(node, context):
             if len(s) < 128:
                 inline = "<code>%s</code>" % s # TODO: escape
             else:
-                inline = ""
+                inline = s[:125] + '...'
+        else:
+            inline = (node.mime)
 
-        s = ('<p class="datanode">Resource: <a href="%s">%s</a> %s</p>\n' %
-                           (relative, node.nid, inline))
+        if context.write_pickle:
+            name = '<a href="%s">%s</a>: ' % (relative, node.nid)
+        else:
+            name = '%s:' % node.nid
+            
+        s = ('<p class="datanode">%s %s</p>\n' % 
+                           (name, inline))
         context.file.write(s)
 
     if node.children:
