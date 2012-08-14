@@ -174,7 +174,7 @@ def isodate_with_secs():
 
 
 def children_to_html(node, context):
-    from reprep import Figure, Table
+    #from reprep import Figure, Table
     # First figure and tables
     #priority = (Table, Figure, Node)
     #priority = (Table, Figure)

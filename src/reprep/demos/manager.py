@@ -14,11 +14,9 @@ def reprep_demo(f):
 
 def all_demos(argv): #@UnusedVariable
     r = Report('reprep_demos')
-    for demo in DemoStorage.demo_list:
-        ri = r.section(nid='%s' % demo.__name__,
-                       caption=demo.__doc__
-                       )
-        demo(ri)
+    for demof in DemoStorage.demo_list:
+        ri = r.section(nid='%s' % demof.__name__, caption=demof.__doc__)
+        demof(ri)
 
     r.to_html('reprep_demos_out/index.html')
 
