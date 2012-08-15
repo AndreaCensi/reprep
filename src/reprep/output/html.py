@@ -79,7 +79,19 @@ class html_context:
 
 def htmlfy(s):
     # XXX to write
-    return str(s)
+    html_escape_table = {
+        "&": "&amp;",
+        '"': "&quot;",
+        "'": "&apos;",
+        ">": "&gt;",
+        "<": "&lt;",
+    }
+
+    def html_escape(text):
+        """Produce entities within text."""
+        return "".join(html_escape_table.get(c, c) for c in text)
+
+    return html_escape(str(s))
 
 
 def get_complete_id(node, separator='-'):
@@ -335,7 +347,7 @@ def text2html(text, mime):
     if mime == MIME_PLAIN:
         # FIXME: add escaping here
         return ('<pre class="report-text report-text-plain">%s</pre>' %
-                 str(text))
+                 htmlfy(text))
     elif mime == MIME_RST:
         return rst2htmlfragment(text)
     else:

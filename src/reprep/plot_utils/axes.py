@@ -41,6 +41,12 @@ def y_axis_extra_space(pylab, extra_space=0.1):
     extra = D * extra_space
     pylab.axis((a[0], a[1], a[2] - extra, a[3] + extra))
 
+def x_axis_extra_space(pylab, extra_space=0.1):
+    a = pylab.axis()
+    D = a[1] - a[0]
+    extra = D * extra_space
+    pylab.axis((a[0] - extra, a[1] + extra, a[2], a[3]))
+
 
 def x_axis_balanced(pylab, extra_space=0.1):
     a = pylab.axis()
