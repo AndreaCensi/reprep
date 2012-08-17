@@ -260,8 +260,11 @@ def table_to_html(table, context):
         #for field in row.dtype.names:
         #  value = row[field]
         for value in row:
-            rep = str(value)
-            f.write('\t<td>%s</td>\n' % rep)
+            try: # todo: make configuratble
+                rep = '%g' % value
+            except: 
+                rep = str(value)
+            f.write('\t<td  style="text-align: \'.\'">%s</td>\n' % rep)
         f.write('</tr>\n')
     f.write('</tbody>\n')
     f.write('</table>\n')

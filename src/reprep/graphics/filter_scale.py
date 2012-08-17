@@ -1,5 +1,6 @@
 from . import contract, np, skim_top
 from numpy import maximum, minimum, zeros
+import numpy
 
 
 @contract(value='array[HxW],H>0,W>0',
@@ -42,10 +43,14 @@ def scale(value, min_value=None, max_value=None,
       
     """
     value = value.astype('float32')
+    H, W = value.shape
+    
+#    if value.ndim > 2:
+#        value = value.squeeze()
 
-    # TODO: copy nx1 code from procgraph 
-    value = value.squeeze().copy()
-
+    if value.dtype == numpy.dtype('uint8'): # todo: or other integers
+        value = value.astype('float32')
+        
     isnan = np.logical_not(np.isfinite(value))
 
     if skim != 0:
@@ -70,7 +75,7 @@ def scale(value, min_value=None, max_value=None,
     if max_value == min_value or \
       (not np.isfinite(min_value)) or \
       (not np.isfinite(max_value)):
-        result = zeros((value.shape[0], value.shape[1], 3), dtype='uint8')
+        result = zeros((H, W, 3), dtype='uint8')
         result[:, :, 0] = flat_color[0] # TODO: write something?
         result[:, :, 1] = flat_color[1]
         result[:, :, 2] = flat_color[2]

@@ -38,7 +38,7 @@ class ReportInterface:
             supposed to be used in conjunction with the "with" construct. 
             
             For example, the following is the concise way to attach a pdf
-            plot to a node.::
+            plot to a node. ::
             
                 with report.data_file('my_plot', MIME_PDF) as f:
                     pylab.figure()

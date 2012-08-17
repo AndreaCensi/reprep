@@ -39,7 +39,7 @@ class DataNode(Node):
         return self.mime in [MIME_PNG, MIME_SVG] # XXX 
 
     # TODO: move to Figure
-    def display(self, display, **kwargs):
+    def display(self, display, caption=None, **kwargs):
         # TODO: save display parameters
         if display is None:
             display = 'posneg'
@@ -52,16 +52,19 @@ class DataNode(Node):
             raise ValueError('No known converter %r. ' % display)
         nid = display # TODO: check; add args in the name
 
-        image = known[display](self.raw_data, **kwargs)
-
+        converter = known[display] 
+        image = converter(self.raw_data, **kwargs)
+        # TODO: check return
+        
         # TODO: add options somewhere for minimum size and zoom factor        
         if image.shape[0] < 50:
             image = rgb_zoom(image, 10)
 
         pil_image = Image_from_array(image)
-
-        with self.data_file(nid, MIME_PNG) as f:
+        with self.data_file(nid, MIME_PNG, caption=caption) as f:
             pil_image.save(f)
+            
+        # Add here automatic saving of scale
 
         return self.resolve_url_dumb(nid) 
 
