@@ -1,11 +1,11 @@
 from . import contract, Node, describe_value, np
 
-# TODO: use contracts!!!
-
+# TODO: use contracts
 
 class Table(Node):
+    
     @contract(nid='valid_id', caption='None|str')
-    def __init__(self, nid, data, cols=None, rows=None, caption=None):
+    def __init__(self, nid, data, cols=None, rows=None, fmt=None, caption=None):
         ''' 
             :type data:  (array[R](fields[C]) | array[RxC] | list[R](list[C])
                  ), R>0, C>0
@@ -13,6 +13,10 @@ class Table(Node):
             :type rows:    None|list[R](str)
             :type caption: None|str 
         '''
+
+        if fmt is None:
+            fmt = '%s'
+        self.fmt = fmt
 
         Node.__init__(self, nid)
 

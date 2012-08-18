@@ -117,7 +117,7 @@ class ReportInterface:
 
     @contract(nid='valid_id|None', cols='None|(int,>=1)', caption='None|str')
     def figure(self, nid=None, cols=None, caption=None):
-        ''' Attach a figure to this node. '''
+        ''' Creates a figure, which is a container for subfigures. '''
         if nid is None:
             nid = self.get_first_available_name(prefix='figure')
 
@@ -128,16 +128,17 @@ class ReportInterface:
         return f
 
     @contract(nid='valid_id', data='list(list)|array[HxW]', caption='None|str')
-    def table(self, nid, data, cols=None, rows=None, caption=None):
+    def table(self, nid, data, cols=None, rows=None, fmt=None, caption=None):
         ''' 
             Attach a table to this node. 
             
-            :param:data: A list of lists, or a 2D numpy array.
-            :param:colos: Labels for the columns.  
-            :param:rows: Labels for the rows. 
+            :param data: A list of lists, or a 2D numpy array.
+            :param cols: Labels for the columns.  
+            :param rows: Labels for the rows. 
+            :param fmt: Entries formatting. If None, '%s' is used.
         '''
         from . import Table
-        t = Table(nid=nid, data=data, cols=cols, rows=rows, caption=caption)
+        t = Table(nid=nid, data=data, cols=cols, rows=rows, fmt=fmt, caption=caption)
         self.add_child(t)
         return t
 

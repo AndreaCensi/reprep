@@ -124,3 +124,37 @@ p#reprep-head {
 }
 p#reprep-head A { color: white;}
 
+
+/*** Images ***/ 
+
+
+div.report-figure {
+    width: 100%;
+    display: block;
+    margin: 0;
+    padding: 0;
+    /*border: solid 1px red;*/
+}
+
+div.report-subfigure {
+    display: block;
+    float: left;
+    padding: 0;
+    margin: -1px;
+    /*border: solid 1px black;*/
+    text-align: center;
+}
+div.report-subfigure img { width: 95%;}
+
+div.first-col { clear: left;}
+/* div.ncols-1 { width: 99%; } */
+div.ncols-1 { width: 49%; } /* minimum 2 figures */
+div.ncols-2 { width: 49%; }
+div.ncols-3 { width: 33%; }
+div.ncols-4 { width: 25%; }
+div.ncols-5 { width: 20%; }
+div.ncols-6 { width: 16%; }
+div.ncols-7 { width: 14%; }
+div.ncols-8 { width: 12%; }
+div.ncols-9 { width: 11%; }
+div.ncols-10 { width: 10%; }

@@ -217,7 +217,7 @@ def node_to_html(node, context):
     }
     t = node.__class__
     if not t in functions:
-        msg = ('Could not find type of %s (%s) in %s.' %
+        msg = ('Could not find type of %s (%s) in %s.' % 
                (node, t, functions.keys()))
         raise ValueError(msg)
     functions[t](node, context)
@@ -259,11 +259,18 @@ def table_to_html(table, context):
 
         #for field in row.dtype.names:
         #  value = row[field]
+        if table.fmt is None:
+            fmt = '%g'
+        else:
+            fmt = table.fmt
+
         for value in row:
-            try: # todo: make configuratble
-                rep = '%g' % value
+            try:
+                rep = fmt % value
             except: 
+                # TODO: warning
                 rep = str(value)
+                
             f.write('\t<td  style="text-align: \'.\'">%s</td>\n' % rep)
         f.write('</tr>\n')
     f.write('</tbody>\n')
@@ -289,16 +296,18 @@ def figure_to_html(node, context):
     for i, sub in enumerate(node.subfigures):
         col = i % ncols
         last_col = col == ncols - 1
+        first_col = col == 0
 
-        style = "float:left;"
-#        first_col = col == 0
-#        if first_col:
-#            style += "clear:left;"
+        classes = ['report-subfigure']
+        
+        classes.append('ncols-%s' % ncols)
+        if first_col:
+            classes.append("first-col")
+           
+        if last_col:
+            classes.append("last-col")
 
-        width = "%d%%" % (95.0 / max(ncols, 2))
-        style += 'width:%s' % width
-
-        file.write('<div style="%s" class="report-subfigure"> ' % style)
+        file.write('<div class="%s"> ' % " ".join(classes))
 
         try:
             actual_resource = node.resolve_url(sub.web_image)
@@ -312,12 +321,12 @@ def figure_to_html(node, context):
         file.write(
             Template('''
                 <a href="${src}" class="zoomable">
-                    <img style="width:95%" src="${src}"/>
+                    <img src="${src}"/>
                 </a>    
             ''').substitute(src=image_filename)
         )
 
-        file.write('<p class="report-subfigure-caption">%s</p>' %
+        file.write('<p class="report-subfigure-caption">%s</p>' % 
                  htmlfy(sub.caption))
         file.write('</div> ')
 
@@ -326,7 +335,7 @@ def figure_to_html(node, context):
 
     caption = node.caption if node.caption else ""
 
-    file.write('<p class="report-figure-caption">%s</p>' %
+    file.write('<p class="report-figure-caption">%s</p>' % 
              htmlfy(caption))
 
     children_to_html(node, context)
@@ -349,7 +358,7 @@ def text2html(text, mime):
 
     if mime == MIME_PLAIN:
         # FIXME: add escaping here
-        return ('<pre class="report-text report-text-plain">%s</pre>' %
+        return ('<pre class="report-text report-text-plain">%s</pre>' % 
                  htmlfy(text))
     elif mime == MIME_RST:
         return rst2htmlfragment(text)
