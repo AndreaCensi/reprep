@@ -11,6 +11,33 @@ import shutil
 import sys
 from types import NoneType
 
+mathjax_header = """
+    
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        TeX: { 
+            equationNumbers: { autoNumber: "AMS" },
+            extensions: ["AMSmath.js", "AMSsymbols.js"] 
+        },
+        extensions: ["tex2jax.js"],
+        jax: ["input/TeX", "output/SVG"], //" "output/HTML-CSS"],
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+          displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+          processEscapes: true
+        },
+        "HTML-CSS": { availableFonts: ["TeX"] }
+      });
+      //MathJax.Ajax.loadComplete("/media/tex/symbols.js");
+    </script>
+    
+    <script type='text/javascript' 
+            src='http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+
+
+"""
+
+
 header = """
 <html>
 <head>  
@@ -27,6 +54,8 @@ header = """
             $$('.zoomable').imageZoom();
         });       
     </script>
+    
+    ${mathjax_header}
     
     <style type="text/css">
     /* Extra CSS passed by user. */
@@ -165,7 +194,8 @@ def node_to_html_document(node, filename,
         mapping = {'resources': rel_resources_dir,
                    'title': str(node.nid),
                    'extra_css': extra_css if extra_css else "",
-                   'date': isodate_with_secs()}
+                   'date': isodate_with_secs(),
+                   'mathjax_header': mathjax_header}
 
         f.write(Template(header).substitute(mapping))
 
