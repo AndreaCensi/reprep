@@ -3,6 +3,7 @@ from reprep.report_utils.frozen import frozendict2
 frozendict = frozendict2
 
 class StoreResults(dict):
+    
     def __setitem__(self, attrs, value):
         if not isinstance(attrs, dict):
             msg = 'Keys to this dictionary must be dicts'
@@ -29,5 +30,17 @@ class StoreResults(dict):
                     yield attrs
 
     def field(self, field):
+        """ Returns all values of the given field """ 
         return (attrs[field] for attrs in self)  
+    
+    def field_names(self):
+        """ Returns all field names """
+        if len(self) == 0:
+            return []
+        # XXX: check that all have the same ones
+        for k in self:
+            return list(k.keys())
+        
+        
+        
 

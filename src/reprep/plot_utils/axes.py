@@ -6,6 +6,11 @@ def plot_horizontal_line(pylab, y, *args, **kwargs):
     a = pylab.axis()
     pylab.plot([a[0], a[1]], [y, y], *args, **kwargs)
 
+def plot_vertical_line(pylab, x, *args, **kwargs):
+    ''' Plots a vertical line across the plot using current bounds. '''
+    a = pylab.axis()
+    pylab.plot([x, x], [a[2], a[3]], *args, **kwargs)
+
 
 def y_axis_balanced(pylab, extra_space=0.1, show0=True):
     a = pylab.axis()

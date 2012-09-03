@@ -1,7 +1,6 @@
 from . import logger
 from .. import MIME_PLAIN, MIME_RST, MIME_PYTHON, Node
-from pkg_resources import (
-    resource_filename) #@UnresolvedImport  Eclipse fails here
+from pkg_resources import (resource_filename) #@UnresolvedImport  Eclipse fails here
 from string import Template
 import cPickle
 import datetime
@@ -22,7 +21,7 @@ mathjax_header = """
         extensions: ["tex2jax.js"],
         jax: ["input/TeX", "output/SVG"], //" "output/HTML-CSS"],
         tex2jax: {
-          inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+          inlineMath: [ ['$','$']],
           displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
           processEscapes: true
         },
@@ -55,6 +54,17 @@ header = """
         });       
     </script>
     
+    <!-- Use tablesorter plugin -->
+    <script type="text/javascript" 
+            src="${resources}/static/jquery/tablesorter/jquery.tablesorter.js"></script> 
+    <link rel="stylesheet" 
+          href="${resources}/static/jquery/tablesorter/themes/blue/style.css"/>
+    <script type="text/javascript">
+    $$(document).ready(function() { 
+        $$(".tablesorter").tablesorter(); 
+    } 
+    ); 
+    </script>
     ${mathjax_header}
     
     <style type="text/css">
@@ -174,9 +184,15 @@ def node_to_html_document(node, filename,
     rel_resources_dir = os.path.relpath(resources_dir, dirname)
 
     if dirname and not os.path.exists(dirname):
-        os.makedirs(dirname)
+        try:
+            os.makedirs(dirname)
+        except: 
+            pass 
     if not os.path.exists(resources_dir):
-        os.makedirs(resources_dir)
+        try:
+            os.makedirs(resources_dir)
+        except: 
+            pass 
 
     # look for static data
     static = resource_filename("reprep", "static")
@@ -256,17 +272,17 @@ def node_to_html(node, context):
 def table_to_html(table, context):
     f = context.file
 
-    f.write('<table class="report-table">\n')
+    f.write('<table class="report-table tablesorter">\n')
 
     caption = table.caption if table.caption else table.nid
 
     f.write('<caption>%s</caption>\n' % caption)
 
-    f.write('<tbody>\n')
 
     has_row_labels = filter(None, table.rows)
 
     if filter(None, table.cols): # at least one not None
+        f.write('<thead>\n')
         f.write('<tr>\n')
         if has_row_labels:
             f.write('<th></th>')
@@ -277,6 +293,9 @@ def table_to_html(table, context):
                 f.write('\t<th></th>\n')
         f.write('</tr>\n')
 
+        f.write('</thead>\n')
+
+    f.write('<tbody>\n')
     for i, row in enumerate(table.data):
         html_class = {0: 'even', 1: 'odd'}[i % 2]
         f.write('<tr class="%s">\n' % html_class)
