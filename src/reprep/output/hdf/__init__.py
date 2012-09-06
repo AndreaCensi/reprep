@@ -2,8 +2,9 @@ from ... import logger
 
 try:
     import tables
-except:
-    logger.warning('No HDF support.')
+except Exception as e:
+    logger.exception(e)
+    logger.warning('No HDF support. (%s)' % e)
 else:
     __all__ = ['to_hdf', 'report_from_hdf']
     from .hdf1_rawdata import *

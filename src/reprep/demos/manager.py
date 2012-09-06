@@ -3,18 +3,25 @@ from reprep import Report
 
 
 class DemoStorage:
-    demo_list = []
-
+    demos = {}
+    
 
 def reprep_demo(f):
     ''' Decorator for declaring a reprep demo. '''
-    DemoStorage.demo_list.append(f)
+    DemoStorage.demos[f.__name__] = f
     return f
 
 
 def all_demos(argv): #@UnusedVariable
+    if len(argv) == 0:
+        which = DemoStorage.demos.keys()
+    else:
+        which = argv
+        
+    print DemoStorage.demos.keys()
     r = Report('reprep_demos')
-    for demof in DemoStorage.demo_list:
+    for id_f in which: 
+        demof = DemoStorage.demos[id_f]
         ri = r.section(nid='%s' % demof.__name__, caption=demof.__doc__)
         demof(ri)
 
@@ -22,7 +29,7 @@ def all_demos(argv): #@UnusedVariable
 
 
 def main():
-    all_demos(sys.argv)
+    all_demos(sys.argv[1:])
 
 if __name__ == '__main__':
     main()

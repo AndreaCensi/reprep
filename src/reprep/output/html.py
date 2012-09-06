@@ -394,7 +394,6 @@ def figure_to_html(node, context):
 
 def rst2htmlfragment(text):
     from docutils.core import publish_string #@UnresolvedImport
-
     html = publish_string(
            source=text,
            writer_name='html')

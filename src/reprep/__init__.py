@@ -26,3 +26,7 @@ from .table import *
 Report = Node
 
 
+from . import report_utils # just load demos
+
+
+

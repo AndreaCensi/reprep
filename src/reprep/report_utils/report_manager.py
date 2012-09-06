@@ -1,7 +1,11 @@
 from . import StoreResults, logger, contract
 from .. import Report
+from compmake import comp_stage_job_id
+from compmake.structures import Promise
+from compmake.utils import describe_type
 import os
 import time
+from reprep.report_utils.store_results import frozendict
 
 
 class ReportManager:
@@ -13,13 +17,25 @@ class ReportManager:
         self.allreports_write_jobs = StoreResults()
         
     def add(self, report, report_type, **kwargs):
-        key = dict(report=report_type, **kwargs)
+        if not isinstance(report, Promise):
+            msg = ('ReportManager is mean to be given Promise objects, '
+                   'which are the output of comp(). Obtained: %s' % describe_type(report))
+            raise ValueError(msg)
+        
+        key = frozendict(report=report_type, **kwargs)
+        
+        if key in self.allreports:
+            msg = 'Already added report for %s' % key
+            raise ValueError(msg)
+    
         dirname = os.path.join(self.outdir, report_type)
         basename = "_".join(map(str, kwargs.values()))
         filename = os.path.join(dirname, basename)
-        job_id = 'write-%s-%s' % (report_type, basename)
+        job_id = comp_stage_job_id(report, 'write') 
         from compmake import comp
         job = comp(write_report, report, filename, job_id=job_id)
+        
+    
         self.allreports[key] = report
         self.allreports_filename[key] = filename + '.html'
         self.allreports_write_jobs[key] = job 
@@ -27,11 +43,13 @@ class ReportManager:
     def create_index_job(self):
         from compmake import comp    
         index_filename = os.path.join(self.outdir, 'report_index.html')
-        for write in self.allreports_write_jobs.values():
+        for write_job in self.allreports_write_jobs.values():
+            job_id = comp_stage_job_id(write_job, 'pub')
             comp(index_reports,
                  self.allreports_filename,
                  index_filename,
-                 write)
+                 write_job,
+                 job_id=job_id)
             
         #comp(index_reports, self.allreports_filename, index_filename)
 
@@ -47,14 +65,14 @@ def write_report(report, report_basename, write_pickle=False):
     return html
 
 @contract(reports=StoreResults, index=str)
-def index_reports(reports, index, update=None):
+def index_reports(reports, index, update=None): #@UnusedVariable
     """
         Writes an index for the reports to the file given. 
         The special key "report" gives the report type.
         
         reports[dict(report=...,param1=..., param2=...) ] => filename
     """
-    print('Updating because of new report %s' % update)
+    #print('Updating because of new report %s' % update)
     from compmake.utils import duration_human
     import numpy as np
     
@@ -129,7 +147,8 @@ def index_reports(reports, index, update=None):
         f.write('<h2 id="%s">%s</h2>\n' % (report_type, report_type))
         f.write('<ul>')
         r = reports.select(report=report_type)
-        items = list(r.items())    
+        items = list(r.items()) 
+        items.sort(key=lambda x: str(x[0])) # XXX use natsort   
         for k, filename in items:
             write_li(k, filename)
         f.write('</ul>')
