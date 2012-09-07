@@ -49,10 +49,19 @@ def summarize_data(samples, rows_field, cols_fields):
     """
          returns rows, data, reduced, display 
     """
+    def reduce_data(data_view, samples):
+        try:
+            return data_view.reduce(samples)
+        except:
+            msg = ('Error while applying the view\n\t%s\nto the samples\n\t%s' % 
+                   (data_view, samples))
+            logger.error(msg)
+            raise
+            
     rows = []
     alldata = []
     for row, row_samples in samples.groups_by_field_value(rows_field):
-        row_data = [view.reduce(row_samples) for view in cols_fields]
+        row_data = [reduce_data(view, row_samples) for view in cols_fields]
         alldata.append(row_data)
         rows.append(row)
         

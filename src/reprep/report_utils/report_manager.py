@@ -6,6 +6,7 @@ from compmake.utils import describe_type
 import os
 import time
 from reprep.report_utils.store_results import frozendict
+from reprep.utils.natsorting import natsorted
 
 
 class ReportManager:
@@ -14,12 +15,12 @@ class ReportManager:
         self.outdir = outdir
         self.allreports = StoreResults()
         self.allreports_filename = StoreResults()
-        self.allreports_write_jobs = StoreResults()
-        
+         
     def add(self, report, report_type, **kwargs):
         if not isinstance(report, Promise):
             msg = ('ReportManager is mean to be given Promise objects, '
-                   'which are the output of comp(). Obtained: %s' % describe_type(report))
+                   'which are the output of comp(). Obtained: %s' 
+                   % describe_type(report))
             raise ValueError(msg)
         
         key = frozendict(report=report_type, **kwargs)
@@ -27,33 +28,34 @@ class ReportManager:
         if key in self.allreports:
             msg = 'Already added report for %s' % key
             raise ValueError(msg)
-    
+
+        self.allreports[key] = report
+
         dirname = os.path.join(self.outdir, report_type)
         basename = "_".join(map(str, kwargs.values()))
-        filename = os.path.join(dirname, basename)
-        job_id = comp_stage_job_id(report, 'write') 
-        from compmake import comp
-        job = comp(write_report, report, filename, job_id=job_id)
-        
-    
-        self.allreports[key] = report
+        filename = os.path.join(dirname, basename) 
         self.allreports_filename[key] = filename + '.html'
-        self.allreports_write_jobs[key] = job 
         
     def create_index_job(self):
         from compmake import comp    
         index_filename = os.path.join(self.outdir, 'report_index.html')
-        for write_job in self.allreports_write_jobs.values():
-            job_id = comp_stage_job_id(write_job, 'pub')
-            comp(index_reports,
-                 self.allreports_filename,
-                 index_filename,
-                 write_job,
-                 job_id=job_id)
-            
-        #comp(index_reports, self.allreports_filename, index_filename)
+        
+        for key in self.allreports:
+            job_report = self.allreports[key]
+            filename = self.allreports_filename[key] 
 
-    
+            write_job_id = comp_stage_job_id(job_report, 'write')
+            
+            comp(write_report_and_update,
+                 job_report, filename, self.allreports_filename, index_filename,
+                 write_pickle=False,
+                 job_id=write_job_id)
+            
+def write_report_and_update(report, report_basename, all_reports, index_filename,
+                            write_pickle=False):
+    html = write_report(report, report_basename, write_pickle=write_pickle)
+    index_reports(reports=all_reports, index=index_filename, update=html)
+
 @contract(report=Report, report_basename='str')
 def write_report(report, report_basename, write_pickle=False): 
     from conf_tools.utils import friendly_path
@@ -88,6 +90,7 @@ def index_reports(reports, index, update=None): #@UnusedVariable
         <style type="text/css">
         span.when { float: right; }
         li { clear: both; }
+        a.self { color: black; text-decoration: none; }
         </style>
     """)
     
@@ -114,8 +117,8 @@ def index_reports(reports, index, update=None): #@UnusedVariable
             return "color: gray;"
         return ""     
         
-        
-    def write_li(k, filename):
+    @contract(k=dict, filename=str)
+    def write_li(k, filename, element='li'):
         desc = ",  ".join('%s = %s' % (a, b) for a, b in k.items())
         href = os.path.relpath(filename, os.path.dirname(index))
         if os.path.exists(filename):
@@ -127,7 +130,8 @@ def index_reports(reports, index, update=None): #@UnusedVariable
             style = ""
             span_when = '<span class="when">missing</span>'
             a = '<a href="%s">%s</a>' % (href, desc)
-        f.write('<li style="%s">%s %s</li>' % (style, a, span_when))
+        f.write('<%s style="%s">%s %s</%s>' % (element, style, a, span_when,
+                                               element))
 
         
     # write the first 10
@@ -140,28 +144,86 @@ def index_reports(reports, index, update=None): #@UnusedVariable
     for i in range(nlast):
         write_li(*last[i])
     f.write('</ul>')
-    report_types = sorted(list(set(reports.field('report'))))
+
+    if False:
+        for report_type, r in reports.groups_by_field_value('report'):
+            f.write('<h2 id="%s">%s</h2>\n' % (report_type, report_type))
+            f.write('<ul>')
+            r = reports.select(report=report_type)
+            items = list(r.items()) 
+            items.sort(key=lambda x: str(x[0])) # XXX use natsort   
+            for k, filename in items:
+                write_li(k, filename)
     
+            f.write('</ul>')
+    
+    f.write('<h2>All reports</h2>\n')
 
-    for report_type in report_types:
-        f.write('<h2 id="%s">%s</h2>\n' % (report_type, report_type))
+    sections = make_sections(reports)
+    
+    def write_sections(sections, parents):
+        assert 'type' in sections
+        assert sections['type'] == 'division'
+        field = sections['field']
+        division = sections['division']
+
         f.write('<ul>')
-        r = reports.select(report=report_type)
-        items = list(r.items()) 
-        items.sort(key=lambda x: str(x[0])) # XXX use natsort   
-        for k, filename in items:
-            write_li(k, filename)
-        f.write('</ul>')
+        sorted_values = natsorted(division.keys())
+        for value in sorted_values:
+            parents.append(value)
+            html_id = "-".join(parents)            
+            bottom = division[value]
+            if bottom['type'] == 'sample':
+                d = {field: value}
+                if not bottom['key']:
+                    write_li(k=d, filename=bottom['value'], element='li')
+                else:
+                    f.write('<li> <p id="%s"><a class="self" href="#%s">%s = %s</a></p>\n' 
+                            % (html_id, html_id, field, value))
+                    f.write('<ul>')
+                    write_li(k=bottom['key'], filename=bottom['value'], element='li')
+                    f.write('</ul>')
+                    f.write('</li>')
+            else:
+                f.write('<li> <p id="%s"><a class="self" href="#%s">%s = %s</a></p>\n' 
+                        % (html_id, html_id, field, value))
 
+                write_sections(bottom, parents)
+                f.write('</li>')
+        f.write('</ul>') 
+                
+    write_sections(sections, parents=[])
+    
     f.close()
-#    
-#def write_sections(allruns):
-#    fields = allruns.field_names()
-#    fields.sort() # TODO: sort
-#    if not fields:
-#        return
-#    print fields
-#    f0 = fields[0]
-#    # TODO: finish
+
+
+def make_sections(allruns, common=None):
+    if common is None:
+        common = {}
+        
+    #print('Selecting %d with %s' % (len(allruns), common))
+        
+    if len(allruns) == 1:
+        key = allruns.keys()[0]
+        value = allruns[key]
+        return dict(type='sample', common=common, key=key, value=value)
+    
+    fields_size = [(field, len(list(allruns.groups_by_field_value(field))))
+                    for field in allruns.field_names_in_all_keys()]
+        
+    # Now choose the one with the least choices
+    fields_size.sort(key=lambda x: x[1])
+    
+    field = fields_size[0][0]
+    division = {}
+    for value, samples in allruns.groups_by_field_value(field):
+        samples = samples.remove_field(field)   
+        c = dict(common)
+        c[field] = value
+        division[value] = make_sections(samples, common=c)
+        
+    return dict(type='division', field=field,
+                division=division, common=common)
+
     
     

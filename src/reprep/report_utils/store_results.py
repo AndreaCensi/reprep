@@ -1,7 +1,8 @@
 from contracts.interface import describe_type
 from reprep.report_utils import frozendict2
 from reprep.utils import natsorted
-from contracts import new_contract
+from contracts import new_contract, contract
+from geometry.basic_utils import deprecated
 
 frozendict = frozendict2
 
@@ -20,6 +21,28 @@ class StoreResults(dict):
         for attrs in self.select_key(*cond, **condkeys):
             r[attrs] = self[attrs] 
         return r
+    
+    def remove_field(self, field):
+        """ Returns a copy of this structure, where the given field
+            is removed from the keys. Throws an error if removing the
+            field would make the keys not unique. Also throws 
+            an error if the given field is not present in all keys."""
+        r = self.__class__() 
+        for key in self:
+            if not field in key:
+                msg = "Could not find field %r in key %r." % (field, key)
+                raise ValueError(msg)
+            
+            key2 = frozendict(key)
+            del key2[field]
+            
+            if key2 in r:
+                msg = ('Removing field %r from key %r would make it non unique.' % 
+                        (field, key))
+                raise ValueError(msg)
+            
+            r[key2] = self[key] 
+        return r
 
     def select_key(self, *conditions, **condkeys):
         for attrs in self:
@@ -33,7 +56,12 @@ class StoreResults(dict):
                 else:
                     yield attrs
 
+    @deprecated
     def field(self, field):
+        """ Returns all values of the given field """
+        return self.field_values(field)
+    
+    def field_values(self, field):
         """ Returns all values of the given field """
         for attrs in self:
             if not field in attrs:
@@ -41,14 +69,46 @@ class StoreResults(dict):
                 raise ValueError(msg)
             yield attrs[field]
 
+    @contract(returns='list(str)')
     def field_names(self):
-        """ Returns all field names """
+        """ 
+            Returns all field names presents.
+            Note that some fields might not be present in all entries.
+        """
         if len(self) == 0:
             return []
         # XXX: check that all have the same ones
+        names = set()
         for k in self:
-            return list(k.keys())
+            names.update(k.keys())
+        return list(names)
+
+    @contract(returns='list(str)')    
+    def field_names_in_all_keys(self):
+        """ 
+            Returns the field names that are in all keys.
+        """
+        names = None
+        for k in self:
+            if names is  None:
+                names = set(k.keys())
+            else:
+                names = names & set(k.keys())
+            
+        return list(names)
+    
+    @contract(returns='dict')
+    def fields_with_unique_values(self):
+        """ Returns a dictionary of fields which appear in all keys
+            and that have the same value across all keys. """
+        res = {}
+        for field in self.field_names_in_all_keys():
+            values = list(self.field_values(field))
+            if len(values) == 1:
+                res[field] = values[0]
+        return res
         
+    
     def groups_by_field_value(self, field):
         """
             Partitions the contents according to the value of the given
@@ -70,7 +130,7 @@ class StoreResults(dict):
             
 class StoreResultsDict(StoreResults):
     """ This class assumes that also the values are dictionaries. """
-    
+
     def __setitem__(self, attrs, value):
         if not isinstance(value, dict):
             msg = ('Values to this dictionary must be dicts; found %s' % 

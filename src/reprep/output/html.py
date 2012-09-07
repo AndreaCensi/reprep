@@ -22,7 +22,7 @@ mathjax_header = """
         jax: ["input/TeX", "output/SVG"], //" "output/HTML-CSS"],
         tex2jax: {
           inlineMath: [ ['$','$']],
-          displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+          displayMath: [ ['$$','$$'] ], 
           processEscapes: true
         },
         "HTML-CSS": { availableFonts: ["TeX"] }

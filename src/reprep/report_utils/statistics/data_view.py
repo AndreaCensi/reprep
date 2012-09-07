@@ -6,6 +6,7 @@ from reprep.report_utils.with_description import WithDescription
 
 class DataView(WithDescription):
     """ This class defines how we view the data. """
+    NOT_AVAILABLE = 'n/a'
     
     @contract(source=WithDescription, reduction=Reduction, display=ReductionDisplay)
     def __init__(self, source, reduction, display, *args, **kwargs):
@@ -22,6 +23,9 @@ class DataView(WithDescription):
         self.reduction = reduction
         self.display = display
         
+    def __repr__(self):
+        return 'DataView(%r,%r,%r)' % (self.source, self.reduction, self.display)
+     
     @contract(samples=StoreResultsDict, returns='tuple(*,*,*)')
     def reduce(self, samples):
         """
@@ -30,29 +34,37 @@ class DataView(WithDescription):
         field = self.source.get_name()
         data = list(samples.field_or_value_field(field))
         reduced = self.reduction.function(data)
-        display = self.display.function(reduced)
+        if reduced is None:
+            display = DataView.NOT_AVAILABLE
+        else:
+            display = self.display.function(reduced)
         return data, reduced, display
     
     @staticmethod
     def from_string(s, source_fields={}):
         """ 
             Accepts the formats: 
-            - source   =  source/all/string
+            - source   =  source/one/string
             - source/reduction = source/reduction/string
             - source/reduction/display
+            - source//display => source/one/display
         """
         tokens = s.split('/')
         if len(tokens) == 1:
             source = tokens[0]
-            reduction = 'all'
+            reduction = 'one'
             display = 'string'
         elif len(tokens) == 2:
             source = tokens[0]
             reduction = tokens[1]
+            if len(reduction) == 0:
+                reduction = 'one'
             display = 'string'
         elif len(tokens) == 3:
             source = tokens[0]
             reduction = tokens[1]
+            if len(reduction) == 0:
+                reduction = 'one'
             display = tokens[2]
         else:
             msg = 'Wrong format %r' % s

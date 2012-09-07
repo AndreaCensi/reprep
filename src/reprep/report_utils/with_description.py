@@ -9,6 +9,10 @@ class WithDescription(object):
         self._desc = desc
         self._symbol = symbol
 
+    def __repr__(self):
+        return '%s(name=%r)' % (self.__class__.__name__,
+                                 self._name)
+
     def get_name(self):
         return self._name
     
@@ -30,7 +34,7 @@ class WithDescription(object):
             return self._desc
         
 
-@contract(returns='tuple(str,str)')
+@contract(returns='tuple(None|str,None|str)')
 def symbol_desc_from_docstring(f):
     doc = f.__doc__
     if doc is None:
@@ -45,7 +49,7 @@ def symbol_desc_from_docstring(f):
     return symbol, desc
     
     
-@contract(returns='tuple(str,str)')
+@contract(returns='tuple(None|str,str)')
 def symbol_desc_from_string(doc):
     """ Expects something like: ::
     
