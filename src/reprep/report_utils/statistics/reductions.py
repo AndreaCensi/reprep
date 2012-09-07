@@ -20,24 +20,31 @@ def num(x): #@ReservedAssignment
     """ n%s := Number of samples of %s"""
     return len(x)
 
+def notnone(x):
+    return [a for a in x if a is not None]
+
 @RepRepStats.reduction
 def min(x): #@ReservedAssignment
     """ min(%s) := Minimum of %s """
+    x = notnone(x)
     return np.nanmin(x)
 
 @RepRepStats.reduction
 def max(x): #@ReservedAssignment
     """ max(%s) := Maximum of %s """
+    x = notnone(x)
     return np.nanmax(x)
 
 @RepRepStats.reduction
 def mean(x):
     """ E\{%s\} := Average %s """
+    x = notnone(x)
     return nanmean(x)
 
 @RepRepStats.reduction
 def stddev(x):
     """ std\{%s\} := Standard deviation of %s """
+    x = notnone(x)
     return nanstd(x)
 
 @RepRepStats.reduction

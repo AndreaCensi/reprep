@@ -1,12 +1,12 @@
-from . import StoreResults, logger, contract
+from . import StoreResults, logger, contract, frozendict
 from .. import Report
-from compmake import comp_stage_job_id
-from compmake.structures import Promise
-from compmake.utils import describe_type
+from contracts import describe_type
+from reprep.utils import natsorted
 import os
 import time
-from reprep.report_utils.store_results import frozendict
-from reprep.utils.natsorting import natsorted
+
+
+__all__ = ['ReportManager']
 
 
 class ReportManager:
@@ -17,6 +17,7 @@ class ReportManager:
         self.allreports_filename = StoreResults()
          
     def add(self, report, report_type, **kwargs):
+        from compmake import Promise
         if not isinstance(report, Promise):
             msg = ('ReportManager is mean to be given Promise objects, '
                    'which are the output of comp(). Obtained: %s' 
@@ -37,7 +38,7 @@ class ReportManager:
         self.allreports_filename[key] = filename + '.html'
         
     def create_index_job(self):
-        from compmake import comp    
+        from compmake import comp, comp_stage_job_id
         index_filename = os.path.join(self.outdir, 'report_index.html')
         
         for key in self.allreports:
@@ -171,7 +172,7 @@ def index_reports(reports, index, update=None): #@UnusedVariable
         sorted_values = natsorted(division.keys())
         for value in sorted_values:
             parents.append(value)
-            html_id = "-".join(parents)            
+            html_id = "-".join(map(str, parents))            
             bottom = division[value]
             if bottom['type'] == 'sample':
                 d = {field: value}

@@ -103,7 +103,7 @@ class StoreResults(dict):
             and that have the same value across all keys. """
         res = {}
         for field in self.field_names_in_all_keys():
-            values = list(self.field_values(field))
+            values = list(set(self.field_values(field)))
             if len(values) == 1:
                 res[field] = values[0]
         return res
@@ -126,6 +126,8 @@ class StoreResults(dict):
             query = {field: value}
             samples = self.select(**query)
             assert samples
+            assert field in samples.fields_with_unique_values() # expensive
+
             yield value, samples
             
 class StoreResultsDict(StoreResults):
