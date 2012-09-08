@@ -1,6 +1,7 @@
 from reprep.demos.manager import reprep_demo
-from reprep.report_utils import StoreResults, WithDescription
-from reprep.report_utils.tables.tables_misc import table_by_rows
+from reprep.report_utils.storing.store_results import StoreResults
+from reprep.report_utils.statistics.structures.with_description import WithDescription
+from reprep.report_utils.statistics.tables.tables_misc import table_by_rows
 
 
 s1 = StoreResults()
@@ -25,15 +26,14 @@ descs.append(WithDescription(name='algo2', desc='Other algo', symbol='A2'))
 
 source_descs = dict((a.get_name(), a) for a in descs)
 
+
 @reprep_demo
-def table_multiple_test1(r):
+def table_multiple(r):
     table = table_by_rows(samples=s1,
                            rows_field='algo',
-                           cols_fields=['time',
+                           cols_fields=['time/all',
                                         'objective/max',
                                         'objective/min'],
                            source_descs=source_descs)
     r.add_child(table)
     
-if __name__ == '__main__':
-    table_multiple_test1()

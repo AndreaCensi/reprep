@@ -1,24 +1,4 @@
-
-from reprep.report_utils.with_description import (
-    FunctionWithDescription, symbol_desc_from_docstring)
-
-        
-class Reduction(FunctionWithDescription):
-    def __init__(self, *args, **kwargs):
-        super(Reduction, self).__init__(*args, **kwargs)
-        
-        if not "%s" in self.get_symbol():
-            msg = ('Missing pattern for symbol of %r.' % self.get_name())
-            raise ValueError(msg)
-        
-        if not "%s" in self.get_desc():
-            msg = ('Missing pattern for desc of %r.' % self.get_name())
-            raise ValueError(msg)
-        
-
-class ReductionDisplay(FunctionWithDescription):
-    pass
-
+from . import symbol_desc_from_docstring, Reduction, ReductionDisplay
         
 class RepRepStats(object):
     reductions = {}

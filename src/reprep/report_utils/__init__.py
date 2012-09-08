@@ -20,12 +20,7 @@ import numpy as np
 
 """
 
-
-from .with_description import *
-
-from .frozen import *
-from .store_results import *
-from .report_manager import *
-
+from .storing import *
+from .repmanager import *
 from .statistics import *
-from .tables import *
+

@@ -230,7 +230,11 @@ class Node(ReportInterface):
         self.print_tree(s)
         return s.getvalue()
 
+    @contract(returns='str')
     def get_complete_id(self, separator=":"):
+        if self.nid is None:
+            msg = 'This node was not given an ID, but now we need one.'
+            raise ValueError(msg)
         if not self.parent:
             return self.nid
         else:

@@ -1,8 +1,8 @@
-from contracts import contract
-from reprep.report_utils.statistics.structures import (Reduction,
-    ReductionDisplay, RepRepStats)
-from reprep.report_utils.store_results import StoreResultsDict
-from reprep.report_utils.with_description import WithDescription
+from . import (Reduction, contract, ReductionDisplay, RepRepStats, new_contract,
+    WithDescription)
+from ... import StoreResultsDict
+
+
 
 class DataView(WithDescription):
     """ This class defines how we view the data. """
@@ -72,7 +72,6 @@ class DataView(WithDescription):
     
         name = '%s_%s' % (source, reduction)    
     
-    
         source = source_fields[source]
         reduction = RepRepStats.get_reduction(reduction)
         display = RepRepStats.get_display(display)
@@ -84,8 +83,8 @@ class DataView(WithDescription):
             sdesc = sdesc[0].lower() + sdesc[1:] 
         desc = reduction.get_desc() % sdesc
           
-
         return DataView(name=name, source=source,
                         reduction=reduction, display=display,
                         desc=desc, symbol=symbol)
     
+new_contract('DataView', DataView)

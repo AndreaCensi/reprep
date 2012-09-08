@@ -1,10 +1,7 @@
-from contracts.interface import describe_type
-from reprep.report_utils import frozendict2
-from reprep.utils import natsorted
 from contracts import new_contract, contract
-from geometry.basic_utils import deprecated
+from reprep.utils import deprecated, natsorted, frozendict2
 
-frozendict = frozendict2
+__all__ = ['StoreResults']
 
 class StoreResults(dict):
     
@@ -12,7 +9,7 @@ class StoreResults(dict):
         if not isinstance(attrs, dict):
             msg = 'Keys to this dictionary must be dicts'
             raise ValueError(msg)
-        dict.__setitem__(self, frozendict(**attrs), value)
+        dict.__setitem__(self, frozendict2(**attrs), value)
 
     def select(self, *cond, **condkeys):
         """ Returns another StoreResults with the filtered results. """
@@ -33,7 +30,7 @@ class StoreResults(dict):
                 msg = "Could not find field %r in key %r." % (field, key)
                 raise ValueError(msg)
             
-            key2 = frozendict(key)
+            key2 = frozendict2(key)
             del key2[field]
             
             if key2 in r:
@@ -130,41 +127,9 @@ class StoreResults(dict):
 
             yield value, samples
             
-class StoreResultsDict(StoreResults):
-    """ This class assumes that also the values are dictionaries. """
-
-    def __setitem__(self, attrs, value):
-        if not isinstance(value, dict):
-            msg = ('Values to this dictionary must be dicts; found %s' % 
-                   describe_type(value))
-            raise ValueError(msg)
-        for k in attrs:
-            if k in value:
-                msg = ('The same field %r is found in both key and value. \n'
-                       '  key: %s \n' 
-                       'value: %s' % (k, attrs, value))
-                raise ValueError(msg)
-        super(StoreResultsDict, self).__setitem__(attrs, value)
-    
-    def field_or_value_field(self, field):
-        """ 
-            Returns all values for field, which can be either in the 
-            key or in the value dict.
-        """
-        for k, v in self.items():
-            if field in k:
-                yield k[field]
-            elif field in v:
-                yield v[field]
-            else:
-                msg = ('Could not find value of %r neither in key or value. '
-                       'Key: %s Value: %s' % 
-                       (field, k, v))
-                raise ValueError(msg)
-                
             
 new_contract('StoreResults', StoreResults)        
-new_contract('StoreResultsDict', StoreResultsDict)
+
         
             
             

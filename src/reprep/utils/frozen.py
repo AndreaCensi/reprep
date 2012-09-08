@@ -14,8 +14,6 @@ class frozendict1(dict):
             rval = self._hash = hash(frozenset(self.iteritems()))
         return rval
 
-
-
 class frozendict2(dict):
     
     # OK, but we need to modify it during pickling

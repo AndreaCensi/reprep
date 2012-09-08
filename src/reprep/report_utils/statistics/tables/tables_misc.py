@@ -1,11 +1,7 @@
 from . import contract, logger
-from .. import DataView, StoreResults, StoreResultsDict, WithDescription
-from contracts import new_contract
-from reprep import Report
-from reprep.constants import MIME_RST
-    
-new_contract('DataView', DataView)
-new_contract('WithDescription', WithDescription)
+from .. import DataView, WithDescription
+from reprep import MIME_RST, Report
+from ... import StoreResultsDict, StoreResults
 
 @contract(samples=StoreResults,
           rows_field=str,
@@ -21,6 +17,7 @@ def table_by_rows(samples, rows_field, cols_fields, source_descs):
                                 desc=None)
             self[key] = d
             return d
+        
     source_descs = Missing(source_descs)
         
     r = Report()
@@ -30,6 +27,10 @@ def table_by_rows(samples, rows_field, cols_fields, source_descs):
     rows = ['$%s$' % source_descs[x].get_symbol() for x in rows_field]
     cols = ['$%s$' % x.get_symbol() for x in data_views]
     r.table('table', data=display, cols=cols, rows=rows)
+    r.data('table_data', data=reduced,
+           caption="Data without presentation applied.")
+    r.data('table_data_source', data=data,
+           caption="Source data, before reduction.")
     
     row_desc = "\n".join(['- $%s$: %s' % (x.get_symbol(), x.get_desc()) 
                           for x in map(source_descs.__getitem__, rows_field)])
@@ -43,7 +44,9 @@ def escape_slash(s):
     """ Replace a slash with two, useful for RST """
     return s.replace('\\', '\\\\')
 
-@contract(samples=StoreResultsDict, rows_field=str, cols_fields='list(DataView)')
+@contract(samples=StoreResultsDict, rows_field=str,
+          cols_fields='list[C](DataView)',
+          returns='tuple( list[R], list[R](list[C]),  list[R](list[C]), list[R](list[C]) )')
 #          returns='list[R](list[C](list))')
 def summarize_data(samples, rows_field, cols_fields):
     """
@@ -53,8 +56,8 @@ def summarize_data(samples, rows_field, cols_fields):
         try:
             return data_view.reduce(samples)
         except:
-            msg = ('Error while applying the view\n\t%s\nto the samples\n\t%s' % 
-                   (data_view, samples))
+            msg = ('Error while applying the view\n\t%s\nto the '
+                   'samples\n\t%s' % (data_view, samples))
             logger.error(msg)
             raise
             

@@ -1,7 +1,6 @@
-from . import StoreResults, logger, contract, frozendict
-from .. import Report
+from .. import Report, StoreResults, logger, contract
 from contracts import describe_type
-from reprep.utils import natsorted
+from reprep.utils import frozendict2, natsorted
 import os
 import time
 
@@ -24,7 +23,7 @@ class ReportManager:
                    % describe_type(report))
             raise ValueError(msg)
         
-        key = frozendict(report=report_type, **kwargs)
+        key = frozendict2(report=report_type, **kwargs)
         
         if key in self.allreports:
             msg = 'Already added report for %s' % key
@@ -88,11 +87,15 @@ def index_reports(reports, index, update=None): #@UnusedVariable
     f = open(index, 'w')
     
     f.write("""
+        <html>
+        <head>
         <style type="text/css">
         span.when { float: right; }
         li { clear: both; }
         a.self { color: black; text-decoration: none; }
         </style>
+        </head>
+        <body>
     """)
     
     mtime = lambda x: os.path.getmtime(x)
@@ -195,6 +198,12 @@ def index_reports(reports, index, update=None): #@UnusedVariable
                 
     write_sections(sections, parents=[])
     
+    f.write('''
+    
+    </body>
+    </html>
+    
+    ''')
     f.close()
 
 
