@@ -57,10 +57,10 @@ def mean_std(a):
     return (np.mean(a), np.std(a))
 
 @RepRepStats.reduction
-@contract(a='array[N]', returns='tuple(number, number, number)')
+@contract(a='array[N]|list', returns='tuple(number, number, number)')
 def min_mean_max(a):
     """ b\{%s\} := Min, mean and max of %s """
-    a = np.array(a)
+    a = np.asarray(a, dtype='float') # converts bool
     from scipy.stats.stats import nanmean
     return (np.nanmin(a), nanmean(a), np.max(a))
 

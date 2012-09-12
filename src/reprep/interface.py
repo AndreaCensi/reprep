@@ -1,6 +1,8 @@
 from . import MIME_PLAIN, contract, MIME_PYTHON, MIME_PNG
 import warnings
-
+from contextlib import contextmanager
+from . import logger
+import traceback
 
 class ReportInterface:
 
@@ -14,6 +16,24 @@ class ReportInterface:
         if caption:
             node.text('caption', caption)
         return node
+
+    @contextmanager
+    def subsection(self, nid=None, caption=None, robust=True):
+        """ TODO: change name. 
+            Can be called as a context manager.
+            If robust is True, logs any error but continues on with
+            stuff.
+        """
+        s = self.section(nid, caption)
+        try: 
+            yield s
+        except Exception as e:
+            if not robust:
+                raise
+            else:
+                logger.exception(e)
+                s.text('error', traceback.format_exc(e))            
+        
 
     @contract(nid='valid_id', mime='None|str', caption='None|str')
     def data(self, nid, data, mime=MIME_PYTHON, caption=None):

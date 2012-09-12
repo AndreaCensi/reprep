@@ -1,9 +1,11 @@
-from .. import Report, StoreResults, logger, contract
+from . import logger, contract
+from .. import StoreResults
+from ... import Report
 from contracts import describe_type
 from reprep.utils import frozendict2, natsorted
 import os
 import time
-
+from compmake  import comp_store
 
 __all__ = ['ReportManager']
 
@@ -39,7 +41,9 @@ class ReportManager:
     def create_index_job(self):
         from compmake import comp, comp_stage_job_id
         index_filename = os.path.join(self.outdir, 'report_index.html')
-        
+
+        # Do not pass as argument, it will take lots of memory!
+        allreports_filename = comp_store(self.allreports_filename, 'allfilenames')        
         for key in self.allreports:
             job_report = self.allreports[key]
             filename = self.allreports_filename[key] 
@@ -47,24 +51,26 @@ class ReportManager:
             write_job_id = comp_stage_job_id(job_report, 'write')
             
             comp(write_report_and_update,
-                 job_report, filename, self.allreports_filename, index_filename,
+                 job_report, filename, allreports_filename, index_filename,
                  write_pickle=False,
                  job_id=write_job_id)
-            
-def write_report_and_update(report, report_basename, all_reports, index_filename,
+             
+
+def write_report_and_update(report, report_html, all_reports, index_filename,
                             write_pickle=False):
-    html = write_report(report, report_basename, write_pickle=write_pickle)
+    html = write_report(report, report_html, write_pickle=write_pickle)
     index_reports(reports=all_reports, index=index_filename, update=html)
 
-@contract(report=Report, report_basename='str')
-def write_report(report, report_basename, write_pickle=False): 
+
+@contract(report=Report, report_html='str')
+def write_report(report, report_html, write_pickle=False): 
     from conf_tools.utils import friendly_path
-    html = report_basename + '.html'
-    logger.info('Writing to %r.' % friendly_path(html))
-    rd = os.path.join(os.path.dirname(report_basename), 'images')
-    report.to_html(html, write_pickle=write_pickle, resources_dir=rd)
+    logger.info('Writing to %r.' % friendly_path(report_html))
+    rd = os.path.join(os.path.dirname(report_html), 'images')
+    report.to_html(report_html, write_pickle=write_pickle, resources_dir=rd)
     # TODO: save hdf format
-    return html
+    return report_html
+
 
 @contract(reports=StoreResults, index=str)
 def index_reports(reports, index, update=None): #@UnusedVariable
@@ -125,12 +131,14 @@ def index_reports(reports, index, update=None): #@UnusedVariable
     def write_li(k, filename, element='li'):
         desc = ",  ".join('%s = %s' % (a, b) for a, b in k.items())
         href = os.path.relpath(filename, os.path.dirname(index))
+        
         if os.path.exists(filename):
             when = duration_human(time.time() - mtime(filename))
             span_when = '<span class="when">%s ago</span>' % when
             style = style_order(order(filename))
             a = '<a href="%s">%s</a>' % (href, desc)
         else:
+            # print('File %s does not exist yet' % filename)
             style = ""
             span_when = '<span class="when">missing</span>'
             a = '<a href="%s">%s</a>' % (href, desc)

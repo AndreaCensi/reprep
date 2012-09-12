@@ -29,7 +29,7 @@ source_descs = dict((a.get_name(), a) for a in descs)
 
 @reprep_demo
 def table_multiple(r):
-    table = table_by_rows(samples=s1,
+    table = table_by_rows(id_report="report", samples=s1,
                            rows_field='algo',
                            cols_fields=['time/all',
                                         'objective/max',
