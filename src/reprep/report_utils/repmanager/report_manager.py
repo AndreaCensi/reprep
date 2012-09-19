@@ -52,7 +52,7 @@ class ReportManager:
             
             comp(write_report_and_update,
                  job_report, filename, allreports_filename, index_filename,
-                 write_pickle=False,
+                 write_pickle=True,
                  job_id=write_job_id)
              
 
