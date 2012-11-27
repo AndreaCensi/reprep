@@ -1,19 +1,22 @@
 from . import logger, contract
 from .. import StoreResults
 from ... import Report
+from compmake import comp_store
 from contracts import describe_type
 from reprep.utils import frozendict2, natsorted
 import os
 import time
-from compmake  import comp_store
 
 __all__ = ['ReportManager']
 
 
-class ReportManager:
+class ReportManager(object):
     
-    def __init__(self, outdir):
+    def __init__(self, outdir, index_filename=None):
         self.outdir = outdir
+        if index_filename is None:
+            index_filename = os.path.join(self.outdir, 'report_index.html')
+        self.index_filename = index_filename
         self.allreports = StoreResults()
         self.allreports_filename = StoreResults()
          
@@ -34,15 +37,19 @@ class ReportManager:
         self.allreports[key] = report
 
         dirname = os.path.join(self.outdir, report_type)
-        basename = "_".join(map(str, kwargs.values()))
+        basename = "_".join(map(str, kwargs.values()))  # XXX
+        basename = basename.replace('/', '_')  # XXX
+        if '/' in basename:
+            raise ValueError(basename)
         filename = os.path.join(dirname, basename) 
         self.allreports_filename[key] = filename + '.html'
         
     def create_index_job(self):
         from compmake import comp, comp_stage_job_id
-        index_filename = os.path.join(self.outdir, 'report_index.html')
-
+        
         # Do not pass as argument, it will take lots of memory!
+        # XXX FIXME: there should be a way to make this update or not
+        # otherwise new reports do not appear
         allreports_filename = comp_store(self.allreports_filename, 'allfilenames')        
         for key in self.allreports:
             job_report = self.allreports[key]
@@ -51,7 +58,7 @@ class ReportManager:
             write_job_id = comp_stage_job_id(job_report, 'write')
             
             comp(write_report_and_update,
-                 job_report, filename, allreports_filename, index_filename,
+                 job_report, filename, allreports_filename, self.index_filename,
                  write_pickle=True,
                  job_id=write_job_id)
              
@@ -66,7 +73,11 @@ def write_report_and_update(report, report_html, all_reports, index_filename,
 def write_report(report, report_html, write_pickle=False): 
     from conf_tools.utils import friendly_path
     logger.info('Writing to %r.' % friendly_path(report_html))
-    rd = os.path.join(os.path.dirname(report_html), 'images')
+    if False:
+        # Note here they might overwrite each other
+        rd = os.path.join(os.path.dirname(report_html), 'images')
+    else:
+        rd = None
     report.to_html(report_html, write_pickle=write_pickle, resources_dir=rd)
     # TODO: save hdf format
     return report_html
@@ -173,9 +184,15 @@ def index_reports(reports, index, update=None): #@UnusedVariable
 
     sections = make_sections(reports)
     
+    if  sections['type'] == 'sample':
+        # only one...
+        sections = dict(type='division', field='raw',
+                          division=dict(raw1=sections), common=dict())
+        
+        
     def write_sections(sections, parents):
         assert 'type' in sections
-        assert sections['type'] == 'division'
+        assert sections['type'] == 'division', sections
         field = sections['field']
         division = sections['division']
 

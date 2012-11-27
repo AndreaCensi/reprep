@@ -9,7 +9,9 @@ class StoreResults(dict):
         if not isinstance(attrs, dict):
             msg = 'Keys to this dictionary must be dicts'
             raise ValueError(msg)
-        dict.__setitem__(self, frozendict2(**attrs), value)
+        # Todo: check all strings
+        frozen = frozendict2(**attrs)
+        dict.__setitem__(self, frozen, value)
 
     def select(self, *cond, **condkeys):
         """ Returns another StoreResults with the filtered results. """
@@ -123,7 +125,7 @@ class StoreResults(dict):
             query = {field: value}
             samples = self.select(**query)
             assert samples
-            assert field in samples.fields_with_unique_values() # expensive
+            assert field in samples.fields_with_unique_values()  # expensive
 
             yield value, samples
             

@@ -18,7 +18,7 @@ class ReportInterface:
         return node
 
     @contextmanager
-    def subsection(self, nid=None, caption=None, robust=True):
+    def subsection(self, nid=None, caption=None, robust=False):
         """ TODO: change name. 
             Can be called as a context manager.
             If robust is True, logs any error but continues on with
