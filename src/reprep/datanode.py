@@ -2,7 +2,7 @@ from . import (MIME_PNG, MIME_PYTHON, contract, describe_value,
     colorize_success, scale, posneg, Image_from_array, rgb_zoom,
     MIME_SVG, Node)
 import sys
-
+import numpy as np
 
 
 class DataNode(Node):
@@ -18,7 +18,7 @@ class DataNode(Node):
         if not Node.__eq__(self, other):
             return False
         # FIXME: cannot compare array
-        #if self.raw_data != other.raw_data:
+        # if self.raw_data != other.raw_data:
         #    logger.error('%s, raw_data' % self)
         #    return False 
         if self.mime != other.mime:
@@ -36,7 +36,7 @@ class DataNode(Node):
             child.print_tree(s, prefix + '  ')
 
     def is_image(self):
-        return self.mime in [MIME_PNG, MIME_SVG] # XXX 
+        return self.mime in [MIME_PNG, MIME_SVG]  # XXX 
 
     # TODO: move to Figure
     def display(self, display, caption=None, **kwargs):
@@ -50,7 +50,7 @@ class DataNode(Node):
                  'posneg_zoom': posneg_zoom}
         if not display in known:
             raise ValueError('No known converter %r. ' % display)
-        nid = display # TODO: check; add args in the name
+        nid = display  # TODO: check; add args in the name
 
         converter = known[display] 
         image = converter(self.raw_data, **kwargs)
@@ -75,6 +75,22 @@ class DataNode(Node):
             return isinstance(node, DataNode) and node.mime in mime_types
         return self.find_recursively(choose)
 
+
+    def pil_from_compressed(self):
+        """ Assuming this is a bitmap image, returns a PIL image from the data """
+        assert self.mime in [MIME_PNG]
+        from PIL import ImageFile  # @UnresolvedImport
+        parser = ImageFile.Parser()
+        parser.feed(self.raw_data)
+        res = parser.close()            
+        return res 
+
+    @contract(returns='array[HxWx3](uint8)')
+    def get_rgb(self):
+        """ Assuming this is a bitmap image, returns an RGB array. """
+        pil = self.pil_from_compressed()
+        rgb = np.asarray(pil).astype(np.uint8)
+        return rgb[:, :, :3]
 
 
 def just_check_rgb(value):
