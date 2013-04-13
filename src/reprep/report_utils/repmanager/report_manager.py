@@ -45,17 +45,26 @@ class ReportManager(object):
         self.allreports_filename[key] = filename + '.html'
         
     def create_index_job(self):
+        if not self.allreports:
+            # no reports necessary
+            return
+        
         from compmake import comp, comp_stage_job_id
         
         # Do not pass as argument, it will take lots of memory!
         # XXX FIXME: there should be a way to make this update or not
         # otherwise new reports do not appear
-        allreports_filename = comp_store(self.allreports_filename, 'allfilenames')        
+        if len(self.allreports_filename) < 100:
+            allreports_filename = comp_store(self.allreports_filename, 'allfilenames')
+        else:
+            allreports_filename = self.allreports_filename
+                    
         for key in self.allreports:
             job_report = self.allreports[key]
             filename = self.allreports_filename[key] 
 
-            write_job_id = comp_stage_job_id(job_report, 'write')
+            write_job_id = job_report.job_id + '-write'
+            # comp_stage_job_id(job_report, 'write')
             
             comp(write_report_and_update,
                  job_report, filename, allreports_filename, self.index_filename,
@@ -84,14 +93,14 @@ def write_report(report, report_html, write_pickle=False):
 
 
 @contract(reports=StoreResults, index=str)
-def index_reports(reports, index, update=None): #@UnusedVariable
+def index_reports(reports, index, update=None):  # @UnusedVariable
     """
         Writes an index for the reports to the file given. 
         The special key "report" gives the report type.
         
         reports[dict(report=...,param1=..., param2=...) ] => filename
     """
-    #print('Updating because of new report %s' % update)
+    # print('Updating because of new report %s' % update)
     from compmake.utils import duration_human
     import numpy as np
     
@@ -174,7 +183,7 @@ def index_reports(reports, index, update=None): #@UnusedVariable
             f.write('<ul>')
             r = reports.select(report=report_type)
             items = list(r.items()) 
-            items.sort(key=lambda x: str(x[0])) # XXX use natsort   
+            items.sort(key=lambda x: str(x[0]))  # XXX use natsort   
             for k, filename in items:
                 write_li(k, filename)
     
@@ -236,7 +245,7 @@ def make_sections(allruns, common=None):
     if common is None:
         common = {}
         
-    #print('Selecting %d with %s' % (len(allruns), common))
+    # print('Selecting %d with %s' % (len(allruns), common))
         
     if len(allruns) == 1:
         key = allruns.keys()[0]
