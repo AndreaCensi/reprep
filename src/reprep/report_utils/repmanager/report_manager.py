@@ -6,6 +6,7 @@ from contracts import describe_type
 from reprep.utils import frozendict2, natsorted
 import os
 import time
+from contracts.interface import describe_value
 
 __all__ = ['ReportManager']
 
@@ -19,8 +20,22 @@ class ReportManager(object):
         self.index_filename = index_filename
         self.allreports = StoreResults()
         self.allreports_filename = StoreResults()
-         
+
+    @contract(report_type='str')
     def add(self, report, report_type, **kwargs):
+        """
+            Adds a report to the collection.
+            
+            
+            report: Promise of a Report object
+            report_type: A string that describes the "type" of the report
+        
+            kwargs:  str->str,int,float  parameters used for grouping
+        """         
+        if not isinstance(report_type, str):
+            msg = 'Need a string for report_type, got %r.' % describe_value(report_type)
+            raise ValueError(msg)
+        
         from compmake import Promise
         if not isinstance(report, Promise):
             msg = ('ReportManager is mean to be given Promise objects, '
@@ -49,12 +64,12 @@ class ReportManager(object):
             # no reports necessary
             return
         
-        from compmake import comp, comp_stage_job_id
+        from compmake import comp
         
         # Do not pass as argument, it will take lots of memory!
         # XXX FIXME: there should be a way to make this update or not
         # otherwise new reports do not appear
-        if len(self.allreports_filename) < 100:
+        if len(self.allreports_filename) > 100:
             allreports_filename = comp_store(self.allreports_filename, 'allfilenames')
         else:
             allreports_filename = self.allreports_filename
@@ -74,6 +89,9 @@ class ReportManager(object):
 
 def write_report_and_update(report, report_html, all_reports, index_filename,
                             write_pickle=False):
+    if not isinstance(report, Report):
+        msg = 'Expected Report, got %s.' % describe_type(report)
+        raise ValueError(msg) 
     html = write_report(report, report_html, write_pickle=write_pickle)
     index_reports(reports=all_reports, index=index_filename, update=html)
 
@@ -81,7 +99,7 @@ def write_report_and_update(report, report_html, all_reports, index_filename,
 @contract(report=Report, report_html='str')
 def write_report(report, report_html, write_pickle=False): 
     from conf_tools.utils import friendly_path
-    logger.info('Writing to %r.' % friendly_path(report_html))
+    logger.debug('Writing to %r.' % friendly_path(report_html))
     if False:
         # Note here they might overwrite each other
         rd = os.path.join(os.path.dirname(report_html), 'images')
@@ -108,7 +126,7 @@ def index_reports(reports, index, update=None):  # @UnusedVariable
     if not os.path.exists(dirname):
         os.makedirs(dirname)
     
-    logger.info('Writing on %s' % index)
+    # logger.info('Writing on %s' % friendly_path(index))
     
     f = open(index, 'w')
     

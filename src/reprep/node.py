@@ -2,6 +2,8 @@ from . import (contract, ReportInterface, describe_type, InvalidURL, NotExistent
 from StringIO import StringIO
 import sys
 
+__all__ = ['Node']
+
 class Node(ReportInterface):
 
     @contract(nid='valid_id|None', children='None|list', caption='None|str')
@@ -32,35 +34,35 @@ class Node(ReportInterface):
         if self is other:
             return True
         
-        #def err(x):
-            #from . import logger
-            #logger.error(x)
-            #pass
+        # def err(x):
+            # from . import logger
+            # logger.error(x)
+            # pass
         
         if self.nid != other.nid:
-            #err('Different nid (%s %s)' % (self.nid, other.nid))
+            # err('Different nid (%s %s)' % (self.nid, other.nid))
             return False
         
         if type(other) != type(self):
-            #err('Different type')
-            #err('- me: %s' % self)
-            #err('- him: %s' % other)
+            # err('Different type')
+            # err('- me: %s' % self)
+            # err('- him: %s' % other)
             return False
         if len(self.children) != len(other.children):
-            #err('children: %s vs %s' % (len(self.children),
+            # err('children: %s vs %s' % (len(self.children),
             #                                     len(other.children)))
-            #err('his: %s' % other.children)
-            #err('mine: %s' % self.children)
+            # err('his: %s' % other.children)
+            # err('mine: %s' % self.children)
             return False 
         for i in range(len(self.children)):
             if self.children[i] != other.children[i]:
-                #err('child %d' % i)
-                #err('-mine: %s' % self.children[i])
-                #err('- his: %s' % other.children[i])
+                # err('child %d' % i)
+                # err('-mine: %s' % self.children[i])
+                # err('- his: %s' % other.children[i])
                 return False
                 
         if self.caption != other.caption:
-            #err('caption')
+            # err('caption')
             return False 
         return True
 
