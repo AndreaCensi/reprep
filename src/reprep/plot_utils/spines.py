@@ -1,10 +1,13 @@
 
+def turn_off_all_axes(pylab):
+    turn_off_bottom_and_top(pylab)
+    turn_off_left_and_right(pylab)
 
 def turn_off_bottom_and_top(pylab):
     ax = pylab.gca()
     for loc, spine in ax.spines.iteritems():
         if loc in ['bottom', 'top']:
-            spine.set_color('none') # don't draw spine
+            spine.set_color('none')  # don't draw spine
             
     pylab.xticks([], [])
 
@@ -13,7 +16,7 @@ def turn_off_right(pylab):
     ax = pylab.gca()
     for loc, spine in ax.spines.iteritems():
         if loc in ['right']:
-            spine.set_color('none') # don't draw spine 
+            spine.set_color('none')  # don't draw spine 
     ax.yaxis.set_ticks_position('left')
 
 
@@ -21,7 +24,7 @@ def turn_off_top(pylab):
     ax = pylab.gca()
     for loc, spine in ax.spines.iteritems():
         if loc in ['top']:
-            spine.set_color('none') # don't draw spine 
+            spine.set_color('none')  # don't draw spine 
     ax.yaxis.set_ticks_position('bottom')
 
 
@@ -29,7 +32,7 @@ def turn_off_left_and_right(pylab):
     ax = pylab.gca()
     for loc, spine in ax.spines.iteritems():
         if loc in ['left', 'right']:
-            spine.set_color('none') # don't draw spine 
+            spine.set_color('none')  # don't draw spine 
     pylab.yticks([], [])
 
 
@@ -60,7 +63,7 @@ def set_spines_look_A(pylab, outward_offset=10,
         if loc in ['left', 'bottom']:
             spine.set_position(('outward', outward_offset))
         elif loc in ['right', 'top']:
-            spine.set_color('none') # don't draw spine
+            spine.set_color('none')  # don't draw spine
         else:
             raise ValueError('unknown spine location: %s' % loc)
 
@@ -72,7 +75,7 @@ def set_spines_look_A(pylab, outward_offset=10,
 
     ax.get_frame().set_linewidth(linewidth)
 
-#for l in ax1.yaxis.get_minorticklines()+ax1.xaxis.get_minorticklines():
+# for l in ax1.yaxis.get_minorticklines()+ax1.xaxis.get_minorticklines():
 #
 #    l.set_markersize(3) 
 #
