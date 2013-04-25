@@ -3,7 +3,7 @@ from setup_info import console_scripts
 
 package_data = {'':['*.*']}
 
-version = '2.0'
+version = '2.3dev1'
 
 setup(name='reprep',
       version=version,

@@ -12,15 +12,8 @@ import numpy as np
     
         dict(key=value) -> dict(key2=value2,...)
         
-    
-
-
-
-
-
 """
 
 from .storing import *
-from .repmanager import *
 from .statistics import *
 
