@@ -18,11 +18,20 @@ class ReportInterface:
         return node
 
     @contextmanager
+    @contract(nid='None|valid_id', caption='None|str', robust='bool')
     def subsection(self, nid=None, caption=None, robust=False):
-        """ TODO: change name. 
+        """ 
+         
             Can be called as a context manager.
             If robust is True, logs any error but continues on with
             stuff.
+            
+            Call like this: ::
+            
+                r = Report()
+                with r.subsection() as sub:
+                    make_report(sub)
+            
         """
         s = self.section(nid, caption)
         try: 
@@ -34,7 +43,12 @@ class ReportInterface:
                 logger.exception(e)
                 s.text('error', traceback.format_exc(e))            
         
-
+#     def sub_call(self, nid, function, *args, **kwargs, robust=True, caption=None):
+#         """ 
+#             Even shorter alternative. Defaults to robust = True. 
+#         """
+#         with self.subsection(nid) as
+        
     @contract(nid='valid_id', mime='None|str', caption='None|str')
     def data(self, nid, data, mime=MIME_PYTHON, caption=None):
         ''' 

@@ -45,11 +45,11 @@ class Figure(Node):
             return False
 
         if self.cols != other.cols:
-            #logger.error('Cols: %s %s' % (self.cols, other.cols))
+            # logger.error('Cols: %s %s' % (self.cols, other.cols))
             return False
 
         if self.subfigures != other.subfigures:
-            #logger.error('Sub: %s %s' % (self.subfigures, other.subfigures))
+            # logger.error('Sub: %s %s' % (self.subfigures, other.subfigures))
             return False
         
         return True
@@ -89,6 +89,9 @@ class Figure(Node):
             caption = data.caption
             if caption is None:
                 caption = data.nid
+                # TODO: check if automatically generated
+#                 if data.nid in ['scale', 'posneg']:
+#                     caption = data.parent
 
         if data.get_complete_id() in self.automatically_added:
             warnings.warn('Node %r was automatically added to figure (new '
@@ -107,7 +110,7 @@ class Figure(Node):
             image = data.get_first_child_with_mime(MIME_IMAGES)
 
             if image is None:
-                self.parent.print_tree() # XXX
+                self.parent.print_tree()  # XXX
                 raise ValueError('Could not find candidate image for resource '
                                  '%r; image node is %r.' % 
                                  (resource, data.get_complete_id()))
@@ -119,7 +122,7 @@ class Figure(Node):
                          (MIME_WEB_IMAGES, indent(image.format_tree(), '>')))
             # convert the image to web image
             # TODO: to write
-            web_image = image # XXX
+            web_image = image  # XXX
             logger.error('I need to convert %s into a web image.' % 
                          (image))
 
