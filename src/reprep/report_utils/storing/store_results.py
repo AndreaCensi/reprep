@@ -5,6 +5,12 @@ __all__ = ['StoreResults']
 
 class StoreResults(dict):
     
+    def __getitem__(self, attrs):
+        if not isinstance(attrs, frozendict2):
+            assert isinstance(attrs, dict)
+            attrs = frozendict2(**attrs)
+        return dict.__getitem__(self, attrs)
+    
     def __setitem__(self, attrs, value):
         if not isinstance(attrs, dict):
             msg = 'Keys to this dictionary must be dicts'
@@ -12,6 +18,10 @@ class StoreResults(dict):
         # Todo: check all strings
         frozen = frozendict2(**attrs)
         dict.__setitem__(self, frozen, value)
+
+    def __contains__(self, attrs):
+        frozen = frozendict2(**attrs)
+        return dict.__contains__(self, frozen)
 
     def select(self, *cond, **condkeys):
         """ Returns another StoreResults with the filtered results. """
