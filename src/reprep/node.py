@@ -88,6 +88,14 @@ class Node(ReportInterface):
         self.childid2node[n.nid] = n
         self.children.append(n)
 
+    def _get_or_create_figure(self):
+        """ Gets the first figure() node created, or creates one. """
+        for n in self.children:
+            from . import Figure
+            if isinstance(n, Figure):
+                return n
+        return self.figure()
+
     def has_child(self, nid):
         return nid in self.childid2node
 

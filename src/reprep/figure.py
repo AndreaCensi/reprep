@@ -68,7 +68,8 @@ class Figure(Node):
             child.get_first_child_with_mime(MIME_IMAGES)):
             self.sub(child, child.caption)
             
-            self.automatically_added.add(child.get_complete_id())
+#             self.automatically_added.add(child.get_complete_id())
+            self.automatically_added.add(child)
 
     def sub(self, resource, caption=None, display=None, **kwargs):
         ''' Adds a subfigure displaying the given resource. 
@@ -93,7 +94,9 @@ class Figure(Node):
 #                 if data.nid in ['scale', 'posneg']:
 #                     caption = data.parent
 
-        if data.get_complete_id() in self.automatically_added:
+        # if data.get_complete_id() in self.automatically_added:
+        if data in self.automatically_added:
+            
             warnings.warn('Node %r was automatically added to figure (new '
                           'behavior in 1.0).' % 
                           self.get_relative_url(data), stacklevel=2)

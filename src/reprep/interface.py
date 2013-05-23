@@ -1,10 +1,12 @@
-from . import MIME_PLAIN, contract, MIME_PYTHON, MIME_PNG
+from reprep import MIME_PLAIN, MIME_PYTHON, MIME_PNG
+from contracts import contract
 import warnings
 from contextlib import contextmanager
-from . import logger
+from reprep import logger
 import traceback
 
-class ReportInterface:
+
+class ReportInterface(object):
 
     @contract(nid='None|valid_id')
     def section(self, nid=None, caption=None):
@@ -188,6 +190,33 @@ class ReportInterface:
             the rest is displayed as plain text.
         '''
         return self.data(nid=nid, data=text, mime=mime)
+
+
+    @contract(name='str', value='array', caption='None|str')
+    def array(self, name, value, caption=None):  # XXX to change
+        self.data(name, value, mime=MIME_PYTHON, caption=caption)
+
+    @contract(name='str', value='array', filter='str', caption='None|str')
+    def array_as_image(self, name, value,
+                       filter='posneg',  # @ReservedAssignment # XXX: config
+                       filter_params={},
+                       caption=None):  # @ReservedAssignment
+        """ Not elegant -- for backward compatibility. """
+        f = self._get_or_create_figure() 
+        
+        # try image XXX check uint8
+        # If this is RGB
+        if len(value.shape) == 3 and value.shape[2] == 3:
+            # zoom images smaller than 50
+            #            if value.shape[0] < 50:
+            #                value = zoom(value, 10)
+            self.data_rgb(name, value, caption=caption)
+        else:
+            node = self.data(name, value, mime=MIME_PYTHON, caption=caption)
+            m = node.display(filter, **filter_params)
+            if caption is None:
+                caption = name
+            f.sub(m, caption=caption)
 
     def to_html(self, filename, resources_dir=None, **kwargs):
         ''' Creates a HTML representation of this report. '''
