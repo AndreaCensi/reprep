@@ -2,7 +2,7 @@ from . import logger
 
 __all__ = ['get_matplotlib', 'get_pylab_instance']
 
-class Global:
+class Global(object):
     my_pylab_instance = None
     matplotlib_error = None
     my_matplotlib = None
@@ -12,7 +12,7 @@ def try_load_matplotlib():
     if Global.loaded:
         return
     
-    logger.info('Trying loading matplotlib')
+    # logger.info('Trying loading matplotlib')
     try:
         import matplotlib
     except ImportError as e:
@@ -29,6 +29,10 @@ def try_load_matplotlib():
         Global.my_matplotlib = matplotlib
 
     Global.loaded = True
+    
+# Need to load this now, to set to the "agg" backend, otherwise
+# we might fail in headless environment.
+try_load_matplotlib()
     
 def get_pylab_instance():
     try_load_matplotlib()
