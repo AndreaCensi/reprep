@@ -1,6 +1,8 @@
-from . import contract, np, get_scaled_values
-from .. import get_matplotlib
-from .. import get_pylab_instance
+from . import get_scaled_values
+from .. import get_matplotlib, get_pylab_instance
+from contracts import contract
+import numpy as np
+
 
 
 @contract(returns='array[HxWx4](uint8)')
@@ -10,7 +12,7 @@ def value2rgb(x, vmin=0, vmax=1, cmap='jet'):
     pylab = get_pylab_instance()
     isint = matplotlib.is_interactive()
     if isint:
-        matplotlib.set_interactive(False) #@UndefinedVariable
+        matplotlib.set_interactive(False)  # @UndefinedVariable
     f = pylab.figure()
     # m = f.gca().imshow(x, vmin=vmin, vmax=vmax, 
     # cmap=pyplot.cm.get_cmap(cmap))

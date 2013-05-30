@@ -1,4 +1,6 @@
-from . import np
+
+from contracts import contract
+import numpy as np
 
 
 def plot_horizontal_line(pylab, y, *args, **kwargs):

@@ -1,7 +1,7 @@
-from . import contract, logger
 from .. import DataView, WithDescription
 from ... import StoreResultsDict, StoreResults
-from reprep import MIME_RST, Report
+from contracts import contract
+from reprep import MIME_RST, Report, logger
 
 
 @contract(samples=StoreResults,

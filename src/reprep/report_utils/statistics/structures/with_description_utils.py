@@ -1,5 +1,5 @@
-from . import contract, logger
-
+from contracts import contract
+from reprep import logger
 
 @contract(returns='tuple(None|str,None|str)')
 def symbol_desc_from_docstring(f):
@@ -29,7 +29,7 @@ def symbol_desc_from_string(doc):
     if ':=' in doc:
         tokens = doc.split(':=')
         symbol = tokens[0]
-        #desc = "".join(tokens[1:])
+        # desc = "".join(tokens[1:])
         rest = tokens[1]
         lines = rest.split('\n')
         desc = lines[0]

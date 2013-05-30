@@ -1,6 +1,9 @@
-from . import contract, np, skim_top
+from . import skim_top
+from contracts import contract
 from numpy import maximum, minimum, zeros
 import numpy
+import numpy as np
+
 
 
 @contract(value='array[HxW],H>0,W>0',
@@ -48,7 +51,7 @@ def scale(value, min_value=None, max_value=None,
 #    if value.ndim > 2:
 #        value = value.squeeze()
 
-    if value.dtype == numpy.dtype('uint8'): # todo: or other integers
+    if value.dtype == numpy.dtype('uint8'):  # todo: or other integers
         value = value.astype('float32')
         
     isnan = np.logical_not(np.isfinite(value))
@@ -76,7 +79,7 @@ def scale(value, min_value=None, max_value=None,
       (not np.isfinite(min_value)) or \
       (not np.isfinite(max_value)):
         result = zeros((H, W, 3), dtype='uint8')
-        result[:, :, 0] = flat_color[0] # TODO: write something?
+        result[:, :, 0] = flat_color[0]  # TODO: write something?
         result[:, :, 1] = flat_color[1]
         result[:, :, 2] = flat_color[2]
         mark_nan(result, isnan, nan_color)
@@ -90,7 +93,7 @@ def scale(value, min_value=None, max_value=None,
     # Cut at the thresholds
     value01 = maximum(value01, 0)
     value01 = minimum(value01, 1)
-    value01[isnan] = 0.5 # any value
+    value01[isnan] = 0.5  # any value
     result = interpolate_colors(value01, min_color, max_color)
     mark_nan(result, isnan, nan_color)
     return result

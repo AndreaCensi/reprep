@@ -1,22 +1,24 @@
-from . import np, contract
 from .. import RepRepStats
 
      
+from contracts import contract
+import numpy as np
+
 
 @RepRepStats.reduction
-def all(x): #@ReservedAssignment
+def all(x):  # @ReservedAssignment
     """ %s := %s """
     return x
 
 @RepRepStats.reduction
-def one(x): #@ReservedAssignment
+def one(x):  # @ReservedAssignment
     """ %s := Unique value of %s """
     if len(x) != 1:
         raise ValueError('Expected a unique value, got %s.' % len(x))
     return x[0]
 
 @RepRepStats.reduction
-def num(x): #@ReservedAssignment
+def num(x):  # @ReservedAssignment
     """ n%s := Number of samples of %s"""
     return len(x)
 
@@ -24,13 +26,13 @@ def notnone(x):
     return [a for a in x if a is not None]
 
 @RepRepStats.reduction
-def min(x): #@ReservedAssignment
+def min(x):  # @ReservedAssignment
     """ min(%s) := Minimum of %s """
     x = notnone(x)
     return np.nanmin(x)
 
 @RepRepStats.reduction
-def max(x): #@ReservedAssignment
+def max(x):  # @ReservedAssignment
     """ max(%s) := Maximum of %s """
     x = notnone(x)
     return np.nanmax(x)
@@ -60,7 +62,7 @@ def mean_std(a):
 @contract(a='array[N]|list', returns='tuple(number, number, number)')
 def min_mean_max(a):
     """ b\{%s\} := Min, mean and max of %s """
-    a = np.asarray(a, dtype='float') # converts bool
+    a = np.asarray(a, dtype='float')  # converts bool
     from scipy.stats.stats import nanmean
     return (np.nanmin(a), nanmean(a), np.max(a))
 

@@ -1,6 +1,8 @@
+from . import reprep_demo
 from reprep import filter_colormap
 from reprep.graphics import get_solid
-from . import np, reprep_demo
+import numpy as np
+
 
 
 def get_test_bar(shape=(100, 10)):

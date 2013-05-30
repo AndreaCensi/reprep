@@ -1,4 +1,6 @@
-from . import contract, np
+
+from contracts import contract
+import numpy as np
 
 
 @contract(values='array[HxW]',

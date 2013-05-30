@@ -5,7 +5,7 @@ import warnings
 import sys
 
 
-class SubFigure:
+class SubFigure(object):
     def __init__(self, resource, image, web_image, caption):
         self.resource = resource
         self.image = image

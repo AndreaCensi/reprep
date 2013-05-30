@@ -1,4 +1,8 @@
-from . import contract, Node, describe_value, np
+from . import Node, describe_value
+from contracts import contract
+import numpy as np
+
+
 
 # TODO: use contracts
 
@@ -27,7 +31,7 @@ class Table(Node):
             # check that all of them are lists with same type
             for row in data:
                 if not isinstance(row, list):
-                    raise ValueError('Expected rows to be list, got %s' %
+                    raise ValueError('Expected rows to be list, got %s' % 
                                      row.__class__.__name__)
                 if not len(row) == len(data[0]):
                     raise ValueError('I want all rows to be the same length'
@@ -49,12 +53,12 @@ class Table(Node):
 
         elif isinstance(data, np.ndarray):
             if not data.ndim in [1, 2]:
-                raise ValueError('Expected array of 1D or 2D shape, got %s.' %
+                raise ValueError('Expected array of 1D or 2D shape, got %s.' % 
                                 describe_value(data))
 
             if data.ndim == 1:
                 # use fields name if desc not provided
-                if cols is None: # and data.dtype.fields is not None: 
+                if cols is None:  # and data.dtype.fields is not None: 
                     cols = list(data.dtype.fields)
 
                 nrows = len(data)
@@ -84,7 +88,7 @@ class Table(Node):
                 data = data.tolist()
 
         else:
-            raise ValueError('Expected list of lists or ndarray, got %s.' %
+            raise ValueError('Expected list of lists or ndarray, got %s.' % 
                              data.__class__.__name__)
 
 #        check_multiple([ (cols, 'list[C](str|None),C>0'),

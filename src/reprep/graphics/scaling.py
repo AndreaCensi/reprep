@@ -1,4 +1,6 @@
-from . import contract, np
+
+from contracts import contract
+import numpy as np
 
 
 @contract(a='array', top_percent='>=0,<=90')

@@ -1,5 +1,8 @@
-from . import contract, np, skim_top
+from . import  skim_top
 from numpy import maximum, minimum, zeros
+
+from contracts import contract
+import numpy as np
 
 
 @contract(value='array[HxW],H>0,W>0', max_value='None|number',
@@ -12,7 +15,7 @@ def posneg(value, max_value=None, skim=0, nan_color=[0.5, 0.5, 0.5],
      
     """
     value = value.astype('float32')
-    #value = value.squeeze().copy() # squeeze: (1,1) -> ()
+    # value = value.squeeze().copy() # squeeze: (1,1) -> ()
     value = value.copy()
 
     isfinite = np.isfinite(value)
@@ -29,7 +32,7 @@ def posneg(value, max_value=None, skim=0, nan_color=[0.5, 0.5, 0.5],
 
     if max_value == 0:
         # In this case, it means that all is 0
-        max_value = 1 # don't divide by 0 later
+        max_value = 1  # don't divide by 0 later
 
     assert np.isfinite(max_value)
 

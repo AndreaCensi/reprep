@@ -4,7 +4,7 @@ import mimetypes
 import tempfile
 
 
-class Attacher:
+class Attacher(object):
 
     @contract(node=Node, nid='valid_id', mime='None|str', caption='None|str')
     def __init__(self, node, nid, mime, caption):
@@ -36,7 +36,7 @@ class Attacher:
         self.temp_file.close()
 
 
-class PylabAttacher:
+class PylabAttacher(object):
 
     @contract(node=Node, nid='valid_id', mime='None|str', caption='None|str')
     def __init__(self, node, nid, mime, caption, **figure_args):
@@ -61,7 +61,7 @@ class PylabAttacher:
     def __enter__(self):
         return self.pylab
 
-    def __exit__(self, exc_type, exc_value, traceback): #@UnusedVariable
+    def __exit__(self, exc_type, exc_value, traceback):  # @UnusedVariable
         if exc_type is not None:
             # an error occurred. Close the figure and return false.
             self.pylab.close()
@@ -104,7 +104,7 @@ def data_rgb_imp(parent, nid, rgb, mime=MIME_PNG, caption=None):
     from .graphics import Image_from_array, rgb_zoom
 
     # zoom images smaller than 50
-    if max(rgb.shape[0], rgb.shape[1]) < 50: # XXX config
+    if max(rgb.shape[0], rgb.shape[1]) < 50:  # XXX config
         rgb = rgb_zoom(rgb, 10)
 
     pil_image = Image_from_array(rgb)

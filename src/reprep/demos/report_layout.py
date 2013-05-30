@@ -1,4 +1,6 @@
-from . import np, reprep_demo
+from . import reprep_demo
+import numpy as np
+
 
 
 @reprep_demo
