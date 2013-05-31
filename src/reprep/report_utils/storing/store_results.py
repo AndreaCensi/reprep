@@ -54,6 +54,10 @@ class StoreResults(dict):
         return r
 
     def select_key(self, *conditions, **condkeys):
+        """ 
+            Selects keys according to some conditions, which could be either
+            functions, or key=value queries.
+        """
         for attrs in self:
             for c in conditions:
                 if not c(attrs):
@@ -125,7 +129,7 @@ class StoreResults(dict):
             
             Example: :: 
             
-                for delta, samples in x.groups_by_field_values('delta'):
+                for delta, samples in x.groups_by_field_value('delta'):
                     ...
         """
         field_values = set(self.field(field))     
