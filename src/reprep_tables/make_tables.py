@@ -1,7 +1,7 @@
 from contracts import contract
 from reprep.report_utils.statistics.tables.tables_misc import table_by_rows
 
-
+__all__ = ['jobs_tables_by_sample']
 
 @contract(cols_fields='list(str)')
 def jobs_tables_by_sample(context, id_table, allstats, one_table_for_each, rows_field, cols_fields,
@@ -16,5 +16,7 @@ def jobs_tables_by_sample(context, id_table, allstats, one_table_for_each, rows_
                         job_id=job_id)
         attrs = case_runs.fields_with_unique_values()
         attrs[one_table_for_each] = id_case
+        if rows_field in attrs:
+            del attrs[rows_field]
         context.add_report(report, id_table, **attrs)
 
