@@ -1,4 +1,4 @@
-from . import logger
+from reprep import logger
 
 __all__ = ['get_matplotlib', 'get_pylab_instance']
 

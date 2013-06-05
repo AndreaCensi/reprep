@@ -1,9 +1,13 @@
-from . import (MIME_IMAGES, logger, Node, DataNode, contract, describe_type,
-    MIME_WEB_IMAGES)
+from .datanode import DataNode
+from .node import Node
 from .utils import indent
-import warnings
+from contracts import contract, describe_type
+from reprep import logger, MIME_IMAGES, MIME_WEB_IMAGES
 import sys
+import warnings
 
+
+__all__ = ['Figure', 'SubFigure']
 
 class SubFigure(object):
     def __init__(self, resource, image, web_image, caption):
@@ -101,11 +105,11 @@ class Figure(Node):
                           'behavior in 1.0).' % 
                           self.get_relative_url(data), stacklevel=2)
             return
-
-        if not isinstance(data, DataNode):
-            msg = ('I expect a DataNode as an argument to sub(), not a %s.'
-                   % describe_type(resource))
-            raise ValueError(msg)
+# 
+#         if not isinstance(data, DataNode):
+#             msg = ('I expect a DataNode as an argument to sub(), not a %s.'
+#                    % describe_type(resource))
+#             raise ValueError(msg)
 
         if display is not None:
             image = data.display(display, **kwargs)

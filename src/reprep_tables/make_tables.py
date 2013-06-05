@@ -18,5 +18,5 @@ def jobs_tables_by_sample(context, id_table, allstats, one_table_for_each, rows_
         attrs[one_table_for_each] = id_case
         if rows_field in attrs:
             del attrs[rows_field]
-        context.add_report(report, id_table, **attrs)
+        context.add_report(report, '%s-%s' % (id_table, id_case), **attrs)
 

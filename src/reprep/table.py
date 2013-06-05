@@ -1,9 +1,9 @@
-from . import Node, describe_value
-from contracts import contract
+from .node import Node
+from contracts import contract, describe_value
 import numpy as np
 
 
-
+__all__ = ['Table'] 
 # TODO: use contracts
 
 class Table(Node):

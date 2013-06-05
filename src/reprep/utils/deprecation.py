@@ -1,5 +1,7 @@
 import warnings
 
+__all__ = ['deprecated']
+
 def deprecated(func):
     """This is a decorator which can be used to mark functions
     as deprecated. It will result in a warning being emitted

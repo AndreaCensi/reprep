@@ -5,6 +5,8 @@ import sys
 import numpy as np
 
 
+__all__ = ['DataNode']
+
 class DataNode(Node):
 
     @contract(nid='valid_id', mime='str', caption='None|str')
@@ -68,12 +70,6 @@ class DataNode(Node):
 
         return self.resolve_url_dumb(nid) 
 
-    @contract(mime_types='list(str)')
-    def get_first_child_with_mime(self, mime_types):
-        ''' Search recursively the child with the given mime. '''
-        def choose(node):
-            return isinstance(node, DataNode) and node.mime in mime_types
-        return self.find_recursively(choose)
 
 
     def pil_from_compressed(self):

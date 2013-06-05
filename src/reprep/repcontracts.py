@@ -1,7 +1,8 @@
-from . import VALID_ID_REGEXP
+from reprep import VALID_ID_REGEXP
 from contracts import new_contract
 import re
 
+__all__ = ['valid_id']
 
 @new_contract
 def valid_id(s):

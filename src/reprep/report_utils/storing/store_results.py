@@ -86,7 +86,7 @@ class StoreResults(dict):
     def field_names(self):
         """ 
             Returns all field names presents.
-            Note that some fields might not be present in all entries.
+            Note that, in general, some fields might not be present in all entries.
         """
         if len(self) == 0:
             return []

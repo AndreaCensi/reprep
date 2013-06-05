@@ -1,6 +1,8 @@
-from . import (contract, ReportInterface, describe_type, InvalidURL, NotExistent)
+from .interface import ReportInterface
+from .structures import InvalidURL, NotExistent
 from StringIO import StringIO
 import sys
+from contracts import contract, describe_type
 
 __all__ = ['Node']
 
@@ -236,6 +238,7 @@ class Node(ReportInterface):
             child.print_tree(s, prefix + '  ')
 
     def format_tree(self):
+        """ Returns a visualization of the tree structurs """
         s = StringIO()
         self.print_tree(s)
         return s.getvalue()
@@ -264,10 +267,19 @@ class Node(ReportInterface):
                     return res
             return None
 
+    @contract(mime_types='list(str)')
+    def get_first_child_with_mime(self, mime_types):
+        ''' Search recursively the child with the given mime. '''
+        def choose(node):
+            from reprep.datanode import DataNode
+            return isinstance(node, DataNode) and node.mime in mime_types
+        return self.find_recursively(choose)
+
     def get_first_available_name(self, prefix):
         for i in xrange(1, 1000):
             nid = '%s%d' % (prefix, i)
             if not self.has_child(nid):
                 return nid
         assert False
+
 

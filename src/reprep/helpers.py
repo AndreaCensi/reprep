@@ -1,8 +1,12 @@
-from . import (DataNode, MIME_JPG, MIME_SVG, MIME_PDF, RepRepDefaults, MIME_PNG,
-    contract, Node, get_pylab_instance)
+from .mpl import  get_pylab_instance
 import mimetypes
 import tempfile
+from contracts import contract
+from .node import Node
+from .datanode import DataNode
+from reprep import MIME_JPG, MIME_SVG, MIME_PDF, MIME_PNG, RepRepDefaults
 
+__all__ = ['PylabAttacher', 'Attacher']
 
 class Attacher(object):
 
@@ -12,6 +16,8 @@ class Attacher(object):
         self.nid = nid
         self.mime = mime
         self.caption = caption
+        if node.has_child(nid):
+            raise ValueError('Node %s already hsa child %r' % (node, nid))
         if self.mime is not None:
             suffix = mimetypes.guess_extension(self.mime)
             if not suffix:
@@ -47,6 +53,9 @@ class PylabAttacher(object):
 
         if self.mime is None:
             self.mime = RepRepDefaults.default_image_format
+
+        if node.has_child(nid):
+            raise ValueError('Node %s already has child %r' % (node, nid))
 
         suffix = mimetypes.guess_extension(self.mime)
         if not suffix:

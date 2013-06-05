@@ -5,6 +5,7 @@ from contextlib import contextmanager
 from reprep import logger
 import traceback
 
+__all__ = ['ReportInterface']
 
 class ReportInterface(object):
 
