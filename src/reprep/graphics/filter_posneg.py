@@ -4,8 +4,9 @@ from numpy import maximum, minimum, zeros
 from contracts import contract
 import numpy as np
 
+__all__ = ['posneg']
 
-@contract(value='array[HxW],H>0,W>0', max_value='None|number',
+@contract(value='array[HxW],H>0,W>0', max_value='None|float',
           skim='>=0,<=90', nan_color='color_spec')
 def posneg(value, max_value=None, skim=0, nan_color=[0.5, 0.5, 0.5],
            properties=None):
