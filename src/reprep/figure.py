@@ -63,7 +63,7 @@ class Figure(Node):
         for sub in self.subfigures:
             s.write(prefix + ' sub %s\n' % sub)
         
-        
+    @contract(child=Node)
     def add_child(self, child):
         """ Automatically add child if it can be displayed. """
         Node.add_child(self, child)
@@ -72,9 +72,9 @@ class Figure(Node):
             child.get_first_child_with_mime(MIME_IMAGES)):
             self.sub(child, child.caption)
             
-#             self.automatically_added.add(child.get_complete_id())
             self.automatically_added.add(child)
 
+#     @contract(resource='DataNode|str')
     def sub(self, resource, caption=None, display=None, **kwargs):
         ''' Adds a subfigure displaying the given resource. 
         
@@ -83,11 +83,15 @@ class Figure(Node):
 
         if isinstance(resource, str):
             data = self.resolve_url(resource)
-        elif isinstance(resource, Node):
+            if not isinstance(data, DataNode):
+                msg = ('I expected a DataNode for %r, got %s' % 
+                       (resource, data))
+                raise ValueError(msg)
+        elif isinstance(resource, DataNode):
             data = resource
         else:
             raise ValueError('The first parameter to sub() must be either'
-                             ' a string (url) or a reference to a Node, '
+                             ' a string (url) or a reference to a DataNode, '
                              ' not a %s.' % describe_type(resource))
 
         if caption is None:

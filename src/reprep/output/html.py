@@ -1,14 +1,15 @@
-from . import logger
-from .. import MIME_PLAIN, MIME_RST, MIME_PYTHON, Node
-from pkg_resources import (resource_filename)  # @UnresolvedImport  Eclipse fails here
+from pkg_resources import (
+    resource_filename)  # @UnresolvedImport  Eclipse fails here
+from reprep import MIME_PLAIN, MIME_RST, MIME_PYTHON, Node, logger
 from string import Template
+from types import NoneType
 import cPickle
 import datetime
 import mimetypes
 import os
 import shutil
 import sys
-from types import NoneType
+from reprep.datanode import DataNode
 
 mathjax_header = """
     
@@ -373,6 +374,8 @@ def figure_to_html(node, context):
 
         file.write('<div class="%s"> ' % " ".join(classes))
 
+        main_resource = node.resolve_url(sub.resource)
+        
         try:
             actual_resource = node.resolve_url(sub.web_image)
         except:
@@ -389,9 +392,16 @@ def figure_to_html(node, context):
                 </a>    
             ''').substitute(src=image_filename)
         )
-
+        
+        
         file.write('<p class="report-subfigure-caption">%s</p>' % 
                  htmlfy(sub.caption))
+        
+        if main_resource != actual_resource:
+            if isinstance(main_resource, DataNode):
+                t = '<p class="report-subfigure-main-link"><a href="${src}"> main </a></p>'
+                file.write(Template(t).substitute(src=get_node_filename(main_resource, context)[0]))
+
         file.write('</div> ')
 
         if last_col:

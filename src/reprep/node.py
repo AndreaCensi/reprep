@@ -78,6 +78,7 @@ class Node(ReportInterface):
             method directly. 
         '''
         assert n is not None
+        assert isinstance(n, Node)
         if n.nid is not None:
             if n.nid in self.childid2node:
                 raise Exception('Already have child with same id %r.' % n.nid)
@@ -135,6 +136,7 @@ class Node(ReportInterface):
                     return self
                 msg = ('Could not find child %r; I know %s.' % 
                         (nid, self.childid2node.keys()))
+                msg += '\n' + self.format_tree()
                 raise NotExistent(msg)
             return l[nid]
 

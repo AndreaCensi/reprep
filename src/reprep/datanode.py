@@ -45,11 +45,13 @@ class DataNode(Node):
         # TODO: save display parameters
         if display is None:
             display = 'posneg'
+        from reprep.graphics.filter_posneg import posneg_hinton
         known = {'posneg': posneg,
                  'success': colorize_success,
                  'scale': scale,
                  'rgb': just_check_rgb,
-                 'posneg_zoom': posneg_zoom}
+                 'posneg_zoom': posneg_zoom,
+                 'posneg_hinton': posneg_hinton}
         if not display in known:
             raise ValueError('No known converter %r. ' % display)
         nid = display  # TODO: check; add args in the name
@@ -69,8 +71,6 @@ class DataNode(Node):
         # Add here automatic saving of scale
 
         return self.resolve_url_dumb(nid) 
-
-
 
     def pil_from_compressed(self):
         """ Assuming this is a bitmap image, returns a PIL image from the data """

@@ -192,7 +192,6 @@ class ReportInterface(object):
         '''
         return self.data(nid=nid, data=text, mime=mime)
 
-
     @contract(name='str', value='array', caption='None|str')
     def array(self, name, value, caption=None):  # XXX to change
         self.data(name, value, mime=MIME_PYTHON, caption=caption)

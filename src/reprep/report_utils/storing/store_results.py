@@ -9,7 +9,16 @@ class StoreResults(dict):
         if not isinstance(attrs, frozendict2):
             assert isinstance(attrs, dict)
             attrs = frozendict2(**attrs)
-        return dict.__getitem__(self, attrs)
+        try:
+            return dict.__getitem__(self, attrs)
+        except KeyError as e:
+            msg = str(e)
+            keys = self.keys()
+            if keys:
+                k = most_similar(self.keys(), attrs)
+                msg += '\n The most similar key is: %s' % str(k)
+            raise KeyError(msg)
+            
     
     def __setitem__(self, attrs, value):
         if not isinstance(attrs, dict):
@@ -147,10 +156,29 @@ class StoreResults(dict):
 new_contract('StoreResults', StoreResults)        
 
         
-            
-            
-            
-    
+             
      
+
+def most_similar(keys, key):
+    """ Returns the key which is most similar """
+
+    def score(key1):
+        v1 = set(key1.values())
+        v2 = set(key.values())
+        return len(v1 & v2)
+    
+    import numpy as np
+    keys = list(keys)
+    scores = np.array(map(score, keys))
+    
+#     tie = np.sum(scores == np.max(scores)) > 1
+#     if tie:
+#         # print('there is a tie: %s,\n %s' % (key, keys))
+#         return None
+#     
+    best = keys[np.argmax(scores)]
+    return best
+    
+    
          
 

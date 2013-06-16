@@ -34,3 +34,13 @@ def demo_colormaps(r):
         f.data_rgb('inf_color', get_solid((20, 20), properties['inf_color']))
         f.data_rgb('flat_color', get_solid((20, 20), properties['flat_color']))
 
+
+@reprep_demo
+def demo_posneg(r):
+    x = np.kron(np.random.randn(50, 50), np.ones((5, 5)))
+    
+    x = x - x.T
+    f = r.figure()
+    f.data('a', x).display('posneg').add_to(f)
+    f.data('b', x).display('posneg_hinton').add_to(f)
+    
