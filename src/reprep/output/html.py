@@ -10,6 +10,7 @@ import os
 import shutil
 import sys
 from reprep.datanode import DataNode
+import warnings
 
 mathjax_header = """
     
@@ -111,12 +112,12 @@ ${extra_html_body_end}
 
 class html_context:
     def __init__(self, file,  # @ReservedAssignment
-                 rel_resources_dir, resources_dir, write_pickle):
+                 rel_resources_dir, resources_dir, write_pickle, pickle_compress):
         self.file = file
         self.rel_resources_dir = rel_resources_dir
         self.resources_dir = resources_dir
         self.write_pickle = write_pickle
-
+        self.pickle_compress = pickle_compress
 
 def htmlfy(s):
     # XXX to write
@@ -177,6 +178,7 @@ def node_to_html_document(node, filename,
                           resources_dir=None,
                           extra_css=None,
                           write_pickle=False,
+                          pickle_compress=True,
                           extra_html_body_start="",
                           extra_html_body_end=""
                           ):
@@ -234,7 +236,8 @@ def node_to_html_document(node, filename,
         context = html_context(f,
                     resources_dir=resources_dir,
                     rel_resources_dir=rel_resources_dir,
-                    write_pickle=write_pickle)
+                    write_pickle=write_pickle,
+                    pickle_compress=pickle_compress)
         node_to_html(node, context)
 
         f.write(Template(footer).substitute(mapping))
@@ -478,6 +481,7 @@ def datanode_to_html(node, context):
         if node.mime == MIME_PYTHON:
             # print "Ignoring %s" % filename
             if context.write_pickle:
+                warnings.warn('implement compress')
                 with open(filename, 'wb') as f:
                     cPickle.dump(node.raw_data, f)
             # TODO: add other representations for numpy array

@@ -69,6 +69,10 @@ def y_axis_set(pylab, ymin, ymax):
     a = pylab.axis()
     pylab.axis((a[0], a[1], ymin, ymax))
 
+def y_axis_set_min(pylab, ymin):
+    a = pylab.axis()
+    pylab.axis((a[0], a[1], ymin, a[3]))
+
 
 def turn_all_axes_off(pylab):
     """ Turns everything off. (TODO) """
