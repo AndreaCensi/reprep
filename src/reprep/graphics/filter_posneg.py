@@ -1,8 +1,8 @@
-from . import  skim_top
-from numpy import maximum, minimum, zeros
-
+from . import skim_top
 from contracts import contract
+from numpy import maximum, minimum, zeros
 import numpy as np
+
 
 __all__ = ['posneg', 'posneg_hinton']
 

@@ -4,7 +4,9 @@ from StringIO import StringIO
 import sys
 from contracts import contract, describe_type
 
+
 __all__ = ['Node']
+
 
 class Node(ReportInterface):
 
@@ -31,6 +33,7 @@ class Node(ReportInterface):
         
         self.caption = caption
 
+        self.explicit_figure_created = []
 
     def __eq__(self, other):
         if self is other:

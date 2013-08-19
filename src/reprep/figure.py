@@ -9,21 +9,6 @@ import warnings
 
 __all__ = ['Figure', 'SubFigure']
 
-class SubFigure(object):
-    def __init__(self, resource, image, web_image, caption):
-        self.resource = resource
-        self.image = image
-        self.web_image = web_image
-        self.caption = caption
-  
-    def __eq__(self, other):
-        return ((type(self) == type(other)) and 
-                (self.__dict__ == other.__dict__)) 
-
-    def __repr__(self):
-        return ('Sub(%s,%s,%s,%s)' % 
-                (self.resource, self.image, self.web_image, self.caption))
-
 class Figure(Node):
 
     @contract(cols='None|(int,>0)')
@@ -146,3 +131,20 @@ class Figure(Node):
     def get_subfigures(self):
         return self.subfigures
 
+
+
+
+class SubFigure(object):
+    def __init__(self, resource, image, web_image, caption):
+        self.resource = resource
+        self.image = image
+        self.web_image = web_image
+        self.caption = caption
+  
+    def __eq__(self, other):
+        return ((type(self) == type(other)) and 
+                (self.__dict__ == other.__dict__)) 
+
+    def __repr__(self):
+        return ('Sub(%s,%s,%s,%s)' % 
+                (self.resource, self.image, self.web_image, self.caption))
