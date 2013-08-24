@@ -20,6 +20,25 @@ class ReportInterface(object):
             node.text('caption', caption)
         return node
 
+
+    @contract(subsections='list(str)')
+    def set_subsections_needed(self, subsections):
+        """
+            Marks the subsections that need to be generated;
+            if this is given then the others are ignored. ::
+            
+                r = Report()
+                r.set_subsections_needed(['estimator'])
+                
+                with r.subsection('estimator') as sub:
+                    # ok
+
+                with r.subsection('model') as sub:
+                    # ignored
+
+        """
+        self._subsections_needed = subsections
+    
     @contextmanager
     @contract(nid='None|valid_id', caption='None|str', robust='bool')
     def subsection(self, nid=None, caption=None, robust=False):
@@ -36,7 +55,33 @@ class ReportInterface(object):
                     make_report(sub)
             
         """
+        
+        # check if we want to create this subsection
+        if self._subsections_needed is not None:
+            for subname in self._subsections_needed:
+                first = subname.split('/')[0]
+                if first == nid:
+                    # ok
+                    break
+            else:
+                # print('Section name %r not required (%r)' % (nid, self._subsections_needed))
+                yield None
+                return
+        
         s = self.section(nid, caption)
+        
+        if self._subsections_needed is not None:
+            his = []
+            for subname in self._subsections_needed:
+                tokens = subname.split('/') 
+                first = tokens[0]
+                other = tokens[1:]
+                if first == nid and other:
+                    his.append("/".join(other))
+            if his:
+                # print('his needed are %r' % his)
+                s.set_subsections_needed(his)
+        
         try: 
             yield s
         except Exception as e:
@@ -45,12 +90,6 @@ class ReportInterface(object):
             else:
                 logger.exception(e)
                 s.text('error', traceback.format_exc(e))            
-        
-#     def sub_call(self, nid, function, *args, **kwargs, robust=True, caption=None):
-#         """ 
-#             Even shorter alternative. Defaults to robust = True. 
-#         """
-#         with self.subsection(nid) as
         
     @contract(nid='valid_id', mime='None|str', caption='None|str')
     def data(self, nid, data, mime=MIME_PYTHON, caption=None):

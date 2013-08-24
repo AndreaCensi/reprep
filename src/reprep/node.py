@@ -32,8 +32,12 @@ class Node(ReportInterface):
         self.parent = None
         
         self.caption = caption
+        
+        
+        # used by subsection(), set_subsections_needed()
+        self._subsections_needed = None
 
-        self.explicit_figure_created = []
+        # self.explicit_figure_created = []
 
     def __eq__(self, other):
         if self is other:
