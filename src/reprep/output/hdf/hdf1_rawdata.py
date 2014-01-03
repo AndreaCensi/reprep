@@ -2,6 +2,11 @@ from tables.flavor import flavor_of
 from StringIO import StringIO
 import cPickle
 import tables
+from reprep import logger
+from contracts import describe_type, describe_value
+
+__all__ =['write_python_data', 'read_python_data']
+
 
 def write_python_data(parent, name, mime, data):
     hf = parent._v_file
@@ -13,8 +18,24 @@ def write_python_data(parent, name, mime, data):
     except:
         ok_pytables = False
     
+    # 2014-01-02 XXX this is a hack
+    if data == []:
+        ok_pytables = False
+        
     if ok_pytables: 
-        hf.createArray(group, 'value', data)
+        try:
+            hf.createArray(group, 'value', data)
+        except:
+            msg = 'Error while writing python data'
+            msg += '\n parent: %s' % parent
+            msg += '\n name: %s' % name
+            msg += '\n mime: %s' % mime
+            msg += '\n data: %s' % describe_type(data)
+            msg += '\n       %s' % describe_value(data)
+            msg += '\n flavor: %s' % flavor_of(data)
+            msg += '\nraw:\n%s' % data.__repr__()
+            logger.error(msg)
+            raise
         serialized = 'pytables'
     else:
         serialized = 'pickle'
