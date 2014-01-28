@@ -1,5 +1,5 @@
 from reprep import VALID_ID_REGEXP
-from contracts import new_contract
+from contracts import new_contract, contract
 import re
 
 __all__ = ['valid_id']
@@ -12,3 +12,9 @@ def valid_id(s):
         msg = ('The given string %r does not match the spec %r.' % 
                (s, VALID_ID_REGEXP))
         raise ValueError(msg)
+
+@contract(returns='valid_id')
+def sanitize_id(nid):
+    nid = nid.replace('/', '_')
+    nid = nid.replace('.', '_')
+    return nid

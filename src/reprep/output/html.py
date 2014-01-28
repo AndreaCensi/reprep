@@ -163,7 +163,6 @@ def get_node_filename(node, context):
 
     return relative, absolute
 
-
 def normalize(f):
     # convert '-png.png' to '.png'
     base, ext = os.path.splitext(f)
