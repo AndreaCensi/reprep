@@ -2,7 +2,7 @@ from reprep import VALID_ID_REGEXP
 from contracts import new_contract, contract
 import re
 
-__all__ = ['valid_id']
+__all__ = ['valid_id', 'sanitize_id']
 
 @new_contract
 def valid_id(s):
