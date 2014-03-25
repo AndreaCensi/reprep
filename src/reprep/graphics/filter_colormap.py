@@ -1,8 +1,9 @@
-from . import get_scaled_values
-from .. import get_matplotlib, get_pylab_instance
 from contracts import contract
+
 import numpy as np
 
+from . import get_scaled_values
+from .. import get_matplotlib, get_pylab_instance
 
 
 @contract(returns='array[HxWx4](uint8)')
@@ -43,6 +44,20 @@ def filter_colormap(value,
                    flat_color=[0.5, 0.5, 0.5],
                    skim=0,
                    properties=None):
+
+    """
+    
+      shape = grid.get_map().shape
+    xb = np.linspace(0, shape[0] * 1.0, shape[0] / res)
+    yb = np.linspace(0, shape[1] * 1.0, shape[1] / res)
+    X, Y = np.meshgrid(xb, yb)
+    values = F(X,Y)
+    values_rgb = filter_colormap(values, cmap='jet')
+    pylab.imshow(values_rgb, extent=(xb[0], xb[-1], yb[0], yb[-1]))
+
+
+    
+    """
     scaled = get_scaled_values(value,
                                min_value=min_value, max_value=max_value,
                                skim=skim)
