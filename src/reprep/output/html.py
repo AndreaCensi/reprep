@@ -1,16 +1,20 @@
-from pkg_resources import (
-    resource_filename)  # @UnresolvedImport  Eclipse fails here
-from reprep import MIME_PLAIN, MIME_RST, MIME_PYTHON, Node, logger
-from string import Template
-from types import NoneType
 import cPickle
 import datetime
 import mimetypes
 import os
 import shutil
+from string import Template
 import sys
-from reprep.datanode import DataNode
+from types import NoneType
 import warnings
+
+from pkg_resources import (
+    resource_filename)  # @UnresolvedImport  Eclipse fails here
+
+from reprep import Figure, Table
+from reprep import MIME_PLAIN, MIME_RST, MIME_PYTHON, Node, logger
+from reprep.datanode import DataNode
+
 
 mathjax_header = """
     
@@ -270,9 +274,9 @@ def children_to_html(node, context):
         f.write('</div>\n')
 
 
-def node_to_html(node, context):
-    from reprep import Figure, Table, DataNode
 
+
+def node_to_html(node, context):
     functions = {
         DataNode: datanode_to_html,
         Table: table_to_html,
@@ -483,15 +487,20 @@ def datanode_to_html(node, context):
                 warnings.warn('implement compress')
                 with open(filename, 'wb') as f:
                     cPickle.dump(node.raw_data, f)
+                add_link = True
+            else:
+                add_link = False
             # TODO: add other representations for numpy array
         else:
             if not isinstance(node.raw_data, str):
                 sys.stderr.write("Ignoring %s because raw_data is %s\n" % 
                     (filename, node.raw_data.__class__))
+                add_link = False
             else:
                 # print "Writing on %s" % filename
                 with open(filename, 'w') as f:
                     f.write(node.raw_data)
+                add_link = True
 
         inline = ""
 
@@ -504,7 +513,9 @@ def datanode_to_html(node, context):
         else:
             inline = (node.mime)
 
-        if context.write_pickle:
+
+        
+        if add_link:
             name = '<a href="%s">%s</a>: ' % (relative, node.nid)
         else:
             name = '%s:' % node.nid

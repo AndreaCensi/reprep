@@ -6,6 +6,7 @@ MIME_RST = 'text/x-rst'
 MIME_PLAIN = 'text/plain'
 MIME_PYTHON = 'application/python'
 MIME_SVG = 'image/svg+xml'
+MIME_MP4 = 'video/mp4'
 
 # Images 
 MIME_IMAGES = [MIME_PDF, MIME_SVG, MIME_PNG, MIME_JPG]
