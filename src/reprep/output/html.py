@@ -47,13 +47,13 @@ header = """
 <html>
 <head>  
     <script type="text/javascript" 
-        src="${resources}/static/jquery/jquery.js"></script>
+        src="${static}/jquery/jquery.js"></script>
     
     <!-- Use imagezoom plugin --> 
     <script type="text/javascript" 
-        src="${resources}/static/jquery/jquery.imageZoom.js"></script>
+        src="${static}/jquery/jquery.imageZoom.js"></script>
     <link rel="stylesheet" 
-          href="${resources}/static/jquery/jquery.imageZoom.css"/>
+          href="${static}/jquery/jquery.imageZoom.css"/>
     <script type="text/javascript"> 
         $$(document).ready( function () {
             $$('.zoomable').imageZoom();
@@ -62,9 +62,9 @@ header = """
     
     <!-- Use tablesorter plugin -->
     <script type="text/javascript" 
-            src="${resources}/static/jquery/tablesorter/jquery.tablesorter.js"></script> 
+            src="${static}/jquery/tablesorter/jquery.tablesorter.js"></script> 
     <link rel="stylesheet" 
-          href="${resources}/static/jquery/tablesorter/themes/blue/style.css"/>
+          href="${static}/jquery/tablesorter/themes/blue/style.css"/>
     <script type="text/javascript">
     $$(document).ready(function() { 
         $$(".tablesorter").tablesorter(); 
@@ -79,7 +79,7 @@ header = """
     </style>
 
     <link rel="stylesheet" 
-          href="${resources}/static/reprep/default_style.css"/>
+          href="${static}/reprep/default_style.css"/>
 
     <title> ${title} </title>
 <body>
@@ -179,6 +179,7 @@ def normalize(f):
 
 def node_to_html_document(node, filename,
                           resources_dir=None,
+                          static_dir=None,
                           extra_css=None,
                           write_pickle=False,
                           pickle_compress=True,
@@ -193,6 +194,7 @@ def node_to_html_document(node, filename,
     :param extra_css:
     :param extra_html_body_start: Extra HTML to put at the beginning of <body>
     :param write_pickle:
+    :param static_dir: Where to put common materials to all reports. 
     '''
     basename = os.path.basename(filename)
     dirname = os.path.dirname(filename)
@@ -213,21 +215,26 @@ def node_to_html_document(node, filename,
         except: 
             pass 
 
+    if static_dir is None:
+        static_dir = os.path.join(resources_dir, 'static')
+        
     # look for static data
     static = resource_filename("reprep", "static")
-
     if not os.path.exists(static):
         # XXX:
         logger.warn('Warning: resource dir %s not found' % static)
     else:
-        dst = os.path.join(resources_dir, 'static')
-        if not os.path.exists(dst):
+        if not os.path.exists(static_dir):
             # XXX: does not work if updated
-            shutil.copytree(static, dst)
+            shutil.copytree(static, static_dir)
+        
+
+    rel_static_dir = os.path.relpath(static_dir, dirname)
 
     with open(filename, 'w') as f:
         mapping = {'resources': rel_resources_dir,
                    'title': str(node.nid),
+                   'static': rel_static_dir,
                    'extra_css': extra_css if extra_css else "",
                    'date': isodate_with_secs(),
                    'mathjax_header': mathjax_header,
@@ -272,8 +279,6 @@ def children_to_html(node, context):
         for child in second:
             node_to_html(child, context)
         f.write('</div>\n')
-
-
 
 
 def node_to_html(node, context):

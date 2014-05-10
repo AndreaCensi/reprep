@@ -149,6 +149,9 @@ class Node(ReportInterface):
 
     @contract(url='str')
     def resolve_url(self, url, already_visited=None):
+        if not isinstance(url, str):
+            raise ValueError(describe_type(url))
+
         if already_visited is None:
             already_visited = [self]
         else:
