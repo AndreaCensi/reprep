@@ -1,7 +1,6 @@
 from .node import Node
 from contracts import contract, describe_value
 import numpy as np
-from contracts.main import check_multiple
 
 
 __all__ = ['Table'] 

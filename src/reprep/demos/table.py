@@ -1,4 +1,4 @@
-has_row_labels = filter(lambda x: isinstance(x, str) and len(x) > 0, table.rows)from .manager import reprep_demo
+from .manager import reprep_demo
 
 
 @reprep_demo
