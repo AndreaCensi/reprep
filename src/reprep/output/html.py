@@ -305,14 +305,15 @@ def table_to_html(table, context):
 
     f.write('<caption>%s</caption>\n' % caption)
 
-
-    has_row_labels = filter(None, table.rows)
+    has_row_labels = len(filter(None, table.rows)) > 0
 
     if filter(None, table.cols):  # at least one not None
         f.write('<thead>\n')
         f.write('<tr>\n')
+
         if has_row_labels:
-            f.write('<th></th>')
+            f.write('<th>&nbsp;</th>')
+
         for field in table.cols:
             if field is not None:
                 f.write('\t<th>%s</th>\n' % field)
@@ -327,13 +328,9 @@ def table_to_html(table, context):
         html_class = {0: 'even', 1: 'odd'}[i % 2]
         f.write('<tr class="%s">\n' % html_class)
 
-        if table.rows[i] is not None:
+        if has_row_labels:
             f.write('<th>%s</th>\n' % table.rows[i])  # FIXME html escaping
-        else:
-            if has_row_labels:
-                f.write('<th></th>\n')
 
-        # for field in row.dtype.names:
         #  value = row[field]
         if table.fmt is None:
             fmt = '%g'

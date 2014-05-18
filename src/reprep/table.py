@@ -1,6 +1,7 @@
 from .node import Node
 from contracts import contract, describe_value
 import numpy as np
+from contracts.main import check_multiple
 
 
 __all__ = ['Table'] 
@@ -90,11 +91,16 @@ class Table(Node):
         else:
             raise ValueError('Expected list of lists or ndarray, got %s.' % 
                              data.__class__.__name__)
+#
+#         check_multiple([ (cols, 'list[C](str|None),C>0'),
+#                          (rows, 'list[R](str|None),R>0'),
+#                          (data, 'list[R](list[C])'),
+#                          (caption, 'str|None') ])
+#         print('cols', cols)
+#         print('rows', rows)
+#         print('data', data)
+#         print('cols', cols)
 
-#        check_multiple([ (cols, 'list[C](str|None),C>0'),
-#                         (rows, 'list[R](str|None),R>0'),
-#                         (data, 'list[R](list[C])'),
-#                         (caption, 'str|None') ])
         self.data = data
         self.cols = cols
         self.rows = rows

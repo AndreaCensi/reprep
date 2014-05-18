@@ -1,5 +1,7 @@
-from . import reprep_demo, np
+import numpy as np
 from reprep.plot_utils.spines import set_spines_look_A, set_thick_ticks
+
+from .manager import reprep_demo
 
 
 @reprep_demo
