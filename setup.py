@@ -9,7 +9,7 @@ console_scripts = map(lambda s: '%s = %s:main' % (s[0], s[1]), scripts)
 
 package_data = {'':['*.*']}
 
-version = '2.3dev1'
+version = '2.3'
 
 setup(name='reprep',
       version=version,
