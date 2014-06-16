@@ -226,7 +226,14 @@ def node_to_html_document(node, filename,
     else:
         if not os.path.exists(static_dir):
             # XXX: does not work if updated
-            shutil.copytree(static, static_dir)
+            try:
+                shutil.copytree(static, static_dir)
+            except:
+                if os.path.exists(static_dir):
+                    # race condition
+                    pass
+                else:
+                    raise
         
 
     rel_static_dir = os.path.relpath(static_dir, dirname)
