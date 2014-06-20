@@ -202,7 +202,12 @@ def node_to_html_document(node, filename,
     if resources_dir is None:
         resources_dir = os.path.join(dirname, basename + '_resources')
 
-    rel_resources_dir = os.path.relpath(resources_dir, dirname)
+    # print('filename: %s ' % filename)
+    # print('Resources_dir: %s' % resources_dir)
+
+    rel_resources_dir = os.path.relpath(os.path.realpath(resources_dir), os.path.realpath(dirname))
+
+    # print('real_resources_dir: %s' % rel_resources_dir)
 
     if dirname and not os.path.exists(dirname):
         try:
@@ -235,8 +240,9 @@ def node_to_html_document(node, filename,
                 else:
                     raise
         
-
-    rel_static_dir = os.path.relpath(static_dir, dirname)
+    # print('static_dir: %s' % static_dir)
+    rel_static_dir = os.path.relpath(os.path.realpath(static_dir), os.path.realpath(dirname))
+    # print('rel_static_dir: %s' % rel_static_dir)
 
     with open(filename, 'w') as f:
         mapping = {'resources': rel_resources_dir,

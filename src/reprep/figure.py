@@ -1,10 +1,13 @@
+import sys
+import warnings
+
+from contracts import contract, describe_type
+
+from reprep import logger, MIME_IMAGES, MIME_WEB_IMAGES
+
 from .datanode import DataNode
 from .node import Node
 from .utils import indent
-from contracts import contract, describe_type
-from reprep import logger, MIME_IMAGES, MIME_WEB_IMAGES
-import sys
-import warnings
 
 
 __all__ = ['Figure', 'SubFigure']

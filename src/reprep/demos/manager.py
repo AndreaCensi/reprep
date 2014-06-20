@@ -1,5 +1,6 @@
 import sys
 from reprep import Report
+import inspect
 
 
 class DemoStorage:
@@ -23,7 +24,9 @@ def all_demos(argv): #@UnusedVariable
     for id_f in which: 
         demof = DemoStorage.demos[id_f]
         ri = r.section(nid='%s' % demof.__name__, caption=demof.__doc__)
-        demof(ri)
+        ri.text('source', inspect.getsource(demof))
+        with ri.subsection('output') as sub:
+            demof(sub)
 
     r.to_html('reprep_demos_out/index.html')
 

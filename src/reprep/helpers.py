@@ -1,10 +1,15 @@
-from .mpl import  get_pylab_instance
 import mimetypes
 import tempfile
+
 from contracts import contract
-from .node import Node
-from .datanode import DataNode
+
 from reprep import MIME_JPG, MIME_SVG, MIME_PDF, MIME_PNG, RepRepDefaults
+
+from .datanode import DataNode
+from .mpl import  get_pylab_instance
+from .node import Node
+from reprep.figure import Figure
+
 
 __all__ = ['PylabAttacher', 'Attacher']
 
@@ -105,7 +110,11 @@ class PylabAttacher(object):
         self.pylab.close()
 
         self.node.add_child(image_node)
-
+        
+        self.node.add_to_autofigure(image_node)
+                
+                
+                
 
 @contract(parent=Node, nid='valid_id',
           rgb='array[HxWx(3|4)]', caption='None|str')

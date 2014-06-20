@@ -1,7 +1,9 @@
-from reprep.tests.cases import for_all_example_reports
-import shutil
 import os
+import shutil
 import tempfile
+
+from reprep.tests.cases import for_all_example_reports
+
 
 @for_all_example_reports
 def check_to_html(r):    

@@ -48,11 +48,16 @@ class ReportInterface(object):
             If robust is True, logs any error but continues on with
             stuff.
             
+            There is also an experimental feature in which
+            it can yield None if you are not asked to publish
+            the subsection. In that case you have to skip.
+            
             Call like this: ::
             
                 r = Report()
                 with r.subsection() as sub:
-                    make_report(sub)
+                    if sub is not None:
+                        make_report(sub)
             
         """
         

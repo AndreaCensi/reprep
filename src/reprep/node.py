@@ -37,12 +37,19 @@ class Node(ReportInterface):
         # used by subsection(), set_subsections_needed()
         self._subsections_needed = None
 
-        # self.explicit_figure_created = []
+        # Reference to a figure that was created automatically
+        # (see code in add_to_autofigure)
+        self._auto_figure = None
+
 
     def __eq__(self, other):
         if self is other:
             return True
         
+        if other is None:
+            msg = 'Comparing a Node to None.'
+            raise ValueError(msg)
+
         # def err(x):
             # from . import logger
             # logger.error(x)
@@ -294,4 +301,34 @@ class Node(ReportInterface):
                 return nid
         assert False
 
+
+    def add_to_autofigure(self, image_node):
+        """ Checks if no figure has been defined, in which
+            case create one automatically (self.auto_figure). 
+            
+            node is anything that can be visualized and is already a children of us.
+            
+            This code is called by PylabAttacher. (TODO: whereelse should it be called?)
+        """
+
+        assert image_node in self.children
+
+        from reprep.figure import Figure
+        if isinstance(self, Figure):
+            return
+
+        # If we are not a figure, and we don't have a child figure
+        # unless it was automatically created:
+
+        # if there is already a figure we don't do it automatically
+
+        children_figures_manual = filter(lambda x: isinstance(x, Figure)
+                                         and (self._auto_figure is None or self._auto_figure != x),
+                                         self.children)
+        if not children_figures_manual:
+            # Have we already created the child figure?
+            if self._auto_figure is None:
+                # create child figure
+                self._auto_figure = self.figure()
+            self._auto_figure.sub(image_node)
 

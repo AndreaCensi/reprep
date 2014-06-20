@@ -1,8 +1,10 @@
+import sys
+
+import numpy as np
+
 from . import (MIME_PNG, MIME_PYTHON, contract, describe_value,
     colorize_success, scale, posneg, Image_from_array, rgb_zoom,
     MIME_SVG, Node)
-import sys
-import numpy as np
 
 
 __all__ = ['DataNode']
