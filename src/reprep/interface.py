@@ -223,7 +223,7 @@ class ReportInterface(object):
         self.add_child(t)
         return t
 
-    @contract(nid='valid_id', text='str', mime='None|str')
+    @contract(nid='valid_id', text='str|*', mime='None|str')
     def text(self, nid, text, mime=MIME_PLAIN):
         ''' 
             Adds a text node with the given id.
@@ -234,7 +234,7 @@ class ReportInterface(object):
             For now, only restructured text is converted to HTML,
             the rest is displayed as plain text.
         '''
-        return self.data(nid=nid, data=text, mime=mime)
+        return self.data(nid=nid, data=str(text), mime=mime)
 
     @contract(name='str', value='array', caption='None|str')
     def array(self, name, value, caption=None):  # XXX to change
