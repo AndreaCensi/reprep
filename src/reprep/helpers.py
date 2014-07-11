@@ -8,7 +8,6 @@ from reprep import MIME_JPG, MIME_SVG, MIME_PDF, MIME_PNG, RepRepDefaults
 from .datanode import DataNode
 from .mpl import  get_pylab_instance
 from .node import Node
-from reprep.figure import Figure
 
 
 __all__ = ['PylabAttacher', 'Attacher']
@@ -22,7 +21,8 @@ class Attacher(object):
         self.mime = mime
         self.caption = caption
         if node.has_child(nid):
-            raise ValueError('Node %s already hsa child %r' % (node, nid))
+            msg = 'Node %s already has child %r' % (node, nid)
+            raise ValueError(msg)
         if self.mime is not None:
             suffix = mimetypes.guess_extension(self.mime)
             if not suffix:

@@ -1,9 +1,11 @@
-from reprep import MIME_PLAIN, MIME_PYTHON, MIME_PNG
-from contracts import contract
-import warnings
 from contextlib import contextmanager
-from reprep import logger
 import traceback
+import warnings
+
+from contracts import contract
+
+from reprep import MIME_PLAIN, MIME_PYTHON, MIME_PNG, logger
+
 
 __all__ = ['ReportInterface']
 
