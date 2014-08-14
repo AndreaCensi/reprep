@@ -1,5 +1,3 @@
-from .. import Image
-
 from contracts import contract
 import numpy as np
 
@@ -35,6 +33,7 @@ def Image_from_array(a):
 
     assert rgba.shape == (height, width, 4)
 
+    from PIL import Image #@UnresolvedImport
     im = Image.frombuffer("RGBA", (width, height), rgba.data,  # @UndefinedVariable
                            "raw", "RGBA", 0, 1)
     return im

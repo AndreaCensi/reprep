@@ -5,7 +5,6 @@ logging.basicConfig()
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 
-from PIL import Image #@UnresolvedImport
 
 from contracts import contract, new_contract, describe_value, describe_type
 import numpy as np
