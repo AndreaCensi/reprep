@@ -1,4 +1,8 @@
-from . import FunctionWithDescription
+from .function_with_description import FunctionWithDescription
+
+__all__ = [
+    'Reduction',
+]
 
 class Reduction(FunctionWithDescription):
     def __init__(self, *args, **kwargs):

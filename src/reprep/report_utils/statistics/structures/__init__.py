@@ -1,6 +1,3 @@
-from .. import np, contract, logger
-from contracts import new_contract
-
 from .with_description_utils import *
 from .with_description import *
 from .function_with_description import *

@@ -1,7 +1,9 @@
-from . import StoreResults
 from contracts import describe_type, new_contract
+from reprep.report_utils.storing.store_results import StoreResults
 
-__all__ = ['StoreResultsDict']
+__all__ = [
+    'StoreResultsDict',
+]
 
 class StoreResultsDict(StoreResults):
     """ 
@@ -37,5 +39,10 @@ class StoreResultsDict(StoreResults):
                        'Key: %s Value: %s' % 
                        (field, k, v))
                 raise ValueError(msg)
+            
+            
+    
     
 new_contract('StoreResultsDict', StoreResultsDict)
+
+

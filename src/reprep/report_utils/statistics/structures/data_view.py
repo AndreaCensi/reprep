@@ -1,8 +1,13 @@
-from . import (Reduction, contract, ReductionDisplay, RepRepStats, new_contract,
-    WithDescription)
-from ... import StoreResultsDict
+from .reduction import Reduction
+from .reduction_display import ReductionDisplay
+from .storage import RepRepStats
+from .with_description import WithDescription
+from contracts import contract, new_contract
+from reprep.report_utils.storing import StoreResultsDict
 
-
+__all__ = [
+    'DataView',
+]
 
 class DataView(WithDescription):
     """ This class defines how we view the data. """

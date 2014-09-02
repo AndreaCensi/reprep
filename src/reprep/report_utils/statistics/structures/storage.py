@@ -1,4 +1,10 @@
-from . import symbol_desc_from_docstring, Reduction, ReductionDisplay
+from .reduction import Reduction
+from .reduction_display import ReductionDisplay
+from .with_description_utils import symbol_desc_from_docstring
+
+__all__ = [
+    'RepRepStats',
+]
         
 class RepRepStats(object):
     reductions = {}

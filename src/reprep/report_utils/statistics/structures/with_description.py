@@ -1,5 +1,10 @@
-from . import new_contract, logger
+from reprep import logger
+from contracts import new_contract
 
+
+__all__ = [
+    'WithDescription',
+]
 
 class WithDescription(object):
     """ Descriptive fields for objects """

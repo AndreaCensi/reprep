@@ -1,10 +1,13 @@
-from . import skim_top
 from contracts import contract
 from numpy import maximum, minimum, zeros
 import numpy as np
+from .scaling import skim_top
 
 
-__all__ = ['posneg', 'posneg_hinton']
+__all__ = [
+    'posneg', 
+    'posneg_hinton',
+]
 
 @contract(value='array[HxW],H>0,W>0', max_value='None|float',
           skim='>=0,<=90', nan_color='color_spec')

@@ -13,8 +13,6 @@ def to_hdf(node, filename):
     node_to_hdf(hf, hf.root, node)    
 
     hf.close()
-    if os.path.exists(filename):
-        os.unlink(filename)
     os.rename(tmp_filename, filename)
 
 # FIXME: this is not checked yet

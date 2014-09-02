@@ -1,4 +1,3 @@
-from .. import np, contract
 from .. import RepRepStats
 
 from . import reductions

@@ -1,13 +1,15 @@
-from contracts import new_contract, contract
-from reprep.utils import deprecated, natsorted, frozendict2
+from contracts import check_isinstance, contract, new_contract
+from reprep.utils import deprecated, frozendict2, natsorted
 
-__all__ = ['StoreResults']
+__all__ = [
+    'StoreResults',
+]
 
 class StoreResults(dict):
     
     def __getitem__(self, attrs):
         if not isinstance(attrs, frozendict2):
-            assert isinstance(attrs, dict)
+            check_isinstance(attrs, dict)
             attrs = frozendict2(**attrs)
         try:
             return dict.__getitem__(self, attrs)

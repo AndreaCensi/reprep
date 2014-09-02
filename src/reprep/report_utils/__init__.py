@@ -1,6 +1,3 @@
-from .. import logger, contract
-import numpy as np
-
 """
     Some notes on how these classes are used together.
     

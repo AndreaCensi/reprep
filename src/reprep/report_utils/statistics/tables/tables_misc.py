@@ -1,7 +1,9 @@
-from .. import DataView, WithDescription
-from ... import StoreResultsDict, StoreResults
 from contracts import contract
 from reprep import MIME_RST, Report, logger
+from reprep.report_utils.storing.store_results import StoreResults
+from reprep.report_utils.storing.store_results_dict import StoreResultsDict
+from reprep.report_utils.statistics.structures.with_description import WithDescription
+from reprep.report_utils.statistics.structures.data_view import DataView
 
 
 @contract(samples=StoreResults,
