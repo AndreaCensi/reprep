@@ -1,10 +1,11 @@
 from .node import Node
-from contracts import contract, describe_value
+from contracts import check_isinstance, contract, describe_value
 import numpy as np
 
 
-__all__ = ['Table'] 
-# TODO: use contracts
+__all__ = [
+    'Table',
+] 
 
 class Table(Node):
     
@@ -23,6 +24,8 @@ class Table(Node):
         self.fmt = fmt
 
         Node.__init__(self, nid)
+        
+        check_isinstance(data, (list, np.ndarray))
 
         if isinstance(data, list):
             # check minimum length
@@ -30,13 +33,11 @@ class Table(Node):
                 raise ValueError('Expected at least one row')
             # check that all of them are lists with same type
             for row in data:
-                if not isinstance(row, list):
-                    raise ValueError('Expected rows to be list, got %s' % 
-                                     row.__class__.__name__)
+                check_isinstance(row, list)
                 if not len(row) == len(data[0]):
-                    raise ValueError('I want all rows to be the same length'
-                                     ' Got %s != %s.' % (len(row),
-                                                         len(data[0])))
+                    msg = ('I want all rows to be the same length'
+                          ' Got %s != %s.' % (len(row), len(data[0])))
+                    raise ValueError(msg)
 
             # create numpy array
             nrows = len(data)
@@ -53,8 +54,9 @@ class Table(Node):
 
         elif isinstance(data, np.ndarray):
             if not data.ndim in [1, 2]:
-                raise ValueError('Expected array of 1D or 2D shape, got %s.' % 
-                                describe_value(data))
+                msg= ('Expected array of 1D or 2D shape, got %s.' % 
+                        describe_value(data))
+                raise ValueError(msg)
 
             if data.ndim == 1:
                 # use fields name if desc not provided
@@ -73,9 +75,10 @@ class Table(Node):
 
             elif data.ndim == 2:
                 if data.dtype.fields is not None:
-                    raise ValueError('Cannot convert ndarray to table using '
-                                     'the heuristics that I know '
-                                     '(received: %s). ' % describe_value(data))
+                    msg = ('Cannot convert ndarray to table using '
+                            'the heuristics that I know (received: %s). ' 
+                            % describe_value(data))
+                    raise ValueError(msg)
 
                 nrows = data.shape[0]
                 ncols = data.shape[1]
@@ -88,8 +91,8 @@ class Table(Node):
                 data = data.tolist()
 
         else:
-            raise ValueError('Expected list of lists or ndarray, got %s.' % 
-                             data.__class__.__name__)
+            assert False
+            
 #
 #         check_multiple([ (cols, 'list[C](str|None),C>0'),
 #                          (rows, 'list[R](str|None),R>0'),
@@ -105,3 +108,15 @@ class Table(Node):
         self.rows = rows
         self.caption = caption
 
+
+
+def table_from_array(r, nid, a):
+    data = []
+    cols = list(a.dtype.names)
+    
+    for v in a:
+        row = [v[n] for n in cols]
+        data.append(row)
+    
+    rows = ['']* len(data)
+    r.table(nid, data, cols, rows, fmt=None, caption=None)

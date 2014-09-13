@@ -49,15 +49,9 @@ def set_thick_ticks(pylab, markersize=3, markeredgewidth=1):
         l.set_markersize(markersize)
         l.set_markeredgewidth(markeredgewidth)
 
-    
-def set_spines_look_A(pylab, outward_offset=10,
-                      linewidth=2, markersize=3, markeredgewidth=1):
-    ''' 
-        Taken from 
-        http://matplotlib.sourceforge.net/examples/pylab_examples
-        /spine_placement_demo.html
-    '''
 
+
+def set_spines_outward(pylab, outward_offset=10):
     ax = pylab.gca()
     for loc, spine in ax.spines.iteritems():
         if loc in ['left', 'bottom']:
@@ -70,6 +64,19 @@ def set_spines_look_A(pylab, outward_offset=10,
     # turn off ticks where there is no spine
     ax.xaxis.set_ticks_position('bottom')
     ax.yaxis.set_ticks_position('left')
+    
+    
+def set_spines_look_A(pylab, outward_offset=10,
+                      linewidth=2, markersize=3, markeredgewidth=1):
+    ''' 
+        Taken from 
+        http://matplotlib.sourceforge.net/examples/pylab_examples
+        /spine_placement_demo.html
+    '''
+
+    ax = pylab.gca()
+    
+    set_spines_outward(pylab, outward_offset)
 
     set_thick_ticks(pylab, markersize, markeredgewidth)
 

@@ -1,7 +1,6 @@
 from . import skim_top
 from contracts import contract
 from numpy import maximum, minimum, zeros
-import numpy
 import numpy as np
 
 
@@ -51,7 +50,7 @@ def scale(value, min_value=None, max_value=None,
 #    if value.ndim > 2:
 #        value = value.squeeze()
 
-    if value.dtype == numpy.dtype('uint8'):  # todo: or other integers
+    if value.dtype == np.dtype('uint8'):  # todo: or other integers
         value = value.astype('float32')
         
     isnan = np.logical_not(np.isfinite(value))
