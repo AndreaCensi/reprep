@@ -5,6 +5,7 @@ import warnings
 from contracts import contract
 
 from reprep import MIME_PLAIN, MIME_PYTHON, MIME_PNG, logger
+from contracts.utils import check_isinstance
 
 
 __all__ = ['ReportInterface']
@@ -16,6 +17,8 @@ class ReportInterface(object):
         ''' Creates a subsection of the report. Returns a reference. '''
         if nid is None:
             nid = self.get_first_available_name(prefix='section')
+        else:
+            check_isinstance(nid, str)
         node = self.node(nid)
         # TODO: unify treatment of caption
         if caption:
