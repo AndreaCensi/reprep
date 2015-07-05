@@ -1,48 +1,17 @@
 from contextlib import contextmanager
+from contracts import contract
+from contracts.utils import check_isinstance
+from reprep import MIME_PLAIN, MIME_PNG, MIME_PYTHON, logger
 import traceback
 import warnings
 
-from contracts import contract
 
-from reprep import MIME_PLAIN, MIME_PYTHON, MIME_PNG, logger
-from contracts.utils import check_isinstance
-
-
-__all__ = ['ReportInterface']
+__all__ = [
+    'ReportInterface',
+]
 
 class ReportInterface(object):
 
-    @contract(nid='None|valid_id')
-    def section(self, nid=None, caption=None):
-        ''' Creates a subsection of the report. Returns a reference. '''
-        if nid is None:
-            nid = self.get_first_available_name(prefix='section')
-        else:
-            check_isinstance(nid, str)
-        node = self.node(nid)
-        # TODO: unify treatment of caption
-        if caption:
-            node.text('caption', caption)
-        return node
-
-
-    @contract(subsections='list(str)')
-    def set_subsections_needed(self, subsections):
-        """
-            Marks the subsections that need to be generated;
-            if this is given then the others are ignored. ::
-            
-                r = Report()
-                r.set_subsections_needed(['estimator'])
-                
-                with r.subsection('estimator') as sub:
-                    # ok
-
-                with r.subsection('model') as sub:
-                    # ignored
-
-        """
-        self._subsections_needed = subsections
     
     @contextmanager
     @contract(nid='None|valid_id', caption='None|str', robust='bool')
@@ -279,4 +248,39 @@ class ReportInterface(object):
 
     def add_to(self, figure, caption=None):
         figure.sub(self, caption)
+
+
+    # ## candidates for deprecation
+
+    @contract(nid='None|valid_id')
+    def section(self, nid=None, caption=None):
+        ''' Creates a subsection of the report. Returns a reference. '''
+        if nid is None:
+            nid = self.get_first_available_name(prefix='section')
+        else:
+            check_isinstance(nid, str)
+        node = self.node(nid)
+        # TODO: unify treatment of caption
+        if caption:
+            node.text('caption', caption)
+        return node
+
+
+    @contract(subsections='list(str)')
+    def set_subsections_needed(self, subsections):
+        """
+            Marks the subsections that need to be generated;
+            if this is given then the others are ignored. ::
+            
+                r = Report()
+                r.set_subsections_needed(['estimator'])
+                
+                with r.subsection('estimator') as sub:
+                    # ok
+
+                with r.subsection('model') as sub:
+                    # ignored
+
+        """
+        self._subsections_needed = subsections
 
