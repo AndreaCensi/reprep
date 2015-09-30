@@ -18,6 +18,9 @@ class DataNode(Node):
         self.mime = mime
         self.caption = caption
         
+    def get_raw_data(self):
+        return self.raw_data
+
     def __eq__(self, other):
         if not Node.__eq__(self, other):
             return False

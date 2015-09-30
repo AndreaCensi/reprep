@@ -13,7 +13,8 @@ def ieee_fonts(pylab):
     # /users/customizing.html#matplotlibrc-sample
     params = {
           'axes.labelsize': 8,
-          'text.fontsize': 8,
+#           'text.fontsize': 8,
+          'font.size': 8,
           'legend.fontsize': 8,
           'xtick.labelsize': 6,
           'ytick.labelsize': 6,

@@ -236,6 +236,15 @@ class ReportInterface(object):
                 caption = name
             f.sub(m, caption=caption)
 
+
+    def to_ipython(self, filename=None):
+        """ Displays in the IPython editor. """
+        if filename is None:
+            filename = 'reprep-%s.html' % str(id(self))
+        self.to_html(filename)
+        from IPython.display import display, HTML
+        display(HTML(open(filename).read()))
+
     def to_html(self, filename, resources_dir=None, **kwargs):
         ''' Creates a HTML representation of this report. '''
         from .output.html import node_to_html_document
