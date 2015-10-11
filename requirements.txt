@@ -1,4 +1,3 @@
 docutils
 -e git+https://github.com/AndreaCensi/contracts.git@env_fault#egg=PyContracts
-PIL
 numpy

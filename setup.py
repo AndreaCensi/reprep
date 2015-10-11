@@ -18,7 +18,7 @@ setup(name='reprep',
       install_requires=[
             'docutils',
             'PyContracts>=1.2,<2',
-            'PIL',
+            # 'PIL',
       ],
       package_data=package_data,
       url='http://AndreaCensi.github.com/reprep/',
