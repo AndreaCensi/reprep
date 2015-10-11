@@ -9,7 +9,7 @@ console_scripts = map(lambda s: '%s = %s:main' % (s[0], s[1]), scripts)
 
 package_data = {'':['*.*']}
 
-version = '2.5'
+version = '2.6'
 
 setup(name='reprep',
       version=version,
@@ -18,6 +18,7 @@ setup(name='reprep',
       install_requires=[
             'docutils',
             'PyContracts>=1.2,<2',
+            'PIL',
       ],
       package_data=package_data,
       url='http://AndreaCensi.github.com/reprep/',
