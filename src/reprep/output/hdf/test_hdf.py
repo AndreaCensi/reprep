@@ -1,7 +1,9 @@
-from . import logger, report_from_hdf, to_hdf
+
+from . import logger, to_hdf
+from reprep.output.hdf.hdf_read import report_from_hdf
 from reprep.tests import for_all_example_reports
 import os
-import shutil # FIXME
+import shutil  # FIXME
 import tempfile
     
 @for_all_example_reports
