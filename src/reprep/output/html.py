@@ -109,6 +109,8 @@ ${extra_html_body_start}
 
 """
 
+import warnings
+warnings.warn('experimental feature: support for Autoreload')
 footer = """
  
 ${extra_html_body_end}
