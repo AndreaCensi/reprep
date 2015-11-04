@@ -1,7 +1,8 @@
-from . import  tables, node_from_hdf_group_v1
+from . import get_tables, node_from_hdf_group_v1
 
 
 def report_from_hdf(filename):
+    tables = get_tables()
     hf = tables.openFile(filename, 'r')
 
     children = hf.root._v_children

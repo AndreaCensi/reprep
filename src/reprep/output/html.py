@@ -109,17 +109,25 @@ ${extra_html_body_start}
 
 """
 
-import warnings
-warnings.warn('experimental feature: support for Autoreload')
 footer = """
  
 ${extra_html_body_end}
 
-<script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>
-
 </body>
 </html>
 """
+if False:
+    import warnings
+    warnings.warn('experimental feature: support for Autoreload')
+    footer = """
+     
+    ${extra_html_body_end}
+
+    <script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>
+
+    </body>
+    </html>
+    """
 
 
 class html_context:
