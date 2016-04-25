@@ -8,5 +8,8 @@ python:
   # - 3.4
   # - pypy
 
+before_install:
+  - sudo apt-get -y install python-numpy 
+
 script:
   - nosetests reprep

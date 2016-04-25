@@ -236,7 +236,6 @@ class ReportInterface(object):
                 caption = name
             f.sub(m, caption=caption)
 
-
     def to_ipython(self, filename=None):
         """ Displays in the IPython editor. """
         if filename is None:
@@ -257,7 +256,6 @@ class ReportInterface(object):
 
     def add_to(self, figure, caption=None):
         figure.sub(self, caption)
-
 
     # ## candidates for deprecation
 

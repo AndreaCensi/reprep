@@ -1,8 +1,8 @@
 from .interface import ReportInterface
 from .structures import InvalidURL, NotExistent
 from StringIO import StringIO
-import sys
 from contracts import contract, describe_type
+import sys
 
 
 __all__ = ['Node']

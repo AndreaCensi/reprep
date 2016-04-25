@@ -1,11 +1,13 @@
-from . import write_python_data, tables
+from . import write_python_data
 from reprep import DataNode, Figure, __version__, Table
 import datetime
 import os
+from reprep.output.hdf import get_tables
 
 
 def to_hdf(node, filename):
     """ Writes the report in HDF format. """
+    tables = get_tables()
     tmp_filename = filename + '.active'
     filters = tables.Filters(complevel=9, shuffle=False,
                             fletcher32=True, complib='zlib')
