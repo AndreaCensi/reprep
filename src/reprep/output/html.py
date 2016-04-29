@@ -14,6 +14,7 @@ from pkg_resources import (
 from reprep import Figure, Table
 from reprep import MIME_PLAIN, MIME_RST, MIME_PYTHON, Node, logger
 from reprep.datanode import DataNode
+from reprep.constants import MIME_GRAPHVIZ
 
 
 mathjax_header = """
