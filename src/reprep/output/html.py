@@ -46,6 +46,7 @@ mathjax_header = """
 header = """
 <html>
 <head>  
+    <meta charset="utf-8" /> 
     <script type="text/javascript" 
         src="${static}/jquery/jquery.js"></script>
     
@@ -59,6 +60,7 @@ header = """
             $$('.zoomable').imageZoom();
         });       
     </script>
+    
     
     <!-- Use tablesorter plugin -->
     <script type="text/javascript" 
@@ -78,6 +80,7 @@ header = """
         ${extra_css}
     </style>
 
+    
     <link rel="stylesheet" 
           href="${static}/reprep/default_style.css"/>
 
@@ -109,9 +112,22 @@ ${extra_html_body_start}
 footer = """
  
 ${extra_html_body_end}
+
 </body>
 </html>
 """
+if False:
+    import warnings
+    warnings.warn('experimental feature: support for Autoreload')
+    footer = """
+     
+    ${extra_html_body_end}
+
+    <script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>
+
+    </body>
+    </html>
+    """
 
 
 class html_context:

@@ -1,14 +1,15 @@
-from tables.flavor import flavor_of
 from StringIO import StringIO
 import cPickle
-import tables
 from reprep import logger
 from contracts import describe_type, describe_value
+from reprep.output.hdf import get_tables
 
-__all__ =['write_python_data', 'read_python_data']
+__all__ = ['write_python_data', 'read_python_data']
 
 
 def write_python_data(parent, name, mime, data):
+    tables = get_tables()
+    from tables.flavor import flavor_of
     hf = parent._v_file
     group = hf.createGroup(parent, name)
     hf.createArray(group, 'mime', mime)
