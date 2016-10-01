@@ -2,7 +2,6 @@ import mimetypes
 import tempfile
 
 from contracts import contract
-
 from reprep import MIME_JPG, MIME_SVG, MIME_PDF, MIME_PNG, RepRepDefaults
 
 from .datanode import DataNode
@@ -21,15 +20,27 @@ class Attacher(object):
         self.mime = mime
         self.caption = caption
         if node.has_child(nid):
-            msg = 'Node %s already has child %r' % (node, nid)
+            msg = 'Node %s (id = %r) already has child %r' % (node, node.nid, nid)
             raise ValueError(msg)
         if self.mime is not None:
             suffix = mimetypes.guess_extension(self.mime)
+
             if not suffix:
                 raise Exception('Cannot guess extension for MIME %r.' % mime)
             
             if self.mime == MIME_JPG:
                 suffix = '.jpg'
+
+            # sometimes it returns 'svgz'...
+            if self.mime == 'image/svg+xml':
+                suffix = '.svg'
+
+            # sometimes it returns '.txt'
+            if self.mime == 'text/plain':
+                suffix = '.txt'
+
+            # print('suffix for %r = %r' % (self.mime, suffix))
+
         else:
             suffix = '.bin'
 

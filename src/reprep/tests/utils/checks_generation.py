@@ -1,5 +1,5 @@
 """ 
-    These are very "meta" utils for creating nose tests on the fly. 
+    These are very "meta" utils for creating nose mcdp_lang_tests on the fly. 
 
     Here is an example use: ::
 

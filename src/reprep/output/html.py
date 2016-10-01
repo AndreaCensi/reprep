@@ -6,7 +6,6 @@ import shutil
 from string import Template
 import sys
 from types import NoneType
-import warnings
 
 from pkg_resources import (
     resource_filename)  # @UnresolvedImport  Eclipse fails here
@@ -14,7 +13,6 @@ from pkg_resources import (
 from reprep import Figure, Table
 from reprep import MIME_PLAIN, MIME_RST, MIME_PYTHON, Node, logger
 from reprep.datanode import DataNode
-from reprep.constants import MIME_GRAPHVIZ
 
 
 mathjax_header = """
@@ -423,14 +421,25 @@ def figure_to_html(node, context):
 
         image_filename, _ = get_node_filename(actual_resource, context)
 
-        file.write(
-            Template('''
-                <a href="${src}" class="zoomable">
-                    <img src="${src}"/>
-                </a>    
-            ''').substitute(src=image_filename)
-        )
-        
+        if image_filename.endswith('pdf'):
+            file.write(
+                Template('''
+                    <a href="${src}" class="zoomable">
+                        (cannot display PDF)
+                    </a>    
+                ''').substitute(src=image_filename)
+            )
+            
+        else:
+            
+            file.write(
+                Template('''
+                    <a href="${src}" class="zoomable">
+                        <img src="${src}"/>
+                    </a>    
+                ''').substitute(src=image_filename)
+            )
+            
         
         file.write('<p class="report-subfigure-caption">%s</p>' % 
                  htmlfy(sub.caption))

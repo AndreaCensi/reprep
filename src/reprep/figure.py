@@ -125,9 +125,12 @@ class Figure(Node):
             logger.error('I need to convert %s into a web image.' % 
                          (image))
 
+        if web_image is not None:
+            web_image=self.get_relative_url(web_image)
+            
         sub = SubFigure(resource=self.get_relative_url(data),
                         image=self.get_relative_url(image),
-                        web_image=self.get_relative_url(web_image),
+                        web_image=web_image,
                         caption=caption)
         self.subfigures.append(sub)
 
