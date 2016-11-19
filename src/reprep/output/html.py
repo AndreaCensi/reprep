@@ -165,6 +165,11 @@ def get_complete_id(node, separator='-'):
 def get_node_filename(node, context):
     ''' Returns a tuple (relative_from_file, absolute) '''
     suffix = mimetypes.guess_extension(node.mime)
+    from reprep.constants import MIME_SVG
+    if node.mime == MIME_SVG:
+        print('get_node_filename() guess : %r' % suffix)
+        suffix = '.svg'
+        
     if suffix is None:
         suffix = '.pickle'
     nid = get_complete_id(node)
