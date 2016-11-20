@@ -165,10 +165,6 @@ def get_complete_id(node, separator='-'):
 def get_node_filename(node, context):
     ''' Returns a tuple (relative_from_file, absolute) '''
     suffix = mimetypes.guess_extension(node.mime)
-    from reprep.constants import MIME_SVG
-    if node.mime == MIME_SVG:
-        print('get_node_filename() guess : %r' % suffix)
-        suffix = '.svg'
         
     if suffix is None:
         suffix = '.pickle'
@@ -429,14 +425,18 @@ def figure_to_html(node, context):
         if image_filename.endswith('pdf'):
             file.write(
                 Template('''
-                    <a href="${src}" class="zoomable">
+                    <a href="${src}">
                         (cannot display PDF)
                     </a>    
                 ''').substitute(src=image_filename)
             )
-            
+        elif image_filename.endswith('svg'):
+            file.write(
+                Template('''
+                    <object data="${src}" width="100%" type="image/svg+xml"></object>    
+                ''').substitute(src=image_filename)
+            )
         else:
-            
             file.write(
                 Template('''
                     <a href="${src}" class="zoomable">
