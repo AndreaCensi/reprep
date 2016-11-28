@@ -39,8 +39,10 @@ class Attacher(object):
             if self.mime == 'text/plain':
                 suffix = '.txt'
 
-            # print('suffix for %r = %r' % (self.mime, suffix))
+#             print('suffix for %r = %r' % (self.mime, suffix))
 
+            if suffix == '.svgz':
+                suffix = '.svg'
         else:
             suffix = '.bin'
 
