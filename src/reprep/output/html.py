@@ -6,7 +6,6 @@ import shutil
 from string import Template
 import sys
 from types import NoneType
-import warnings
 
 from pkg_resources import (
     resource_filename)  # @UnresolvedImport  Eclipse fails here
@@ -166,6 +165,7 @@ def get_complete_id(node, separator='-'):
 def get_node_filename(node, context):
     ''' Returns a tuple (relative_from_file, absolute) '''
     suffix = mimetypes.guess_extension(node.mime)
+        
     if suffix is None:
         suffix = '.pickle'
     nid = get_complete_id(node)
@@ -422,14 +422,29 @@ def figure_to_html(node, context):
 
         image_filename, _ = get_node_filename(actual_resource, context)
 
-        file.write(
-            Template('''
-                <a href="${src}" class="zoomable">
-                    <img src="${src}"/>
-                </a>    
-            ''').substitute(src=image_filename)
-        )
-        
+        if image_filename.endswith('pdf'):
+            file.write(
+                Template('''
+                    <a href="${src}">
+                        (cannot display PDF)
+                    </a>    
+                ''').substitute(src=image_filename)
+            )
+        elif image_filename.endswith('svg'):
+            file.write(
+                Template('''
+                    <object data="${src}" width="100%" type="image/svg+xml"></object>    
+                ''').substitute(src=image_filename)
+            )
+        else:
+            file.write(
+                Template('''
+                    <a href="${src}" class="zoomable">
+                        <img src="${src}"/>
+                    </a>    
+                ''').substitute(src=image_filename)
+            )
+            
         
         file.write('<p class="report-subfigure-caption">%s</p>' % 
                  htmlfy(sub.caption))

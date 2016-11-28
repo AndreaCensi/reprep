@@ -6,6 +6,10 @@ from reprep import MIME_IMAGES, MIME_WEB_IMAGES, logger
 import sys
 import warnings
 
+from contracts import contract, describe_type
+from reprep import MIME_IMAGES, MIME_WEB_IMAGES
+ 
+
 
 __all__ = [
     'Figure',
@@ -117,17 +121,20 @@ class Figure(Node):
         # Get an image that can be shown in a browser
         web_image = image.get_first_child_with_mime(MIME_WEB_IMAGES)
         if web_image is None:
-            logger.error('No image with mime %r found in:\n%s' % 
-                         (MIME_WEB_IMAGES, indent(image.format_tree(), '>')))
+            #logger.error('No image with mime %r found in:\n%s' % 
+            #(MIME_WEB_IMAGES, indent(image.format_tree(), '>')))
             # convert the image to web image
             # TODO: to write
             web_image = image  # XXX
-            logger.error('I need to convert %s into a web image.' % 
-                         (image))
+            #logger.error('I need to convert %s into a web image.' % 
+            #             (image))
 
+        if web_image is not None:
+            web_image=self.get_relative_url(web_image)
+            
         sub = SubFigure(resource=self.get_relative_url(data),
                         image=self.get_relative_url(image),
-                        web_image=self.get_relative_url(web_image),
+                        web_image=web_image,
                         caption=caption)
         self.subfigures.append(sub)
 

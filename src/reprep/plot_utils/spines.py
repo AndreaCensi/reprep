@@ -81,7 +81,11 @@ def set_spines_look_A(pylab, outward_offset=10,
     set_thick_ticks(pylab, markersize, markeredgewidth)
 
     try:
-        ax.get_frame().set_linewidth(linewidth)
+#         f = pylab.gcf()
+#         ax.get_frame().set_linewidth(linewidth)
+
+        [i.set_linewidth(linewidth) for i in ax.spines.itervalues()]
+
     except BaseException as e:
         print('set_linewidth() not working in matplotlib 1.3.1: %s' % e)
         

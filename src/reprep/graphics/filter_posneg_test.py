@@ -25,4 +25,4 @@ class Test(unittest.TestCase):
         # a[0, 0] = nan
         # self.assertRaises(ValueError, posneg, a)
 
-# TODO: add RGB(a) tests
+# TODO: add RGB(a) mcdp_lang_tests
