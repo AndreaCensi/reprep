@@ -27,7 +27,7 @@ scripts = [
 console_scripts = map(lambda s: '%s = %s:main' % (s[0], s[1]), scripts)
 
 package_data = {'':['*.*']}
- 
+
 
 setup(name='reprep',
       version=version,
@@ -47,5 +47,5 @@ setup(name='reprep',
       keywords="report reproducible research tables html latex",
       download_url='http://github.com/AndreaCensi/reprep/tarball/%s' % version,
       entry_points={ 'console_scripts': console_scripts},
+      zip_safe=False, # because of resources
 )
-
