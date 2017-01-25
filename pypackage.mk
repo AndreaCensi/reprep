@@ -49,5 +49,5 @@ test-coverage:
 
 bump-upload:
 	bumpversion --config-file .bumbversion.cfg patch
-	git push --tags --all
+	git push --tags 
 	python setup.py sdist upload
