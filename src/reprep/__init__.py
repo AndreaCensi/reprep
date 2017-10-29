@@ -1,4 +1,4 @@
-__version__ = '2.10.2'
+__version__ = '2.10.3'
 
 import logging
 logging.basicConfig()
@@ -27,6 +27,3 @@ Report = Node
 
 
 from . import report_utils # just load demos
-
-
-
