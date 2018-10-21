@@ -35,6 +35,7 @@ setup(name='reprep',
       install_requires=[
           'docutils',
           'PyContracts>=1.2,<2',
+          'numpy',
           # 'PIL',
       ],
       package_data=package_data,
