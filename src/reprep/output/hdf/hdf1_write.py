@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from . import write_python_data
 from reprep import DataNode, Figure, __version__, Table
 import datetime

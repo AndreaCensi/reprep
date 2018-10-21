@@ -1,4 +1,5 @@
-''' 
+# -*- coding: utf-8 -*-
+'''
     A collection of useful procedures for interacting with matplotlib plots. 
 '''
 

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from .node import Node
 from contracts import check_isinstance, contract, describe_value
 import numpy as np

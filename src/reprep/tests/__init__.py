@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from .. import logger
 from .utils import *
 from .cases import *

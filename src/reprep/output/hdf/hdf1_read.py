@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from . import read_python_data
 from reprep import DataNode, Node, Figure, SubFigure, Table
  

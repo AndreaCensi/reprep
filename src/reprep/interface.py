@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from contextlib import contextmanager
 from contracts import contract
 from contracts.utils import check_isinstance

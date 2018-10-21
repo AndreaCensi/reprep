@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from .. import Report
 from .utils import fancy_test_decorator
 

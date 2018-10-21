@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # ---------------------------------------------------------
 # natsort.py: Natural string sorting.
 # ---------------------------------------------------------
@@ -16,30 +17,32 @@ def try_int(s):
 def natsort_key(s):
     "Used internally to get a tuple by which s is sorted."
     import re
-    s = str(s) # convert everything to string
-    return map(try_int, re.findall(r'(\d+|\D+)', s))
+    s = str(s)  # convert everything to string
+    return tuple(map(try_int, re.findall(r'(\d+|\D+)', s)))
 
-def cmp2(a, b):
-    return (a > b) - (a < b)
-def natcmp(a, b):
-    "Natural string comparison, case sensitive."
-    return cmp2(natsort_key(a), natsort_key(b))
+#
+# def cmp2(a, b):
+#     return (a > b) - (a < b)
 
 
-def natcasecmp(a, b):
-    "Natural string comparison, ignores case."
-    return natcmp(a.lower(), b.lower())
+#
+# def natcmp(a, b):
+#     "Natural string comparison, case sensitive."
+#     return cmp2(natsort_key(a), natsort_key(b))
+
+#
+# def natcasecmp(a, b):
+#     "Natural string comparison, ignores case."
+#     return natcmp(a.lower(), b.lower())
+#
+
+#
+# def natsort(seq, compare=natcmp):
+#     "In-place natural string sort."
+#     seq.sort(key=compare)
 
 
-def natsort(seq, compare=natcmp):
-    "In-place natural string sort."
-    seq.sort(compare)
-
-
-def natsorted(seq, compare=natcmp):
+def natsorted(seq):
     "Returns a copy of seq, sorted by natural string sort."
     # convert set -> list
-    temp = list(seq)
-    natsort(temp, compare)
-    return temp
-
+    return sorted(list(seq), key=natsort_key)

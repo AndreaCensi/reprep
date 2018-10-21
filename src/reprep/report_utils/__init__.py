@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
     Some notes on how these classes are used together.
     

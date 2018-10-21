@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from reprep.figure import Figure
 from reprep.table import Table
 from reprep.node import Node

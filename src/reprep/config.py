@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from .constants import MIME_PDF, MIME_SVG, MIME_PNG  # @UnusedImport
 
 

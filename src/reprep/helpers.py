@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import mimetypes
 import tempfile
 
@@ -5,11 +6,11 @@ from contracts import contract
 from reprep import MIME_JPG, MIME_SVG, MIME_PDF, MIME_PNG, RepRepDefaults
 
 from .datanode import DataNode
-from .mpl import  get_pylab_instance
+from .mpl import get_pylab_instance
 from .node import Node
 
-
 __all__ = ['PylabAttacher', 'Attacher']
+
 
 class Attacher(object):
 
@@ -27,7 +28,7 @@ class Attacher(object):
 
             if not suffix:
                 raise Exception('Cannot guess extension for MIME %r.' % mime)
-            
+
             if self.mime == MIME_JPG:
                 suffix = '.jpg'
 
@@ -39,7 +40,7 @@ class Attacher(object):
             if self.mime == 'text/plain':
                 suffix = '.txt'
 
-#             print('suffix for %r = %r' % (self.mime, suffix))
+            #             print('suffix for %r = %r' % (self.mime, suffix))
 
             if suffix == '.svgz':
                 suffix = '.svg'
@@ -52,7 +53,7 @@ class Attacher(object):
         return self.temp_file.name
 
     def __exit__(self, _a, _b, _c):
-        with open(self.temp_file.name) as f:
+        with open(self.temp_file.name, 'rb') as f:
             data = f.read()
             self.node.data(nid=self.nid, data=data,
                            mime=self.mime,
@@ -100,7 +101,7 @@ class PylabAttacher(object):
         self.pylab.savefig(self.temp_file.name,
                            **RepRepDefaults.savefig_params)
 
-        with open(self.temp_file.name) as f:
+        with open(self.temp_file.name, 'rb') as f:
             data = f.read()
         self.temp_file.close()
 
@@ -123,11 +124,9 @@ class PylabAttacher(object):
         self.pylab.close()
 
         self.node.add_child(image_node)
-        
+
         self.node.add_to_autofigure(image_node)
-                
-                
-                
+
 
 @contract(parent=Node, nid='valid_id',
           rgb='array[HxWx(3|4)]', caption='None|str')
@@ -148,5 +147,3 @@ def data_rgb_imp(parent, nid, rgb, mime=MIME_PNG, caption=None):
         pil_image.save(f, **params)
 
     return parent[nid]
-
-

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from .with_description import WithDescription
 
 __all__ = ['FunctionWithDescription']

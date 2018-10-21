@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from . import Image_from_array, np
 import unittest
 

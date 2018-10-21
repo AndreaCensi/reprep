@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from reprep import  filter_colormap
 import numpy as np
 

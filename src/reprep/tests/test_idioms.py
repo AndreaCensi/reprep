@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from .common import ReprepTest
 from contracts import ContractNotRespected
 from numpy.linalg.linalg import pinv

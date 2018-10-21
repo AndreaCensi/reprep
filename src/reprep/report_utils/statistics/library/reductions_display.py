@@ -1,4 +1,4 @@
-
+# -*- coding: utf-8 -*-
 from contracts import contract
 from .. import RepRepStats
 

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from six.moves import cPickle
 import datetime
 import mimetypes
@@ -5,7 +6,8 @@ import os
 import shutil
 from string import Template
 import sys
-from types import NoneType
+import six
+NoneType = type(None)
 
 from pkg_resources import (
     resource_filename)  # @UnresolvedImport  Eclipse fails here
@@ -334,7 +336,7 @@ def table_to_html(table, context):
 
     f.write('<caption>%s</caption>\n' % caption)
 
-    has_row_labels = len(filter(None, table.rows)) > 0
+    has_row_labels = len(list(filter(None, table.rows))) > 0
 
     if filter(None, table.cols):  # at least one not None
         f.write('<thead>\n')
@@ -538,13 +540,17 @@ def datanode_to_html(node, context):
                 add_link = False
             # TODO: add other representations for numpy array
         else:
-            if not isinstance(node.raw_data, str):
+            if six.PY2:
+                look_for = str
+            else:
+                look_for = bytes
+            if not isinstance(node.raw_data, look_for):
                 sys.stderr.write("Ignoring %s because raw_data is %s\n" % 
                     (filename, node.raw_data.__class__))
                 add_link = False
             else:
                 # print "Writing on %s" % filename
-                with open(filename, 'w') as f:
+                with open(filename, 'wb') as f:
                     f.write(node.raw_data)
                 add_link = True
 

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import sys
 import warnings
 
@@ -22,7 +23,7 @@ class Figure(Node):
         self.cols = cols
 
         self.subfigures = []
-        self.automatically_added = set()
+        self.automatically_added = []
 
     def __repr__(self):
         return 'Figure(cols=%s,%s)' % (self.cols, self.subfigures)
@@ -61,7 +62,7 @@ class Figure(Node):
                 child.get_first_child_with_mime(MIME_IMAGES)):
             self.sub(child, child.caption)
 
-            self.automatically_added.add(child)
+            self.automatically_added.append(child)
 
     #     @contract(resource='DataNode|str')
     def sub(self, resource, caption=None, display=None, **kwargs):

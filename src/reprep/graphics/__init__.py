@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from .. import np, new_contract, contract
 new_contract('color_spec', 'seq[3](>=0,<=1)')
 
