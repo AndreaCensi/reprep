@@ -5,7 +5,7 @@ def turn_off_all_axes(pylab):
 
 def turn_off_bottom_and_top(pylab):
     ax = pylab.gca()
-    for loc, spine in ax.spines.iteritems():
+    for loc, spine in ax.spines.items():
         if loc in ['bottom', 'top']:
             spine.set_color('none')  # don't draw spine
             
@@ -14,7 +14,7 @@ def turn_off_bottom_and_top(pylab):
 
 def turn_off_right(pylab):
     ax = pylab.gca()
-    for loc, spine in ax.spines.iteritems():
+    for loc, spine in ax.spines.items():
         if loc in ['right']:
             spine.set_color('none')  # don't draw spine 
     ax.yaxis.set_ticks_position('left')
@@ -22,7 +22,7 @@ def turn_off_right(pylab):
 
 def turn_off_top(pylab):
     ax = pylab.gca()
-    for loc, spine in ax.spines.iteritems():
+    for loc, spine in ax.spines.items():
         if loc in ['top']:
             spine.set_color('none')  # don't draw spine 
     ax.yaxis.set_ticks_position('bottom')
@@ -30,7 +30,7 @@ def turn_off_top(pylab):
 
 def turn_off_left_and_right(pylab):
     ax = pylab.gca()
-    for loc, spine in ax.spines.iteritems():
+    for loc, spine in ax.spines.items():
         if loc in ['left', 'right']:
             spine.set_color('none')  # don't draw spine 
     pylab.yticks([], [])
@@ -38,7 +38,7 @@ def turn_off_left_and_right(pylab):
 
 def set_left_spines_outward(pylab, offset=10):
     ax = pylab.gca()
-    for loc, spine in ax.spines.iteritems():
+    for loc, spine in ax.spines.items():
         if loc in ['left']:
             spine.set_position(('outward', offset))
     
@@ -53,7 +53,7 @@ def set_thick_ticks(pylab, markersize=3, markeredgewidth=1):
 
 def set_spines_outward(pylab, outward_offset=10):
     ax = pylab.gca()
-    for loc, spine in ax.spines.iteritems():
+    for loc, spine in ax.spines.items():
         if loc in ['left', 'bottom']:
             spine.set_position(('outward', outward_offset))
         elif loc in ['right', 'top']:
