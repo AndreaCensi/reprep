@@ -24,7 +24,7 @@ jobs:
           name: Run tests
           command: |
             pip install --user nose
-            PATH=~/.local/bin:$PATH make test-parallel
+            DISABLE_CONTRACTS=1 PATH=~/.local/bin:$PATH make test-parallel
 
   test-3.7:
       <<: *test-template

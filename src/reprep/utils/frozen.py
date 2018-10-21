@@ -1,28 +1,32 @@
 import copy
+import six
 
 try:
     frozenset
 except NameError:
-    from sets import ImmutableSet as frozenset
+    if six.PY2:
+        from sets import ImmutableSet as frozenset
+
 
 class frozendict1(dict):
     __slots__ = ('_hash',)
-    
+
     def __hash__(self):
         rval = getattr(self, '_hash', None)
         if rval is None:
-            rval = self._hash = hash(frozenset(self.iteritems()))
+            rval = self._hash = hash(frozenset(self.items()))
         return rval
 
-class frozendict2(dict):
-    
-    # OK, but we need to modify it during pickling
-    #def _blocked_attribute(obj):
-    #    raise AttributeError, "A frozendict cannot be modified."
-    #_blocked_attribute = property(_blocked_attribute)
 
-#    __delitem__ = __setitem__ = clear = _blocked_attribute
-#    pop = popitem = setdefault = update = _blocked_attribute
+class frozendict2(dict):
+
+    # OK, but we need to modify it during pickling
+    # def _blocked_attribute(obj):
+    #    raise AttributeError, "A frozendict cannot be modified."
+    # _blocked_attribute = property(_blocked_attribute)
+
+    #    __delitem__ = __setitem__ = clear = _blocked_attribute
+    #    pop = popitem = setdefault = update = _blocked_attribute
 
     def __new__(cls, *args, **kw):
         new = dict.__new__(cls)
