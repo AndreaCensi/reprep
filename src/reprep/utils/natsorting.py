@@ -19,10 +19,11 @@ def natsort_key(s):
     s = str(s) # convert everything to string
     return map(try_int, re.findall(r'(\d+|\D+)', s))
 
-
+def cmp2(a, b):
+    return (a > b) - (a < b)
 def natcmp(a, b):
     "Natural string comparison, case sensitive."
-    return cmp(natsort_key(a), natsort_key(b))
+    return cmp2(natsort_key(a), natsort_key(b))
 
 
 def natcasecmp(a, b):

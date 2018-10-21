@@ -1,6 +1,6 @@
 from .interface import ReportInterface
 from .structures import InvalidURL, NotExistent
-from StringIO import StringIO
+from six.moves import StringIO
 from contracts import contract, describe_type
 import sys
 
@@ -295,7 +295,7 @@ class Node(ReportInterface):
         return self.find_recursively(choose)
 
     def get_first_available_name(self, prefix):
-        for i in xrange(1, 1000):
+        for i in range(1, 1000):
             nid = '%s%d' % (prefix, i)
             if not self.has_child(nid):
                 return nid
