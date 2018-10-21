@@ -2,3 +2,4 @@ docutils
 PyContracts
 numpy
 PIL
+matplotlib
