@@ -1,5 +1,5 @@
 docutils
 PyContracts
 numpy
-PIL
+Pillow
 matplotlib
