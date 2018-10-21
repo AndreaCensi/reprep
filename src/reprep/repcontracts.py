@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from reprep import VALID_ID_REGEXP
 from contracts import new_contract, contract
 import re

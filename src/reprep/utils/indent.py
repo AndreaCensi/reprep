@@ -1,4 +1,4 @@
-
+# -*- coding: utf-8 -*-
 
 def indent(s, prefix):
     if '\n' in prefix:

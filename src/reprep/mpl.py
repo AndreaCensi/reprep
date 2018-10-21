@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from reprep import logger
 
 __all__ = ['get_matplotlib', 'get_pylab_instance']

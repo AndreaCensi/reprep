@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+from __future__ import print_function
 import sys
 from reprep import Report
 import inspect
@@ -18,8 +20,8 @@ def all_demos(argv): #@UnusedVariable
         which = DemoStorage.demos.keys()
     else:
         which = argv
-        
-    print DemoStorage.demos.keys()
+
+    print(DemoStorage.demos.keys())
     r = Report('reprep_demos')
     for id_f in which: 
         demof = DemoStorage.demos[id_f]

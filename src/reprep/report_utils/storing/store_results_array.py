@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from contracts import contract
 from reprep.report_utils.storing.store_results import StoreResults
 import numpy as np

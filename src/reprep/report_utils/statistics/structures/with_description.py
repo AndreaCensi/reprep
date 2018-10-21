@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from reprep import logger
 from contracts import new_contract
 

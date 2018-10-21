@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import numpy as np
 
 
@@ -84,6 +85,6 @@ def turn_all_axes_off(pylab):
     axes.yaxis.offsetText.set_visible(False)
     axes.xaxis.set_ticks_position('none')
     axes.yaxis.set_ticks_position('none')
-    for _, spine in axes.spines.iteritems():
+    for _, spine in axes.spines.items():
         spine.set_color('none')
 

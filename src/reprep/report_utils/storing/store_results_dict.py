@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from contracts import describe_type, new_contract
 from reprep.report_utils.storing.store_results import StoreResults
 

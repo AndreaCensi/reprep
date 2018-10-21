@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import numpy as np
 from reprep.plot_utils import set_spines_look_A, set_thick_ticks
 

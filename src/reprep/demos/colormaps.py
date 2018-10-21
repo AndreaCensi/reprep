@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from . import reprep_demo
 from reprep import filter_colormap
 from reprep.graphics import get_solid

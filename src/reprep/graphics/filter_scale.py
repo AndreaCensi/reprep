@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from . import skim_top
 from contracts import contract
 from numpy import maximum, minimum, zeros
