@@ -3,3 +3,4 @@ PyContracts
 numpy
 Pillow
 matplotlib
+six

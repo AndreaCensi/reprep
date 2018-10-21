@@ -1,5 +1,6 @@
-from StringIO import StringIO
-import cPickle
+from six.moves import cPickle
+from six import StringIO
+
 from reprep import logger
 from contracts import describe_type, describe_value
 from reprep.output.hdf import get_tables
