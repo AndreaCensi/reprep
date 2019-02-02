@@ -2,7 +2,7 @@
 from contracts import contract
 from reprep import logger
 
-@contract(returns='tuple(None|str,None|str)')
+@contract(returns='tuple(None|string,None|string)')
 def symbol_desc_from_docstring(f):
     doc = f.__doc__
     if doc is None:
@@ -17,7 +17,7 @@ def symbol_desc_from_docstring(f):
     return symbol, desc
     
     
-@contract(returns='tuple(None|str,str)')
+@contract(returns='tuple(None|string,string)')
 def symbol_desc_from_string(doc):
     """ Expects something like: ::
     
