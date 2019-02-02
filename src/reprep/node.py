@@ -4,6 +4,7 @@ from .structures import InvalidURL, NotExistent
 from six.moves import StringIO
 from contracts import contract, describe_type
 import sys
+import six
 
 
 __all__ = ['Node']
@@ -129,7 +130,7 @@ class Node(ReportInterface):
         return n
 
     def resolve_url_dumb(self, url):
-        assert isinstance(url, str)
+        assert isinstance(url, six.string_types)
 
         components = Node.url_split(url)
         if len(components) > 1:
@@ -157,7 +158,7 @@ class Node(ReportInterface):
 
     @contract(url='str')
     def resolve_url(self, url, already_visited=None):
-        if not isinstance(url, str):
+        if not isinstance(url, six.string_types):
             raise ValueError(describe_type(url))
 
         if already_visited is None:
@@ -323,9 +324,9 @@ class Node(ReportInterface):
 
         # if there is already a figure we don't do it automatically
 
-        children_figures_manual = filter(lambda x: isinstance(x, Figure)
+        children_figures_manual = list(filter(lambda x: isinstance(x, Figure)
                                          and (self._auto_figure is None or self._auto_figure != x),
-                                         self.children)
+                                         self.children))
         if not children_figures_manual:
             # Have we already created the child figure?
             if self._auto_figure is None:

@@ -5,7 +5,7 @@ from contracts.utils import check_isinstance
 from reprep import MIME_PLAIN, MIME_PNG, MIME_PYTHON, logger
 import traceback
 import warnings
-
+import six
 
 __all__ = [
     'ReportInterface',
@@ -69,7 +69,7 @@ class ReportInterface(object):
                 raise
             else:
                 logger.exception(e)
-                s.text('error', traceback.format_exc(e))            
+                s.text('error', traceback.format_exc())
         
     @contract(nid='valid_id', mime='None|str', caption='None|str')
     def data(self, nid, data, mime=MIME_PYTHON, caption=None):
@@ -209,7 +209,7 @@ class ReportInterface(object):
             For now, only restructured text is converted to HTML,
             the rest is displayed as plain text.
         '''
-        return self.data(nid=nid, data=str(text), mime=mime)
+        return self.data(nid=nid, data=text, mime=mime)
 
     @contract(name='str', value='array', caption='None|str')
     def array(self, name, value, caption=None):  # XXX to change
@@ -266,7 +266,7 @@ class ReportInterface(object):
         if nid is None:
             nid = self.get_first_available_name(prefix='section')
         else:
-            check_isinstance(nid, str)
+            check_isinstance(nid, six.string_types)
         node = self.node(nid)
         # TODO: unify treatment of caption
         if caption:

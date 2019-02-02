@@ -338,7 +338,7 @@ def table_to_html(table, context):
 
     has_row_labels = len(list(filter(None, table.rows))) > 0
 
-    if filter(None, table.cols):  # at least one not None
+    if list(filter(None, table.cols)):  # at least one not None
         f.write('<thead>\n')
         f.write('<tr>\n')
 
