@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from __future__ import unicode_literals
 from .with_description import WithDescription
 
 __all__ = ['FunctionWithDescription']

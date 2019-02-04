@@ -13,7 +13,7 @@ __all__ = ['DataNode']
 
 class DataNode(Node):
 
-    @contract(nid='valid_id', mime='str', caption='None|str')
+    @contract(nid='valid_id', mime='unicode', caption='None|unicode')
     def __init__(self, nid, data, mime=MIME_PYTHON, caption=None):
         Node.__init__(self, nid)
         self.raw_data = data

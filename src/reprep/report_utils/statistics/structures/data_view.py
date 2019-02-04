@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from __future__ import unicode_literals
 from .reduction import Reduction
 from .reduction_display import ReductionDisplay
 from .storage import RepRepStats

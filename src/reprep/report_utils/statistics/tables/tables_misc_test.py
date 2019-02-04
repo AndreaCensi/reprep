@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from __future__ import unicode_literals
 from reprep.demos.manager import reprep_demo
 from reprep.report_utils.storing.store_results import StoreResults
 from reprep.report_utils.statistics.structures.with_description import WithDescription

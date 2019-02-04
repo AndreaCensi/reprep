@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from __future__ import unicode_literals
 from contracts import contract
 from reprep import MIME_RST, Report, logger
 from reprep.report_utils.storing.store_results import StoreResults
@@ -8,9 +9,9 @@ from reprep.report_utils.statistics.structures.data_view import DataView
 
 
 @contract(samples=StoreResults,
-          rows_field=str,
-          cols_fields='list[>=1](str)',
-          source_descs='dict(str:WithDescription)')
+          rows_field='unicode',
+          cols_fields='list[>=1](unicode)',
+          source_descs='dict(unicode:WithDescription)')
 def table_by_rows(id_report, samples, rows_field, cols_fields, source_descs):
     samples2 = StoreResultsDict(samples)
     
@@ -45,7 +46,7 @@ def table_by_rows(id_report, samples, rows_field, cols_fields, source_descs):
     return  r
 
 
-@contract(samples=StoreResultsDict, rows_field=str,
+@contract(samples=StoreResultsDict, rows_field='unicode',
           cols_fields='list[C](DataView)',
           returns='tuple( list[R], list[R](list[C]),  '
                          'list[R](list[C]), list[R](list[C]) )')

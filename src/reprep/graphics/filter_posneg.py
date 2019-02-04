@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from __future__ import unicode_literals
 from contracts import contract
 from numpy import maximum, minimum, zeros
 import numpy as np

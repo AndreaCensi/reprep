@@ -15,7 +15,7 @@ __all__ = ['PylabAttacher', 'Attacher']
 
 class Attacher(object):
 
-    @contract(node=Node, nid='valid_id', mime='None|str', caption='None|str')
+    @contract(node=Node, nid='valid_id', mime='None|unicode', caption='None|unicode')
     def __init__(self, node, nid, mime, caption):
         self.node = node
         self.nid = nid
@@ -64,7 +64,7 @@ class Attacher(object):
 
 class PylabAttacher(object):
 
-    @contract(node=Node, nid='valid_id', mime='None|str', caption='None|str')
+    @contract(node=Node, nid='valid_id', mime='None|unicode', caption='None|unicode')
     def __init__(self, node, nid, mime, caption, **figure_args):
         self.node = node
         self.nid = nid
@@ -130,7 +130,7 @@ class PylabAttacher(object):
 
 
 @contract(parent=Node, nid='valid_id',
-          rgb='array[HxWx(3|4)]', caption='None|str')
+          rgb='array[HxWx(3|4)]', caption='None|unicode')
 def data_rgb_imp(parent, nid, rgb, mime=MIME_PNG, caption=None):
     from .graphics import Image_from_array, rgb_zoom
 

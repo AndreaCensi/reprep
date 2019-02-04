@@ -158,7 +158,7 @@ class Node(ReportInterface):
                 raise NotExistent(msg)
             return l[nid]
 
-    @contract(url='str')
+    @contract(url='unicode')
     def resolve_url(self, url, already_visited=None):
         if not isinstance(url, six.string_types):
             raise ValueError(describe_type(url))
@@ -266,7 +266,7 @@ class Node(ReportInterface):
         self.print_tree(s)
         return s.getvalue()
 
-    @contract(returns='str')
+    @contract(returns='unicode')
     def get_complete_id(self, separator=":"):
         if self.nid is None:
             msg = 'This node was not given an ID, but now we need one.'
@@ -290,7 +290,7 @@ class Node(ReportInterface):
                     return res
             return None
 
-    @contract(mime_types='list(str)')
+    @contract(mime_types='list(unicode)')
     def get_first_child_with_mime(self, mime_types):
         ''' Search recursively the child with the given mime. '''
         def choose(node):
