@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from __future__ import unicode_literals
 from contextlib import contextmanager
 from contracts import contract
 from contracts.utils import check_isinstance

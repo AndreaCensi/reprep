@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from __future__ import unicode_literals
 from reprep import logger
 
 __all__ = ['get_matplotlib', 'get_pylab_instance']

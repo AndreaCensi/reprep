@@ -1,4 +1,7 @@
 # -*- coding: utf-8 -*-
+from __future__ import unicode_literals
+
+import contracts
 from . import Image_from_array, np
 import unittest
 
@@ -18,5 +21,6 @@ class Test(unittest.TestCase):
         for shape in Test.invalid_shapes:
             v = np.zeros(shape=shape, dtype='uint8')
             print('Trying with %s' % str(v.shape))
-            self.assertRaises(Exception, Image_from_array, v)
+            if not contracts.all_disabled():
+                self.assertRaises(Exception, Image_from_array, v)
 

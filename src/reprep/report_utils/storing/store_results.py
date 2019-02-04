@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from __future__ import unicode_literals
 from contracts import check_isinstance, contract, new_contract
 from reprep.utils import deprecated, frozendict2, natsorted
 

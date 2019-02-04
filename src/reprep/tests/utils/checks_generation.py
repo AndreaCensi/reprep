@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from __future__ import unicode_literals
 """
     These are very "meta" utils for creating nose mcdp_lang_tests on the fly. 
 
@@ -83,7 +84,7 @@ def add_checker_f(f, x, arguments, attributes, naming):
             logger.error(msg)
             raise
 
-    caller.__name__ = name
+    caller.__name__ = str(name)
 
     for k, v in attributes(x).items():
         caller.__dict__[k] = v

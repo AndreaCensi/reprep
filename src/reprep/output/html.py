@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from __future__ import unicode_literals
 from six.moves import cPickle
 import datetime
 import mimetypes
@@ -7,6 +8,9 @@ import shutil
 from string import Template
 import sys
 import six
+
+from contracts import check_isinstance
+
 NoneType = type(None)
 
 from pkg_resources import (
@@ -141,6 +145,10 @@ class html_context:
         self.pickle_compress = pickle_compress
 
 def htmlfy(s):
+    if six.PY2 and isinstance(s, bytes):
+        s = s.decode('utf-8')
+
+    check_isinstance(s, six.text_type)
     # XXX to write
     html_escape_table = {
         "&": "&amp;",
@@ -154,7 +162,7 @@ def htmlfy(s):
         """Produce entities within text."""
         return "".join(html_escape_table.get(c, c) for c in text)
 
-    return html_escape(str(s))
+    return html_escape(s)
 
 
 def get_complete_id(node, separator='-'):
@@ -287,7 +295,10 @@ def node_to_html_document(node, filename,
 def isodate_with_secs():
     """ E.g., '2011-10-06-22:54:33' """
     now = datetime.datetime.now()
-    date = now.isoformat('-')[:19]
+    if six.PY2:
+        date = now.isoformat(b'-')[:19]
+    else:
+        date = now.isoformat('-')[:19]
     return date
 
 

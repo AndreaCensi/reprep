@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from __future__ import unicode_literals
 from . import reprep_demo
 from reprep import filter_colormap
 from reprep.graphics import get_solid

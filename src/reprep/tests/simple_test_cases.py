@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from __future__ import unicode_literals
 import numpy as np
 from reprep.tests.cases import ExampleReports
 from reprep import MIME_PLAIN, Table
@@ -29,7 +30,7 @@ def table2(r):
 
 @ExampleReports.add
 def table3(r):
-    dtype = np.dtype([('field1', 'int32'), ('field2', 'int32')])
+    dtype = np.dtype([(b'field1', b'int32'), (b'field2', b'int32')])
     data = np.zeros(shape=(5,), dtype=dtype)
     table = Table('mytable', data)
     r.add_child(table)

@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from __future__ import unicode_literals
 from .constants import MIME_PDF, MIME_SVG, MIME_PNG  # @UnusedImport
 
 

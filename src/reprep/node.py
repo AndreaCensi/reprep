@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
+from __future__ import unicode_literals
 from .interface import ReportInterface
 from .structures import InvalidURL, NotExistent
 from six.moves import StringIO
-from contracts import contract, describe_type
+from contracts import contract, describe_type, check_isinstance
 import sys
 import six
 
@@ -14,7 +15,8 @@ class Node(ReportInterface):
 
     @contract(nid='valid_id|None', children='None|list', caption='None|str')
     def __init__(self, nid=None, children=None, caption=None):
-
+        check_isinstance(nid, (type(None),) + six.string_types)
+        check_isinstance(caption, (type(None), six.text_type))
         if children is not None and not isinstance(children, list):
             raise ValueError('Received a %s object as children list, should'
                              ' be None or list.' % describe_type(children))

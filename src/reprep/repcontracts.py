@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from __future__ import unicode_literals
 from reprep import VALID_ID_REGEXP
 from contracts import new_contract, contract
 import re

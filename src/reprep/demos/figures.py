@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from __future__ import unicode_literals
 from reprep.demos.manager import reprep_demo
 import numpy as np
 

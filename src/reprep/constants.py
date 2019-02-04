@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from __future__ import unicode_literals
 MIME_PNG = 'image/png'
 MIME_JPG = 'image/jpeg'
 MIME_PDF = 'application/pdf'

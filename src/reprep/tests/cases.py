@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from __future__ import unicode_literals
 from .. import Report
 from .utils import fancy_test_decorator
 

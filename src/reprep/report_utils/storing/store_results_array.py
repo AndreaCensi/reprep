@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from __future__ import unicode_literals
 from contracts import contract
 from reprep.report_utils.storing.store_results import StoreResults
 import numpy as np

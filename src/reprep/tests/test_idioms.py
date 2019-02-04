@@ -1,4 +1,7 @@
 # -*- coding: utf-8 -*-
+from __future__ import unicode_literals
+
+import contracts
 from .common import ReprepTest
 from contracts import ContractNotRespected
 from numpy.linalg.linalg import pinv
@@ -23,7 +26,7 @@ class Test(ReprepTest):
         self.node_serialization_ok(table)
 
     def testTable3(self):
-        dtype = numpy.dtype([('field1', 'int32'), ('field2', 'int32')])
+        dtype = numpy.dtype([(b'field1', b'int32'), (b'field2', b'int32')])
         data = numpy.zeros(shape=(5,), dtype=dtype)
         table = Table('mytable', data)
         self.node_serialization_ok(table)
@@ -33,7 +36,7 @@ class Test(ReprepTest):
         self.assertRaises(ValueError, Table, 'mytable', data)
 
     def testTable5(self):
-        dtype = numpy.dtype([('field1', 'int32'), ('field2', 'int32')])
+        dtype = numpy.dtype([(b'field1', b'int32'), (b'field2', b'int32')])
         data = numpy.zeros(shape=(5, 4), dtype=dtype)
         self.assertRaises(ValueError, Table, 'mytable', data)
 
@@ -135,7 +138,8 @@ class Test(ReprepTest):
         ]
         for s in invalid:
             print('TRying with %r' % s)
-            self.assertRaises((ValueError, ContractNotRespected), Report, s)
+            if not contracts.all_disabled():
+                self.assertRaises((ValueError, ContractNotRespected), Report, s)
 
         for s in valid:
             Report(s)
