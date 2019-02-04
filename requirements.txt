@@ -1,6 +1,6 @@
 pyparsing==2.1.5
 docutils
-PyContracts==1.8.9
+PyContracts==1.8.10
 numpy
 Pillow
 matplotlib
