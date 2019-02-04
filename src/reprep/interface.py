@@ -16,7 +16,7 @@ class ReportInterface(object):
 
     
     @contextmanager
-    @contract(nid='None|valid_id', caption='None|str', robust='bool')
+    @contract(nid='None|valid_id', caption='None|string', robust='bool')
     def subsection(self, nid=None, caption=None, robust=False):
         """ 
          
@@ -72,7 +72,7 @@ class ReportInterface(object):
                 logger.exception(e)
                 s.text('error', traceback.format_exc())
         
-    @contract(nid='valid_id', mime='None|str', caption='None|str')
+    @contract(nid='valid_id', mime='None|string', caption='None|string')
     def data(self, nid, data, mime=MIME_PYTHON, caption=None):
         ''' 
             Attaches a data child to this node. 
@@ -88,7 +88,7 @@ class ReportInterface(object):
         self.add_child(n)
         return n
 
-    @contract(nid='valid_id', mime='str', caption='None|str')
+    @contract(nid='valid_id', mime='string', caption='None|string')
     def data_file(self, nid, mime, caption=None):
         ''' 
             Support for attaching data from a file. Note: this method is 
@@ -128,14 +128,14 @@ class ReportInterface(object):
 
         return Attacher(self, nid=nid, mime=mime, caption=caption)
 
-    @contract(nid='None|valid_id', mime='None|str', caption='None|str')
+    @contract(nid='None|valid_id', mime='None|string', caption='None|string')
     def data_pylab(self, nid, mime=None, caption=None, **figure_args):
         ''' Same as plot(), but deprecated. '''
         warnings.warn('data_pylab() has been deprecated, use plot().',
                       stacklevel=2)
         return self.plot(nid=nid, mime=mime, caption=caption, **figure_args)
 
-    @contract(nid='None|valid_id', mime='None|str', caption='None|str')
+    @contract(nid='None|valid_id', mime='None|string', caption='None|string')
     def plot(self, nid=None, mime=None, caption=None, **figure_args):
         ''' 
             Easy support for creating a node consisting of a pylab plot.
@@ -161,7 +161,7 @@ class ReportInterface(object):
                              **figure_args)
 
     @contract(nid='valid_id|None', rgb='array[HxWx(3|4)](uint8)',
-              caption='None|str')
+              caption='None|string')
     def data_rgb(self, nid, rgb, mime=MIME_PNG, caption=None):
         ''' 
             Create a node containing an image from a RGB[a] array.
@@ -172,7 +172,7 @@ class ReportInterface(object):
         from .helpers import data_rgb_imp
         return data_rgb_imp(parent=self, nid=nid, rgb=rgb, mime=mime, caption=caption)
 
-    @contract(nid='valid_id|None', cols='None|(int,>=1)', caption='None|str')
+    @contract(nid='valid_id|None', cols='None|(int,>=1)', caption='None|string')
     def figure(self, nid=None, cols=None, caption=None):
         ''' Creates a figure, which is a container for subfigures. '''
         if nid is None:
@@ -184,7 +184,7 @@ class ReportInterface(object):
 
         return f
 
-    @contract(nid='valid_id', data='list(list)|array[HxW]', caption='None|str')
+    @contract(nid='valid_id', data='list(list)|array[HxW]', caption='None|string')
     def table(self, nid, data, cols=None, rows=None, fmt=None, caption=None):
         ''' 
             Attach a table to this node. 
@@ -199,7 +199,7 @@ class ReportInterface(object):
         self.add_child(t)
         return t
 
-    @contract(nid='valid_id', text='str|*', mime='None|str')
+    @contract(nid='valid_id', text='str|*', mime='None|string')
     def text(self, nid, text, mime=MIME_PLAIN):
         ''' 
             Adds a text node with the given id.
@@ -212,11 +212,11 @@ class ReportInterface(object):
         '''
         return self.data(nid=nid, data=text, mime=mime)
 
-    @contract(name='str', value='array', caption='None|str')
+    @contract(name='string', value='array', caption='None|string')
     def array(self, name, value, caption=None):  # XXX to change
         self.data(name, value, mime=MIME_PYTHON, caption=caption)
 
-    @contract(name='str', value='array', filter='str', caption='None|str')
+    @contract(name='string', value='array', filter='string', caption='None|string')
     def array_as_image(self, name, value,
                        filter='posneg',  # @ReservedAssignment # XXX: config
                        filter_params={},
@@ -275,7 +275,7 @@ class ReportInterface(object):
         return node
 
 
-    @contract(subsections='list(str)')
+    @contract(subsections='list(string)')
     def set_subsections_needed(self, subsections):
         """
             Marks the subsections that need to be generated;
