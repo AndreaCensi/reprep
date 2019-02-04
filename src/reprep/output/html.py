@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
+
+import codecs
+
 from six.moves import cPickle
 import datetime
 import mimetypes
@@ -270,7 +273,9 @@ def node_to_html_document(node, filename,
     rel_static_dir = os.path.relpath(os.path.realpath(static_dir), os.path.realpath(dirname))
     # print('rel_static_dir: %s' % rel_static_dir)
 
-    with open(filename, 'w') as f:
+    with codecs.open(filename, 'w', encoding='utf-8') as f:
+    #     return f.read()
+    # with open(filename, 'w') as f:
         mapping = {'resources': rel_resources_dir,
                    'title': str(node.nid),
                    'static': rel_static_dir,
@@ -514,7 +519,7 @@ def datanode_to_html(node, context):
         content = text2html(node.raw_data, node.mime)
         
         if node.nid == 'caption':
-            context.file.write("""
+            s = """
 <div class="textnode report-text-node"> 
 
     <span class="textid report-text-node-id"></span> 
@@ -524,21 +529,23 @@ def datanode_to_html(node, context):
    </div>
      
 </div>  
-""".format(content=content))
+""".format(content=content)
+
             
         else:
-            context.file.write("""
-<div class="textnode report-text-node"> 
+            s = """
+            <div class="textnode report-text-node"> 
 
-    <span class="textid report-text-node-id"> {id} </span> 
-   
-   <div class="report-text-node-content">
-     {content}
-   </div>
-     
-</div>  
-""".format(id=node.nid, content=content))
+                <span class="textid report-text-node-id"> {id} </span> 
 
+               <div class="report-text-node-content">
+                 {content}
+               </div>
+
+            </div>  
+            """.format(id=node.nid, content=content)
+
+        context.file.write(s)
     else:
         if node.mime == MIME_PYTHON:
             # print "Ignoring %s" % filename
@@ -565,7 +572,6 @@ def datanode_to_html(node, context):
                     f.write(node.raw_data)
                 add_link = True
 
-        inline = ""
 
         if node.mime == MIME_PYTHON:
             s = str(node.raw_data)

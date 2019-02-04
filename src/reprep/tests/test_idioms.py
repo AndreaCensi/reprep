@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+import six
+
 import contracts
 from .common import ReprepTest
 from contracts import ContractNotRespected
@@ -26,7 +28,10 @@ class Test(ReprepTest):
         self.node_serialization_ok(table)
 
     def testTable3(self):
-        dtype = numpy.dtype([(b'field1', b'int32'), (b'field2', b'int32')])
+        if six.PY3:
+            dtype = numpy.dtype([('field1', 'int32'), ('field2', 'int32')])
+        else:
+            dtype = numpy.dtype([(b'field1', b'int32'), (b'field2', b'int32')])
         data = numpy.zeros(shape=(5,), dtype=dtype)
         table = Table('mytable', data)
         self.node_serialization_ok(table)
@@ -36,7 +41,10 @@ class Test(ReprepTest):
         self.assertRaises(ValueError, Table, 'mytable', data)
 
     def testTable5(self):
-        dtype = numpy.dtype([(b'field1', b'int32'), (b'field2', b'int32')])
+        if six.PY3:
+            dtype = numpy.dtype([('field1', 'int32'), ('field2', 'int32')])
+        else:
+            dtype = numpy.dtype([(b'field1', b'int32'), (b'field2', b'int32')])
         data = numpy.zeros(shape=(5, 4), dtype=dtype)
         self.assertRaises(ValueError, Table, 'mytable', data)
 
