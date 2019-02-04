@@ -34,7 +34,7 @@ setup(name='reprep',
       include_package_data=True,
       install_requires=[
           'docutils',
-          'PyContracts>=1.8.5',
+          'PyContracts>=1.8.9',
           'numpy',
           'Pillow',
           'matplotlib',
