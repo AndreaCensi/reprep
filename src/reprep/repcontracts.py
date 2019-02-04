@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
+
+import six
+
 from reprep import VALID_ID_REGEXP
 from contracts import new_contract, contract
 import re
@@ -8,7 +11,7 @@ __all__ = ['valid_id', 'sanitize_id']
 
 @new_contract
 def valid_id(s):
-    assert isinstance(s, str)
+    assert isinstance(s, six.string_types)
 
     if re.match(VALID_ID_REGEXP, s) is None:
         msg = ('The given string %r does not match the spec %r.' % 
