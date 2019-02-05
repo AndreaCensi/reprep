@@ -213,6 +213,7 @@ class ReportInterface(object):
             For now, only restructured text is converted to HTML,
             the rest is displayed as plain text.
         '''
+        check_isinstance(text, six.text_type)
         return self.data(nid=nid, data=text, mime=mime)
 
     @contract(name='string', value='array', caption=caption_type)
