@@ -4,7 +4,7 @@ import mimetypes
 import tempfile
 
 from contracts import contract
-from reprep import MIME_JPG, MIME_SVG, MIME_PDF, MIME_PNG, RepRepDefaults
+from reprep import MIME_JPG, MIME_SVG, MIME_PDF, MIME_PNG, RepRepDefaults, mime_implies_unicode_representation
 
 from .datanode import DataNode
 from .mpl import get_pylab_instance
@@ -54,11 +54,14 @@ class Attacher(object):
         return self.temp_file.name
 
     def __exit__(self, _a, _b, _c):
-        with open(self.temp_file.name, 'rb') as f:
-            data = f.read()
-            self.node.data(nid=self.nid, data=data,
-                           mime=self.mime,
-                           caption=self.caption)
+        data = open(self.temp_file.name, 'rb').read()
+
+        if mime_implies_unicode_representation(self.mime):
+            data = data.decode('utf-8')
+
+        self.node.data(nid=self.nid, data=data,
+                       mime=self.mime,
+                       caption=self.caption)
         self.temp_file.close()
 
 

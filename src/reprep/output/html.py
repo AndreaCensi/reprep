@@ -23,7 +23,7 @@ from reprep import Figure, Table
 from reprep import MIME_PLAIN, MIME_RST, MIME_PYTHON, Node, logger
 from reprep.datanode import DataNode
 
-
+# language=html
 mathjax_header = """
     
     <script type="text/x-mathjax-config">
@@ -50,7 +50,7 @@ mathjax_header = """
 
 """
 
-
+# language=html
 header = """
 <html>
 <head>  
@@ -509,6 +509,9 @@ def text2html(text, mime):
         assert('Unknown mime %r for text.' % mime)
 
 
+
+
+
 def datanode_to_html(node, context):
     ''' Writes the data on the file '''
     relative, filename = get_node_filename(node, context)  # @UnusedVariable
@@ -516,6 +519,7 @@ def datanode_to_html(node, context):
     text_mimes = [MIME_PLAIN, MIME_RST]
 
     if node.mime in text_mimes:
+
         content = text2html(node.raw_data, node.mime)
         
         if node.nid == 'caption':

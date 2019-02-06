@@ -3,10 +3,12 @@ from __future__ import unicode_literals
 import sys
 
 import numpy as np
+import six
 
+from contracts import check_isinstance
 from . import (MIME_PNG, MIME_PYTHON, contract, describe_value,
-    colorize_success, scale, posneg, Image_from_array, rgb_zoom,
-    MIME_SVG, Node)
+               colorize_success, scale, posneg, Image_from_array, rgb_zoom,
+               MIME_SVG, Node, mime_implies_unicode_representation)
 
 
 __all__ = ['DataNode']
@@ -18,6 +20,8 @@ class DataNode(Node):
         Node.__init__(self, nid)
         self.raw_data = data
         self.mime = mime
+        if mime_implies_unicode_representation(self.mime):
+            check_isinstance(data, six.text_type)
         self.caption = caption
         
     def get_raw_data(self):

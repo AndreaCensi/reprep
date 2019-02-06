@@ -20,3 +20,6 @@ MIME_WEB_IMAGES = [MIME_SVG, MIME_PNG, MIME_JPG]
 #VALID_ID_REGEXP = '\A\w(\w|-)*\Z'
 VALID_ID_REGEXP = '\A\w(\w|-|\.)*\Z'
 
+
+def mime_implies_unicode_representation(x):
+    return x in [MIME_PLAIN, MIME_RST, MIME_SVG, MIME_GRAPHVIZ]
