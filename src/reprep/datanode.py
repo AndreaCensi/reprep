@@ -18,10 +18,15 @@ class DataNode(Node):
     @contract(nid='valid_id', mime='unicode', caption='None|unicode')
     def __init__(self, nid, data, mime=MIME_PYTHON, caption=None):
         Node.__init__(self, nid)
-        self.raw_data = data
         self.mime = mime
         if mime_implies_unicode_representation(self.mime):
-            check_isinstance(data, six.text_type)
+            if isinstance(data, bytes):
+                data = data.decode('utf8')
+
+        self.raw_data = data
+
+
+            # check_isinstance(data, six.text_type)
         self.caption = caption
         
     def get_raw_data(self):

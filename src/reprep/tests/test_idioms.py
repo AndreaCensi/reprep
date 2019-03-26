@@ -7,7 +7,7 @@ import contracts
 from .common import ReprepTest
 from contracts import ContractNotRespected
 from numpy.linalg.linalg import pinv
-from reprep import (MIME_PLAIN, Table, Node, Report)
+from reprep import (MIME_PLAIN, Table, Node, Report, MIME_PNG)
 import numpy
 import unittest
 from reprep.mpl import get_pylab_instance
@@ -99,7 +99,7 @@ class Test(ReprepTest):
         report.data('information', information)
 
         pylab = get_pylab_instance()
-        with cov.data_file('plot', 'image/png') as f:
+        with cov.data_file('plot', MIME_PNG) as f:
             pylab.figure()
             pylab.plot(C)
             pylab.savefig(f)

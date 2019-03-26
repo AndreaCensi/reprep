@@ -4,7 +4,8 @@ import mimetypes
 import tempfile
 
 from contracts import contract
-from reprep import MIME_JPG, MIME_SVG, MIME_PDF, MIME_PNG, RepRepDefaults, mime_implies_unicode_representation
+from reprep import MIME_JPG, MIME_SVG, MIME_PDF, MIME_PNG, RepRepDefaults, mime_implies_unicode_representation, \
+    MIME_PLAIN
 
 from .datanode import DataNode
 from .mpl import get_pylab_instance
@@ -34,11 +35,11 @@ class Attacher(object):
                 suffix = '.jpg'
 
             # sometimes it returns 'svgz'...
-            if self.mime == 'image/svg+xml':
+            if self.mime == MIME_SVG:
                 suffix = '.svg'
 
             # sometimes it returns '.txt'
-            if self.mime == 'text/plain':
+            if self.mime == MIME_PLAIN:
                 suffix = '.txt'
 
             #             print('suffix for %r = %r' % (self.mime, suffix))

@@ -562,19 +562,23 @@ def datanode_to_html(node, context):
                 add_link = False
             # TODO: add other representations for numpy array
         else:
-            if six.PY2:
-                look_for = str
-            else:
-                look_for = bytes
-            if not isinstance(node.raw_data, look_for):
-                sys.stderr.write("Ignoring %s because raw_data is %s\n" % 
-                    (filename, node.raw_data.__class__))
-                add_link = False
-            else:
-                # print "Writing on %s" % filename
+            # if six.PY2:
+            #     look_for = str
+            # else:
+            #     look_for = bytes
+            # if not isinstance(node.raw_data, look_for):
+            #     sys.stderr.write("Ignoring %s because raw_data is %s\n" %
+            #         (filename, node.raw_data.__class__))
+            #     add_link = False
+            # else:
+            # print "Writing on %s" % filename
+            if isinstance(node.raw_data, bytes):
                 with open(filename, 'wb') as f:
                     f.write(node.raw_data)
-                add_link = True
+            if isinstance(node.raw_data, str):
+                with open(filename, 'w') as f:
+                    f.write(node.raw_data)
+            add_link = True
 
 
         if node.mime == MIME_PYTHON:
