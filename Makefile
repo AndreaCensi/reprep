@@ -7,7 +7,7 @@ demos:
 
 
 bump:
-	bumpversion patch
+	bumpversion --verbose patch
 
 upload:
 	git push --tags
