@@ -17,7 +17,7 @@ def turn_off_right(pylab):
     ax = pylab.gca()
     for loc, spine in ax.spines.items():
         if loc in ['right']:
-            spine.set_color('none')  # don't draw spine 
+            spine.set_color('none')  # don't draw spine
     ax.yaxis.set_ticks_position('left')
 
 
@@ -25,7 +25,7 @@ def turn_off_top(pylab):
     ax = pylab.gca()
     for loc, spine in ax.spines.items():
         if loc in ['top']:
-            spine.set_color('none')  # don't draw spine 
+            spine.set_color('none')  # don't draw spine
     ax.yaxis.set_ticks_position('bottom')
 
 
@@ -33,7 +33,7 @@ def turn_off_left_and_right(pylab):
     ax = pylab.gca()
     for loc, spine in ax.spines.items():
         if loc in ['left', 'right']:
-            spine.set_color('none')  # don't draw spine 
+            spine.set_color('none')  # don't draw spine
     pylab.yticks([], [])
 
 
@@ -68,8 +68,8 @@ def set_spines_outward(pylab, outward_offset=10):
 
 def set_spines_look_A(pylab, outward_offset=10,
                       linewidth=2, markersize=3, markeredgewidth=1):
-    ''' 
-        Taken from 
+    '''
+        Taken from
         http://matplotlib.sourceforge.net/examples/pylab_examples
         /spine_placement_demo.html
     '''
@@ -87,12 +87,13 @@ def set_spines_look_A(pylab, outward_offset=10,
         [i.set_linewidth(linewidth) for i in ax.spines.items()]
 
     except BaseException as e:
-        print('set_linewidth() not working in matplotlib 1.3.1: %s' % e)
+        # print('set_linewidth() not working in matplotlib 1.3.1: %s' % e)
+        pass
 
     # ax.get_frame().set_linewidth(linewidth)
 
 # for l in ax1.yaxis.get_minorticklines()+ax1.xaxis.get_minorticklines():
 #
-#    l.set_markersize(3) 
+#    l.set_markersize(3)
 #
 #    l.set_markeredgewidth(1.2)

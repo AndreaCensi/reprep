@@ -1,17 +1,15 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
+
 import sys
 
 import numpy as np
-import six
 
-from contracts import check_isinstance
-from . import (MIME_PNG, MIME_PYTHON, contract, describe_value,
-               colorize_success, scale, posneg, Image_from_array, rgb_zoom,
-               MIME_SVG, Node, mime_implies_unicode_representation)
-
+from . import (colorize_success, contract, describe_value, Image_from_array, mime_implies_unicode_representation,
+               MIME_PNG, MIME_PYTHON, MIME_SVG, Node, posneg, rgb_zoom, scale)
 
 __all__ = ['DataNode']
+
 
 class DataNode(Node):
 
@@ -25,10 +23,9 @@ class DataNode(Node):
 
         self.raw_data = data
 
-
-            # check_isinstance(data, six.text_type)
+        # check_isinstance(data, six.text_type)
         self.caption = caption
-        
+
     def get_raw_data(self):
         return self.raw_data
 
@@ -38,9 +35,9 @@ class DataNode(Node):
         # FIXME: cannot compare array
         # if self.raw_data != other.raw_data:
         #    logger.error('%s, raw_data' % self)
-        #    return False 
+        #    return False
         if self.mime != other.mime:
-            return False 
+            return False
         return True
 
     def __repr__(self):
@@ -53,8 +50,8 @@ class DataNode(Node):
         for child in self.children:
             child.print_tree(s, prefix + '  ')
 
-    def is_image(self):
-        return self.mime in [MIME_PNG, MIME_SVG]  # XXX 
+    # def is_image(self):
+    #     return self.mime in [MIME_PNG, MIME_SVG]  # XXX
 
     # TODO: move to Figure
     def display(self, display, caption=None, **kwargs):
@@ -62,31 +59,33 @@ class DataNode(Node):
         if display is None:
             display = 'posneg'
         from reprep.graphics.filter_posneg import posneg_hinton
-        known = {'posneg': posneg,
-                 'success': colorize_success,
-                 'scale': scale,
-                 'rgb': just_check_rgb,
-                 'posneg_zoom': posneg_zoom,
-                 'posneg_hinton': posneg_hinton}
+        known = {
+            'posneg': posneg,
+            'success': colorize_success,
+            'scale': scale,
+            'rgb': just_check_rgb,
+            'posneg_zoom': posneg_zoom,
+            'posneg_hinton': posneg_hinton
+        }
         if not display in known:
             raise ValueError('No known converter %r. ' % display)
         nid = display  # TODO: check; add args in the name
 
-        converter = known[display] 
+        converter = known[display]
         image = converter(self.raw_data, **kwargs)
         # TODO: check return
-        
-        # TODO: add options somewhere for minimum size and zoom factor        
+
+        # TODO: add options somewhere for minimum size and zoom factor
         if image.shape[0] < 50:
             image = rgb_zoom(image, 10)
 
         pil_image = Image_from_array(image)
         with self.data_file(nid, MIME_PNG, caption=caption) as f:
             pil_image.save(f)
-            
+
         # Add here automatic saving of scale
 
-        return self.resolve_url_dumb(nid) 
+        return self.resolve_url_dumb(nid)
 
     def pil_from_compressed(self):
         """ Assuming this is a bitmap image, returns a PIL image from the data """
@@ -94,8 +93,8 @@ class DataNode(Node):
         from PIL import ImageFile  # @UnresolvedImport
         parser = ImageFile.Parser()
         parser.feed(self.raw_data)
-        res = parser.close()            
-        return res 
+        res = parser.close()
+        return res
 
     @contract(returns='array[HxWx3](uint8)')
     def get_rgb(self):
@@ -118,4 +117,3 @@ def posneg_zoom(value, zoom=8, uptowidth=2048, **params):
     z = rgb_zoom(rgb, actual)
     print('scaling %d to %s' % (actual, z.shape))
     return z
-

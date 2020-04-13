@@ -178,7 +178,7 @@ def get_complete_id(node, separator='-'):
 def get_node_filename(node, context):
     ''' Returns a tuple (relative_from_file, absolute) '''
     suffix = mimetypes.guess_extension(node.mime)
-        
+
     if suffix is None:
         suffix = '.pickle'
     nid = get_complete_id(node)
@@ -216,14 +216,14 @@ def node_to_html_document(node, filename,
                           extra_html_body_end=""
                           ):
     '''
-    
+
     :param node:
     :param filename:
     :param resources_dir:
     :param extra_css:
     :param extra_html_body_start: Extra HTML to put at the beginning of <body>
     :param write_pickle:
-    :param static_dir: Where to put common materials to all reports. 
+    :param static_dir: Where to put common materials to all reports.
     '''
     basename = os.path.basename(filename)
     dirname = os.path.dirname(filename)
@@ -241,17 +241,17 @@ def node_to_html_document(node, filename,
     if dirname and not os.path.exists(dirname):
         try:
             os.makedirs(dirname)
-        except: 
-            pass 
+        except:
+            pass
     if not os.path.exists(resources_dir):
         try:
             os.makedirs(resources_dir)
-        except: 
-            pass 
+        except:
+            pass
 
     if static_dir is None:
         static_dir = os.path.join(resources_dir, 'static')
-        
+
     # look for static data
     static = resource_filename("reprep", "static")
     if not os.path.exists(static):
@@ -268,7 +268,7 @@ def node_to_html_document(node, filename,
                     pass
                 else:
                     raise
-        
+
     # print('static_dir: %s' % static_dir)
     rel_static_dir = os.path.relpath(os.path.realpath(static_dir), os.path.realpath(dirname))
     # print('rel_static_dir: %s' % rel_static_dir)
@@ -300,10 +300,8 @@ def node_to_html_document(node, filename,
 def isodate_with_secs():
     """ E.g., '2011-10-06-22:54:33' """
     now = datetime.datetime.now()
-    if six.PY2:
-        date = now.isoformat(b'-')[:19]
-    else:
-        date = now.isoformat('-')[:19]
+
+    date = now.isoformat('-')[:19]
     return date
 
 
@@ -337,7 +335,7 @@ def node_to_html(node, context):
     }
     t = node.__class__
     if not t in functions:
-        msg = ('Could not find type of %s (%s) in %s.' % 
+        msg = ('Could not find type of %s (%s) in %s.' %
                (node, t, functions.keys()))
         raise ValueError(msg)
     functions[t](node, context)
@@ -387,10 +385,10 @@ def table_to_html(table, context):
         for value in row:
             try:
                 rep = fmt % value
-            except: 
+            except:
                 # TODO: warning
                 rep = str(value)
-                
+
             f.write('\t<td  style="text-align: \'.\'">%s</td>\n' % rep)
         f.write('</tr>\n')
     f.write('</tbody>\n')
@@ -419,18 +417,18 @@ def figure_to_html(node, context):
         first_col = col == 0
 
         classes = ['report-subfigure']
-        
+
         classes.append('ncols-%s' % ncols)
         if first_col:
             classes.append("first-col")
-           
+
         if last_col:
             classes.append("last-col")
 
         file.write('<div class="%s"> ' % " ".join(classes))
 
         main_resource = node.resolve_url(sub.resource)
-        
+
         try:
             actual_resource = node.resolve_url(sub.web_image)
         except:
@@ -462,11 +460,11 @@ def figure_to_html(node, context):
                     </a>    
                 ''').substitute(src=image_filename)
             )
-            
-        
-        file.write('<p class="report-subfigure-caption">%s</p>' % 
+
+
+        file.write('<p class="report-subfigure-caption">%s</p>' %
                  htmlfy(sub.caption))
-        
+
         if main_resource != actual_resource:
             if isinstance(main_resource, DataNode):
                 t = '<p class="report-subfigure-main-link"><a href="${src}"> main </a></p>'
@@ -479,7 +477,7 @@ def figure_to_html(node, context):
 
     caption = node.caption if node.caption else ""
 
-    file.write('<p class="report-figure-caption">%s</p>' % 
+    file.write('<p class="report-figure-caption">%s</p>' %
              htmlfy(caption))
 
     children_to_html(node, context)
@@ -501,7 +499,7 @@ def text2html(text, mime):
 
     if mime == MIME_PLAIN:
         # FIXME: add escaping here
-        return ('<pre class="report-text report-text-plain">%s</pre>' % 
+        return ('<pre class="report-text report-text-plain">%s</pre>' %
                  htmlfy(text))
     elif mime == MIME_RST:
         return rst2htmlfragment(text)
@@ -521,7 +519,7 @@ def datanode_to_html(node, context):
     if node.mime in text_mimes:
 
         content = text2html(node.raw_data, node.mime)
-        
+
         if node.nid == 'caption':
             s = """
 <div class="textnode report-text-node"> 
@@ -535,7 +533,7 @@ def datanode_to_html(node, context):
 </div>  
 """.format(content=content)
 
-            
+
         else:
             s = """
             <div class="textnode report-text-node"> 
@@ -591,13 +589,13 @@ def datanode_to_html(node, context):
             inline = (node.mime)
 
 
-        
+
         if add_link:
             name = '<a href="%s">%s</a>: ' % (relative, node.nid)
         else:
             name = '%s:' % node.nid
-            
-        s = ('<p class="datanode">%s %s</p>\n' % 
+
+        s = ('<p class="datanode">%s %s</p>\n' %
                            (name, inline))
         context.file.write(s)
 

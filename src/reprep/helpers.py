@@ -2,11 +2,12 @@
 from __future__ import unicode_literals
 import mimetypes
 import tempfile
+from typing import Optional
 
 from contracts import contract
-from reprep import MIME_JPG, MIME_SVG, MIME_PDF, MIME_PNG, RepRepDefaults, mime_implies_unicode_representation, \
+from reprep import  RepRepDefaults, mime_implies_unicode_representation, \
     MIME_PLAIN
-
+from .constants import MIME_GIF, MIME_JPG, MIME_SVG, MIME_PDF, MIME_PNG
 from .datanode import DataNode
 from .mpl import get_pylab_instance
 from .node import Node
@@ -16,8 +17,7 @@ __all__ = ['PylabAttacher', 'Attacher']
 
 class Attacher(object):
 
-    @contract(node=Node, nid='valid_id', mime='None|unicode', caption='None|unicode')
-    def __init__(self, node, nid, mime, caption):
+    def __init__(self, node: Node, nid: str, mime: Optional[str], caption: Optional[str]):
         self.node = node
         self.nid = nid
         self.mime = mime
@@ -41,6 +41,8 @@ class Attacher(object):
             # sometimes it returns '.txt'
             if self.mime == MIME_PLAIN:
                 suffix = '.txt'
+            if self.mime == MIME_GIF:
+                suffix = '.gif'
 
             #             print('suffix for %r = %r' % (self.mime, suffix))
 
