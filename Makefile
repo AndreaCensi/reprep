@@ -15,7 +15,7 @@ upload:
 	rm -f dist/*
 	rm -rf src/*.egg-info
 	python setup.py sdist
-	twine upload dist/*
+	twine upload --verbose dist/*
 
 bump-upload:
 	$(MAKE) bump
