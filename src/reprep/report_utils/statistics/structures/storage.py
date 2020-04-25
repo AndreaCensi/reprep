@@ -5,9 +5,10 @@ from .reduction_display import ReductionDisplay
 from .with_description_utils import symbol_desc_from_docstring
 
 __all__ = [
-    'RepRepStats',
+    "RepRepStats",
 ]
-        
+
+
 class RepRepStats(object):
     reductions = {}
     display = {}
@@ -17,7 +18,7 @@ class RepRepStats(object):
         """ Add as a reduction function. """
         name = f.__name__
         symbol, desc = symbol_desc_from_docstring(f)
-        assert not '\n' in desc, desc
+        assert not "\n" in desc, desc
         red = Reduction(name=name, function=f, desc=desc, symbol=symbol)
         RepRepStats.reductions[name] = red
         return f
@@ -25,7 +26,7 @@ class RepRepStats(object):
     @staticmethod
     def get_reduction(name):
         return RepRepStats.reductions[name]
-    
+
     @staticmethod
     def reduction_display(f):
         """ Add as a reduction display function. """

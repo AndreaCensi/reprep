@@ -11,13 +11,13 @@ class Test(unittest.TestCase):
 
     def testValid(self):
         for shape in Test.valid_shapes:
-            v = np.zeros(shape=shape, dtype='float32')
+            v = np.zeros(shape=shape, dtype="float32")
             v[...] = np.random.rand(*shape) * 255
             posneg(v)
 
     def testInvalidShapes(self):
         for shape in Test.invalid_shapes:
-            v = np.zeros(shape=shape, dtype='float32')
+            v = np.zeros(shape=shape, dtype="float32")
             self.assertRaises(Exception, posneg, v)
 
     def testInvalidNumbers(self):
@@ -26,5 +26,6 @@ class Test(unittest.TestCase):
         # a = np.ones(shape=(10, 10))
         # a[0, 0] = nan
         # self.assertRaises(ValueError, posneg, a)
+
 
 # TODO: add RGB(a) mcdp_lang_tests

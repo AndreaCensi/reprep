@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals
+from zuper_commons.types import ZException
 
-class ReprepException(Exception):
+
+class ReprepException(ZException):
     pass
 
 
@@ -11,4 +12,3 @@ class NotExistent(ReprepException):
 
 class InvalidURL(ReprepException):
     pass
- 

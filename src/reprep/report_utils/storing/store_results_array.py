@@ -5,17 +5,18 @@ from reprep.report_utils.storing.store_results import StoreResults
 import numpy as np
 
 __all__ = [
-    'array_from_sr',           
+    "array_from_sr",
 ]
 
-@contract(sr=StoreResults, fields='seq(str)', returns='array')
+
+@contract(sr=StoreResults, fields="seq(str)", returns="array")
 def array_from_sr(sr, fields):
-        
+
     if len(sr) == 0:
-        raise ValueError('empty')
-    
+        raise ValueError("empty")
+
     order = list(sr)
-    
+
     def get_values_for_field(field):
         values = []
         for s in order:
@@ -25,11 +26,11 @@ def array_from_sr(sr, fields):
             elif field in v:
                 values.append(v[field])
             else:
-                msg = 'No field %r found in %r or %r' % (field, s, v)
+                msg = "No field %r found in %r or %r" % (field, s, v)
                 raise ValueError(msg)
         return values
-    
-    dtype = []    
+
+    dtype = []
     for f in fields:
         values = get_values_for_field(f)
         assert len(values) == len(sr)
@@ -43,4 +44,3 @@ def array_from_sr(sr, fields):
         for i in range(len(values)):
             a[i][f] = values[i]
     return a
-

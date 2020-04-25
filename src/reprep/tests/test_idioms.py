@@ -7,116 +7,111 @@ import contracts
 from .common import ReprepTest
 from contracts import ContractNotRespected
 from numpy.linalg.linalg import pinv
-from reprep import (MIME_PLAIN, Table, Node, Report, MIME_PNG)
+from reprep import MIME_PLAIN, Table, Node, Report, MIME_PNG
 import numpy
 import unittest
 from reprep.mpl import get_pylab_instance
 
 
 class Test(ReprepTest):
-
     def testTable(self):
 
-        table = Table('mytable',
-                      [['Andrea', 'Censi'], ['a', 'b']], ['Name', 'Last'],
-                      )
+        table = Table("mytable", [["Andrea", "Censi"], ["a", "b"]], ["Name", "Last"],)
         self.node_serialization_ok(table)
 
     def testTable2(self):
         data = numpy.zeros((2, 2))
-        table = Table('mytable', data)
+        table = Table("mytable", data)
         self.node_serialization_ok(table)
 
     def testTable3(self):
         if six.PY3:
-            dtype = numpy.dtype([('field1', 'int32'), ('field2', 'int32')])
+            dtype = numpy.dtype([("field1", "int32"), ("field2", "int32")])
         else:
-            dtype = numpy.dtype([(b'field1', b'int32'), (b'field2', b'int32')])
+            dtype = numpy.dtype([(b"field1", b"int32"), (b"field2", b"int32")])
         data = numpy.zeros(shape=(5,), dtype=dtype)
-        table = Table('mytable', data)
+        table = Table("mytable", data)
         self.node_serialization_ok(table)
 
     def testTable4(self):
         data = numpy.zeros((2, 2, 3))
-        self.assertRaises(ValueError, Table, 'mytable', data)
+        self.assertRaises(ValueError, Table, "mytable", data)
 
     def testTable5(self):
         if six.PY3:
-            dtype = numpy.dtype([('field1', 'int32'), ('field2', 'int32')])
+            dtype = numpy.dtype([("field1", "int32"), ("field2", "int32")])
         else:
-            dtype = numpy.dtype([(b'field1', b'int32'), (b'field2', b'int32')])
+            dtype = numpy.dtype([(b"field1", b"int32"), (b"field2", b"int32")])
         data = numpy.zeros(shape=(5, 4), dtype=dtype)
-        self.assertRaises(ValueError, Table, 'mytable', data)
+        self.assertRaises(ValueError, Table, "mytable", data)
 
     def testImageRGB(self):
-        rgb = numpy.zeros((4, 4, 3), 'uint8')
-        report = Node('test')
-        report.data_rgb('rgb', rgb)
+        rgb = numpy.zeros((4, 4, 3), "uint8")
+        report = Node("test")
+        report.data_rgb("rgb", rgb)
 
     def testImageRGBCaption(self):
-        rgb = numpy.zeros((4, 4, 3), 'uint8')
-        r = Report('test')
-        r.data_rgb('rgb', rgb, caption='ciao')
+        rgb = numpy.zeros((4, 4, 3), "uint8")
+        r = Report("test")
+        r.data_rgb("rgb", rgb, caption="ciao")
 
     def testFigures(self):
-        rgb = numpy.zeros((4, 4, 3), 'uint8')
-        r = Report('test')
+        rgb = numpy.zeros((4, 4, 3), "uint8")
+        r = Report("test")
         f = r.figure()
-        f.data_rgb('rgb', rgb, caption='ciao')
+        f.data_rgb("rgb", rgb, caption="ciao")
         assert len(f.get_subfigures()) == 1
-        r.data_rgb('rgb', rgb, caption='ciao2')
+        r.data_rgb("rgb", rgb, caption="ciao2")
         r.last().add_to(f)
         assert len(f.get_subfigures()) == 2
 
     def testPlot(self):
-        r = Report('test')
-        with r.plot('ciao') as pylab:
-            pylab.plot([0, 1], [0, 1], '-k')
+        r = Report("test")
+        with r.plot("ciao") as pylab:
+            pylab.plot([0, 1], [0, 1], "-k")
 
     def testPlotCaption(self):
-        r = Report('test')
-        with r.plot('ciao', caption='my caption') as pylab:
-            pylab.plot([0, 1], [0, 1], '-k')
+        r = Report("test")
+        with r.plot("ciao", caption="my caption") as pylab:
+            pylab.plot([0, 1], [0, 1], "-k")
 
     def testText(self):
-        r = Report('test')
-        r.text('ciao', 'come va?')
+        r = Report("test")
+        r.text("ciao", "come va?")
 
     def testText2(self):
-        r = Report('test')
-        r.text('ciao', 'come va?', MIME_PLAIN)
+        r = Report("test")
+        r.text("ciao", "come va?", MIME_PLAIN)
 
     def testImage(self):
         C = numpy.random.rand(50, 50)
         information = pinv(C)
         T = numpy.random.rand(50, 50, 3)
 
-        report = Node('rangefinder')
-        report.data('Tx', T[:, :, 0])
-        report.data('Ty', T[:, :, 1])
-        report.data('Tz', T[:, :, 2])
-        cov = report.data('covariance', C)
-        report.data('information', information)
+        report = Node("rangefinder")
+        report.data("Tx", T[:, :, 0])
+        report.data("Ty", T[:, :, 1])
+        report.data("Tz", T[:, :, 2])
+        cov = report.data("covariance", C)
+        report.data("information", information)
 
         pylab = get_pylab_instance()
-        with cov.data_file('plot', MIME_PNG) as f:
+        with cov.data_file("plot", MIME_PNG) as f:
             pylab.figure()
             pylab.plot(C)
             pylab.savefig(f)
             pylab.close()
 
-        report.table('results',
-                         cols=['One', 'Two'],
-                         data=[[1, 2], [3, 4]])
+        report.table("results", cols=["One", "Two"], data=[[1, 2], [3, 4]])
 
-        f = report.figure(caption='Covariance and information matrix', cols=3)
-        f.sub('covariance', 'should default to plot')
-        f.sub('covariance/plot', 'Same as <-')
+        f = report.figure(caption="Covariance and information matrix", cols=3)
+        f.sub("covariance", "should default to plot")
+        f.sub("covariance/plot", "Same as <-")
 
-        f = report.figure('Tensors', cols=3)
-        f.sub('Tx', display='posneg')
-        f.sub('Ty', display='posneg')
-        f.sub('Tz', display='posneg')
+        f = report.figure("Tensors", cols=3)
+        f.sub("Tx", display="posneg")
+        f.sub("Ty", display="posneg")
+        f.sub("Tz", display="posneg")
 
         self.node_serialization_ok(report)
 
@@ -125,27 +120,27 @@ class Test(ReprepTest):
 
     def test_invalid_id_2(self):
         valid = [
-            'cioa',
-            'cioa',
-            'cioa_',
-            'cioa-0.4',
-            'cioa-',
+            "cioa",
+            "cioa",
+            "cioa_",
+            "cioa-0.4",
+            "cioa-",
         ]
         invalid = [
-             'cioa/',
-             'cioa:',
-             'cioa ',
-             'cioa <',
-             '$cioa',
-             ' cioa',
-             '',
-             '"',
-             '""',
-             "'",
-             "a\\a",
+            "cioa/",
+            "cioa:",
+            "cioa ",
+            "cioa <",
+            "$cioa",
+            " cioa",
+            "",
+            '"',
+            '""',
+            "'",
+            "a\\a",
         ]
         for s in invalid:
-            print('TRying with %r' % s)
+            print("TRying with %r" % s)
             if not contracts.all_disabled():
                 self.assertRaises((ValueError, ContractNotRespected), Report, s)
 
@@ -153,13 +148,11 @@ class Test(ReprepTest):
             Report(s)
 
     def test_invalid_children(self):
-        self.assertRaises((ValueError, ContractNotRespected),
-                          Report, children=1)
-        self.assertRaises((ValueError, ContractNotRespected),
-                          Report, children=[1])
-        self.assertRaises((ValueError, ContractNotRespected),
-                          Report, children=[None])
+        self.assertRaises((ValueError, ContractNotRespected), Report, children=1)
+        self.assertRaises((ValueError, ContractNotRespected), Report, children=[1])
+        self.assertRaises((ValueError, ContractNotRespected), Report, children=[None])
+
 
 if __name__ == "__main__":
-    #import sys;sys.argv = ['', 'Test.testName']
+    # import sys;sys.argv = ['', 'Test.testName']
     unittest.main()
