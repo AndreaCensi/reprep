@@ -1,8 +1,12 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals
+from contracts import describe_value
+
+from nose.tools import istest, nottest
+import sys
+from reprep import logger
 
 """
-    These are very "meta" utils for creating nose mcdp_lang_tests on the fly. 
+    These are very "meta" utils for creating nose mcdp_lang_tests on the fly.
 
     Here is an example use: ::
 
@@ -10,33 +14,28 @@ from __future__ import unicode_literals
 
         def thinghies_list():
             return thinghies.keys()
-        
+
         def thinghies_args(x):
             return (x, thinghies[x])
-        
+
         def thinghies_attrs(x):
             return dict(thinghy_name='%s' % x, flavor=thinghies[x])
-        
+
         for_all_thinghies = fancy_test_decorator(lister=thinghies_list,
                                                  arguments=thinghies_args,
                                                  attributes=thinghies_attrs)
-                                                 
-                                           
+
+
     And this is the proper test: ::
 
         @for_all_thinghies
         def check_good_flavor(id_thinghy, flavor):
             print('test for %s %s' % (id_thinghy, flavor))
 
-        
+
 """
-from contracts import describe_value
 
 __all__ = ["fancy_test_decorator"]
-
-from nose.tools import istest, nottest
-import sys
-from .. import logger
 
 
 def add_to_module(function, module_name):
@@ -106,15 +105,15 @@ def fancy_test_decorator(
     naming=lambda x: str(x),
     debug=False,
 ):
-    """ 
+    """
         Creates a fancy decorator for adding checks.
-        
+
         :param lister: a function that should give a list of objects
         :param arguments: from object to arguments
         :param attributes: (optional) set of attributes for the test
-        
+
         Returns a function that can be used as a decorator.
-        
+
     """
 
     def for_all_stuff(check):

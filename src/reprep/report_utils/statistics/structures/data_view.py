@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals
+
 from .reduction import Reduction
 from .reduction_display import ReductionDisplay
 from .storage import RepRepStats
@@ -19,7 +19,7 @@ class DataView(WithDescription):
 
     @contract(source=WithDescription, reduction=Reduction, display=ReductionDisplay)
     def __init__(self, source, reduction, display, *args, **kwargs):
-        """        
+        """
         :param name: ID for this view
         :param source: the source field in the data
         :param reduce: the reduction function (one defined in RepRepStats)
@@ -38,7 +38,7 @@ class DataView(WithDescription):
     @contract(samples=StoreResultsDict, returns="tuple(*,*,*)")
     def reduce(self, samples):
         """
-            Returns all stages: raw_data, reduction, display. 
+            Returns all stages: raw_data, reduction, display.
         """
         field = self.source.get_name()
         data = list(samples.field_or_value_field(field))
@@ -51,8 +51,8 @@ class DataView(WithDescription):
 
     @staticmethod
     def from_string(s, source_fields={}):
-        """ 
-            Accepts the formats: 
+        """
+            Accepts the formats:
             - source   =  source/one/string
             - source/reduction = source/reduction/string
             - source/reduction/display

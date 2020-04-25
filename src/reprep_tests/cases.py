@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals
-from .. import Report
-from .utils import fancy_test_decorator
+
+from reprep import Report
+from .checks_generation import fancy_test_decorator
 
 __all__ = ["ExampleReports", "for_all_example_reports"]
 

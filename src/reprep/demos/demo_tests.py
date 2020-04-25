@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals
+
 from reprep import Report
 from reprep.demos.manager import DemoStorage
 

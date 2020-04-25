@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals
+
 from contracts import contract
 from numpy import maximum, minimum, zeros
 import numpy as np
@@ -80,10 +80,10 @@ def posneg_hinton(
     nan_color="color_spec",
 )
 def posneg(value, max_value=None, skim=0, nan_color=[0.5, 0.5, 0.5], properties=None):
-    """ 
+    """
         Converts a 2D value to normalized display.
         (red=positive, blue=negative)
-     
+
     """
     value = value.astype("float32")
     # value = value.squeeze().copy() # squeeze: (1,1) -> ()

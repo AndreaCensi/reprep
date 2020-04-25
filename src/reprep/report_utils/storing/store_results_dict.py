@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals
+
 from contracts import describe_type, new_contract
 from reprep.report_utils.storing.store_results import StoreResults
 
@@ -9,9 +9,9 @@ __all__ = [
 
 
 class StoreResultsDict(StoreResults):
-    """ 
-        This class is a StoreResults that assumes that also 
-        the values are dictionaries. 
+    """
+        This class is a StoreResults that assumes that also
+        the values are dictionaries.
     """
 
     def __setitem__(self, attrs, value):
@@ -31,8 +31,8 @@ class StoreResultsDict(StoreResults):
         super(StoreResultsDict, self).__setitem__(attrs, value)
 
     def field_or_value_field(self, field):
-        """ 
-            Returns all values for field, which can be either in the 
+        """
+            Returns all values for field, which can be either in the
             key or in the value dict.
         """
         for k, v in self.items():

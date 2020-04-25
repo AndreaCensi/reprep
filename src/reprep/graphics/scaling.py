@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals
+
 from contracts import contract
 import numpy as np
 
@@ -24,7 +24,7 @@ def get_scaled_values(value, min_value=None, max_value=None, skim=0):
         - isnan         Values were NaN.
         - isinf         Values were +-Inf
         - isfin         Values weren't Inf or NaN
-        - clipped_ub    Values were clipped 
+        - clipped_ub    Values were clipped
         - clipped_lb
         - flat          Boolean if there wasn't a range
         - min_value

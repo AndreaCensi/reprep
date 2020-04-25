@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals
+
 from . import skim_top
 from contracts import contract
 from numpy import maximum, minimum, zeros
@@ -28,28 +28,28 @@ def scale(
     skim=0,
     properties=None,
 ):
-    """ 
-        Provides a RGB representation of the values by interpolating the range 
+    """
+        Provides a RGB representation of the values by interpolating the range
         [min(value),max(value)] into the colorspace [min_color, max_color].
-        
+
         Input: a numpy array with finite values squeeze()able to (W,H).
-        
+
         Configuration:
-        
-        - ``min_value``: If specified, this is taken to be the threshold. 
-                         Everything below min_value is considered to 
+
+        - ``min_value``: If specified, this is taken to be the threshold.
+                         Everything below min_value is considered to
                          be equal to min_value.
         - ``max_value``: Optional upper threshold.
-        - ``min_color``: color associated to minimum value. 
-        - ``max_color``: color associated to maximum value. 
-        - ``nan_color``: color associated to nan/inf values. 
-       
-        If all valid elements have the same value, their color will be 
+        - ``min_color``: color associated to minimum value.
+        - ``max_color``: color associated to maximum value.
+        - ``nan_color``: color associated to nan/inf values.
+
+        If all valid elements have the same value, their color will be
         ``flat_color``.
-        
-        Returns:  a (W,H,3) numpy array with dtype uint8 
+
+        Returns:  a (W,H,3) numpy array with dtype uint8
         representing a RGB image.
-      
+
     """
     value = value.astype("float32")
     H, W = value.shape

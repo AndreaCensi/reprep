@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals
+
 from contracts import contract
 from reprep import MIME_RST, Report, logger
 from reprep.report_utils.storing.store_results import StoreResults
@@ -61,7 +61,7 @@ def table_by_rows(id_report, samples, rows_field, cols_fields, source_descs):
 )
 def summarize_data(samples, rows_field, cols_fields):
     """
-         returns rows, data, reduced, display 
+         returns rows, data, reduced, display
     """
 
     def reduce_data(data_view, samples):

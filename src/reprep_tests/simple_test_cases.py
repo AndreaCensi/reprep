@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals
+
 import numpy as np
 import six
 
-from reprep.tests.cases import ExampleReports
+from reprep_tests import ExampleReports
 from reprep import MIME_PLAIN, Table
 from reprep.types import NID
 

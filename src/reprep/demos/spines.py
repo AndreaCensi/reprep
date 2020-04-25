@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals
+
 import numpy as np
 from reprep.plot_utils import set_spines_look_A, set_thick_ticks
 

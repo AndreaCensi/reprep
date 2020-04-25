@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals
+
 from contracts import check_isinstance, contract, new_contract
 from reprep.utils import deprecated, frozendict2, natsorted
 
@@ -46,7 +46,7 @@ class StoreResults(dict):
     def remove_field(self, field):
         """ Returns a copy of this structure, where the given field
             is removed from the keys. Throws an error if removing the
-            field would make the keys not unique. Also throws 
+            field would make the keys not unique. Also throws
             an error if the given field is not present in all keys."""
         r = self.__class__()
         for key in self:
@@ -68,7 +68,7 @@ class StoreResults(dict):
         return r
 
     def select_key(self, *conditions, **condkeys):
-        """ 
+        """
             Selects keys according to some conditions, which could be either
             functions, or key=value queries.
         """
@@ -98,7 +98,7 @@ class StoreResults(dict):
 
     @contract(returns="list(str)")
     def field_names(self):
-        """ 
+        """
             Returns all field names presents.
             Note that, in general, some fields might not be present in all entries.
         """
@@ -112,7 +112,7 @@ class StoreResults(dict):
 
     @contract(returns="list(str)")
     def field_names_in_all_keys(self):
-        """ 
+        """
             Returns the field names that are in all keys.
         """
         names = None
@@ -139,9 +139,9 @@ class StoreResults(dict):
         """
             Partitions the contents according to the value of the given
             field.
-            
-            Example: :: 
-            
+
+            Example: ::
+
                 for delta, samples in x.groups_by_field_value('delta'):
                     ...
         """

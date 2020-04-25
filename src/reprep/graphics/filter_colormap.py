@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals
+
 from contracts import contract
 
 import numpy as np
@@ -53,7 +53,7 @@ def filter_colormap(
 ):
 
     """
-    
+
       shape = grid.get_map().shape
     xb = np.linspace(0, shape[0] * 1.0, shape[0] / res)
     yb = np.linspace(0, shape[1] * 1.0, shape[1] / res)
@@ -63,7 +63,7 @@ def filter_colormap(
     pylab.imshow(values_rgb, extent=(xb[0], xb[-1], yb[0], yb[-1]))
 
 
-    
+
     """
     scaled = get_scaled_values(
         value, min_value=min_value, max_value=max_value, skim=skim

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals
+
 from contracts import contract
 from reprep import logger
 
@@ -22,11 +22,11 @@ def symbol_desc_from_docstring(f):
 @contract(returns="tuple(None|string,string)")
 def symbol_desc_from_string(doc):
     """ Expects something like: ::
-    
+
             M := Number of edges.
-            
+
             blah blah
-    
+
         Gets only the first line of the description. """
     doc = doc.strip()
     if ":=" in doc:

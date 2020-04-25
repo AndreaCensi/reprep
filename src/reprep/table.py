@@ -14,7 +14,7 @@ __all__ = [
 
 class Table(Node):
     @contract(nid="valid_id", caption="None|str")
-    def __init__(self, nid: NID, data, cols=None, rows=None, fmt=None, caption=None):
+    def __init__(self, nid: str, data, cols=None, rows=None, fmt=None, caption=None):
         """
             :type data:  (array[R](fields[C]) | array[RxC] | list[R](list[C])
                  ), R>0, C>0
