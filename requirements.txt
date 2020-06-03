@@ -1,7 +1,9 @@
-pyparsing==2.1.5
-docutils
-PyContracts==1.8.5
-numpy
-Pillow
-matplotlib
-six
+pyparsing==2.4.7
+docutils==0.16
+PyContracts==1.8.14
+numpy==1.18.4
+Pillow==7.1.2
+matplotlib==3.2.1
+six==1.15.0
+zuper-commons-z6==6.0.29
+zuper-typing-z6==6.0.66

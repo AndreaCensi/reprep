@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+
 import numpy as np
 
 from .manager import reprep_demo
@@ -27,4 +28,3 @@ def demo_columns(r, nplots, ncols):
             x = np.linspace(0, 2 * np.pi, 100)
             y = np.sin(x * (k + 1))
             pylab.plot(x, y)
-

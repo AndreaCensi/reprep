@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
+
 from contracts import check_isinstance, contract, new_contract
 from reprep.utils import deprecated, frozendict2, natsorted
 
 __all__ = [
-    'StoreResults',
+    "StoreResults",
 ]
 
 
 class StoreResults(dict):
-
     def __getitem__(self, attrs):
         if not isinstance(attrs, frozendict2):
             check_isinstance(attrs, dict)
@@ -20,12 +20,12 @@ class StoreResults(dict):
             keys = self.keys()
             if keys:
                 k = most_similar(self.keys(), attrs)
-                msg += '\n The most similar key is: %s' % str(k)
+                msg += "\n The most similar key is: %s" % str(k)
             raise KeyError(msg)
 
     def __setitem__(self, attrs, value):
         if not isinstance(attrs, dict):
-            msg = 'Keys to this dictionary must be dicts'
+            msg = "Keys to this dictionary must be dicts"
             raise ValueError(msg)
         # Todo: check all strings
         frozen = frozendict2(**attrs)
@@ -37,7 +37,7 @@ class StoreResults(dict):
 
     def select(self, *cond, **condkeys):
         """ Returns another StoreResults with the filtered results. """
-        # So that we can be subclassed with specialization 
+        # So that we can be subclassed with specialization
         r = self.__class__()
         for attrs in self.select_key(*cond, **condkeys):
             r[attrs] = self[attrs]
@@ -46,7 +46,7 @@ class StoreResults(dict):
     def remove_field(self, field):
         """ Returns a copy of this structure, where the given field
             is removed from the keys. Throws an error if removing the
-            field would make the keys not unique. Also throws 
+            field would make the keys not unique. Also throws
             an error if the given field is not present in all keys."""
         r = self.__class__()
         for key in self:
@@ -58,15 +58,17 @@ class StoreResults(dict):
             del key2[field]
 
             if key2 in r:
-                msg = ('Removing field %r from key %r would make it non unique.' %
-                       (field, key))
+                msg = "Removing field %r from key %r would make it non unique." % (
+                    field,
+                    key,
+                )
                 raise ValueError(msg)
 
             r[key2] = self[key]
         return r
 
     def select_key(self, *conditions, **condkeys):
-        """ 
+        """
             Selects keys according to some conditions, which could be either
             functions, or key=value queries.
         """
@@ -90,13 +92,13 @@ class StoreResults(dict):
         """ Returns all values of the given field """
         for attrs in self:
             if not field in attrs:
-                msg = 'Field %r not found in %s.' % (field, attrs)
+                msg = "Field %r not found in %s." % (field, attrs)
                 raise ValueError(msg)
             yield attrs[field]
 
-    @contract(returns='list(str)')
+    @contract(returns="list(str)")
     def field_names(self):
-        """ 
+        """
             Returns all field names presents.
             Note that, in general, some fields might not be present in all entries.
         """
@@ -108,9 +110,9 @@ class StoreResults(dict):
             names.update(k.keys())
         return list(names)
 
-    @contract(returns='list(str)')
+    @contract(returns="list(str)")
     def field_names_in_all_keys(self):
-        """ 
+        """
             Returns the field names that are in all keys.
         """
         names = None
@@ -122,7 +124,7 @@ class StoreResults(dict):
 
         return list(names)
 
-    @contract(returns='dict')
+    @contract(returns="dict")
     def fields_with_unique_values(self):
         """ Returns a dictionary of fields which appear in all keys
             and that have the same value across all keys. """
@@ -137,9 +139,9 @@ class StoreResults(dict):
         """
             Partitions the contents according to the value of the given
             field.
-            
-            Example: :: 
-            
+
+            Example: ::
+
                 for delta, samples in x.groups_by_field_value('delta'):
                     ...
         """
@@ -155,7 +157,7 @@ class StoreResults(dict):
             yield value, samples
 
 
-new_contract('StoreResults', StoreResults)
+new_contract("StoreResults", StoreResults)
 
 
 def most_similar(keys, key):
@@ -167,6 +169,7 @@ def most_similar(keys, key):
         return len(v1 & v2)
 
     import numpy as np
+
     keys = list(keys)
     scores = np.array(map(score, keys))
 

@@ -6,14 +6,20 @@ demos:
 	reprep_demos
 
 
-bump-upload:
-	bumpversion patch
+bump:
+	bumpversion --verbose patch
+
+upload:
 	git push --tags
 	git push --all
 	rm -f dist/*
+	rm -rf src/*.egg-info
 	python setup.py sdist
-	twine upload dist/*
+	twine upload --verbose dist/*
 
+bump-upload:
+	$(MAKE) bump
+	$(MAKE) upload
 
 name=reprep-python3
 

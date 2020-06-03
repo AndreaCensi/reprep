@@ -1,33 +1,36 @@
 # -*- coding: utf-8 -*-
+
 from contracts import contract
 import numpy as np
 
 
-@contract(a='array', top_percent='>=0,<=90')
+@contract(a="array", top_percent=">=0,<=90")
 def skim_top(a, top_percent):
-    ''' Cuts off the top percentile '''
+    """ Cuts off the top percentile """
     threshold = np.percentile(a.flat, 100 - top_percent)
     return np.minimum(a, threshold)
 
 
-@contract(value='array[HxW],H>0,W>0',
-          max_value='None|number',
-          min_value='None|number',
-          skim='>=0,<=90')
+@contract(
+    value="array[HxW],H>0,W>0",
+    max_value="None|number",
+    min_value="None|number",
+    skim=">=0,<=90",
+)
 def get_scaled_values(value, min_value=None, max_value=None, skim=0):
-    '''
+    """
         Returns dictionary with entries:
         - value01       Values in [0, 1], no inf, nan, where it is set 0.5.
         - isnan         Values were NaN.
         - isinf         Values were +-Inf
         - isfin         Values weren't Inf or NaN
-        - clipped_ub    Values were clipped 
+        - clipped_ub    Values were clipped
         - clipped_lb
         - flat          Boolean if there wasn't a range
         - min_value
         - max_value
-    '''
-    value = value.copy().astype('float32')
+    """
+    value = value.copy().astype("float32")
 
     isfin = np.isfinite(value)
     isnan = np.isnan(value)
@@ -76,14 +79,13 @@ def get_scaled_values(value, min_value=None, max_value=None, skim=0):
     scaled01 = np.minimum(scaled01, 1)
 
     return dict(
-                scaled01=scaled01,
-                isnan=isnan,
-                isinf=isinf,
-                isfin=isfin,
-                flat=flat,
-                min_value=min_value,
-                max_value=max_value,
-                clipped_ub=clipped_ub,
-                clipped_lb=clipped_lb
-                )
-
+        scaled01=scaled01,
+        isnan=isnan,
+        isinf=isinf,
+        isfin=isfin,
+        flat=flat,
+        min_value=min_value,
+        max_value=max_value,
+        clipped_ub=clipped_ub,
+        clipped_lb=clipped_lb,
+    )

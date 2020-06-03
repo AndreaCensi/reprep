@@ -1,19 +1,13 @@
 # -*- coding: utf-8 -*-
-import copy
-import six
 
-try:
-    frozenset
-except NameError:
-    if six.PY2:
-        from sets import ImmutableSet as frozenset
+import copy
 
 
 class frozendict1(dict):
-    __slots__ = ('_hash',)
+    __slots__ = ("_hash",)
 
     def __hash__(self):
-        rval = getattr(self, '_hash', None)
+        rval = getattr(self, "_hash", None)
         if rval is None:
             rval = self._hash = hash(frozenset(self.items()))
         return rval

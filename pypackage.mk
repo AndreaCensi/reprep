@@ -12,6 +12,9 @@ develop:
 docs:
 	make -C docs
 
+
+test_packages=reprep reprep_tests
+
 coverage_dir=coverage_information
 nose=nosetests --with-id
 nose_parallel=--processes=16 --process-timeout=300 --process-restartworker
@@ -29,26 +32,21 @@ test:
 	@echo   NOSE_PARAMS='--nologcapture -s -v' make test-failed
 	@echo
 	@echo
-	$(nose) $(package) $(NOSE_PARAMS)
+	$(nose) $(test_packages) $(NOSE_PARAMS)
 
 
 test-stop:
-	$(nose) $(package) $(NOSE_PARAMS) -x
+	$(nose) $(test_packages) $(NOSE_PARAMS) -x
 
 test-failed:
-	$(nose) $(package) $(NOSE_PARAMS) --failed
+	$(nose) $(test_packages) $(NOSE_PARAMS) --failed
 
 test-parallel:
-	$(nose) $(package) $(NOSE_PARAMS) $(nose_parallel)
+	$(nose) $(test_packages) $(NOSE_PARAMS) $(nose_parallel)
 
 test-parallel-stop:
-	$(nose) $(package) $(NOSE_PARAMS) $(nose_parallel) -x
+	$(nose) $(test_packages) $(NOSE_PARAMS) $(nose_parallel) -x
 
 test-coverage:
-	$(nose) $(package) $(NOSE_PARAMS) $(nose_coverage)
+	$(nose) $(test_packages) $(NOSE_PARAMS) $(nose_coverage)
 
-bump-upload:
-	bumpversion --config-file .bumbversion.cfg patch
-	git push --tags
-	git push --all
-	python setup.py sdist upload

@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+
+
 # ---------------------------------------------------------
 # natsort.py: Natural string sorting.
 # ---------------------------------------------------------
@@ -17,8 +19,10 @@ def try_int(s):
 def natsort_key(s):
     "Used internally to get a tuple by which s is sorted."
     import re
+
     s = str(s)  # convert everything to string
-    return tuple(map(try_int, re.findall(r'(\d+|\D+)', s)))
+    return tuple(map(try_int, re.findall(r"(\d+|\D+)", s)))
+
 
 #
 # def cmp2(a, b):
