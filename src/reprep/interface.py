@@ -7,7 +7,7 @@ from typing import List, Optional
 
 import numpy as np
 
-from contracts import contract
+# from contracts import contract
 from zuper_commons.types import check_isinstance
 from . import logger
 from .constants import MIME_PLAIN, MIME_PNG, MIME_PYTHON
@@ -17,14 +17,14 @@ __all__ = [
     "ReportInterface",
 ]
 
-caption_type = "None|unicode"  # '(type(None), six.text_type)
-mime_type = "unicode"
+# caption_type = "None|unicode"  # '(type(None), six.text_type)
+# mime_type = "unicode"
 
 
-class ReportInterface(object):
+class ReportInterface:
     @contextmanager
-    @contract(nid="None|valid_id", caption=caption_type, robust="bool")
-    def subsection(self, nid: str = None, caption: str = None, robust: bool = False):
+    # @contract(nid="None|valid_id", caption=caption_type, robust="bool")
+    def subsection(self, nid: str = None, caption: Optional[str] = None, robust: bool = False):
         """
 
             Can be called as a context manager.
@@ -79,8 +79,8 @@ class ReportInterface(object):
                 logger.exception(e)
                 s.text("error", traceback.format_exc())
 
-    @contract(nid="valid_id", mime=caption_type, caption=caption_type)
-    def data(self, nid: str, data, mime=MIME_PYTHON, caption=None):
+    # @contract(nid="valid_id", mime=caption_type, caption=caption_type)
+    def data(self, nid: str, data, mime: MimeType=MIME_PYTHON, caption: str=None):
         """
             Attaches a data child to this node.
 
@@ -96,7 +96,7 @@ class ReportInterface(object):
         self.add_child(n)
         return n
 
-    @contract(nid="valid_id", mime=mime_type, caption=caption_type)
+    # @contract(nid="valid_id", mime=mime_type, caption=caption_type)
     def data_file(self, nid: str, mime: MimeType, caption: Optional[str] = None):
         """
             Support for attaching data from a file. Note: this method is
@@ -139,10 +139,10 @@ class ReportInterface(object):
 
         return Attacher(self, nid=nid, mime=mime, caption=caption)
 
-    @contract(nid="None|valid_id", mime=caption_type, caption=caption_type)
+    # @contract(nid="None|valid_id", mime=caption_type, caption=caption_type)
     def data_pylab(
         self,
-        nid: str,
+        nid: Optional[str],
         mime: Optional[MimeType] = None,
         caption: Optional[str] = None,
         **figure_args
@@ -151,7 +151,7 @@ class ReportInterface(object):
         warnings.warn("data_pylab() has been deprecated, use plot().", stacklevel=2)
         return self.plot(nid=nid, mime=mime, caption=caption, **figure_args)
 
-    @contract(nid="None|valid_id", mime=caption_type, caption=caption_type)
+    # @contract(nid="None|valid_id", mime=caption_type, caption=caption_type)
     def plot(
         self,
         nid: str = None,
@@ -182,7 +182,7 @@ class ReportInterface(object):
 
         return PylabAttacher(self, nid=nid, mime=mime, caption=caption, **figure_args)
 
-    @contract(nid="valid_id|None", rgb="array[HxWx(3|4)](uint8)", caption=caption_type)
+    # @contract(nid="valid_id|None", rgb="array[HxWx(3|4)](uint8)", caption=caption_type)
     def data_rgb(self, nid: str, rgb, mime: MimeType = MIME_PNG, caption=None):
         """
             Create a node containing an image from a RGB[a] array.
@@ -194,7 +194,7 @@ class ReportInterface(object):
 
         return data_rgb_imp(parent=self, nid=nid, rgb=rgb, mime=mime, caption=caption)
 
-    @contract(nid="valid_id|None", cols="None|(int,>=1)", caption=caption_type)
+    # @contract(nid="valid_id|None", cols="None|(int,>=1)", caption=caption_type)
     def figure(
         self,
         nid: Optional[str] = None,
@@ -212,7 +212,7 @@ class ReportInterface(object):
 
         return f
 
-    @contract(nid="valid_id", data="list(list)|array[HxW]", caption=caption_type)
+    # @contract(nid="valid_id", data="list(list)|array[HxW]", caption=caption_type)
     def table(
         self,
         nid: str,
@@ -236,7 +236,7 @@ class ReportInterface(object):
         self.add_child(t)
         return t
 
-    @contract(nid="valid_id", text="str|*", mime=caption_type)
+    # @contract(nid="valid_id", text="str|*", mime=caption_type)
     def text(self, nid: str, text: str, mime: MimeType = MIME_PLAIN):
         """
             Adds a text node with the given id.
@@ -250,13 +250,13 @@ class ReportInterface(object):
         check_isinstance(text, str)
         return self.data(nid=nid, data=text, mime=mime)
 
-    @contract(name="string", value="array", caption=caption_type)
+    # @contract(name="string", value="array", caption=caption_type)
     def array(
         self, name: str, value: np.array, caption: Optional[str] = None
     ):  # XXX to change
         self.data(name, value, mime=MIME_PYTHON, caption=caption)
 
-    @contract(name="string", value="array", filter="string", caption=caption_type)
+    # @contract(name="string", value="array", filter="string", caption=caption_type)
     def array_as_image(
         self,
         name: str,
@@ -310,7 +310,7 @@ class ReportInterface(object):
 
     # ## candidates for deprecation
 
-    @contract(nid="None|valid_id")
+    # @contract(nid="None|valid_id")
     def section(self, nid=None, caption=None):
         """ Creates a subsection of the report. Returns a reference. """
         if nid is None:
@@ -323,7 +323,7 @@ class ReportInterface(object):
             node.text("caption", caption)
         return node
 
-    @contract(subsections="list(string)")
+    # @contract(subsections="list(string)")
     def set_subsections_needed(self, subsections):
         """
             Marks the subsections that need to be generated;
