@@ -1,4 +1,4 @@
-from setuptools import setup, find_packages
+from setuptools import find_packages, setup
 
 
 def get_version(filename):
@@ -26,22 +26,23 @@ scripts = [
 console_scripts = map(lambda s: '%s = %s:main' % (s[0], s[1]), scripts)
 
 package_data = {'': ['*.*']}
-
-setup(name='reprep',
+line = 'z6'
+install_requires = [
+    'docutils',
+    'PyContracts3',
+    'numpy',
+    'Pillow',
+    'matplotlib',
+    'six',
+    'zuper-commons-z6>=6.0.29',
+    'zuper-typing-z6>=6.0.66',
+]
+setup(name=f'reprep-{line}',
       version=version,
       package_dir={'': 'src'},
       packages=find_packages('src'),
       include_package_data=True,
-      install_requires=[
-          'docutils',
-          'PyContracts>=1.8.9',
-          'numpy',
-          'Pillow',
-          'matplotlib',
-          'six',
-          'zuper-commons-z6>=6.0.29',
-          'zuper-typing-z6>=6.0.66',
-      ],
+      install_requires=install_requires,
       package_data=package_data,
       url='http://AndreaCensi.github.com/reprep/',
       author='Andrea Censi',
