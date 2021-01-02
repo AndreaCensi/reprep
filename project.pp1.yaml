@@ -6,6 +6,16 @@ modules:
 
 install_requires:
   - zuper-commons-z7
+  - PyContracts3
+  - Pillow
+  - docutils
+  - ipython
+  - matplotlib
+  - numpy
+  - scipy
+  - tables
+  - setuptools # keep
+  - six
 
 install_conflicts: [ 'reprep*' ]
 tests_require: [ ]

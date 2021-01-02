@@ -25,7 +25,7 @@ jobs:
       - run:
           name: Run tests
           command: |
-            pip install --user nose
+            pip install -q --user nose
             PATH=~/.local/bin:$PATH make test-parallel
   test-3.8:
       <<: *test-template

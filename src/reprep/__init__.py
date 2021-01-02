@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
 __version__ = "6.0.8"
+__date__ = ""
 
-import logging
+from zuper_commons import ZLogger
 
-logging.basicConfig()
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)
+logger = ZLogger(__name__)
+logger.hello_module(
+    name=__name__, filename=__file__, version=__version__, date=__date__
+)
 
 from .mpl import *
 from .structures import *
@@ -24,6 +26,5 @@ from .types import *
 
 # Alias
 Report = Node
-
 
 from . import report_utils  # just load demos
