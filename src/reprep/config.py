@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from .constants import MIME_PDF
 
 __all__ = ["RepRepDefaults"]

@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 from contracts import contract
 from numpy import maximum, minimum, zeros
 import numpy as np

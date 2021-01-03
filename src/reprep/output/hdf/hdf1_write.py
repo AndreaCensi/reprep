@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from . import write_python_data
 from reprep import DataNode, Figure, __version__, Table
 import datetime
@@ -42,18 +41,18 @@ def node_to_hdf(hf, parent, node):
     attrs[
         "reprep_format_desc"
     ] = """
-    
+
     Node attributes:
-        reprep_format_version: 
+        reprep_format_version:
         reprep_version: 2 integers, major and minor.
         reprep_node_type: Type of node (Node, DataNode, Figure, Table)
         reprep_date_created: Current date
         reprep_order: order in which it appears in the report
-        
+
     Protocol:
-    
+
         [1, 0]:  First protocol.
-        
+
     """
 
     if isinstance(node, DataNode):

@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 from reprep import Report
 from .checks_generation import fancy_test_decorator
 

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from contracts import describe_value
 
 from nose.tools import istest, nottest

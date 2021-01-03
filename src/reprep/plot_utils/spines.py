@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 def turn_off_all_axes(pylab):
     turn_off_bottom_and_top(pylab)
     turn_off_left_and_right(pylab)

@@ -1,11 +1,9 @@
-# -*- coding: utf-8 -*-
-
 import numpy as np
 import six
 
-from reprep_tests import ExampleReports
 from reprep import MIME_PLAIN, Table
 from reprep.types import NID
+from .cases import ExampleReports
 
 
 @ExampleReports.add

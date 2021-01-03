@@ -49,7 +49,7 @@ setup(
     url="http://AndreaCensi.github.com/reprep/",
     author="Andrea Censi",
     description="Reproducible Reports",
-    # author_email='censi@mit.edu',
+    # author_email='github@censi.org',
     license="LGPL",
     keywords="report reproducible research tables html latex",
     download_url="http://github.com/AndreaCensi/reprep/tarball/%s" % version,

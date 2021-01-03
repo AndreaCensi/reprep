@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from .interface import ReportInterface
 from .structures import InvalidURL, NotExistent
 from six.moves import StringIO

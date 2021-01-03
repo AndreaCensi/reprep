@@ -1,6 +1,3 @@
-# -*- coding: utf-8 -*-
-
-
 import contracts
 from . import Image_from_array, np
 import unittest

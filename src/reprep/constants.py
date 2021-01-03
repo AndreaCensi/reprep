@@ -1,6 +1,3 @@
-# -*- coding: utf-8 -*-
-
-
 MIME_PNG = "image/png"
 MIME_JPG = "image/jpeg"
 MIME_GIF = "image/gif"

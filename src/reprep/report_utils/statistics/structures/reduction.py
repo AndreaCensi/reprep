@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 from .function_with_description import FunctionWithDescription
 
 __all__ = [

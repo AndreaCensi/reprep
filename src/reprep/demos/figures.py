@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 from reprep.demos.manager import reprep_demo
 import numpy as np
 

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from contracts import new_contract
 
 new_contract("color_spec", "seq[3](>=0,<=1)")

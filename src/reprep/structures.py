@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from zuper_commons.types import ZException
 
 

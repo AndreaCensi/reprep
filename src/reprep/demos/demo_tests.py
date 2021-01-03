@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 from reprep import Report
 from reprep.demos.manager import DemoStorage
 

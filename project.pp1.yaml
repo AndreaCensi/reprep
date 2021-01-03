@@ -3,6 +3,7 @@ srcdir: src
 version_file: "1"
 modules:
   - reprep
+  - reprep_tables
 
 install_requires:
   - zuper-commons-z7

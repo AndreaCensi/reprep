@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from . import get_tables, node_from_hdf_group_v1
 
 

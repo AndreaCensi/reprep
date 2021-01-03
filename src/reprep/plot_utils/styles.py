@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from reprep.plot_utils.spines import set_spines_look_A
 
 ieee_colsize = 1.57 * 2
@@ -56,10 +55,10 @@ def ieee_fonts(pylab):
 
 
 def style_ieee_halfcol_xy(pylab, ratio=3.0 / 4):
-    """ 
+    """
         Note: not sure if should be called before plotting, or after.
         Find out and write it here.
-        
+
         ratio=1 to have a square one
     """
     f = pylab.gcf()

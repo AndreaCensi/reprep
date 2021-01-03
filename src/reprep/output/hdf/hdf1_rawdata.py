@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from six.moves import cPickle
 from six import StringIO
 

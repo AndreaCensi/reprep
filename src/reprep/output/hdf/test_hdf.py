@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 try:
     from . import tables
 except ImportError:

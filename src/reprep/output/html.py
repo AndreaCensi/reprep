@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 import codecs
 import datetime
 import mimetypes
@@ -21,26 +19,26 @@ from reprep.datanode import DataNode
 
 # language=html
 mathjax_header = """
-    
+
     <script type="text/x-mathjax-config">
       MathJax.Hub.Config({
-        TeX: { 
+        TeX: {
             equationNumbers: { autoNumber: "AMS" },
-            extensions: ["AMSmath.js", "AMSsymbols.js"] 
+            extensions: ["AMSmath.js", "AMSsymbols.js"]
         },
         extensions: ["tex2jax.js"],
         jax: ["input/TeX", "output/SVG"], //" "output/HTML-CSS"],
         tex2jax: {
           inlineMath: [ ['$','$']],
-          displayMath: [ ['$$','$$'] ], 
+          displayMath: [ ['$$','$$'] ],
           processEscapes: true
         },
         "HTML-CSS": { availableFonts: ["TeX"] }
       });
       //MathJax.Ajax.loadComplete("/media/tex/symbols.js");
     </script>
-    
-    <script type='text/javascript' 
+
+    <script type='text/javascript'
             src='http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
 
@@ -49,54 +47,54 @@ mathjax_header = """
 # language=html
 header = """
 <html>
-<head>  
-    <meta charset="utf-8" /> 
-    <script type="text/javascript" 
+<head>
+    <meta charset="utf-8" />
+    <script type="text/javascript"
         src="${static}/jquery/jquery.js"></script>
-    
-    <!-- Use imagezoom plugin --> 
-    <script type="text/javascript" 
+
+    <!-- Use imagezoom plugin -->
+    <script type="text/javascript"
         src="${static}/jquery/jquery.imageZoom.js"></script>
-    <link rel="stylesheet" 
+    <link rel="stylesheet"
           href="${static}/jquery/jquery.imageZoom.css"/>
-    <script type="text/javascript"> 
+    <script type="text/javascript">
         $$(document).ready( function () {
             $$('.zoomable').imageZoom();
-        });       
+        });
     </script>
-    
-    
+
+
     <!-- Use tablesorter plugin -->
-    <script type="text/javascript" 
-            src="${static}/jquery/tablesorter/jquery.tablesorter.js"></script> 
-    <link rel="stylesheet" 
+    <script type="text/javascript"
+            src="${static}/jquery/tablesorter/jquery.tablesorter.js"></script>
+    <link rel="stylesheet"
           href="${static}/jquery/tablesorter/themes/blue/style.css"/>
     <script type="text/javascript">
-    $$(document).ready(function() { 
-        $$(".tablesorter").tablesorter(); 
-    } 
-    ); 
+    $$(document).ready(function() {
+        $$(".tablesorter").tablesorter();
+    }
+    );
     </script>
     ${mathjax_header}
-    
+
     <style type="text/css">
     /* Extra CSS passed by user. */
         ${extra_css}
     </style>
 
-    
-    <link rel="stylesheet" 
+
+    <link rel="stylesheet"
           href="${static}/reprep/default_style.css"/>
 
     <title> ${title} </title>
 <body>
 
-<p id="reprep-head"> 
+<p id="reprep-head">
     Report created on ${date}
     by <a href="http://purl.org/censi/2010/RepRep">RepRep</a>.
     Show:
-    <input type="submit" name="datanode_toggle" 
-           value="data nodes" id="datanode_toggle" /> 
+    <input type="submit" name="datanode_toggle"
+           value="data nodes" id="datanode_toggle" />
 </p>
 
 ${extra_html_body_start}
@@ -114,7 +112,7 @@ ${extra_html_body_start}
 """
 
 footer = """
- 
+
 ${extra_html_body_end}
 
 </body>
@@ -125,10 +123,10 @@ if False:
 
     warnings.warn("experimental feature: support for Autoreload")
     footer = """
-     
+
     ${extra_html_body_end}
 
-    <script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + 
+    <script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] +
     ':35729/livereload.js?snipver=1"></' + 'script>')</script>
 
     </body>
@@ -462,7 +460,7 @@ def figure_to_html(node, context):
                     """
                     <a href="${src}">
                         (cannot display PDF)
-                    </a>    
+                    </a>
                 """
                 ).substitute(src=image_filename)
             )
@@ -470,7 +468,7 @@ def figure_to_html(node, context):
             file.write(
                 Template(
                     """
-                    <object data="${src}" width="100%" type="image/svg+xml"></object>    
+                    <object data="${src}" width="100%" type="image/svg+xml"></object>
                 """
                 ).substitute(src=image_filename)
             )
@@ -480,7 +478,7 @@ def figure_to_html(node, context):
                     """
                     <a href="${src}" class="zoomable">
                         <img src="${src}"/>
-                    </a>    
+                    </a>
                 """
                 ).substitute(src=image_filename)
             )
@@ -542,30 +540,30 @@ def datanode_to_html(node, context):
 
         if node.nid == "caption":
             s = """
-<div class="textnode report-text-node"> 
+<div class="textnode report-text-node">
 
-    <span class="textid report-text-node-id"></span> 
-   
+    <span class="textid report-text-node-id"></span>
+
    <div class="report-text-node-content">
      {content}
    </div>
-     
-</div>  
+
+</div>
 """.format(
                 content=content
             )
 
         else:
             s = """
-            <div class="textnode report-text-node"> 
+            <div class="textnode report-text-node">
 
-                <span class="textid report-text-node-id"> {id} </span> 
+                <span class="textid report-text-node-id"> {id} </span>
 
                <div class="report-text-node-content">
                  {content}
                </div>
 
-            </div>  
+            </div>
             """.format(
                 id=node.nid, content=content
             )

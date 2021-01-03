@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 from contracts import contract
 from reprep import MIME_RST, Report, logger
 from reprep.report_utils.storing.store_results import StoreResults
