@@ -1,7 +1,7 @@
-from setuptools import find_packages, setup
+from setuptools import setup
 
 
-def get_version(filename):
+def get_version_from_source(filename):
     import ast
 
     version = None
@@ -11,48 +11,42 @@ def get_version(filename):
                 version = ast.parse(line).body[0].value.s
                 break
         else:
-            raise ValueError("No version found in %r." % filename)
+            raise ValueError(f"No version found in {filename!r}.")
     if version is None:
         raise ValueError(filename)
     return version
 
 
-version = get_version("src/reprep/__init__.py")
+import yaml
 
-scripts = [
-    ("reprep_demos", "reprep.demos.manager"),
-]
+with open("project.pp1.yaml") as f:
+    data = yaml.load(f, Loader=yaml.Loader)
 
-# this is the format for setuptools
-console_scripts = map(lambda s: "%s = %s:main" % (s[0], s[1]), scripts)
+install_requires = data["install_requires"]
+tests_require = data["tests_require"]
 
-package_data = {"": ["*.*"]}
-line = "z7"
-install_requires = [
-    "docutils",
-    "PyContracts3",
-    "numpy",
-    "Pillow",
-    "matplotlib",
-    "six",
-    "zuper-commons-z7>=6.0.29",
-    "zuper-typing-z7>=6.0.66",
-]
-setup(
-    name=f"reprep-{line}",
-    version=version,
-    package_dir={"": "src"},
-    packages=find_packages("src"),
-    include_package_data=True,
+src = data["srcdir"]
+console_scripts = [f"{k} = {v}" for k, v in data["console_scripts"].items()]
+package_name = data["package_name"]
+packages = data["modules"]
+main_package = packages[0]
+version = get_version_from_source(f"{src}/{main_package}/__init__.py")
+
+# setup package
+params = dict(
+    name=package_name,
+    author=data["author"],
+    author_email=data["author_email"],
+    url=data["url"],
+    tests_require=tests_require,
     install_requires=install_requires,
-    package_data=package_data,
-    url="http://AndreaCensi.github.com/reprep/",
-    author="Andrea Censi",
-    description="Reproducible Reports",
-    # author_email='github@censi.org',
-    license="LGPL",
-    keywords="report reproducible research tables html latex",
-    download_url="http://github.com/AndreaCensi/reprep/tarball/%s" % version,
+    package_dir={"": src},
+    packages=data["modules"],
+    long_description="",
+    version=version,
     entry_points={"console_scripts": console_scripts},
-    zip_safe=False,  # because of resources
 )
+
+setup(**params)
+
+# sigil eb9c1d7b9c70de6abb2a4a14d0c49253
