@@ -4,5 +4,6 @@ include *.txt
 include *.cfg
 include *.mk
 graft src/reprep/static
-
 recursive-include src/reprep/static *
+include setup.json
+exclude project.pp1.yaml
