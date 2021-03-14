@@ -16,7 +16,7 @@ NoneType = type(None)
 from pkg_resources import resource_filename
 
 from reprep import Figure, Table, mime_to_ext
-from reprep import MIME_PLAIN, MIME_RST, MIME_PYTHON, Node, logger
+from reprep import MIME_PLAIN, MIME_RST, MIME_PYTHON, MIME_HTML, Node, logger
 from reprep.datanode import DataNode
 
 # language=html
@@ -138,12 +138,12 @@ if False:
 
 class html_context:
     def __init__(
-        self,
-        file,  # @ReservedAssignment
-        rel_resources_dir,
-        resources_dir,
-        write_pickle,
-        pickle_compress,
+            self,
+            file,  # @ReservedAssignment
+            rel_resources_dir,
+            resources_dir,
+            write_pickle,
+            pickle_compress,
     ):
         self.file = file
         self.rel_resources_dir = rel_resources_dir
@@ -213,15 +213,15 @@ def normalize(f):
 
 
 def node_to_html_document(
-    node,
-    filename,
-    resources_dir=None,
-    static_dir=None,
-    extra_css=None,
-    write_pickle=False,
-    pickle_compress=True,
-    extra_html_body_start="",
-    extra_html_body_end="",
+        node,
+        filename,
+        resources_dir=None,
+        static_dir=None,
+        extra_css=None,
+        write_pickle=False,
+        pickle_compress=True,
+        extra_html_body_start="",
+        extra_html_body_end="",
 ):
     """
 
@@ -514,7 +514,7 @@ def rst2htmlfragment(text):
     from docutils.core import publish_string  # @UnresolvedImport
 
     html = publish_string(source=text, writer_name="html")
-    html = html[html.find("<body>") + 6 : html.find("</body>")].strip()
+    html = html[html.find("<body>") + 6: html.find("</body>")].strip()
     return html
 
 
@@ -526,6 +526,8 @@ def text2html(text, mime):
         return '<pre class="report-text report-text-plain">%s</pre>' % htmlfy(text)
     elif mime == MIME_RST:
         return rst2htmlfragment(text)
+    elif mime == MIME_HTML:
+        return text
     else:
         assert "Unknown mime %r for text." % mime
 
@@ -534,7 +536,7 @@ def datanode_to_html(node, context):
     """ Writes the data on the file """
     relative, filename = get_node_filename(node, context)  # @UnusedVariable
 
-    text_mimes = [MIME_PLAIN, MIME_RST]
+    text_mimes = [MIME_PLAIN, MIME_RST, MIME_HTML]
 
     if node.mime in text_mimes:
 
