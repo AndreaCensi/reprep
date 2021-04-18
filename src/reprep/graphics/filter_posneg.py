@@ -16,9 +16,7 @@ __all__ = [
     skim=">=0,<=90",
     nan_color="color_spec",
 )
-def posneg_hinton(
-    value, max_value=None, skim=0, nan_color=[0.5, 0.5, 0.5], properties=None
-):
+def posneg_hinton(value, max_value=None, skim=0, nan_color=[0.5, 0.5, 0.5], properties=None):
     value = value.astype("float32")
     # value = value.squeeze().copy() # squeeze: (1,1) -> ()
     value = value.copy()
@@ -79,8 +77,8 @@ def posneg_hinton(
 )
 def posneg(value, max_value=None, skim=0, nan_color=[0.5, 0.5, 0.5], properties=None):
     """
-        Converts a 2D value to normalized display.
-        (red=positive, blue=negative)
+    Converts a 2D value to normalized display.
+    (red=positive, blue=negative)
 
     """
     value = value.astype("float32")

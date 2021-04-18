@@ -22,25 +22,23 @@ __all__ = [
 class ReportInterface:
     @contextmanager
     # @contract(nid="None|valid_id", caption=caption_type, robust="bool")
-    def subsection(
-        self, nid: str = None, caption: Optional[str] = None, robust: bool = False
-    ):
+    def subsection(self, nid: str = None, caption: Optional[str] = None, robust: bool = False):
         """
 
-            Can be called as a context manager.
-            If robust is True, logs any error but continues on with
-            stuff.
+        Can be called as a context manager.
+        If robust is True, logs any error but continues on with
+        stuff.
 
-            There is also an experimental feature in which
-            it can yield None if you are not asked to publish
-            the subsection. In that case you have to skip.
+        There is also an experimental feature in which
+        it can yield None if you are not asked to publish
+        the subsection. In that case you have to skip.
 
-            Call like this: ::
+        Call like this: ::
 
-                r = Report()
-                with r.subsection() as sub:
-                    if sub is not None:
-                        make_report(sub)
+            r = Report()
+            with r.subsection() as sub:
+                if sub is not None:
+                    make_report(sub)
 
         """
 
@@ -82,13 +80,13 @@ class ReportInterface:
     # @contract(nid="valid_id", mime=caption_type, caption=caption_type)
     def data(self, nid: str, data, mime: MimeType = MIME_PYTHON, caption: str = None):
         """
-            Attaches a data child to this node.
+        Attaches a data child to this node.
 
-            "data" is assumed to be a raw python structure.
-            Or, if data is a string representing a file,
-            pass a proper mime type (mime='image/png').
+        "data" is assumed to be a raw python structure.
+        Or, if data is a string representing a file,
+        pass a proper mime type (mime='image/png').
 
-            Returns a reference to the node being created.
+        Returns a reference to the node being created.
         """
         from . import DataNode
 
@@ -99,34 +97,34 @@ class ReportInterface:
     # @contract(nid="valid_id", mime=mime_type, caption=caption_type)
     def data_file(self, nid: str, mime: MimeType, caption: Optional[str] = None):
         """
-            Support for attaching data from a file. Note: this method is
-            supposed to be used in conjunction with the "with" construct.
+        Support for attaching data from a file. Note: this method is
+        supposed to be used in conjunction with the "with" construct.
 
-            For example, the following is the concise way to attach a pdf
-            plot to a node. ::
+        For example, the following is the concise way to attach a pdf
+        plot to a node. ::
 
-                with report.data_file('my_plot', MIME_PDF) as f:
+            with report.data_file('my_plot', MIME_PDF) as f:
+                pylab.figure()
+                pylab.plot(x,y)
+                pylab.title('my x-y plot')
+                pylab.savefig(f)
+
+        Omit any file extension from 'id', ("my_plot" and not
+        "my_plot.pdf"), we will take care of it for you.
+
+        This is a more complicated example, where we attach two versions
+        of the same image, in different formats. ::
+
+            for format in [MIME_PDF, MIME_PNG]:
+                with report.data_file('plot', format) as f:
                     pylab.figure()
                     pylab.plot(x,y)
-                    pylab.title('my x-y plot')
                     pylab.savefig(f)
+                    pylab.close()
 
-            Omit any file extension from 'id', ("my_plot" and not
-            "my_plot.pdf"), we will take care of it for you.
-
-            This is a more complicated example, where we attach two versions
-            of the same image, in different formats. ::
-
-                for format in [MIME_PDF, MIME_PNG]:
-                    with report.data_file('plot', format) as f:
-                        pylab.figure()
-                        pylab.plot(x,y)
-                        pylab.savefig(f)
-                        pylab.close()
-
-            Note that if you are mainly using pylab plots, there is the
-            function :py:func:`.plot` which offers a shortcut with less
-            ceremonies.
+        Note that if you are mainly using pylab plots, there is the
+        function :py:func:`.plot` which offers a shortcut with less
+        ceremonies.
         """
         from .helpers import Attacher
 
@@ -145,7 +143,7 @@ class ReportInterface:
         nid: Optional[str],
         mime: Optional[MimeType] = None,
         caption: Optional[str] = None,
-        **figure_args
+        **figure_args,
     ):
         """ Same as plot(), but deprecated. """
         warnings.warn("data_pylab() has been deprecated, use plot().", stacklevel=2)
@@ -153,28 +151,24 @@ class ReportInterface:
 
     # @contract(nid="None|valid_id", mime=caption_type, caption=caption_type)
     def plot(
-        self,
-        nid: str = None,
-        mime: Optional[MimeType] = None,
-        caption: Optional[str] = None,
-        **figure_args
+        self, nid: str = None, mime: Optional[MimeType] = None, caption: Optional[str] = None, **figure_args
     ):
         """
-            Easy support for creating a node consisting of a pylab plot.
-            Note: this method is supposed to be used in conjunction with
-            the "with" construct.
+        Easy support for creating a node consisting of a pylab plot.
+        Note: this method is supposed to be used in conjunction with
+        the "with" construct.
 
-            For example, the following is the concise way to attach a plot: ::
+        For example, the following is the concise way to attach a plot: ::
 
-                with report.plot('my_plot') as pylab:
-                    pylab.plot(x,y)
-                    pylab.title('my x-y plot')
+            with report.plot('my_plot') as pylab:
+                pylab.plot(x,y)
+                pylab.title('my x-y plot')
 
-            Basically, data_pylab allows you to save some lines of code
-            more than with :py:func:`.data_file`.
+        Basically, data_pylab allows you to save some lines of code
+        more than with :py:func:`.data_file`.
 
-            You can pass **figure_args to pylab.figure().
-         """
+        You can pass **figure_args to pylab.figure().
+        """
         from .helpers import PylabAttacher
 
         if nid is None:
@@ -185,11 +179,11 @@ class ReportInterface:
     # @contract(nid="valid_id|None", rgb="array[HxWx(3|4)](uint8)", caption=caption_type)
     def data_rgb(self, nid: str, rgb, mime: MimeType = MIME_PNG, caption=None):
         """
-            Create a node containing an image from a RGB[a] array.
-            (internally, it will be saved as PNG)
+        Create a node containing an image from a RGB[a] array.
+        (internally, it will be saved as PNG)
 
-            ``rgb`` must be a height x width x 3 uint8 numpy array.
-         """
+        ``rgb`` must be a height x width x 3 uint8 numpy array.
+        """
         from .helpers import data_rgb_imp
 
         return data_rgb_imp(parent=self, nid=nid, rgb=rgb, mime=mime, caption=caption)
@@ -223,12 +217,12 @@ class ReportInterface:
         caption: Optional[str] = None,
     ):
         """
-            Attach a table to this node.
+        Attach a table to this node.
 
-            :param data: A list of lists, or a 2D numpy array.
-            :param cols: Labels for the columns.
-            :param rows: Labels for the rows.
-            :param fmt: Entries formatting. If None, '%s' is used.
+        :param data: A list of lists, or a 2D numpy array.
+        :param cols: Labels for the columns.
+        :param rows: Labels for the rows.
+        :param fmt: Entries formatting. If None, '%s' is used.
         """
         from . import Table
 
@@ -239,21 +233,19 @@ class ReportInterface:
     # @contract(nid="valid_id", text="str|*", mime=caption_type)
     def text(self, nid: str, text: str, mime: MimeType = MIME_PLAIN):
         """
-            Adds a text node with the given id.
+        Adds a text node with the given id.
 
-            This is a very thin wrapper around data() that
-            provides a default mime type (MIME_PLAIN).
+        This is a very thin wrapper around data() that
+        provides a default mime type (MIME_PLAIN).
 
-            For now, only restructured text is converted to HTML,
-            the rest is displayed as plain text.
+        For now, only restructured text is converted to HTML,
+        the rest is displayed as plain text.
         """
         check_isinstance(text, str)
         return self.data(nid=nid, data=text, mime=mime)
 
     # @contract(name="string", value="array", caption=caption_type)
-    def array(
-        self, name: str, value: np.array, caption: Optional[str] = None
-    ):  # XXX to change
+    def array(self, name: str, value: np.array, caption: Optional[str] = None):  # XXX to change
         self.data(name, value, mime=MIME_PYTHON, caption=caption)
 
     # @contract(name="string", value="array", filter="string", caption=caption_type)
@@ -326,17 +318,17 @@ class ReportInterface:
     # @contract(subsections="list(string)")
     def set_subsections_needed(self, subsections):
         """
-            Marks the subsections that need to be generated;
-            if this is given then the others are ignored. ::
+        Marks the subsections that need to be generated;
+        if this is given then the others are ignored. ::
 
-                r = Report()
-                r.set_subsections_needed(['estimator'])
+            r = Report()
+            r.set_subsections_needed(['estimator'])
 
-                with r.subsection('estimator') as sub:
-                    # ok
+            with r.subsection('estimator') as sub:
+                # ok
 
-                with r.subsection('model') as sub:
-                    # ignored
+            with r.subsection('model') as sub:
+                # ignored
 
         """
         self._subsections_needed = subsections

@@ -105,13 +105,13 @@ def fancy_test_decorator(
     debug=False,
 ):
     """
-        Creates a fancy decorator for adding checks.
+    Creates a fancy decorator for adding checks.
 
-        :param lister: a function that should give a list of objects
-        :param arguments: from object to arguments
-        :param attributes: (optional) set of attributes for the test
+    :param lister: a function that should give a list of objects
+    :param arguments: from object to arguments
+    :param attributes: (optional) set of attributes for the test
 
-        Returns a function that can be used as a decorator.
+    Returns a function that can be used as a decorator.
 
     """
 

@@ -30,9 +30,7 @@ class IPNContext:
 def datanode_to_ipn(node, context):
     from IPython.display import display, Image
 
-    png = Image(
-        data=r.resolve_url("graph/graph").get_raw_data(), format="png", embed=True
-    )
+    png = Image(data=r.resolve_url("graph/graph").get_raw_data(), format="png", embed=True)
     display(png)
 
 

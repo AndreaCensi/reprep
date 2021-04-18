@@ -42,10 +42,10 @@ class StoreResults(dict):
         return r
 
     def remove_field(self, field):
-        """ Returns a copy of this structure, where the given field
-            is removed from the keys. Throws an error if removing the
-            field would make the keys not unique. Also throws
-            an error if the given field is not present in all keys."""
+        """Returns a copy of this structure, where the given field
+        is removed from the keys. Throws an error if removing the
+        field would make the keys not unique. Also throws
+        an error if the given field is not present in all keys."""
         r = self.__class__()
         for key in self:
             if not field in key:
@@ -67,8 +67,8 @@ class StoreResults(dict):
 
     def select_key(self, *conditions, **condkeys):
         """
-            Selects keys according to some conditions, which could be either
-            functions, or key=value queries.
+        Selects keys according to some conditions, which could be either
+        functions, or key=value queries.
         """
         for attrs in self:
             for c in conditions:
@@ -97,8 +97,8 @@ class StoreResults(dict):
     @contract(returns="list(str)")
     def field_names(self):
         """
-            Returns all field names presents.
-            Note that, in general, some fields might not be present in all entries.
+        Returns all field names presents.
+        Note that, in general, some fields might not be present in all entries.
         """
         if len(self) == 0:
             return []
@@ -111,7 +111,7 @@ class StoreResults(dict):
     @contract(returns="list(str)")
     def field_names_in_all_keys(self):
         """
-            Returns the field names that are in all keys.
+        Returns the field names that are in all keys.
         """
         names = None
         for k in self:
@@ -124,8 +124,8 @@ class StoreResults(dict):
 
     @contract(returns="dict")
     def fields_with_unique_values(self):
-        """ Returns a dictionary of fields which appear in all keys
-            and that have the same value across all keys. """
+        """Returns a dictionary of fields which appear in all keys
+        and that have the same value across all keys."""
         res = {}
         for field in self.field_names_in_all_keys():
             values = list(set(self.field_values(field)))
@@ -135,13 +135,13 @@ class StoreResults(dict):
 
     def groups_by_field_value(self, field):
         """
-            Partitions the contents according to the value of the given
-            field.
+        Partitions the contents according to the value of the given
+        field.
 
-            Example: ::
+        Example: ::
 
-                for delta, samples in x.groups_by_field_value('delta'):
-                    ...
+            for delta, samples in x.groups_by_field_value('delta'):
+                ...
         """
         field_values = set(self.field(field))
         # convert to string in order to sort

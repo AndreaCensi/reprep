@@ -2,20 +2,21 @@ jobs:
   test-3.8-production:
     docker:
     - {image: python:3.8}
-    environment: {COLUMNS: '160', PATH: /root/.local/bin:/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin}
+    environment: {COLUMNS: '160', COVER_PACKAGES: 'reprep,reprep_tests,reprep.output,reprep.report_utils.statistics.library,reprep.report_utils.statistics.structures.with_description,reprep_tables,reprep.output.ipn.node,reprep.datanode,reprep_tables.make_tables,reprep.types,reprep.report_utils,reprep.report_utils.storing.store_results_dict,reprep.constants,reprep.report_utils.storing.store_results,reprep.mpl,reprep.demos.spines,reprep.graphics.zoom,reprep.output.ipn,reprep.graphics.filter_posneg,reprep.demos.report_layout,reprep.utils.natsorting,reprep.plot_utils.spines,reprep.output.hdf.hdf1_write,reprep.config,reprep.report_utils.statistics.structures.reduction,reprep.output.hdf.hdf1_rawdata,reprep.report_utils.statistics.structures,reprep.output.html_test,reprep.demos.demo_tests,reprep.interface,reprep.output.html,reprep.utils.frozen,reprep.graphics.scaling,reprep.report_utils.statistics.structures.data_view,reprep.table,reprep.graphics.filter_scale,reprep.helpers,reprep.figure,reprep.graphics.success,reprep.graphics.filter_colormap,reprep.demos.table,reprep.report_utils.statistics.structures.function_with_description,reprep.output.hdf,reprep.graphics.conversions_tests,reprep.report_utils.storing,reprep.structures,reprep.graphics.conversions,reprep.report_utils.statistics,reprep,reprep.plot_utils.axes,reprep.output.hdf.test_hdf,reprep.report_utils.statistics.structures.reduction_display,reprep.graphics.numpy_utils,reprep.report_utils.storing.store_results_array,reprep.demos.figures,reprep.graphics.filter_posneg_test,reprep.demos.manager,reprep.demos,reprep.report_utils.statistics.structures.storage,reprep.report_utils.statistics.library.reductions_display,reprep.plot_utils,reprep.demos.colormaps,reprep.report_utils.statistics.library.reductions,reprep.repcontracts,reprep.report_utils.statistics.tables.tables_misc_test,reprep.report_utils.statistics.tables.tables_misc,reprep.output.hdf.hdf1_read,reprep.utils.deprecation,reprep.report_utils.statistics.tables,reprep.output.hdf.hdf_read,reprep.plot_utils.styles,reprep.node,reprep.graphics,reprep.utils,reprep.mime_extensions,reprep.report_utils.statistics.structures.with_description_utils',
+      PATH: /root/.local/bin:/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin,
+      TEST_PACKAGES: reprep reprep_tests}
     steps:
     - checkout
     - run: {command: "mkdir -p  build-stats\nenv | tee  build-stats/env.txt\n", name: Build
           stats (1)}
     - store_artifacts: {destination: build-stats, path: build-stats}
-    - run: {command: "pip3 install -U pip\npip3 install pipdeptree coverage\n\npip3\
-          \ install --user shyaml\nshyaml get-values install_requires < project.pp1.yaml\
-          \ > .requirements.txt\npip3 install --user --upgrade -r .requirements.txt\n\
-          rm .requirements.txt\n", name: Install deps}
-    - run: {command: "pip3 install --user shyaml\nshyaml get-values tests_require\
-          \ < project.pp1.yaml > .requirements_tests.txt\npip3 install --user --upgrade\
-          \ -r .requirements_tests.txt\nrm .requirements_tests.txt\n\npip install\
-          \ \t\tpipdeptree==0.13.2\t\tbump2version\t\tnose==1.3.7\t\tnose2==0.10\t\
+    - run: {command: "pip3 install -U pip\npip3 install pipdeptree coverage shyaml\n\
+          \nshyaml get-values install_requires < project.pp1.yaml > .requirements.txt\n\
+          pip3 install  -r .requirements.txt\nrm .requirements.txt\n", name: Install
+          deps}
+    - run: {command: "shyaml get-values tests_require < project.pp1.yaml > .requirements_tests.txt\n\
+          pip3 install -r .requirements_tests.txt\nrm .requirements_tests.txt\n\n\
+          pip install \t\tpipdeptree==0.13.2\t\tbump2version\t\tnose==1.3.7\t\tnose2==0.10\t\
           \tnose2-html-report==0.6.0\t\tnose-parallel==0.4.0\t\tnose_xunitmp==0.4.1\t\
           \tpre-commit==2.11.1\t\trednose==1.3.0\t\tcoverage\tsphinx\t\tsphinx-rtd-theme\n",
         name: Install testing deps}
@@ -32,7 +33,8 @@ jobs:
           \n#              --processes=8 --process-timeout=1000 --process-restartworker\
           \ \\\n# --cover-packages=${COVER_PACKAGES} \\\nnosetests \\\n  --rednose\
           \ --immediate \\\n  --cover-tests --with-coverage \\\n  --with-xunitmp --xunitmp-file=${xunit_output}\
-          \ \\\n  src\n", name: Run tests}
+          \ \\\n  --cover-packages=${COVER_PACKAGES} \\\n  ${TEST_PACKAGES}\n", name: Run
+          tests}
     - store_test_results: {path: out/test-results, when: always}
     - run: {command: "coverage combine\ncoverage html -d out/coverage\ncoverage xml\n",
         name: Coverage report, when: always}
@@ -43,20 +45,21 @@ jobs:
   test-3.8-staging:
     docker:
     - {image: python:3.8}
-    environment: {COLUMNS: '160', PATH: /root/.local/bin:/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin}
+    environment: {COLUMNS: '160', COVER_PACKAGES: 'reprep,reprep_tests,reprep.output,reprep.report_utils.statistics.library,reprep.report_utils.statistics.structures.with_description,reprep_tables,reprep.output.ipn.node,reprep.datanode,reprep_tables.make_tables,reprep.types,reprep.report_utils,reprep.report_utils.storing.store_results_dict,reprep.constants,reprep.report_utils.storing.store_results,reprep.mpl,reprep.demos.spines,reprep.graphics.zoom,reprep.output.ipn,reprep.graphics.filter_posneg,reprep.demos.report_layout,reprep.utils.natsorting,reprep.plot_utils.spines,reprep.output.hdf.hdf1_write,reprep.config,reprep.report_utils.statistics.structures.reduction,reprep.output.hdf.hdf1_rawdata,reprep.report_utils.statistics.structures,reprep.output.html_test,reprep.demos.demo_tests,reprep.interface,reprep.output.html,reprep.utils.frozen,reprep.graphics.scaling,reprep.report_utils.statistics.structures.data_view,reprep.table,reprep.graphics.filter_scale,reprep.helpers,reprep.figure,reprep.graphics.success,reprep.graphics.filter_colormap,reprep.demos.table,reprep.report_utils.statistics.structures.function_with_description,reprep.output.hdf,reprep.graphics.conversions_tests,reprep.report_utils.storing,reprep.structures,reprep.graphics.conversions,reprep.report_utils.statistics,reprep,reprep.plot_utils.axes,reprep.output.hdf.test_hdf,reprep.report_utils.statistics.structures.reduction_display,reprep.graphics.numpy_utils,reprep.report_utils.storing.store_results_array,reprep.demos.figures,reprep.graphics.filter_posneg_test,reprep.demos.manager,reprep.demos,reprep.report_utils.statistics.structures.storage,reprep.report_utils.statistics.library.reductions_display,reprep.plot_utils,reprep.demos.colormaps,reprep.report_utils.statistics.library.reductions,reprep.repcontracts,reprep.report_utils.statistics.tables.tables_misc_test,reprep.report_utils.statistics.tables.tables_misc,reprep.output.hdf.hdf1_read,reprep.utils.deprecation,reprep.report_utils.statistics.tables,reprep.output.hdf.hdf_read,reprep.plot_utils.styles,reprep.node,reprep.graphics,reprep.utils,reprep.mime_extensions,reprep.report_utils.statistics.structures.with_description_utils',
+      PATH: /root/.local/bin:/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin,
+      TEST_PACKAGES: reprep reprep_tests}
     steps:
     - checkout
     - run: {command: "mkdir -p  build-stats\nenv | tee  build-stats/env.txt\n", name: Build
           stats (1)}
     - store_artifacts: {destination: build-stats, path: build-stats}
-    - run: {command: "pip3 install -U pip\npip3 install pipdeptree coverage\n\npip3\
-          \ install --user shyaml\nshyaml get-values install_requires < project.pp1.yaml\
-          \ > .requirements.txt\npip3 install --user --upgrade -r .requirements.txt\n\
-          rm .requirements.txt\n", name: Install deps}
-    - run: {command: "pip3 install --user shyaml\nshyaml get-values tests_require\
-          \ < project.pp1.yaml > .requirements_tests.txt\npip3 install --user --upgrade\
-          \ -r .requirements_tests.txt\nrm .requirements_tests.txt\n\npip install\
-          \ \t\tpipdeptree==0.13.2\t\tbump2version\t\tnose==1.3.7\t\tnose2==0.10\t\
+    - run: {command: "pip3 install -U pip\npip3 install pipdeptree coverage shyaml\n\
+          \nshyaml get-values install_requires < project.pp1.yaml > .requirements.txt\n\
+          pip3 install  -r .requirements.txt\nrm .requirements.txt\n", name: Install
+          deps}
+    - run: {command: "shyaml get-values tests_require < project.pp1.yaml > .requirements_tests.txt\n\
+          pip3 install -r .requirements_tests.txt\nrm .requirements_tests.txt\n\n\
+          pip install \t\tpipdeptree==0.13.2\t\tbump2version\t\tnose==1.3.7\t\tnose2==0.10\t\
           \tnose2-html-report==0.6.0\t\tnose-parallel==0.4.0\t\tnose_xunitmp==0.4.1\t\
           \tpre-commit==2.11.1\t\trednose==1.3.0\t\tcoverage\tsphinx\t\tsphinx-rtd-theme\n",
         name: Install testing deps}
@@ -73,7 +76,8 @@ jobs:
           \n#              --processes=8 --process-timeout=1000 --process-restartworker\
           \ \\\n# --cover-packages=${COVER_PACKAGES} \\\nnosetests \\\n  --rednose\
           \ --immediate \\\n  --cover-tests --with-coverage \\\n  --with-xunitmp --xunitmp-file=${xunit_output}\
-          \ \\\n  src\n", name: Run tests}
+          \ \\\n  --cover-packages=${COVER_PACKAGES} \\\n  ${TEST_PACKAGES}\n", name: Run
+          tests}
     - store_test_results: {path: out/test-results, when: always}
     - run: {command: "coverage combine\ncoverage html -d out/coverage\ncoverage xml\n",
         name: Coverage report, when: always}
@@ -95,4 +99,4 @@ workflows:
           branches: {ignore: /z7-stage.*/}
   version: 2
 
-# sigil fb93096043bbdbbf196f80475305823d
+# sigil fc2f79bffb8e32ff779adb0d2063c622

@@ -4,9 +4,7 @@ __all__ = ["RepRepDefaults"]
 
 
 class RepRepDefaults:
-    savefig_params = dict(
-        dpi=200, bbox_inches="tight", pad_inches=0.01, transparent=True
-    )
+    savefig_params = dict(dpi=200, bbox_inches="tight", pad_inches=0.01, transparent=True)
 
     default_image_format = MIME_PDF
 

@@ -16,8 +16,7 @@ class Node(ReportInterface):
         check_isinstance(caption, (type(None), six.text_type))
         if children is not None and not isinstance(children, list):
             raise ValueError(
-                "Received a %s object as children list, should"
-                " be None or list." % describe_type(children)
+                "Received a %s object as children list, should" " be None or list." % describe_type(children)
             )
 
         self.nid = nid
@@ -88,8 +87,8 @@ class Node(ReportInterface):
 
     def add_child(self, n):
         """
-            Adds a child to this node. Usually you would not use this
-            method directly.
+        Adds a child to this node. Usually you would not use this
+        method directly.
         """
         assert n is not None
         assert isinstance(n, Node)
@@ -277,8 +276,8 @@ class Node(ReportInterface):
 
     def find_recursively(self, criterium):
         """
-            Finds the closest node in the family passing the criterium,
-            or None if none can be found.
+        Finds the closest node in the family passing the criterium,
+        or None if none can be found.
         """
         if criterium(self):
             return self
@@ -308,12 +307,12 @@ class Node(ReportInterface):
         assert False
 
     def add_to_autofigure(self, image_node):
-        """ Checks if no figure has been defined, in which
-            case create one automatically (self.auto_figure).
+        """Checks if no figure has been defined, in which
+        case create one automatically (self.auto_figure).
 
-            node is anything that can be visualized and is already a children of us.
+        node is anything that can be visualized and is already a children of us.
 
-            This code is called by PylabAttacher. (TODO: whereelse should it be called?)
+        This code is called by PylabAttacher. (TODO: whereelse should it be called?)
         """
 
         assert image_node in self.children
@@ -330,8 +329,7 @@ class Node(ReportInterface):
 
         children_figures_manual = list(
             filter(
-                lambda x: isinstance(x, Figure)
-                and (self._auto_figure is None or self._auto_figure != x),
+                lambda x: isinstance(x, Figure) and (self._auto_figure is None or self._auto_figure != x),
                 self.children,
             )
         )

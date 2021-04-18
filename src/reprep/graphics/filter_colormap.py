@@ -63,9 +63,7 @@ def filter_colormap(
 
 
     """
-    scaled = get_scaled_values(
-        value, min_value=min_value, max_value=max_value, skim=skim
-    )
+    scaled = get_scaled_values(value, min_value=min_value, max_value=max_value, skim=skim)
 
     if scaled["flat"]:
         rgb = get_solid(value.shape, flat_color)
@@ -98,9 +96,7 @@ def mark_values(rgb, which, color):
         rgb[:, :, u] = col
 
 
-@contract(
-    shape="tuple((int,H),(int,W))", color="color_spec", returns="array[HxWx3](uint8)"
-)
+@contract(shape="tuple((int,H),(int,W))", color="color_spec", returns="array[HxWx3](uint8)")
 def get_solid(shape, color):
     res = np.zeros((shape[0], shape[1], 3), dtype="uint8")
     for u in [0, 1, 2]:

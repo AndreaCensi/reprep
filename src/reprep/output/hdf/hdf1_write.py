@@ -9,9 +9,7 @@ def to_hdf(node, filename):
     """ Writes the report in HDF format. """
     tables = get_tables()
     tmp_filename = filename + ".active"
-    filters = tables.Filters(
-        complevel=9, shuffle=False, fletcher32=True, complib="zlib"
-    )
+    filters = tables.Filters(complevel=9, shuffle=False, fletcher32=True, complib="zlib")
     hf = tables.openFile(tmp_filename, "w", filters=filters)
     node_to_hdf(hf, hf.root, node)
 

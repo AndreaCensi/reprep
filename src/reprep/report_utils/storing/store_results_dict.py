@@ -8,15 +8,13 @@ __all__ = [
 
 class StoreResultsDict(StoreResults):
     """
-        This class is a StoreResults that assumes that also
-        the values are dictionaries.
+    This class is a StoreResults that assumes that also
+    the values are dictionaries.
     """
 
     def __setitem__(self, attrs, value):
         if not isinstance(value, dict):
-            msg = "Values to this dictionary must be dicts; found %s" % describe_type(
-                value
-            )
+            msg = "Values to this dictionary must be dicts; found %s" % describe_type(value)
             raise ValueError(msg)
         for k in attrs:
             if k in value:
@@ -30,8 +28,8 @@ class StoreResultsDict(StoreResults):
 
     def field_or_value_field(self, field):
         """
-            Returns all values for field, which can be either in the
-            key or in the value dict.
+        Returns all values for field, which can be either in the
+        key or in the value dict.
         """
         for k, v in self.items():
             if field in k:
@@ -39,9 +37,10 @@ class StoreResultsDict(StoreResults):
             elif field in v:
                 yield v[field]
             else:
-                msg = (
-                    "Could not find value of %r neither in key or value. "
-                    "Key: %s Value: %s" % (field, k, v)
+                msg = "Could not find value of %r neither in key or value. " "Key: %s Value: %s" % (
+                    field,
+                    k,
+                    v,
                 )
                 raise ValueError(msg)
 

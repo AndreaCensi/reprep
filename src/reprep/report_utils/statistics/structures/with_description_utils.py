@@ -19,13 +19,13 @@ def symbol_desc_from_docstring(f):
 
 @contract(returns="tuple(None|string,string)")
 def symbol_desc_from_string(doc):
-    """ Expects something like: ::
+    """Expects something like: ::
 
-            M := Number of edges.
+        M := Number of edges.
 
-            blah blah
+        blah blah
 
-        Gets only the first line of the description. """
+    Gets only the first line of the description."""
     doc = doc.strip()
     if ":=" in doc:
         tokens = doc.split(":=")

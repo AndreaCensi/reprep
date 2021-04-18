@@ -21,9 +21,7 @@ class Attacher:
     mime: Optional[MimeType]
     caption: Optional[str]
 
-    def __init__(
-        self, node: Node, nid: NID, mime: Optional[MimeType], caption: Optional[str]
-    ):
+    def __init__(self, node: Node, nid: NID, mime: Optional[MimeType], caption: Optional[str]):
         self.node = node
         self.nid = nid
         self.mime = mime
@@ -68,14 +66,7 @@ class PylabAttacher:
     caption: Optional[str]
 
     @contract(node=Node, nid="valid_id", mime="None|unicode", caption="None|unicode")
-    def __init__(
-        self,
-        node: Node,
-        nid: NID,
-        mime: Optional[MimeType],
-        caption: Optional[str],
-        **figure_args
-    ):
+    def __init__(self, node: Node, nid: NID, mime: Optional[MimeType], caption: Optional[str], **figure_args):
         self.node = node
         self.nid = nid
         self.mime = mime
@@ -115,9 +106,7 @@ class PylabAttacher:
             data = f.read()
         self.temp_file.close()
 
-        image_node = DataNode(
-            nid=self.nid, data=data, mime=self.mime, caption=self.caption
-        )
+        image_node = DataNode(nid=self.nid, data=data, mime=self.mime, caption=self.caption)
 
         # save other versions if needed
         if (self.mime != MIME_PNG) and RepRepDefaults.save_extra_png:
@@ -140,9 +129,7 @@ class PylabAttacher:
 
 
 @contract(parent=Node, nid="valid_id", rgb="array[HxWx(3|4)]")
-def data_rgb_imp(
-    parent: Node, nid: NID, rgb, mime=MIME_PNG, caption: Optional[str] = None
-):
+def data_rgb_imp(parent: Node, nid: NID, rgb, mime=MIME_PNG, caption: Optional[str] = None):
     from .graphics import Image_from_array, rgb_zoom
 
     # zoom images smaller than 50

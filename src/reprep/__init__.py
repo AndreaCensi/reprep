@@ -4,9 +4,7 @@ __date__ = "2021-04-18T15:14:17.212084"
 from zuper_commons import ZLogger
 
 logger = ZLogger(__name__)
-logger.hello_module(
-    name=__name__, filename=__file__, version=__version__, date=__date__
-)
+logger.hello_module(name=__name__, filename=__file__, version=__version__, date=__date__)
 
 from .mpl import *
 from .structures import *

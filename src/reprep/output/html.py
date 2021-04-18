@@ -240,9 +240,7 @@ def node_to_html_document(
     # print('filename: %s ' % filename)
     # print('Resources_dir: %s' % resources_dir)
 
-    rel_resources_dir = os.path.relpath(
-        os.path.realpath(resources_dir), os.path.realpath(dirname)
-    )
+    rel_resources_dir = os.path.relpath(os.path.realpath(resources_dir), os.path.realpath(dirname))
 
     # print('real_resources_dir: %s' % rel_resources_dir)
 
@@ -278,9 +276,7 @@ def node_to_html_document(
                     raise
 
     # print('static_dir: %s' % static_dir)
-    rel_static_dir = os.path.relpath(
-        os.path.realpath(static_dir), os.path.realpath(dirname)
-    )
+    rel_static_dir = os.path.relpath(os.path.realpath(static_dir), os.path.realpath(dirname))
     # print('rel_static_dir: %s' % rel_static_dir)
 
     with codecs.open(filename, "w", encoding="utf-8") as f:
@@ -488,11 +484,7 @@ def figure_to_html(node, context):
         if main_resource != actual_resource:
             if isinstance(main_resource, DataNode):
                 t = '<p class="report-subfigure-main-link"><a href="${src}"> main </a></p>'
-                file.write(
-                    Template(t).substitute(
-                        src=get_node_filename(main_resource, context)[0]
-                    )
-                )
+                file.write(Template(t).substitute(src=get_node_filename(main_resource, context)[0]))
 
         file.write("</div> ")
 

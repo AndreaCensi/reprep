@@ -12,9 +12,7 @@ def set_spines_look_A_demo(r):
     y = 2 * np.sin(x)
 
     for off in [0, 10, 50]:
-        with f.plot(
-            figsize=(3, 2), caption="set_spines_look_A(pylab, outward_offset=%s)" % off
-        ) as pylab:
+        with f.plot(figsize=(3, 2), caption="set_spines_look_A(pylab, outward_offset=%s)" % off) as pylab:
             pylab.plot(x, y)
             set_spines_look_A(pylab, outward_offset=off)
 

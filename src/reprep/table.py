@@ -15,11 +15,11 @@ class Table(Node):
     @contract(nid="valid_id", caption="None|str")
     def __init__(self, nid: str, data, cols=None, rows=None, fmt=None, caption=None):
         """
-            :type data:  (array[R](fields[C]) | array[RxC] | list[R](list[C])
-                 ), R>0, C>0
-            :type cols:    None|list[C](str)
-            :type rows:    None|list[R](str)
-            :type caption: None|str
+        :type data:  (array[R](fields[C]) | array[RxC] | list[R](list[C])
+             ), R>0, C>0
+        :type cols:    None|list[C](str)
+        :type rows:    None|list[R](str)
+        :type caption: None|str
         """
 
         if fmt is None:
@@ -81,8 +81,7 @@ class Table(Node):
                 if data.dtype.fields is not None:
                     msg = (
                         "Cannot convert ndarray to table using "
-                        "the heuristics that I know (received: %s). "
-                        % describe_value(data)
+                        "the heuristics that I know (received: %s). " % describe_value(data)
                     )
                     raise ValueError(msg)
 

@@ -9,11 +9,7 @@ def node_from_hdf_group_v1(hf, group):
 
     nid = group._v_name
     caption = group._v_title
-    cgroups = [
-        child
-        for child in group._f_listNodes("Group")
-        if "reprep_format_version" in child._v_attrs
-    ]
+    cgroups = [child for child in group._f_listNodes("Group") if "reprep_format_version" in child._v_attrs]
     cgroups.sort(key=lambda x: x._v_attrs["reprep_order"])
 
     children = [node_from_hdf_group_v1(hf, child) for child in cgroups]

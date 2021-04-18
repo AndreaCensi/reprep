@@ -17,8 +17,8 @@ def get_test_bar(shape=(100, 10), M=10, dtype="float32", with_strange=False):
 
 def get_examples():
     """
-        Returns some examples of things that can be passed to
-        filter_colormap.
+    Returns some examples of things that can be passed to
+    filter_colormap.
     """
     yield get_test_bar(dtype="int", with_strange=False)
     yield get_test_bar(dtype="uint8", with_strange=False)

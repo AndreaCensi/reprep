@@ -27,9 +27,7 @@ def table_by_rows(id_report, samples, rows_field, cols_fields, source_descs):
     r = Report(id_report)
     data_views = [DataView.from_string(x, source_descs) for x in cols_fields]
     # data: list of list of list
-    rows_field, data, reduced, display = summarize_data(
-        samples2, rows_field, data_views
-    )
+    rows_field, data, reduced, display = summarize_data(samples2, rows_field, data_views)
     rows = ["$%s$" % source_descs[x].get_symbol() for x in rows_field]
     cols = ["$%s$" % x.get_symbol() for x in data_views]
     r.table("table", data=display, cols=cols, rows=rows)
@@ -42,9 +40,7 @@ def table_by_rows(id_report, samples, rows_field, cols_fields, source_descs):
             for x in list(map(source_descs.__getitem__, rows_field))
         ]
     )
-    col_desc = "\n".join(
-        ["- $%s$: %s" % (x.get_symbol(), x.get_desc()) for x in data_views]
-    )
+    col_desc = "\n".join(["- $%s$: %s" % (x.get_symbol(), x.get_desc()) for x in data_views])
     r.text("row_desc", rst_escape_slash(row_desc), mime=MIME_RST)
     r.text("col_desc", rst_escape_slash(col_desc), mime=MIME_RST)
     return r
@@ -54,12 +50,11 @@ def table_by_rows(id_report, samples, rows_field, cols_fields, source_descs):
     samples=StoreResultsDict,
     rows_field="unicode",
     cols_fields="list[C](DataView)",
-    returns="tuple( list[R], list[R](list[C]),  "
-    "list[R](list[C]), list[R](list[C]) )",
+    returns="tuple( list[R], list[R](list[C]),  " "list[R](list[C]), list[R](list[C]) )",
 )
 def summarize_data(samples, rows_field, cols_fields):
     """
-         returns rows, data, reduced, display
+    returns rows, data, reduced, display
     """
 
     def reduce_data(data_view, samples):

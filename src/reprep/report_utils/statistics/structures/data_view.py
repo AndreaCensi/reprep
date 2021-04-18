@@ -36,7 +36,7 @@ class DataView(WithDescription):
     @contract(samples=StoreResultsDict, returns="tuple(*,*,*)")
     def reduce(self, samples):
         """
-            Returns all stages: raw_data, reduction, display.
+        Returns all stages: raw_data, reduction, display.
         """
         field = self.source.get_name()
         data = list(samples.field_or_value_field(field))
@@ -50,11 +50,11 @@ class DataView(WithDescription):
     @staticmethod
     def from_string(s, source_fields={}):
         """
-            Accepts the formats:
-            - source   =  source/one/string
-            - source/reduction = source/reduction/string
-            - source/reduction/display
-            - source//display => source/one/display
+        Accepts the formats:
+        - source   =  source/one/string
+        - source/reduction = source/reduction/string
+        - source/reduction/display
+        - source//display => source/one/display
         """
         tokens = s.split("/")
         if len(tokens) == 1:

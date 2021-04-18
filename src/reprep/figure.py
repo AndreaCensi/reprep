@@ -66,9 +66,9 @@ class Figure(Node):
 
     #     @contract(resource='DataNode|str')
     def sub(self, resource, caption=None, display=None, **kwargs):
-        """ Adds a subfigure displaying the given resource.
+        """Adds a subfigure displaying the given resource.
 
-            resource can either be a string or a data node.
+        resource can either be a string or a data node.
         """
 
         if isinstance(resource, six.text_type):

@@ -13,7 +13,11 @@ from reprep.mpl import get_pylab_instance
 class Test(ReprepTest):
     def testTable(self):
 
-        table = Table("mytable", [["Andrea", "Censi"], ["a", "b"]], ["Name", "Last"],)
+        table = Table(
+            "mytable",
+            [["Andrea", "Censi"], ["a", "b"]],
+            ["Name", "Last"],
+        )
         self.node_serialization_ok(table)
 
     def testTable2(self):

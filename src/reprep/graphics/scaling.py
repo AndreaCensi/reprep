@@ -17,16 +17,16 @@ def skim_top(a, top_percent):
 )
 def get_scaled_values(value, min_value=None, max_value=None, skim=0):
     """
-        Returns dictionary with entries:
-        - value01       Values in [0, 1], no inf, nan, where it is set 0.5.
-        - isnan         Values were NaN.
-        - isinf         Values were +-Inf
-        - isfin         Values weren't Inf or NaN
-        - clipped_ub    Values were clipped
-        - clipped_lb
-        - flat          Boolean if there wasn't a range
-        - min_value
-        - max_value
+    Returns dictionary with entries:
+    - value01       Values in [0, 1], no inf, nan, where it is set 0.5.
+    - isnan         Values were NaN.
+    - isinf         Values were +-Inf
+    - isfin         Values weren't Inf or NaN
+    - clipped_ub    Values were clipped
+    - clipped_lb
+    - flat          Boolean if there wasn't a range
+    - min_value
+    - max_value
     """
     value = value.copy().astype("float32")
 

@@ -4,9 +4,7 @@ ieee_colsize = 1.57 * 2
 
 
 def ieee_spines(pylab):
-    set_spines_look_A(
-        pylab, outward_offset=5, linewidth=1, markersize=2, markeredgewidth=0.5
-    )
+    set_spines_look_A(pylab, outward_offset=5, linewidth=1, markersize=2, markeredgewidth=0.5)
 
 
 def ieee_fonts(pylab):
@@ -45,7 +43,7 @@ def ieee_fonts(pylab):
             "family": "serif",
             "serif": ["Bitstream Vera Serif", "Times New Roman", "Palatino"],
             "size": 8.0,
-        }
+        },
     )
 
 
@@ -56,10 +54,10 @@ def ieee_fonts(pylab):
 
 def style_ieee_halfcol_xy(pylab, ratio=3.0 / 4):
     """
-        Note: not sure if should be called before plotting, or after.
-        Find out and write it here.
+    Note: not sure if should be called before plotting, or after.
+    Find out and write it here.
 
-        ratio=1 to have a square one
+    ratio=1 to have a square one
     """
     f = pylab.gcf()
     f.set_size_inches((ieee_colsize / 2, ieee_colsize / 2 * ratio))
