@@ -21,8 +21,7 @@ install_requires:
 install_conflicts: [ 'reprep*' ]
 tests_require: [ ]
 
-console_scripts:
-  zt-demo: zuper_utils_asyncio:zt_demo
+console_scripts: {}
 nose:
   modules:
     - "*_tests"
