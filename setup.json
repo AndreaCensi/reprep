@@ -16,9 +16,7 @@
   "srcdir": "src",
   "package_name": "reprep-z7",
   "entry_points": {
-    "console_scripts": [
-      "zt-demo = zuper_utils_asyncio:zt_demo"
-    ]
+    "console_scripts": []
   },
   "zip_safe": false,
   "include_package_data": false,
@@ -39,7 +37,7 @@
     "reprep.utils",
     "reprep_tables"
   ],
-  "version": "7.1.2104181514",
+  "version": "7.1.2104191743",
   "author": "",
   "author_email": "info@zupermind.com",
   "url": "https://github.com/zupermind/PACKAGENAME"
