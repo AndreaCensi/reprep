@@ -4,7 +4,7 @@ except ImportError:
     pass
 
 else:
-    from . import logger
+    from reprep import logger
     from reprep.output.hdf.hdf_read import report_from_hdf
     from reprep_tests import for_all_example_reports
     import os
