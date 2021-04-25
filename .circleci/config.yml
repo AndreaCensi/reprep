@@ -1,4 +1,4 @@
-version: 2
+version: '2'
 workflows:
   version: 2
   test:
@@ -30,7 +30,7 @@ jobs:
       # default is /usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
       PATH: /root/.local/bin:/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
       COVER_PACKAGES: reprep,reprep_tables,reprep_tests
-      TEST_PACKAGES: reprep reprep_tests
+      TEST_PACKAGES: reprep_tests reprep
     docker:
     - image: ${DOCKER_REGISTRY}/zupermind/zuper-ci-3.7:z7
       auth:
@@ -146,13 +146,14 @@ jobs:
         when: always
         command: |
           bash <(curl -s https://codecov.io/bash)
+    resource_class: medium+
   test-3.7-production:
     environment:
       COLUMNS: '160'
       # default is /usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
       PATH: /root/.local/bin:/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
       COVER_PACKAGES: reprep,reprep_tables,reprep_tests
-      TEST_PACKAGES: reprep reprep_tests
+      TEST_PACKAGES: reprep_tests reprep
     docker:
     - image: ${DOCKER_REGISTRY}/zupermind/zuper-ci-3.7:z7
       auth:
@@ -268,13 +269,14 @@ jobs:
         when: always
         command: |
           bash <(curl -s https://codecov.io/bash)
+    resource_class: medium+
   test-3.8-staging:
     environment:
       COLUMNS: '160'
       # default is /usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
       PATH: /root/.local/bin:/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
       COVER_PACKAGES: reprep,reprep_tables,reprep_tests
-      TEST_PACKAGES: reprep reprep_tests
+      TEST_PACKAGES: reprep_tests reprep
     docker:
     - image: ${DOCKER_REGISTRY}/zupermind/zuper-ci-3.8:z7
       auth:
@@ -390,13 +392,14 @@ jobs:
         when: always
         command: |
           bash <(curl -s https://codecov.io/bash)
+    resource_class: medium+
   test-3.8-production:
     environment:
       COLUMNS: '160'
       # default is /usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
       PATH: /root/.local/bin:/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
       COVER_PACKAGES: reprep,reprep_tables,reprep_tests
-      TEST_PACKAGES: reprep reprep_tests
+      TEST_PACKAGES: reprep_tests reprep
     docker:
     - image: ${DOCKER_REGISTRY}/zupermind/zuper-ci-3.8:z7
       auth:
@@ -512,5 +515,6 @@ jobs:
         when: always
         command: |
           bash <(curl -s https://codecov.io/bash)
+    resource_class: medium+
 
-# sigil 10aaf49b5b11bd108c7dcdc48e4ab761
+# sigil 853fc843f9e4f7799fcfe50577c1ec51
