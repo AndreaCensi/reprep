@@ -3,37 +3,37 @@ package_name: reprep-z7
 srcdir: src
 version_file: '1'
 modules:
-    - reprep
-    - reprep_tables
+- reprep
+- reprep_tables
 
 install_requires:
-    - zuper-commons-z7
-    - PyContracts3
-    - Pillow
-    - docutils
-    - ipython
-    - matplotlib
-    - numpy
-    - scipy
-    - tables
-    - setuptools # keep
-    - six
+- zuper-commons-z7
+- PyContracts3
+- Pillow
+- docutils
+- ipython
+- matplotlib
+- numpy
+- scipy
+- tables
+- setuptools     # keep
+- six
 
 install_conflicts: [reprep*]
 tests_require: []
 
 console_scripts: {}
 nose:
-    modules:
-        - '*_tests'
+  modules:
+  - '*_tests'
 
 
 pypi:
-    upload: []
+  upload: []
 
 circleci:
-    active: true
-    test_python_versions: ['3.8']
+  active: true
+  test_python_versions: ['3.8']
 
 python_syntax_version: '3.8'
 
