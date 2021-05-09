@@ -19,7 +19,7 @@ install_requires:
 - setuptools     # keep
 - six
 
-install_conflicts: [reprep*]
+
 tests_require: []
 
 console_scripts: {}
