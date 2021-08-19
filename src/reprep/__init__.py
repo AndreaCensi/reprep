@@ -1,4 +1,4 @@
-__version__ = "devel"
+__version__ = "7.2"
 __date__ = "2021-08-11T13:29:34.735188+00:00"
 
 from zuper_commons import ZLogger
