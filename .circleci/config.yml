@@ -14,7 +14,7 @@ workflows:
         context: z7-prod
         filters:
           branches:
-            ignore: /z7-stage.*/
+            only: /z7-prod.*/
     - test-3.9-stage:
         context: z7-stage
         filters:
@@ -24,7 +24,7 @@ workflows:
         context: z7-prod
         filters:
           branches:
-            ignore: /z7-stage.*/
+            only: /z7-prod.*/
 jobs:
   test-3.8-stage:
     environment:
@@ -647,4 +647,4 @@ jobs:
           bash <(curl -s https://codecov.io/bash)
     resource_class: medium
 
-# sigil 651b93eca5326305c390b5b7615d5d9a
+# sigil 5aa0c2e7352de06d681865ed678e8c68
