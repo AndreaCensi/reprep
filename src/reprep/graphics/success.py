@@ -4,7 +4,7 @@ import numpy as np
 
 @contract(values="array[HxW]", colors="list[>=1](tuple(a,(b,b>a),seq[4](number)))")
 def colormap_rgba(values, colors, invalid_color=[255, 255, 0, 255], nan_color=[0, 0, 0, 0]):
-    """ colors = [ (min, max, [r,g,b,a]),... ] """
+    """colors = [ (min, max, [r,g,b,a]),... ]"""
     h, w = values.shape
     res = np.zeros(shape=(h, w, 4), dtype="uint8")
     for i in range(h):

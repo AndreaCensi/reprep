@@ -13,7 +13,7 @@ class RepRepStats(object):
 
     @staticmethod
     def reduction(f):
-        """ Add as a reduction function. """
+        """Add as a reduction function."""
         name = f.__name__
         symbol, desc = symbol_desc_from_docstring(f)
         assert not "\n" in desc, desc
@@ -27,7 +27,7 @@ class RepRepStats(object):
 
     @staticmethod
     def reduction_display(f):
-        """ Add as a reduction display function. """
+        """Add as a reduction display function."""
         name = f.__name__
         desc = f.__doc__
         if desc is None:

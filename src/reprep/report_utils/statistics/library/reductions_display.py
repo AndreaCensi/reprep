@@ -23,53 +23,53 @@ def string(s):
 
 @RepRepStats.reduction_display
 def f(s):
-    """ Format as a float number ('f' formatter) """
+    """Format as a float number ('f' formatter)"""
     return "%f" % s
 
 
 @RepRepStats.reduction_display
 def f5(s):
-    """ Format as a float number ('f' formatter) with 5 digits """
+    """Format as a float number ('f' formatter) with 5 digits"""
     return "%.5f" % s
 
 
 @RepRepStats.reduction_display
 def f4(s):
-    """ Format as a float number ('f' formatter) with 4 digits """
+    """Format as a float number ('f' formatter) with 4 digits"""
     return "%.4f" % s
 
 
 @RepRepStats.reduction_display
 def f3(s):
-    """ Format as a float number ('f' formatter) with 3 digits """
+    """Format as a float number ('f' formatter) with 3 digits"""
     return "%.3f" % s
 
 
 @RepRepStats.reduction_display
 def f2(s):
-    """ Format as a float number ('f' formatter) with 2 digits """
+    """Format as a float number ('f' formatter) with 2 digits"""
     return "%.2f" % s
 
 
 @RepRepStats.reduction_display
 def f1(s):
-    """ Format as a float number ('f' formatter) with 1 digits """
+    """Format as a float number ('f' formatter) with 1 digits"""
     return "%.1f" % s
 
 
 @RepRepStats.reduction_display
 def perc(s):
-    """ Format as a percentual """
+    """Format as a percentual"""
     return "%d%%" % (100 * s)
 
 
 @RepRepStats.reduction_display
 def g(s):
-    """ Format as a float number ('g' formatter) """
+    """Format as a float number ('g' formatter)"""
     return "%g" % s
 
 
 @RepRepStats.reduction_display
 def d(s):
-    """ Format as an integer ('d' formatter) """
+    """Format as an integer ('d' formatter)"""
     return "%d" % s

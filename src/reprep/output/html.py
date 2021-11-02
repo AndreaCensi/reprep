@@ -176,7 +176,7 @@ def get_complete_id(node, separator="-"):
 
 
 def get_node_filename(node: DataNode, context):
-    """ Returns a tuple (relative_from_file, absolute) """
+    """Returns a tuple (relative_from_file, absolute)"""
     if node.mime in mime_to_ext:
         suffix = "." + mime_to_ext[node.mime]
     else:
@@ -308,7 +308,7 @@ def node_to_html_document(
 
 
 def isodate_with_secs():
-    """ E.g., '2011-10-06-22:54:33' """
+    """E.g., '2011-10-06-22:54:33'"""
     now = datetime.datetime.now()
 
     date = now.isoformat("-")[:19]
@@ -509,7 +509,7 @@ def rst2htmlfragment(text):
 
 
 def text2html(text, mime):
-    """ Converts rst to HTML element. """
+    """Converts rst to HTML element."""
 
     if mime == MIME_PLAIN:
         # FIXME: add escaping here
@@ -521,7 +521,7 @@ def text2html(text, mime):
 
 
 def datanode_to_html(node, context):
-    """ Writes the data on the file """
+    """Writes the data on the file"""
     relative, filename = get_node_filename(node, context)  # @UnusedVariable
 
     text_mimes = [MIME_PLAIN, MIME_RST]

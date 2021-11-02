@@ -14,7 +14,7 @@ class Test(unittest.TestCase):
         self.all = [self.n1, self.n2, self.n3, self.n4, self.n3bis]
 
     def test_normal(self):
-        """ Testing normal cases of resolve_url """
+        """Testing normal cases of resolve_url"""
         self.assertEqual(self.n1, self.n2.resolve_url(".."))
         self.assertEqual(self.n1, self.n3.resolve_url("../.."))
         self.assertEqual(self.n1, self.n4.resolve_url("../../.."))
@@ -23,7 +23,7 @@ class Test(unittest.TestCase):
         self.assertEqual(self.n3, self.n1.resolve_url("n2/n3"))
 
     def test_smart(self):
-        """ Testing smart cases of resolve_url """
+        """Testing smart cases of resolve_url"""
         self.assertEqual(self.n1.resolve_url("n3"), self.n3bis)
         self.assertEqual(self.n2.resolve_url("n3"), self.n3)
         self.assertEqual(self.n3.resolve_url("n3"), self.n3)
@@ -45,14 +45,14 @@ class Test(unittest.TestCase):
                 self.assertEqual(A.resolve_url_dumb(url), B)
 
     def test_not_existent(self):
-        """ Testing that we warn if not existent """
+        """Testing that we warn if not existent"""
         self.assertRaises(NotExistent, self.n1.resolve_url, "x")
 
     def test_not_found(self):
         self.assertRaises(NotExistent, self.n1.resolve_url, "..")
 
     def test_well_formed(self):
-        """ Testing that we can recognize invalid urls """
+        """Testing that we can recognize invalid urls"""
         self.assertRaises(InvalidURL, self.n1.resolve_url, "")
         self.assertRaises(InvalidURL, self.n2.resolve_url, "//")
 

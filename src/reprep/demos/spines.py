@@ -6,7 +6,7 @@ from .manager import reprep_demo
 
 @reprep_demo
 def set_spines_look_A_demo(r):
-    """ Displaying only left and bottom spines. """
+    """Displaying only left and bottom spines."""
     f = r.figure()
     x = np.linspace(0, 2 * np.pi, 100)
     y = 2 * np.sin(x)

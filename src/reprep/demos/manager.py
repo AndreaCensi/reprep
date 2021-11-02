@@ -9,7 +9,7 @@ class DemoStorage:
 
 
 def reprep_demo(f):
-    """ Decorator for declaring a reprep demo. """
+    """Decorator for declaring a reprep demo."""
     DemoStorage.demos[f.__name__] = f
     return f
 

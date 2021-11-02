@@ -4,7 +4,7 @@ import numpy as np
 
 @contract(a="array", top_percent=">=0,<=90")
 def skim_top(a, top_percent):
-    """ Cuts off the top percentile """
+    """Cuts off the top percentile"""
     threshold = np.percentile(a.flat, 100 - top_percent)
     return np.minimum(a, threshold)
 

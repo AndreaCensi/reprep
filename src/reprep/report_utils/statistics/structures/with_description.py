@@ -8,7 +8,7 @@ __all__ = [
 
 
 class WithDescription(object):
-    """ Descriptive fields for objects """
+    """Descriptive fields for objects"""
 
     def __init__(self, name, desc=None, symbol=None):
         self._name = name

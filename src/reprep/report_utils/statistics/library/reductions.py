@@ -7,13 +7,13 @@ import numpy as np
 
 @RepRepStats.reduction
 def all(x):  # @ReservedAssignment
-    """ %s := %s """
+    """%s := %s"""
     return x
 
 
 @RepRepStats.reduction
 def one(x):  # @ReservedAssignment
-    """ %s := Unique value of %s """
+    """%s := Unique value of %s"""
     if len(x) != 1:
         raise ValueError("Expected a unique value, got %s." % len(x))
     return x[0]
@@ -21,7 +21,7 @@ def one(x):  # @ReservedAssignment
 
 @RepRepStats.reduction
 def num(x):  # @ReservedAssignment
-    """ n%s := Number of samples of %s"""
+    """n%s := Number of samples of %s"""
     return len(x)
 
 
@@ -31,21 +31,21 @@ def notnone(x):
 
 @RepRepStats.reduction
 def min(x):  # @ReservedAssignment
-    """ min(%s) := Minimum of %s """
+    """min(%s) := Minimum of %s"""
     x = notnone(x)
     return np.nanmin(x)
 
 
 @RepRepStats.reduction
 def max(x):  # @ReservedAssignment
-    """ max(%s) := Maximum of %s """
+    """max(%s) := Maximum of %s"""
     x = notnone(x)
     return np.nanmax(x)
 
 
 @RepRepStats.reduction
 def mean(x):
-    """ E\{%s\} := Average %s """
+    """E\{%s\} := Average %s"""
     from scipy.stats.stats import nanmean
 
     x = notnone(x)
@@ -54,7 +54,7 @@ def mean(x):
 
 @RepRepStats.reduction
 def stddev(x):
-    """ std\{%s\} := Standard deviation of %s """
+    """std\{%s\} := Standard deviation of %s"""
     from scipy.stats.stats import nanstd
 
     x = notnone(x)
@@ -64,7 +64,7 @@ def stddev(x):
 @RepRepStats.reduction
 @contract(a="array[N]", returns="tuple(number, number)")
 def mean_std(a):
-    """ mean,std\{%s\} := mean and standard deviation of %s """
+    """mean,std\{%s\} := mean and standard deviation of %s"""
     a = np.array(a)
     return (np.mean(a), np.std(a))
 
@@ -72,7 +72,7 @@ def mean_std(a):
 @RepRepStats.reduction
 @contract(a="array[N]|list", returns="tuple(number, number, number)")
 def min_mean_max(a):
-    """ b\{%s\} := Min, mean and max of %s """
+    """b\{%s\} := Min, mean and max of %s"""
     a = np.asarray(a, dtype="float")  # converts bool
     from scipy.stats.stats import nanmean
 

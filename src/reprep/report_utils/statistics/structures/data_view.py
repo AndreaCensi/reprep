@@ -11,7 +11,7 @@ __all__ = [
 
 
 class DataView(WithDescription):
-    """ This class defines how we view the data. """
+    """This class defines how we view the data."""
 
     NOT_AVAILABLE = "n/a"
 

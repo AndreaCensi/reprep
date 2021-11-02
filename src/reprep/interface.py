@@ -145,7 +145,7 @@ class ReportInterface:
         caption: Optional[str] = None,
         **figure_args,
     ):
-        """ Same as plot(), but deprecated. """
+        """Same as plot(), but deprecated."""
         warnings.warn("data_pylab() has been deprecated, use plot().", stacklevel=2)
         return self.plot(nid=nid, mime=mime, caption=caption, **figure_args)
 
@@ -195,7 +195,7 @@ class ReportInterface:
         cols: Optional[int] = None,
         caption: Optional[str] = None,
     ):
-        """ Creates a figure, which is a container for subfigures. """
+        """Creates a figure, which is a container for subfigures."""
         if nid is None:
             nid = self.get_first_available_name(prefix="figure")
 
@@ -257,7 +257,7 @@ class ReportInterface:
         filter_params: Optional[dict] = None,
         caption=None,
     ):  # @ReservedAssignment
-        """ Not elegant -- for backward compatibility. """
+        """Not elegant -- for backward compatibility."""
         if filter_params is None:
             filter_params = {}
         f = self._get_or_create_figure()
@@ -277,7 +277,7 @@ class ReportInterface:
             f.sub(m, caption=caption)
 
     def to_ipython(self, filename=None):
-        """ Displays in the IPython editor. """
+        """Displays in the IPython editor."""
         if filename is None:
             filename = "reprep-%s.html" % str(id(self))
         self.to_html(filename)
@@ -286,13 +286,13 @@ class ReportInterface:
         display(HTML(open(filename).read()))
 
     def to_html(self, filename, resources_dir=None, **kwargs):
-        """ Creates a HTML representation of this report. """
+        """Creates a HTML representation of this report."""
         from .output.html import node_to_html_document
 
         node_to_html_document(self, filename, resources_dir, **kwargs)
 
     def to_hdf(self, filename, **kwargs):
-        """ Creates an HDF representation of this report. """
+        """Creates an HDF representation of this report."""
         from .output import to_hdf
 
         to_hdf(self, filename, **kwargs)
@@ -304,7 +304,7 @@ class ReportInterface:
 
     # @contract(nid="None|valid_id")
     def section(self, nid=None, caption=None):
-        """ Creates a subsection of the report. Returns a reference. """
+        """Creates a subsection of the report. Returns a reference."""
         if nid is None:
             nid = self.get_first_available_name(prefix="section")
         else:

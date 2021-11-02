@@ -34,7 +34,7 @@ class StoreResults(dict):
         return dict.__contains__(self, frozen)
 
     def select(self, *cond, **condkeys):
-        """ Returns another StoreResults with the filtered results. """
+        """Returns another StoreResults with the filtered results."""
         # So that we can be subclassed with specialization
         r = self.__class__()
         for attrs in self.select_key(*cond, **condkeys):
@@ -83,11 +83,11 @@ class StoreResults(dict):
 
     @deprecated
     def field(self, field):
-        """ Returns all values of the given field """
+        """Returns all values of the given field"""
         return self.field_values(field)
 
     def field_values(self, field):
-        """ Returns all values of the given field """
+        """Returns all values of the given field"""
         for attrs in self:
             if not field in attrs:
                 msg = "Field %r not found in %s." % (field, attrs)
@@ -159,7 +159,7 @@ new_contract("StoreResults", StoreResults)
 
 
 def most_similar(keys, key):
-    """ Returns the key which is most similar """
+    """Returns the key which is most similar"""
 
     def score(key1):
         v1 = set(key1.values())

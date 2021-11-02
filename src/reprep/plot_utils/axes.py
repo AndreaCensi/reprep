@@ -2,13 +2,13 @@ import numpy as np
 
 
 def plot_horizontal_line(pylab, y, *args, **kwargs):
-    """ Plots an horizontal line across the plot using current bounds. """
+    """Plots an horizontal line across the plot using current bounds."""
     a = pylab.axis()
     pylab.plot([a[0], a[1]], [y, y], *args, **kwargs)
 
 
 def plot_vertical_line(pylab, x, *args, **kwargs):
-    """ Plots a vertical line across the plot using current bounds. """
+    """Plots a vertical line across the plot using current bounds."""
     a = pylab.axis()
     pylab.plot([x, x], [a[2], a[3]], *args, **kwargs)
 
@@ -78,7 +78,7 @@ def y_axis_set_min(pylab, ymin):
 
 
 def turn_all_axes_off(pylab):
-    """ Turns everything off. (TODO) """
+    """Turns everything off. (TODO)"""
     axes = pylab.gca()
     axes.set_frame_on(False)
     pylab.setp(axes.get_xticklabels(), visible=False)

@@ -56,7 +56,7 @@ class Figure(Node):
 
     @contract(child=Node)
     def add_child(self, child):
-        """ Automatically add child if it can be displayed. """
+        """Automatically add child if it can be displayed."""
         Node.add_child(self, child)
 
         if isinstance(child, DataNode) and child.get_first_child_with_mime(MIME_IMAGES):

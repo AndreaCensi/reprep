@@ -6,7 +6,7 @@ from reprep.output.hdf import get_tables
 
 
 def to_hdf(node, filename):
-    """ Writes the report in HDF format. """
+    """Writes the report in HDF format."""
     tables = get_tables()
     tmp_filename = filename + ".active"
     filters = tables.Filters(complevel=9, shuffle=False, fletcher32=True, complib="zlib")
@@ -19,7 +19,7 @@ def to_hdf(node, filename):
 
 # FIXME: this is not checked yet
 def ob2h5(x):
-    """ If x is None, returns "None", otherwise x """
+    """If x is None, returns "None", otherwise x"""
     if x is None:
         return "None"
     else:

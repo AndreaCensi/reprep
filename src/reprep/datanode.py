@@ -90,7 +90,7 @@ class DataNode(Node):
         return self.resolve_url_dumb(nid)
 
     def pil_from_compressed(self):
-        """ Assuming this is a bitmap image, returns a PIL image from the data """
+        """Assuming this is a bitmap image, returns a PIL image from the data"""
         assert self.mime in [MIME_PNG]
         from PIL import ImageFile  # @UnresolvedImport
 
@@ -101,14 +101,14 @@ class DataNode(Node):
 
     @contract(returns="array[HxWx3](uint8)")
     def get_rgb(self):
-        """ Assuming this is a bitmap image, returns an RGB array. """
+        """Assuming this is a bitmap image, returns an RGB array."""
         pil = self.pil_from_compressed()
         rgb = np.asarray(pil).astype(np.uint8)
         return rgb[:, :, :3]
 
 
 def just_check_rgb(value):
-    """ return value, checking it's a rgb image """
+    """return value, checking it's a rgb image"""
     # TODO
     return value
 

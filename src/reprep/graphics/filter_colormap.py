@@ -8,7 +8,7 @@ from .. import get_matplotlib, get_pylab_instance
 
 @contract(returns="array[HxWx4](uint8)")
 def value2rgb(x, vmin=0, vmax=1, cmap="jet"):
-    """ Asssumes x is in [0,1]. """
+    """Asssumes x is in [0,1]."""
     matplotlib = get_matplotlib()
     pylab = get_pylab_instance()
     isint = matplotlib.is_interactive()

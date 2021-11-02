@@ -5,13 +5,13 @@ __all__ = ["ExampleReports", "for_all_example_reports"]
 
 
 class ExampleReports:
-    """ Stores test cases; see for_all_example_reports """
+    """Stores test cases; see for_all_example_reports"""
 
     generators = {}
 
     @staticmethod
     def add(generator):
-        """ Use as decorator. """
+        """Use as decorator."""
         ExampleReports.generators[generator.__name__] = generator
         return generator
 
@@ -27,7 +27,7 @@ class ExampleReports:
 
     @staticmethod
     def get_attrs(eid):
-        """ Returns test attributes """
+        """Returns test attributes"""
         return dict(example=eid)
 
 

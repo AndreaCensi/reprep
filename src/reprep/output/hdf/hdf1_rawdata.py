@@ -50,7 +50,7 @@ def write_python_data(parent, name, mime, data):
 
 
 def read_python_data(parent, name):
-    """ Returns MIME, object """
+    """Returns MIME, object"""
     group = parent._v_children[name]
     reprep_data_format = group._v_attrs["reprep_data_format"]
     mime = group.mime.read()

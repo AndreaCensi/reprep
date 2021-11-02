@@ -105,7 +105,7 @@ class Node(ReportInterface):
         self.children.append(n)
 
     def _get_or_create_figure(self):
-        """ Gets the first figure() node created, or creates one. """
+        """Gets the first figure() node created, or creates one."""
         for n in self.children:
             from . import Figure
 
@@ -117,11 +117,11 @@ class Node(ReportInterface):
         return nid in self.childid2node
 
     def last(self):
-        """ Returns the last added child Node. """
+        """Returns the last added child Node."""
         return self.children[-1]
 
     def node(self, nid, caption=None):
-        """ Creates a simple child node. """
+        """Creates a simple child node."""
         from . import Node
 
         n = Node(nid, caption=caption)
@@ -244,7 +244,7 @@ class Node(ReportInterface):
         return url
 
     def get_all_parents(self):
-        """ Returns a list of all parents. """
+        """Returns a list of all parents."""
         if self.parent:
             return self.parent.get_all_parents() + [self.parent]
         else:
@@ -259,7 +259,7 @@ class Node(ReportInterface):
             child.print_tree(s, prefix + "  ")
 
     def format_tree(self):
-        """ Returns a visualization of the tree structurs """
+        """Returns a visualization of the tree structurs"""
         s = StringIO()
         self.print_tree(s)
         return s.getvalue()
@@ -290,7 +290,7 @@ class Node(ReportInterface):
 
     @contract(mime_types="list(unicode)")
     def get_first_child_with_mime(self, mime_types):
-        """ Search recursively the child with the given mime. """
+        """Search recursively the child with the given mime."""
 
         def choose(node):
             from reprep.datanode import DataNode

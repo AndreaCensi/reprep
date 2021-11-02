@@ -83,5 +83,5 @@ def summarize_data(samples, rows_field, cols_fields):
 
 
 def rst_escape_slash(s):
-    """ Replace a slash with two, useful for RST """
+    """Replace a slash with two, useful for RST"""
     return s.replace("\\", "\\\\")
