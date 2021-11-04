@@ -22,7 +22,7 @@ __all__ = [
 class ReportInterface:
     @contextmanager
     # @contract(nid="None|valid_id", caption=caption_type, robust="bool")
-    def subsection(self, nid: str = None, caption: Optional[str] = None, robust: bool = False):
+    def subsection(self, nid: Optional[str] = None, caption: Optional[str] = None, robust: bool = False):
         """
 
         Can be called as a context manager.
@@ -78,7 +78,7 @@ class ReportInterface:
                 s.text("error", traceback.format_exc())
 
     # @contract(nid="valid_id", mime=caption_type, caption=caption_type)
-    def data(self, nid: str, data, mime: MimeType = MIME_PYTHON, caption: str = None):
+    def data(self, nid: str, data, mime: MimeType = MIME_PYTHON, caption: Optional[str] = None):
         """
         Attaches a data child to this node.
 
@@ -151,7 +151,11 @@ class ReportInterface:
 
     # @contract(nid="None|valid_id", mime=caption_type, caption=caption_type)
     def plot(
-        self, nid: str = None, mime: Optional[MimeType] = None, caption: Optional[str] = None, **figure_args
+        self,
+        nid: Optional[str] = None,
+        mime: Optional[MimeType] = None,
+        caption: Optional[str] = None,
+        **figure_args,
     ):
         """
         Easy support for creating a node consisting of a pylab plot.
