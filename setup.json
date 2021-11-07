@@ -9,7 +9,6 @@
     "scipy",
     "setuptools",
     "six",
-    "tables",
     "zuper-commons-z7"
   ],
   "tests_require": [],
