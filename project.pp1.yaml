@@ -15,7 +15,7 @@ install_requires:
 - matplotlib
 - numpy
 - scipy
-- tables
+# - tables
 - setuptools     # keep
 - six
 
