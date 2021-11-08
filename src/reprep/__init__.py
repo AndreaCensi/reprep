@@ -1,5 +1,5 @@
 __version__ = "7.2"
-__date__ = "2021-08-11T13:29:34.735188+00:00"
+__date__ = ""
 
 from zuper_commons import ZLogger
 
@@ -25,3 +25,5 @@ from .types import *
 Report = Node
 
 from . import report_utils  # just load demos
+
+logger.hello_module_finished(__name__)
