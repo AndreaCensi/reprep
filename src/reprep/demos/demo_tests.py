@@ -1,5 +1,5 @@
 from reprep import Report
-from reprep.demos.manager import DemoStorage
+from .manager import DemoStorage
 
 
 def test_all_demos():

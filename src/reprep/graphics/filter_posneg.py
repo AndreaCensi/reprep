@@ -1,8 +1,8 @@
-from contracts import contract
-from numpy import maximum, minimum, zeros
 import numpy as np
-from .scaling import skim_top
+from numpy import maximum, minimum, zeros
 
+from contracts import contract
+from .scaling import skim_top
 
 __all__ = [
     "posneg",
@@ -33,7 +33,7 @@ def posneg_hinton(value, max_value=None, skim=0, nan_color=[0.5, 0.5, 0.5], prop
 
         max_value = np.max(abs_value)
 
-    from reprep.graphics.filter_scale import scale
+    from .filter_scale import scale
 
     rgb_p = scale(
         value,

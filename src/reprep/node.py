@@ -1,10 +1,11 @@
+import sys
+
+import six
+from six.moves import StringIO
+
+from contracts import check_isinstance, contract, describe_type
 from .interface import ReportInterface
 from .structures import InvalidURL, NotExistent
-from six.moves import StringIO
-from contracts import contract, describe_type, check_isinstance
-import sys
-import six
-
 
 __all__ = ["Node"]
 
@@ -293,7 +294,7 @@ class Node(ReportInterface):
         """Search recursively the child with the given mime."""
 
         def choose(node):
-            from reprep.datanode import DataNode
+            from .datanode import DataNode
 
             return isinstance(node, DataNode) and node.mime in mime_types
 
@@ -317,7 +318,7 @@ class Node(ReportInterface):
 
         assert image_node in self.children
 
-        from reprep.figure import Figure
+        from .figure import Figure
 
         if isinstance(self, Figure):
             return

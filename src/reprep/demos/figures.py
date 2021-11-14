@@ -1,5 +1,6 @@
-from reprep.demos.manager import reprep_demo
 import numpy as np
+
+from .manager import reprep_demo
 
 
 @reprep_demo

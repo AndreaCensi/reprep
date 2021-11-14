@@ -1,8 +1,7 @@
 from reprep.demos.manager import reprep_demo
-from reprep.report_utils.storing.store_results import StoreResults
 from reprep.report_utils.statistics.structures.with_description import WithDescription
-from reprep.report_utils.statistics.tables.tables_misc import table_by_rows
-
+from reprep.report_utils.storing.store_results import StoreResults
+from .tables_misc import table_by_rows
 
 s1 = StoreResults()
 s1[dict(algo="algo1", sample="sample1", delta=1)] = dict(time=1, objective=0)
@@ -19,7 +18,6 @@ descs.append(WithDescription(name="algo", desc="Algorithm name", symbol=None))
 descs.append(WithDescription(name="sample", desc="Sample ID", symbol=None))
 descs.append(WithDescription(name="time", desc="Execution time", symbol="T"))
 descs.append(WithDescription(name="objective", desc="Objective", symbol="J"))
-
 
 descs.append(WithDescription(name="algo1", desc="One algo", symbol="A1"))
 descs.append(WithDescription(name="algo2", desc="Other algo", symbol="A2"))

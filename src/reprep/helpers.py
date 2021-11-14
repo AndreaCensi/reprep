@@ -3,9 +3,16 @@ import tempfile
 from typing import Optional
 
 from contracts import contract
-from reprep import mime_implies_unicode_representation, RepRepDefaults
 from zuper_commons.types import ZException
-from .constants import MIME_JPG, MIME_PDF, MIME_PNG, MIME_SVG, mime_to_ext
+from .config import RepRepDefaults
+from .constants import (
+    mime_implies_unicode_representation,
+    MIME_JPG,
+    MIME_PDF,
+    MIME_PNG,
+    MIME_SVG,
+    mime_to_ext,
+)
 from .datanode import DataNode
 from .mpl import get_pylab_instance
 from .node import Node

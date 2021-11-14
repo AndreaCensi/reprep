@@ -1,6 +1,7 @@
-from contracts import contract
-from reprep.report_utils.storing.store_results import StoreResults
 import numpy as np
+
+from contracts import contract
+from .store_results import StoreResults
 
 __all__ = [
     "array_from_sr",
@@ -9,7 +10,6 @@ __all__ = [
 
 @contract(sr=StoreResults, fields="seq(str)", returns="array")
 def array_from_sr(sr, fields):
-
     if len(sr) == 0:
         raise ValueError("empty")
 
