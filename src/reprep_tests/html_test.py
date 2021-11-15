@@ -2,7 +2,7 @@ import os
 import shutil
 import tempfile
 
-from reprep_tests import for_all_example_reports
+from .cases import for_all_example_reports
 
 
 @for_all_example_reports

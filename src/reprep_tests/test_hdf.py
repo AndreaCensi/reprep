@@ -5,12 +5,12 @@ except ImportError:
 
 else:
     from reprep import logger
-    from .hdf_read import report_from_hdf
+    from reprep.output import report_from_hdf, to_hdf
+
     from reprep_tests import for_all_example_reports
     import os
     import shutil  # FIXME
     import tempfile
-    from .hdf1_write import to_hdf
 
     @for_all_example_reports
     def check_hdf_write(r):

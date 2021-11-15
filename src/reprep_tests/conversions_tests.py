@@ -1,6 +1,8 @@
 import contracts
-from . import Image_from_array, np
 import unittest
+import numpy as np
+
+from reprep import Image_from_array
 
 
 class Test(unittest.TestCase):
