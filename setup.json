@@ -11,7 +11,9 @@
     "six",
     "zuper-commons-z7"
   ],
-  "tests_require": [],
+  "tests_require": [
+    "nose"
+  ],
   "srcdir": "src",
   "package_name": "reprep-z7",
   "entry_points": {
