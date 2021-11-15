@@ -1,5 +1,7 @@
-from . import posneg, np
+import numpy as np
 import unittest
+
+from reprep import posneg
 
 
 class Test(unittest.TestCase):
