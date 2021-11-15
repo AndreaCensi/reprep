@@ -32,7 +32,7 @@ jobs:
       # default is /usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
       PATH: /root/.local/bin:/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
       COVER_PACKAGES: reprep,reprep_tables,reprep_tests
-      TEST_PACKAGES: reprep reprep_tests
+      TEST_PACKAGES: reprep_tests
     docker:
     - image: ${DOCKER_REGISTRY}/zupermind/zuper-ci-3.8:z7
       auth:
@@ -118,19 +118,6 @@ jobs:
     #       make -C notebooks cleanup all
 
 
-    - run:
-        name: reprep
-        command: |-
-          set -euxo pipefail
-          mkdir -p out/test-results
-          xunit_output=$PWD/out/test-results/nose-${CIRCLE_NODE_INDEX}-reprep-xunit.xml
-          nosetests \
-              --rednose --immediate \
-              --cover-tests --with-coverage \
-              --with-xunit --xunit-file=${xunit_output} \
-              --cover-package=${COVER_PACKAGES} \
-              reprep
-        when: always
     - run:
         name: reprep_tests
         command: |-
@@ -185,7 +172,7 @@ jobs:
       # default is /usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
       PATH: /root/.local/bin:/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
       COVER_PACKAGES: reprep,reprep_tables,reprep_tests
-      TEST_PACKAGES: reprep reprep_tests
+      TEST_PACKAGES: reprep_tests
     docker:
     - image: ${DOCKER_REGISTRY}/zupermind/zuper-ci-3.8:z7
       auth:
@@ -272,19 +259,6 @@ jobs:
 
 
     - run:
-        name: reprep
-        command: |-
-          set -euxo pipefail
-          mkdir -p out/test-results
-          xunit_output=$PWD/out/test-results/nose-${CIRCLE_NODE_INDEX}-reprep-xunit.xml
-          nosetests \
-              --rednose --immediate \
-              --cover-tests --with-coverage \
-              --with-xunit --xunit-file=${xunit_output} \
-              --cover-package=${COVER_PACKAGES} \
-              reprep
-        when: always
-    - run:
         name: reprep_tests
         command: |-
           set -euxo pipefail
@@ -338,7 +312,7 @@ jobs:
       # default is /usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
       PATH: /root/.local/bin:/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
       COVER_PACKAGES: reprep,reprep_tables,reprep_tests
-      TEST_PACKAGES: reprep reprep_tests
+      TEST_PACKAGES: reprep_tests
     docker:
     - image: ${DOCKER_REGISTRY}/zupermind/zuper-ci-3.9:z7
       auth:
@@ -424,19 +398,6 @@ jobs:
     #       make -C notebooks cleanup all
 
 
-    - run:
-        name: reprep
-        command: |-
-          set -euxo pipefail
-          mkdir -p out/test-results
-          xunit_output=$PWD/out/test-results/nose-${CIRCLE_NODE_INDEX}-reprep-xunit.xml
-          nosetests \
-              --rednose --immediate \
-              --cover-tests --with-coverage \
-              --with-xunit --xunit-file=${xunit_output} \
-              --cover-package=${COVER_PACKAGES} \
-              reprep
-        when: always
     - run:
         name: reprep_tests
         command: |-
@@ -491,7 +452,7 @@ jobs:
       # default is /usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
       PATH: /root/.local/bin:/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
       COVER_PACKAGES: reprep,reprep_tables,reprep_tests
-      TEST_PACKAGES: reprep reprep_tests
+      TEST_PACKAGES: reprep_tests
     docker:
     - image: ${DOCKER_REGISTRY}/zupermind/zuper-ci-3.9:z7
       auth:
@@ -578,19 +539,6 @@ jobs:
 
 
     - run:
-        name: reprep
-        command: |-
-          set -euxo pipefail
-          mkdir -p out/test-results
-          xunit_output=$PWD/out/test-results/nose-${CIRCLE_NODE_INDEX}-reprep-xunit.xml
-          nosetests \
-              --rednose --immediate \
-              --cover-tests --with-coverage \
-              --with-xunit --xunit-file=${xunit_output} \
-              --cover-package=${COVER_PACKAGES} \
-              reprep
-        when: always
-    - run:
         name: reprep_tests
         command: |-
           set -euxo pipefail
@@ -639,4 +587,4 @@ jobs:
           bash <(curl -s https://codecov.io/bash)
     resource_class: medium
 
-# sigil bafb9e17ecd8f0996eb978d4652ae3b4
+# sigil d3312b77c1814094a498792c15b7a779
