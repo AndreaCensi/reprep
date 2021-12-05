@@ -32,7 +32,7 @@ def get_examples():
     yield np.zeros((10, 10), dtype="uint8")
 
 
-def test_filter_colormaps():
+def test_filter_colormaps() -> None:
     cmap = "Accent"
 
     for example in get_examples():
