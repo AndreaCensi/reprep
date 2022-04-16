@@ -17,10 +17,11 @@ jobs:
       COLUMNS: '160'
       # default is /usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
       PATH: /root/.local/bin:/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+      CONTEXT_NAME: << pipeline.parameters.context_name >>
       COVER_PACKAGES: reprep,reprep_tables,reprep_tests
       TEST_PACKAGES: reprep_tests
     docker:
-    - image: ${DOCKER_REGISTRY}/zupermind/zuper-ci-3.10:z7
+    - image: ${DOCKER_REGISTRY}/zupermind/z7-stage-zuper-ci-3.10:z7
       auth:
         username: $DOCKER_USERNAME
         password: $DOCKER_PASSWORD
@@ -163,4 +164,4 @@ jobs:
           ./codecov -t ${CODECOV_TOKEN}
     resource_class: small
 
-# sigil d4adda7d52a7b6d1c473f298c1112dd8
+# sigil 407fdef2c74b855b0c1d12ddaefba21f
