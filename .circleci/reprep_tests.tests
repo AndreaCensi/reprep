@@ -1,9 +1,9 @@
 reprep_tests.conversions_tests
 reprep_tests.demo_tests
-reprep_tests.filter_posneg_test
-reprep_tests.html_test
 reprep_tests.simple_test_cases
 reprep_tests.test_colormaps
+reprep_tests.test_filter_posneg
 reprep_tests.test_hdf
+reprep_tests.test_html
 reprep_tests.test_idioms
 reprep_tests.test_urls
