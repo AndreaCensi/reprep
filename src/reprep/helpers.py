@@ -17,7 +17,7 @@ from .datanode import DataNode
 from .mpl import get_pylab_instance
 from .node import Node
 
-__all__ = ["PylabAttacher", "Attacher"]
+__all__ = ["Attacher", "PylabAttacher"]
 
 from .types import MimeType, NID
 

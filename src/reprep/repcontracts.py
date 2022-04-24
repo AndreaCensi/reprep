@@ -5,7 +5,7 @@ from zuper_commons.types import check_isinstance
 from .constants import VALID_ID_REGEXP
 from .types import NID
 
-__all__ = ["valid_id", "sanitize_id"]
+__all__ = ["sanitize_id", "valid_id"]
 
 
 @new_contract
