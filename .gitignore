@@ -60,3 +60,4 @@ reprep_demos
 reprep_demos_out
 .DS_Store
 out
+*.egg-info
