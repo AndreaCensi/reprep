@@ -11,7 +11,11 @@ def get_tables():
 #     logger.warning('No HDF support. (%s)' % e)
 #     raise
 
-__all__ = ["report_from_hdf", "to_hdf"]
+__all__ = [
+    "report_from_hdf",
+    "to_hdf",
+]
+
 from .hdf1_rawdata import *
 from .hdf1_read import *
 from .hdf1_write import *

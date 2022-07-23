@@ -7,7 +7,9 @@ from contracts import check_isinstance, contract, describe_type
 from .interface import ReportInterface
 from .structures import InvalidURL, NotExistent
 
-__all__ = ["Node"]
+__all__ = [
+    "Node",
+]
 
 
 class Node(ReportInterface):

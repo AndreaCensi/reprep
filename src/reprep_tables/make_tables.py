@@ -1,7 +1,9 @@
 from contracts import contract
 from reprep.report_utils.statistics.tables.tables_misc import table_by_rows
 
-__all__ = ["jobs_tables_by_sample"]
+__all__ = [
+    "jobs_tables_by_sample",
+]
 
 
 @contract(cols_fields="list(str)")

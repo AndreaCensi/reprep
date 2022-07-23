@@ -8,7 +8,9 @@ from .constants import mime_implies_unicode_representation, MIME_PNG, MIME_PYTHO
 from .graphics import colorize_success, posneg, rgb_zoom, scale, Image_from_array
 from .node import Node
 
-__all__ = ["DataNode"]
+__all__ = [
+    "DataNode",
+]
 
 
 class DataNode(Node):

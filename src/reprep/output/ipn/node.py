@@ -3,7 +3,9 @@ from reprep.table import Table
 from reprep.node import Node
 from reprep.datanode import DataNode
 
-__all__ = ["report_to_ipn"]
+__all__ = [
+    "report_to_ipn",
+]
 
 
 def report_to_ipn(report):

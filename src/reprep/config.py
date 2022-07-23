@@ -1,6 +1,8 @@
 from .constants import MIME_PDF
 
-__all__ = ["RepRepDefaults"]
+__all__ = [
+    "RepRepDefaults",
+]
 
 
 class RepRepDefaults:

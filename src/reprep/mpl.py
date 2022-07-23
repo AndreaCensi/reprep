@@ -1,6 +1,9 @@
 from . import logger
 
-__all__ = ["get_matplotlib", "get_pylab_instance"]
+__all__ = [
+    "get_matplotlib",
+    "get_pylab_instance",
+]
 
 
 class Global:

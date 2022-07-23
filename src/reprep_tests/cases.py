@@ -1,7 +1,10 @@
 from reprep import Report
 from .checks_generation import fancy_test_decorator
 
-__all__ = ["ExampleReports", "for_all_example_reports"]
+__all__ = [
+    "ExampleReports",
+    "for_all_example_reports",
+]
 
 
 class ExampleReports:

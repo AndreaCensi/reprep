@@ -5,7 +5,10 @@ from reprep import logger
 from contracts import describe_type, describe_value
 from reprep.output.hdf import get_tables
 
-__all__ = ["read_python_data", "write_python_data"]
+__all__ = [
+    "read_python_data",
+    "write_python_data",
+]
 
 
 def write_python_data(parent, name, mime, data):

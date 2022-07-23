@@ -1,7 +1,9 @@
 from contracts import contract
 import numpy as np
 
-__all__ = ["rgb_zoom"]
+__all__ = [
+    "rgb_zoom",
+]
 
 
 @contract(M="array[HxWx(C,(3|4))](uint8)", K="K,>=1", returns="array[(H*K)x(W*K)xC](uint8)")

@@ -1,6 +1,8 @@
 import warnings
 
-__all__ = ["deprecated"]
+__all__ = [
+    "deprecated",
+]
 
 
 def deprecated(func):

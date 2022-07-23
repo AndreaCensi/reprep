@@ -34,7 +34,9 @@ from reprep import logger
 
 """
 
-__all__ = ["fancy_test_decorator"]
+__all__ = [
+    "fancy_test_decorator",
+]
 
 
 def add_to_module(function, module_name):
