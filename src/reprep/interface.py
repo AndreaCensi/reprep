@@ -6,6 +6,7 @@ from typing import List, Optional
 import numpy as np
 
 # from contracts import contract
+from zuper_commons.fs import FilePath
 from zuper_commons.types import check_isinstance
 from . import logger
 from .constants import MIME_PLAIN, MIME_PNG, MIME_PYTHON
@@ -14,6 +15,7 @@ from .types import MimeType
 __all__ = [
     "ReportInterface",
 ]
+
 
 # caption_type = "None|unicode"  # '(type(None), six.text_type)
 # mime_type = "unicode"
@@ -280,7 +282,7 @@ class ReportInterface:
                 caption = name
             f.sub(m, caption=caption)
 
-    def to_ipython(self, filename=None):
+    def to_ipython(self, filename: Optional[FilePath] = None):
         """Displays in the IPython editor."""
         if filename is None:
             filename = "reprep-%s.html" % str(id(self))
@@ -289,13 +291,13 @@ class ReportInterface:
 
         display(HTML(open(filename).read()))
 
-    def to_html(self, filename, resources_dir=None, **kwargs):
+    def to_html(self, filename: FilePath, resources_dir=None, **kwargs):
         """Creates a HTML representation of this report."""
         from .output.html import node_to_html_document
 
         node_to_html_document(self, filename, resources_dir, **kwargs)
 
-    def to_hdf(self, filename, **kwargs):
+    def to_hdf(self, filename: FilePath, **kwargs):
         """Creates an HDF representation of this report."""
         from .output import to_hdf
 

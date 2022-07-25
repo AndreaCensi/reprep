@@ -1,3 +1,4 @@
+from typing import Optional
 import codecs
 import datetime
 import mimetypes
@@ -8,6 +9,7 @@ from string import Template
 from six.moves import cPickle
 
 from zuper_commons.types import check_isinstance
+from zuper_commons.fs import DirPath, FilePath
 
 NoneType = type(None)
 
@@ -212,24 +214,26 @@ def normalize(f):
 
 def node_to_html_document(
     node,
-    filename,
-    resources_dir=None,
-    static_dir=None,
-    extra_css=None,
-    write_pickle=False,
-    pickle_compress=True,
-    extra_html_body_start="",
-    extra_html_body_end="",
+    filename: FilePath,
+    resources_dir: Optional[DirPath] = None,
+    static_dir: Optional[DirPath] = None,
+    extra_css: Optional[str] = None,
+    write_pickle: bool = False,
+    pickle_compress: bool = True,
+    extra_html_body_start: str = "",
+    extra_html_body_end: str = "",
 ):
     """
 
-    :param node:
-    :param filename:
-    :param resources_dir:
-    :param extra_css:
-    :param extra_html_body_start: Extra HTML to put at the beginning of <body>
-    :param write_pickle:
-    :param static_dir: Where to put common materials to all reports.
+    @param node:
+    @param filename:
+    @param resources_dir:
+    @param extra_css:
+    @param extra_html_body_start: Extra HTML to put at the beginning of <body>
+    @param write_pickle:
+    @param static_dir: Where to put common materials to all reports.
+    @param extra_html_body_end:
+    @param pickle_compress:
     """
     basename = os.path.basename(filename)
     dirname = os.path.dirname(filename)
