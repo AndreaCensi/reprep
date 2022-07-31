@@ -26,10 +26,9 @@ class Test(ReprepTest):
         self.node_serialization_ok(table)
 
     def testTable3(self):
-        if six.PY3:
-            dtype = numpy.dtype([("field1", "int32"), ("field2", "int32")])
-        else:
-            dtype = numpy.dtype([(b"field1", b"int32"), (b"field2", b"int32")])
+
+        dtype = numpy.dtype([("field1", "int32"), ("field2", "int32")])
+
         data = numpy.zeros(shape=(5,), dtype=dtype)
         table = Table("mytable", data)
         self.node_serialization_ok(table)
@@ -39,10 +38,7 @@ class Test(ReprepTest):
         self.assertRaises(ValueError, Table, "mytable", data)
 
     def testTable5(self):
-        if six.PY3:
-            dtype = numpy.dtype([("field1", "int32"), ("field2", "int32")])
-        else:
-            dtype = numpy.dtype([(b"field1", b"int32"), (b"field2", b"int32")])
+        dtype = numpy.dtype([("field1", "int32"), ("field2", "int32")])
         data = numpy.zeros(shape=(5, 4), dtype=dtype)
         self.assertRaises(ValueError, Table, "mytable", data)
 

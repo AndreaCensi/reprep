@@ -1,7 +1,5 @@
 import sys
-
-import six
-from six.moves import StringIO
+from io import StringIO
 
 from contracts import check_isinstance, contract, describe_type
 from .interface import ReportInterface
@@ -15,8 +13,8 @@ __all__ = [
 class Node(ReportInterface):
     @contract(nid="valid_id|None", children="None|list", caption="None|str")
     def __init__(self, nid=None, children=None, caption=None):
-        check_isinstance(nid, (type(None),) + six.string_types)
-        check_isinstance(caption, (type(None), six.text_type))
+        check_isinstance(nid, (type(None), str))
+        check_isinstance(caption, (type(None), str))
         if children is not None and not isinstance(children, list):
             raise ValueError(
                 "Received a %s object as children list, should" " be None or list." % describe_type(children)
@@ -132,7 +130,7 @@ class Node(ReportInterface):
         return n
 
     def resolve_url_dumb(self, url):
-        assert isinstance(url, six.string_types)
+        assert isinstance(url, str)
 
         components = Node.url_split(url)
         if len(components) > 1:
@@ -162,7 +160,7 @@ class Node(ReportInterface):
 
     @contract(url="unicode")
     def resolve_url(self, url, already_visited=None):
-        if not isinstance(url, six.string_types):
+        if not isinstance(url, str):
             raise ValueError(describe_type(url))
 
         if already_visited is None:

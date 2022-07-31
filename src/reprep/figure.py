@@ -1,11 +1,8 @@
 import sys
 import warnings
 
-import six
-
-from contracts import contract, describe_type, check_isinstance
+from contracts import check_isinstance, contract, describe_type
 from .constants import MIME_IMAGES, MIME_WEB_IMAGES
-
 from .datanode import DataNode
 from .node import Node
 
@@ -19,7 +16,7 @@ class Figure(Node):
     @contract(cols="None|(int,>0)")
     def __init__(self, nid=None, caption=None, cols=None):
         Node.__init__(self, nid=nid)
-        check_isinstance(caption, (type(None), six.text_type))
+        check_isinstance(caption, (type(None), str))
         self.caption = caption
         self.cols = cols
 
@@ -71,7 +68,7 @@ class Figure(Node):
         resource can either be a string or a data node.
         """
 
-        if isinstance(resource, six.text_type):
+        if isinstance(resource, str):
             data = self.resolve_url(resource)
             if not isinstance(data, DataNode):
                 msg = "I expected a DataNode for %r, got %s" % (resource, data)
@@ -145,11 +142,9 @@ class Figure(Node):
         return self.subfigures
 
 
-class SubFigure(object):
-    def __init__(self, resource, image, web_image, caption):
-        if six.PY2 and isinstance(caption, bytes):
-            caption = caption.decode("utf-8")
-        check_isinstance(caption, (type(None), six.text_type))
+class SubFigure:
+    def __init__(self, resource, image, web_image, caption: str):
+        check_isinstance(caption, (type(None), str))
         self.resource = resource
         self.image = image
         self.web_image = web_image

@@ -1,5 +1,5 @@
-from six.moves import cPickle
-from six import StringIO
+import pickle
+from io import StringIO
 
 from reprep import logger
 from contracts import describe_type, describe_value
@@ -46,7 +46,7 @@ def write_python_data(parent, name, mime, data):
     else:
         serialized = "pickle"
         s = StringIO()
-        cPickle.dump(data, s, protocol=2)
+        pickle.dump(data, s, protocol=2)
         hf.createVLArray(group, "pickle", tables.VLStringAtom(), filters=None)
         group.pickle.append(s.getvalue())
     group._v_attrs["reprep_data_format"] = serialized
@@ -61,7 +61,7 @@ def read_python_data(parent, name):
         data = group.value.read()
     elif reprep_data_format == "pickle":
         pickled = group.pickle[0]
-        data = cPickle.load(StringIO(pickled))
+        data = pickle.load(StringIO(pickled))
     else:
         raise ValueError(format)
     return mime, data

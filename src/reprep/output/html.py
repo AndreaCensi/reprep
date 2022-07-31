@@ -5,8 +5,7 @@ import mimetypes
 import os
 import shutil
 from string import Template
-
-from six.moves import cPickle
+import pickle
 
 from zuper_commons.types import check_isinstance
 from zuper_commons.fs import DirPath, FilePath
@@ -571,7 +570,7 @@ def datanode_to_html(node, context):
             if context.write_pickle:
                 warnings.warn("implement compress")
                 with open(filename, "wb") as f:
-                    cPickle.dump(node.raw_data, f)
+                    pickle.dump(node.raw_data, f)  # XXX: protocol
                 add_link = True
             else:
                 add_link = False

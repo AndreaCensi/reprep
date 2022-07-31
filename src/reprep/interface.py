@@ -217,8 +217,8 @@ class ReportInterface:
         self,
         nid: str,
         data,
-        cols: List[str] = None,
-        rows: List[str] = None,
+        cols: Optional[List[str]] = None,
+        rows: Optional[List[str]] = None,
         fmt: Optional[str] = None,
         caption: Optional[str] = None,
     ):
@@ -229,6 +229,8 @@ class ReportInterface:
         :param cols: Labels for the columns.
         :param rows: Labels for the rows.
         :param fmt: Entries formatting. If None, '%s' is used.
+        :param caption:
+        :param nid:
         """
         from . import Table
 

@@ -1,10 +1,7 @@
-from .node import Node
-from contracts import check_isinstance, contract, describe_value
 import numpy as np
 
-
-from .types import NID
-
+from contracts import check_isinstance, contract, describe_value
+from .node import Node
 
 __all__ = [
     "Table",

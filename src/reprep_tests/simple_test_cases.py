@@ -34,10 +34,8 @@ def table2(r):
 
 @ExampleReports.add
 def table3(r):
-    if six.PY3:
-        dtype = np.dtype([("field1", "int32"), ("field2", "int32")])
-    else:
-        dtype = np.dtype([(b"field1", b"int32"), (b"field2", b"int32")])
+    dtype = np.dtype([("field1", "int32"), ("field2", "int32")])
+
     data = np.zeros(shape=(5,), dtype=dtype)
     table = Table(NID("mytable"), data)
     r.add_child(table)
