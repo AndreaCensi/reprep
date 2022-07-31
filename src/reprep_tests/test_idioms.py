@@ -1,13 +1,13 @@
-import six
+import unittest
+
+import numpy
+from numpy.linalg.linalg import pinv
 
 import contracts
-from .common import ReprepTest
 from contracts import ContractNotRespected
-from numpy.linalg.linalg import pinv
-from reprep import MIME_PLAIN, Table, Node, Report, MIME_PNG
-import numpy
-import unittest
+from reprep import MIME_PLAIN, MIME_PNG, Node, Report, Table
 from reprep.mpl import get_pylab_instance
+from .common import ReprepTest
 
 
 class Test(ReprepTest):

@@ -1,5 +1,4 @@
 import numpy as np
-import six
 
 from reprep import MIME_PLAIN, Table
 from reprep.types import NID
