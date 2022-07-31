@@ -8,7 +8,6 @@
     "numpy",
     "scipy",
     "setuptools",
-    "six",
     "zuper-commons-z7"
   ],
   "tests_require": [

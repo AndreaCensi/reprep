@@ -17,7 +17,6 @@ install_requires:
 - scipy
 # - tables
 - setuptools     # keep
-- six
 
 
 tests_require:
