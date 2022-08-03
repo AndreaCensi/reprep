@@ -1,6 +1,8 @@
 __version__ = "7.3"
 __date__ = ""
 
+from typing_extensions import TypeAlias
+
 from zuper_commons import ZLogger
 
 logger = ZLogger(__name__)
@@ -22,7 +24,7 @@ from .table import *
 from .types import *
 
 # Alias
-Report = Node
+Report: TypeAlias = Node
 
 from . import report_utils  # just load demos
 

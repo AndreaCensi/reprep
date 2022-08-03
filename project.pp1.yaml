@@ -17,7 +17,7 @@ install_requires:
 - scipy
 # - tables
 - setuptools     # keep
-
+- typing_extensions
 
 tests_require:
 - nose
