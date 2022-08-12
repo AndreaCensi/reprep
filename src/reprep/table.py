@@ -1,3 +1,5 @@
+from typing import Optional
+
 import numpy as np
 
 from contracts import check_isinstance, contract, describe_value
@@ -10,7 +12,7 @@ __all__ = [
 
 class Table(Node):
     @contract(nid="valid_id", caption="None|str")
-    def __init__(self, nid: str, data, cols=None, rows=None, fmt=None, caption=None):
+    def __init__(self, nid: str, data, cols=None, rows=None, fmt=None, caption: Optional[str] = None):
         """
         :type data:  (array[R](fields[C]) | array[RxC] | list[R](list[C])
              ), R>0, C>0
