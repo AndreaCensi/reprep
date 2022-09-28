@@ -249,12 +249,12 @@ def node_to_html_document(
 
     if dirname and not os.path.exists(dirname):
         try:
-            os.makedirs(dirname)
+            os.makedirs(dirname, exist_ok=True)
         except:
             pass
     if not os.path.exists(resources_dir):
         try:
-            os.makedirs(resources_dir)
+            os.makedirs(resources_dir, exist_ok=True)
         except:
             pass
 
