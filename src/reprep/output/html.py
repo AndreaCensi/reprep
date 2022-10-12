@@ -1,14 +1,14 @@
-from typing import Optional
 import codecs
 import datetime
 import mimetypes
 import os
+import pickle
 import shutil
 from string import Template
-import pickle
+from typing import Optional
 
-from zuper_commons.types import check_isinstance
 from zuper_commons.fs import DirPath, FilePath
+from zuper_commons.types import check_isinstance
 
 NoneType = type(None)
 
@@ -341,12 +341,13 @@ def children_to_html(node, context):
 
 def node_to_html(node, context):
     functions = {
-        DataNode: datanode_to_html,
-        Table: table_to_html,
-        Figure: figure_to_html,
-        Node: simple_node_to_html,
+        "DataNode": datanode_to_html,
+        "Table": table_to_html,
+        "Figure": figure_to_html,
+        "Node": simple_node_to_html,
+        "Report": simple_node_to_html,
     }
-    t = node.__class__
+    t = type(node).__name__
     if not t in functions:
         msg = "Could not find type of %s (%s) in %s." % (node, t, functions.keys())
         raise ValueError(msg)
