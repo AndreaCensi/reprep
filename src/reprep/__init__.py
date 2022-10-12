@@ -23,8 +23,10 @@ from .table import *
 
 from .types import *
 
-# Alias
-Report: TypeAlias = Node
+
+class Report(Node):
+    pass
+
 
 from . import report_utils  # just load demos
 
