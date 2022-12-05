@@ -65,7 +65,9 @@ def set_spines_outward(pylab, outward_offset=10):
     ax.yaxis.set_ticks_position("left")
 
 
-def set_spines_look_A(pylab, outward_offset=10, linewidth=2, markersize=3, markeredgewidth=1):
+def set_spines_look_A(
+    pylab, outward_offset: float = 10, linewidth: float = 2, markersize: float = 3, markeredgewidth: float = 1
+):
     """
     Taken from
     http://matplotlib.sourceforge.net/examples/pylab_examples
