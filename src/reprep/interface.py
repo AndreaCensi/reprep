@@ -24,7 +24,9 @@ __all__ = [
 class ReportInterface:
     @contextmanager
     # @contract(nid="None|valid_id", caption=caption_type, robust="bool")
-    def subsection(self, nid: Optional[str] = None, caption: Optional[str] = None, robust: bool = False):
+    def subsection(
+        self, nid: Optional[str] = None, caption: Optional[str] = None, robust: bool = False
+    ) -> "Iterator[ReportInterface]":
         """
 
         Can be called as a context manager.

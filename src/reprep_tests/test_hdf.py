@@ -25,6 +25,6 @@ else:
             print(r.format_tree())
             print("-------- r2 ---------")
             print(r2.format_tree())
-            assert False
+            raise AssertionError
 
         shutil.rmtree(directory)
