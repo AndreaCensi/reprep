@@ -8,7 +8,7 @@ modules:
 
 install_requires:
 - zuper-commons-z7
-- PyContracts3
+- PyContracts3>=7
 - Pillow
 - docutils
 - ipython
