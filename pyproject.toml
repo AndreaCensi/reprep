@@ -4,7 +4,7 @@ version = "7.2"
 authors = [{name = "Andrea Censi", email = "info@zupermind.com"}]
 dependencies = [
     "Pillow",
-    "PyContracts3",
+    "PyContracts3>=7",
     "docutils",
     "ipython",
     "matplotlib",
