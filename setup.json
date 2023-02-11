@@ -21,7 +21,7 @@
   },
   "zip_safe": true,
   "include_package_data": true,
-  "packages": [
+  "modules": [
     "reprep",
     "reprep.demos",
     "reprep.graphics",
