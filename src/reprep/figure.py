@@ -52,7 +52,7 @@ class Figure(Node):
             s.write(prefix + " sub %s\n" % sub)
 
     @contract(child=Node)
-    def add_child(self, child):
+    def add_child(self, child: Node) -> None:
         """Automatically add child if it can be displayed."""
         Node.add_child(self, child)
 
