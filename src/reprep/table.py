@@ -95,7 +95,7 @@ class Table(Node):
                 data = data.tolist()
 
         else:
-            assert False
+            raise AssertionError
 
         #
         #         check_multiple([ (cols, 'list[C](str|None),C>0'),

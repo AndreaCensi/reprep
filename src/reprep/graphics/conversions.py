@@ -28,7 +28,7 @@ def Image_from_array(a):
         if depth == 3:
             rgba[:, :, 3] = 255
     else:
-        assert False
+        raise AssertionError
 
     assert rgba.shape == (height, width, 4)
 

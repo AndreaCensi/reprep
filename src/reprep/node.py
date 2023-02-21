@@ -305,7 +305,7 @@ class Node(ReportInterface):
             nid = "%s%d" % (prefix, i)
             if not self.has_child(nid):
                 return nid
-        assert False
+        raise AssertionError
 
     def add_to_autofigure(self, image_node):
         """Checks if no figure has been defined, in which
