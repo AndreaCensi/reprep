@@ -1,7 +1,7 @@
 [project]
 name = "reprep-z7"
 version = "7.2"
-authors = [{name = "Andrea Censi", email = "info@zupermind.com"}]
+authors = [{name = "Andrea Censi", email = "AndreaCensi@users.noreply.github.com"}]
 dependencies = [
     "Pillow",
     "PyContracts3>=7",
@@ -25,7 +25,7 @@ test = [
 name = "reprep-z7"
 version = "7.2"
 description = "report reproducible research tables html latex"
-authors = ["Andrea Censi <info@zupermind.com>"]
+authors = ["Andrea Censi <AndreaCensi@users.noreply.github.com>"]
 packages = [
     {from = "src", include = "reprep"},
     {from = "src", include = "reprep/demos"},
