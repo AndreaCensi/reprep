@@ -12,7 +12,6 @@ class frozendict1(dict):
 
 
 class frozendict2(dict):
-
     # OK, but we need to modify it during pickling
     # def _blocked_attribute(obj):
     #    raise AttributeError, "A frozendict cannot be modified."

@@ -531,7 +531,6 @@ def datanode_to_html(node, context):
     text_mimes = [MIME_PLAIN, MIME_RST]
 
     if node.mime in text_mimes:
-
         content = text2html(node.raw_data, node.mime)
 
         if node.nid == "caption":

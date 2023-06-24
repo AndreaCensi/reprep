@@ -19,8 +19,7 @@ install_requires:
 - setuptools     # keep
 - typing_extensions
 
-tests_require:
-- nose
+tests_require: []
 
 console_scripts: {}
 nose:

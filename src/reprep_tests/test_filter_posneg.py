@@ -5,7 +5,6 @@ from reprep import posneg
 
 
 class Test(unittest.TestCase):
-
     valid_shapes = [(10, 10)]
     invalid_shapes = [(10,), (0, 10, 3), ()]
 
