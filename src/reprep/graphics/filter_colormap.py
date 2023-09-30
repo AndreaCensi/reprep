@@ -49,7 +49,6 @@ def filter_colormap(
     skim=0,
     properties=None,
 ):
-
     """
 
       shape = grid.get_map().shape

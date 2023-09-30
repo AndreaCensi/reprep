@@ -6,7 +6,6 @@ from reprep import Image_from_array
 
 
 class Test(unittest.TestCase):
-
     valid_shapes = [(10, 10), (10, 10, 3), (10, 10, 4)]
     invalid_shapes = [(10, 0), (0, 10, 3), (10, 0, 4), (10, 10, 5), (), (10)]
 

@@ -1,8 +1,9 @@
-from contracts import describe_value
-
-from nose.tools import istest, nottest
 import sys
+from typing import Any, TypeVar
+
+from contracts import describe_value
 from reprep import logger
+from zuper_commons.test_utils import istest, nottest
 
 """
     These are very "meta" utils for creating nose mcdp_lang_tests on the fly.
@@ -39,18 +40,19 @@ __all__ = [
 ]
 
 
-def add_to_module(function, module_name):
+def add_to_module(function: Any, module_name: str) -> None:
     module = sys.modules[module_name]
     name = function.__name__
 
     if not "test" in name:
-        raise Exception('No "test" in function name %r' % name)
+        raise Exception(f'No "test" in function name {name!r}')
 
     if not "test" in module_name:
-        raise Exception(
-            'While adding %r in %r: module does not have "test"'
-            " in it, so nose will not find the test." % (name, module_name)
+        msg = (
+            f'While adding {name!r} in {module_name!r}: module does not have "test" in it, '
+            " so nose will not find the test."
         )
+        raise Exception(msg)
 
     if name in module.__dict__:
         raise Exception("Already created test %r." % name)
@@ -61,10 +63,10 @@ def add_to_module(function, module_name):
 
 
 def add_checker_f(f, x, arguments, attributes, naming):
-    name = "test_%s_%s" % (f.__name__, naming(x))
+    name = f"test_{f.__name__}_{naming(x)}"
 
     @istest
-    def caller():
+    def caller() -> None:
         try:
             args = arguments(x)
         except Exception as e:
@@ -97,6 +99,9 @@ def add_checker_f(f, x, arguments, attributes, naming):
     add_to_module(caller, f.__module__)
 
 
+X = TypeVar("X")
+
+
 # TODO: add debug info function
 @nottest
 def fancy_test_decorator(
@@ -104,11 +109,13 @@ def fancy_test_decorator(
     arguments=lambda x: x,
     attributes=lambda x: {"id": str(x)},
     naming=lambda x: str(x),
-    debug=False,
+    debug: bool = False,
 ):
     """
     Creates a fancy decorator for adding checks.
 
+    :param naming:
+    :param debug:
     :param lister: a function that should give a list of objects
     :param arguments: from object to arguments
     :param attributes: (optional) set of attributes for the test
@@ -117,7 +124,7 @@ def fancy_test_decorator(
 
     """
 
-    def for_all_stuff(check):
+    def for_all_stuff(check: X) -> X:
         for x in lister():
             if debug:
                 logger.info("add test %s / %s " % (check, x))

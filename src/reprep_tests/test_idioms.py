@@ -12,7 +12,6 @@ from .common import ReprepTest
 
 class Test(ReprepTest):
     def testTable(self):
-
         table = Table(
             "mytable",
             [["Andrea", "Censi"], ["a", "b"]],
@@ -26,7 +25,6 @@ class Test(ReprepTest):
         self.node_serialization_ok(table)
 
     def testTable3(self):
-
         dtype = numpy.dtype([("field1", "int32"), ("field2", "int32")])
 
         data = numpy.zeros(shape=(5,), dtype=dtype)

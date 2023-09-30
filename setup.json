@@ -11,9 +11,7 @@
     "typing_extensions",
     "zuper-commons-z7"
   ],
-  "tests_require": [
-    "nose"
-  ],
+  "tests_require": [],
   "srcdir": "src",
   "package_name": "reprep-z7",
   "entry_points": {
