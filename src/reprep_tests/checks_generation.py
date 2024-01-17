@@ -48,10 +48,7 @@ def add_to_module(function: Any, module_name: str) -> None:
         raise Exception(f'No "test" in function name {name!r}')
 
     if not "test" in module_name:
-        msg = (
-            f'While adding {name!r} in {module_name!r}: module does not have "test" in it, '
-            " so nose will not find the test."
-        )
+        msg = f'While adding {name!r} in {module_name!r}: module does not have "test" in it, ' " so nose will not find the test."
         raise Exception(msg)
 
     if name in module.__dict__:

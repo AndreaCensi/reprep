@@ -16,9 +16,7 @@ class Node(ReportInterface):
         check_isinstance(nid, (type(None), str))
         check_isinstance(caption, (type(None), str))
         if children is not None and not isinstance(children, list):
-            raise ValueError(
-                "Received a %s object as children list, should" " be None or list." % describe_type(children)
-            )
+            raise ValueError("Received a %s object as children list, should" " be None or list." % describe_type(children))
 
         self.nid = nid
 

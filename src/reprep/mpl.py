@@ -58,8 +58,5 @@ def get_matplotlib():
 
 
 def raise_error():
-    msg = (
-        "Sorry, this functionality is not enabled because "
-        "I could not import matplotlib (%s)" % Global.matplotlib_error
-    )
+    msg = "Sorry, this functionality is not enabled because " "I could not import matplotlib (%s)" % Global.matplotlib_error
     raise Exception(msg)

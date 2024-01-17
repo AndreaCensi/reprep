@@ -18,11 +18,7 @@ class StoreResultsDict(StoreResults):
             raise ValueError(msg)
         for k in attrs:
             if k in value:
-                msg = (
-                    "The same field %r is found in both key and value. \n"
-                    "  key: %s \n"
-                    "value: %s" % (k, attrs, value)
-                )
+                msg = "The same field %r is found in both key and value. \n" "  key: %s \n" "value: %s" % (k, attrs, value)
                 raise ValueError(msg)
         super(StoreResultsDict, self).__setitem__(attrs, value)
 
