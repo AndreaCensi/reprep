@@ -34,12 +34,7 @@ def table_by_rows(id_report, samples, rows_field, cols_fields, source_descs):
     r.data("table_data", data=reduced, caption="Data without presentation applied.")
     r.data("table_data_source", data=data, caption="Source data, before reduction.")
 
-    row_desc = "\n".join(
-        [
-            "- $%s$: %s" % (x.get_symbol(), x.get_desc())
-            for x in list(map(source_descs.__getitem__, rows_field))
-        ]
-    )
+    row_desc = "\n".join(["- $%s$: %s" % (x.get_symbol(), x.get_desc()) for x in list(map(source_descs.__getitem__, rows_field))])
     col_desc = "\n".join(["- $%s$: %s" % (x.get_symbol(), x.get_desc()) for x in data_views])
     r.text("row_desc", rst_escape_slash(row_desc), mime=MIME_RST)
     r.text("col_desc", rst_escape_slash(col_desc), mime=MIME_RST)

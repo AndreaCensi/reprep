@@ -78,9 +78,8 @@ class Table(Node):
 
             elif data.ndim == 2:
                 if data.dtype.fields is not None:
-                    msg = (
-                        "Cannot convert ndarray to table using "
-                        "the heuristics that I know (received: %s). " % describe_value(data)
+                    msg = "Cannot convert ndarray to table using " "the heuristics that I know (received: %s). " % describe_value(
+                        data
                     )
                     raise ValueError(msg)
 

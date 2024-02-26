@@ -93,8 +93,7 @@ class Figure(Node):
         # if data.get_complete_id() in self.automatically_added:
         if data in self.automatically_added:
             warnings.warn(
-                "Node %r was automatically added to figure (new "
-                "behavior in 1.0)." % self.get_relative_url(data),
+                "Node %r was automatically added to figure (new " "behavior in 1.0)." % self.get_relative_url(data),
                 stacklevel=2,
             )
             return
@@ -112,8 +111,7 @@ class Figure(Node):
             if image is None:
                 self.parent.print_tree()  # XXX
                 raise ValueError(
-                    "Could not find candidate image for resource "
-                    "%r; image node is %r." % (resource, data.get_complete_id())
+                    "Could not find candidate image for resource " "%r; image node is %r." % (resource, data.get_complete_id())
                 )
 
         # Get an image that can be shown in a browser
