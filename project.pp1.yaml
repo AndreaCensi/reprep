@@ -7,17 +7,16 @@ modules:
 - reprep_tables
 
 install_requires:
-- zuper-commons-z7
 - PyContracts3>=7
-- Pillow
 - docutils
 - ipython
 - matplotlib
 - numpy
+- pillow
 - scipy
-# - tables
 - setuptools     # keep
 - typing_extensions
+- zuper-commons-z7
 
 tests_require: []
 

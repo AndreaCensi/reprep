@@ -27,12 +27,12 @@ packages = [
     ]
 
 [tool.poetry.dependencies]
-Pillow = "*"
 PyContracts3 = ">=7"
 docutils = "*"
 ipython = "*"
 matplotlib = "*"
 numpy = "*"
+pillow = "*"
 scipy = "*"
 setuptools = "*"
 typing_extensions = "*"
