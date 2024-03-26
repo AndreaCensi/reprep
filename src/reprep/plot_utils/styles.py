@@ -26,7 +26,7 @@ def ieee_fonts(pylab):
         "legend.markerscale": 2,
         "legend.labelspacing": 0.2,
         "legend.columnspacing": 1,
-        "legend.borderaxespad": 0.1
+        "legend.borderaxespad": 0.1,
         #          'font.family': 'Times New Roman',
         #          'font.serif': ['Times New Roman', 'Times'],
         #          'font.size': 8

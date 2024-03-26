@@ -10,6 +10,7 @@
         dict(key=value) -> dict(key2=value2,...)
 
 """
+
 from .. import logger
 
 logger.hello_module(name=__name__, filename=__file__, version="n/a", date="n/a")
