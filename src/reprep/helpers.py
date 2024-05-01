@@ -1,6 +1,6 @@
 import mimetypes
 import tempfile
-from typing import Optional
+from typing import Optional, TYPE_CHECKING
 
 from contracts import contract
 from zuper_commons.types import ZException
@@ -98,8 +98,17 @@ class PylabAttacher:
         self.pylab = get_pylab_instance()
         self.figure = self.pylab.figure(**figure_args)
 
-    def __enter__(self):
-        return self.pylab
+    if TYPE_CHECKING:
+
+        def __enter__(self):
+            import matplotlib.pyplot as plt
+
+            return plt
+
+    else:
+
+        def __enter__(self):
+            return self.pylab
 
     def __exit__(self, exc_type, exc_value, traceback):  # @UnusedVariable
         if exc_type is not None:

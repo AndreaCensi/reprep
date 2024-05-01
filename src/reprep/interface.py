@@ -20,6 +20,9 @@ __all__ = [
 # caption_type = "None|unicode"  # '(type(None), six.text_type)
 # mime_type = "unicode"
 
+if TYPE_CHECKING:
+    from .helpers import PylabAttacher
+
 
 class ReportInterface:
     @contextmanager
@@ -160,7 +163,7 @@ class ReportInterface:
         mime: Optional[MimeType] = None,
         caption: Optional[str] = None,
         **figure_args,
-    ):
+    ) -> "PylabAttacher":
         """
         Easy support for creating a node consisting of a pylab plot.
         Note: this method is supposed to be used in conjunction with
