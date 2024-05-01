@@ -1,11 +1,9 @@
 import traceback
 import warnings
 from contextlib import contextmanager
-from typing import List, Optional
+from typing import Iterator, List, Optional, TYPE_CHECKING
 
 import numpy as np
-
-# from contracts import contract
 from zuper_commons.fs import FilePath
 from zuper_commons.types import check_isinstance
 from . import logger
@@ -16,17 +14,12 @@ __all__ = [
     "ReportInterface",
 ]
 
-
-# caption_type = "None|unicode"  # '(type(None), six.text_type)
-# mime_type = "unicode"
-
 if TYPE_CHECKING:
     from .helpers import PylabAttacher
 
 
 class ReportInterface:
     @contextmanager
-    # @contract(nid="None|valid_id", caption=caption_type, robust="bool")
     def subsection(
         self, nid: Optional[str] = None, caption: Optional[str] = None, robust: bool = False
     ) -> "Iterator[ReportInterface]":
