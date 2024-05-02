@@ -1,6 +1,6 @@
 from typing import cast
 
-from reprep import MimeType
+from zuper_commons.text import MimeType
 
 MIME_PNG = cast(MimeType, "image/png")
 MIME_JPG = cast(MimeType, "image/jpeg")

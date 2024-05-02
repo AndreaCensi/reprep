@@ -8,7 +8,7 @@ from zuper_commons.fs import FilePath
 from zuper_commons.types import check_isinstance
 from . import logger
 from .constants import MIME_PLAIN, MIME_PNG, MIME_PYTHON
-from .types import MimeType
+from zuper_commons.text import MimeType
 
 __all__ = [
     "ReportInterface",
