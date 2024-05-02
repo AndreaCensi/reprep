@@ -1,19 +1,13 @@
 import mimetypes
 import tempfile
-from typing import Optional, TYPE_CHECKING, Any
+from typing import Any, Optional, TYPE_CHECKING
 
 from contracts import contract
+from zuper_commons.fs import FilePath
+from zuper_commons.text import MimeType
 from zuper_commons.types import ZException
-from zuper_commons.text import FilePath, MimeType
 from .config import RepRepDefaults
-from .constants import (
-    mime_implies_unicode_representation,
-    MIME_JPG,
-    MIME_PDF,
-    MIME_PNG,
-    MIME_SVG,
-    mime_to_ext,
-)
+from .constants import MIME_JPG, MIME_PDF, MIME_PNG, MIME_SVG, mime_implies_unicode_representation, mime_to_ext
 from .datanode import DataNode
 from .mpl import get_pylab_instance
 from .node import Node
