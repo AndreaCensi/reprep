@@ -15,7 +15,7 @@ __all__ = [
 ]
 
 if TYPE_CHECKING:
-    from .helpers import PylabAttacher
+    from .helpers import PylabAttacher, Attacher
 
 
 class ReportInterface:
@@ -95,7 +95,7 @@ class ReportInterface:
         return n
 
     # @contract(nid="valid_id", mime=mime_type, caption=caption_type)
-    def data_file(self, nid: str, mime: MimeType, caption: Optional[str] = None):
+    def data_file(self, nid: str, mime: MimeType, caption: Optional[str] = None) -> "Attacher":
         """
         Support for attaching data from a file. Note: this method is
         supposed to be used in conjunction with the "with" construct.

@@ -1,15 +1,19 @@
-MIME_PNG = "image/png"
-MIME_JPG = "image/jpeg"
-MIME_GIF = "image/gif"
-MIME_PDF = "application/pdf"
-MIME_RST = "text/x-rst"
-MIME_PLAIN = "text/plain"
-MIME_PYTHON = "application/python"
-MIME_SVG = "image/svg+xml"
-MIME_MP4 = "video/mp4"
-MIME_GRAPHML = "application/graphml+xml"
+from typing import cast
 
-MIME_GRAPHVIZ = "text/vnd.graphviz"
+from reprep import MimeType
+
+MIME_PNG = cast(MimeType, "image/png")
+MIME_JPG = cast(MimeType, "image/jpeg")
+MIME_GIF = cast(MimeType, "image/gif")
+MIME_PDF = cast(MimeType, "application/pdf")
+MIME_RST = cast(MimeType, "text/x-rst")
+MIME_PLAIN = cast(MimeType, "text/plain")
+MIME_PYTHON = cast(MimeType, "application/python")
+MIME_SVG = cast(MimeType, "image/svg+xml")
+MIME_MP4 = cast(MimeType, "video/mp4")
+MIME_GRAPHML = cast(MimeType, "application/graphml+xml")
+
+MIME_GRAPHVIZ = cast(MimeType, "text/vnd.graphviz")
 
 # Images
 MIME_IMAGES = [MIME_PDF, MIME_SVG, MIME_PNG, MIME_JPG, MIME_GIF]

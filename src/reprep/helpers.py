@@ -1,9 +1,10 @@
 import mimetypes
 import tempfile
-from typing import Optional, TYPE_CHECKING
+from typing import Optional, TYPE_CHECKING, Any
 
 from contracts import contract
 from zuper_commons.types import ZException
+from zuper_commons.text import FilePath, MimeType
 from .config import RepRepDefaults
 from .constants import (
     mime_implies_unicode_representation,
@@ -16,13 +17,12 @@ from .constants import (
 from .datanode import DataNode
 from .mpl import get_pylab_instance
 from .node import Node
+from .types import NID
 
 __all__ = [
     "Attacher",
     "PylabAttacher",
 ]
-
-from .types import MimeType, NID
 
 
 class Attacher:
@@ -56,10 +56,10 @@ class Attacher:
 
         self.temp_file = tempfile.NamedTemporaryFile(suffix=suffix)
 
-    def __enter__(self):
+    def __enter__(self) -> FilePath:
         return self.temp_file.name
 
-    def __exit__(self, _a, _b, _c):
+    def __exit__(self, _a: Any, _b: Any, _c: Any) -> None:
         data = open(self.temp_file.name, "rb").read()
 
         if mime_implies_unicode_representation(self.mime):
