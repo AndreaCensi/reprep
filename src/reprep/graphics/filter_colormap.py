@@ -17,7 +17,9 @@ def value2rgb(x, vmin=0, vmax=1, cmap="jet"):
     f = pylab.figure()
     # m = f.gca().imshow(x, vmin=vmin, vmax=vmax,
     # cmap=pyplot.cm.get_cmap(cmap))
-    mcmap = pylab.cm.get_cmap(cmap)
+    from matplotlib import pyplot
+
+    mcmap = pyplot.get_cmap(cmap)
     if mcmap is None:
         raise Exception("Unknown cmap %r." % cmap)
     m = pylab.figimage(x, 0, 0, vmin=vmin, vmax=vmax, cmap=mcmap)
