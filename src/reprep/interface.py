@@ -1,10 +1,10 @@
 import traceback
 import warnings
 from contextlib import contextmanager
-from typing import Iterator, List, Optional, TYPE_CHECKING
+from typing import Iterator, List, Optional, TYPE_CHECKING, Any
 
 import numpy as np
-from zuper_commons.fs import FilePath
+from zuper_commons.fs import DirPath, FilePath
 from zuper_commons.types import check_isinstance
 from . import logger
 from .constants import MIME_PLAIN, MIME_PNG, MIME_PYTHON
@@ -291,7 +291,7 @@ class ReportInterface:
 
         display(HTML(open(filename).read()))
 
-    def to_html(self, filename: FilePath, resources_dir=None, **kwargs):
+    def to_html(self, filename: FilePath, resources_dir: Optional[DirPath] = None, **kwargs: Any) -> None:
         """Creates a HTML representation of this report."""
         from .output.html import node_to_html_document
 
