@@ -2,6 +2,17 @@
 name = "reprep-z7"
 version = "7.2"
 authors = [{name = "Andrea Censi", email = "AndreaCensi@users.noreply.github.com"}]
+dependencies = [
+    "PyContracts3>=7",
+    "docutils",
+    "ipython",
+    "matplotlib",
+    "numpy",
+    "pillow",
+    "scipy",
+    "setuptools",
+    "typing_extensions",
+    "zuper-commons-z7",]
 
 [tool.poetry]
 name = "reprep-z7"
@@ -39,6 +50,7 @@ typing_extensions = "*"
 zuper-commons-z7 = "*"
 
 [tool.poetry.group.test.dependencies]
+python = "^3.12"
 
 [build-system]
 requires = [
