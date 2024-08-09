@@ -1,6 +1,6 @@
 import sys
 from io import StringIO
-
+from typing import Collection, Optional
 from contracts import check_isinstance, contract, describe_type
 from .interface import ReportInterface
 from .structures import InvalidURL, NotExistent
@@ -11,6 +11,8 @@ __all__ = [
 
 
 class Node(ReportInterface):
+    children: list[ReportInterface]
+
     @contract(nid="valid_id|None", children="None|list", caption="None|str")
     def __init__(self, nid=None, children=None, caption=None):
         check_isinstance(nid, (type(None), str))
@@ -127,7 +129,7 @@ class Node(ReportInterface):
         self.add_child(n)
         return n
 
-    def resolve_url_dumb(self, url):
+    def resolve_url_dumb(self, url: str) -> ReportInterface:
         assert isinstance(url, str)
 
         components = Node.url_split(url)
@@ -157,7 +159,7 @@ class Node(ReportInterface):
             return l[nid]
 
     @contract(url="unicode")
-    def resolve_url(self, url, already_visited=None):
+    def resolve_url(self, url: str, already_visited: Optional[Collection[ReportInterface]] = None) -> ReportInterface:
         if not isinstance(url, str):
             raise ValueError(describe_type(url))
 
