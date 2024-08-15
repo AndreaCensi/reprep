@@ -215,8 +215,8 @@ class ReportInterface:
         self,
         nid: str,
         data,
-        cols: Optional[List[str]] = None,
-        rows: Optional[List[str]] = None,
+        cols: Optional[list[str]] = None,
+        rows: Optional[list[str]] = None,
         fmt: Optional[str] = None,
         caption: Optional[str] = None,
     ):
