@@ -1,8 +1,6 @@
 __version__ = "7.3"
 __date__ = ""
 
-from typing_extensions import TypeAlias
-
 from zuper_commons import ZLogger
 
 logger = ZLogger(__name__)

@@ -15,7 +15,6 @@ install_requires:
 - pillow
 - scipy
 - setuptools     # keep
-- typing_extensions
 - zuper-commons-z7
 
 tests_require: []

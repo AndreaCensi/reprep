@@ -8,7 +8,6 @@
     "pillow",
     "scipy",
     "setuptools",
-    "typing_extensions",
     "zuper-commons-z7"
   ],
   "tests_require": [],
