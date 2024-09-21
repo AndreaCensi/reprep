@@ -155,7 +155,7 @@ class ReportInterface:
         nid: Optional[str] = None,
         mime: Optional[MimeType] = None,
         caption: Optional[str] = None,
-        **figure_args,
+        **figure_args: Any,
     ) -> "PylabAttacher":
         """
         Easy support for creating a node consisting of a pylab plot.
