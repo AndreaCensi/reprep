@@ -1,13 +1,14 @@
 from .spines import set_spines_look_A
+from typing import Any
 
 ieee_colsize = 1.57 * 2
 
 
-def ieee_spines(pylab):
+def ieee_spines(pylab: Any):
     set_spines_look_A(pylab, outward_offset=5, linewidth=1, markersize=2, markeredgewidth=0.5)
 
 
-def ieee_fonts(pylab):
+def ieee_fonts(pylab: Any):
     # See http://matplotlib.sourceforge.net
     # /users/customizing.html#matplotlibrc-sample
     params = {
@@ -52,7 +53,7 @@ def ieee_fonts(pylab):
 #                  'size': 8.0})
 
 
-def style_ieee_halfcol_xy(pylab, ratio=3.0 / 4):
+def style_ieee_halfcol_xy(pylab: Any, ratio=3.0 / 4):
     """
     Note: not sure if should be called before plotting, or after.
     Find out and write it here.

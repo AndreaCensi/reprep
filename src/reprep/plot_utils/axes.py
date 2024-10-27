@@ -1,19 +1,20 @@
 import numpy as np
+from typing import Any
 
 
-def plot_horizontal_line(pylab, y, *args, **kwargs):
+def plot_horizontal_line(pylab: Any, y, *args, **kwargs):
     """Plots an horizontal line across the plot using current bounds."""
     a = pylab.axis()
     pylab.plot([a[0], a[1]], [y, y], *args, **kwargs)
 
 
-def plot_vertical_line(pylab, x, *args, **kwargs):
+def plot_vertical_line(pylab: Any, x, *args, **kwargs):
     """Plots a vertical line across the plot using current bounds."""
     a = pylab.axis()
     pylab.plot([x, x], [a[2], a[3]], *args, **kwargs)
 
 
-def y_axis_balanced(pylab, extra_space=0.1, show0=True):
+def y_axis_balanced(pylab: Any, extra_space=0.1, show0=True):
     a = pylab.axis()
     y_max = a[3]
     y_min = a[2]
@@ -34,21 +35,21 @@ def y_axis_positive(pylab, extra_space=0.1, show0=True):
         plot_horizontal_line(pylab, 0, "k--")
 
 
-def x_axis_extra_space_right(pylab, fraction=0.1):
+def x_axis_extra_space_right(pylab: Any, fraction=0.1):
     a = pylab.axis()
     D = a[1] - a[0]
     extra = D * fraction
     pylab.axis((a[0], a[1] + extra, a[2], a[3]))
 
 
-def y_axis_extra_space(pylab, extra_space=0.1):
+def y_axis_extra_space(pylab: Any, extra_space=0.1):
     a = pylab.axis()
     D = a[3] - a[2]
     extra = D * extra_space
     pylab.axis((a[0], a[1], a[2] - extra, a[3] + extra))
 
 
-def x_axis_extra_space(pylab, extra_space=0.1):
+def x_axis_extra_space(pylab: Any, extra_space=0.1):
     a = pylab.axis()
     D = a[1] - a[0]
     extra = D * extra_space
