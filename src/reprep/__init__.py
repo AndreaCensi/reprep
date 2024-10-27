@@ -18,7 +18,6 @@ from .node import *
 from .datanode import *
 from .figure import *
 from .table import *
-
 from .types import *
 
 

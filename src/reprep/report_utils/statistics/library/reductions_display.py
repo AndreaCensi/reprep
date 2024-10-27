@@ -1,5 +1,5 @@
 from contracts import contract
-from .. import RepRepStats
+from ..structures import RepRepStats
 
 
 @RepRepStats.reduction_display

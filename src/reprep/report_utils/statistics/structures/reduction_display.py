@@ -1,4 +1,4 @@
-from . import FunctionWithDescription
+from .function_with_description import FunctionWithDescription
 
 
 class ReductionDisplay(FunctionWithDescription):

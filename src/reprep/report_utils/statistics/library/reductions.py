@@ -1,7 +1,7 @@
 import numpy as np
 
 from contracts import contract
-from .. import RepRepStats
+from ..structures import RepRepStats
 
 
 @RepRepStats.reduction
