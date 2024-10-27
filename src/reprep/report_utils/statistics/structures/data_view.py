@@ -1,9 +1,9 @@
+from contracts import contract, new_contract
+from reprep.report_utils.storing import StoreResultsDict
 from .reduction import Reduction
 from .reduction_display import ReductionDisplay
 from .storage import RepRepStats
 from .with_description import WithDescription
-from contracts import contract, new_contract
-from reprep.report_utils.storing import StoreResultsDict
 
 __all__ = [
     "DataView",
@@ -25,13 +25,13 @@ class DataView(WithDescription):
         :param symbol: A LaTeX expression.
         :param desc: A free-form string.
         """
-        super(DataView, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.source = source
         self.reduction = reduction
         self.display = display
 
     def __repr__(self):
-        return "DataView(%r,%r,%r)" % (self.source, self.reduction, self.display)
+        return "DataView({!r},{!r},{!r})".format(self.source, self.reduction, self.display)
 
     @contract(samples=StoreResultsDict, returns="tuple(*,*,*)")
     def reduce(self, samples):
@@ -77,7 +77,7 @@ class DataView(WithDescription):
             msg = "Wrong format %r" % s
             raise ValueError(msg)
 
-        name = "%s_%s" % (source, reduction)
+        name = "{}_{}".format(source, reduction)
 
         source = source_fields[source]
         reduction = RepRepStats.get_reduction(reduction)

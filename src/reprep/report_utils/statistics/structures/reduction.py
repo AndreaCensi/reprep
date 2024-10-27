@@ -7,7 +7,7 @@ __all__ = [
 
 class Reduction(FunctionWithDescription):
     def __init__(self, *args, **kwargs):
-        super(Reduction, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
         if not "%s" in self.get_symbol():
             msg = "Missing pattern for symbol of %r." % self.get_name()

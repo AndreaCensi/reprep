@@ -1,8 +1,9 @@
-from . import write_python_data
-from reprep import DataNode, Figure, __version__, Table
 import datetime
 import os
+
+from reprep import __version__, DataNode, Figure, Table
 from reprep.output.hdf import get_tables
+from . import write_python_data
 
 
 def to_hdf(node, filename):

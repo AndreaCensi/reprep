@@ -1,5 +1,5 @@
 import sys
-from typing import Any, TypeVar
+from typing import Any
 
 from contracts import describe_value
 from reprep import logger
@@ -68,7 +68,7 @@ def add_checker_f(f, x, arguments, attributes, naming):
             args = arguments(x)
         except Exception as e:
             msg = "Error while preparing test case: %s.\n" % e
-            msg += "Error while calling %s with argument %r" % (arguments, x)
+            msg += "Error while calling {} with argument {!r}".format(arguments, x)
             logger.error(msg)
             raise
 
@@ -121,7 +121,7 @@ def fancy_test_decorator(
     def for_all_stuff[X](check: X) -> X:
         for x in lister():
             if debug:
-                logger.info("add test %s / %s " % (check, x))
+                logger.info("add test {} / {} ".format(check, x))
             add_checker_f(check, x, arguments, attributes, naming)
         return check
 

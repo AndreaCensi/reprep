@@ -5,7 +5,7 @@ import numpy as np
 from contracts import contract
 from zuper_commons.types import describe_value
 from .constants import mime_implies_unicode_representation, MIME_PNG, MIME_PYTHON
-from .graphics import colorize_success, posneg, rgb_zoom, scale, Image_from_array
+from .graphics import colorize_success, Image_from_array, posneg, rgb_zoom, scale
 from .node import Node
 
 __all__ = [
@@ -42,14 +42,14 @@ class DataNode(Node):
         return True
 
     def __repr__(self):
-        return "DataNode(%s,%s,%s)" % (
+        return "DataNode({},{},{})".format(
             self.nid,
             self.mime,
             describe_value(self.raw_data),
         )
 
     def print_tree(self, s=sys.stdout, prefix=""):
-        s.write("%s- %s (%s %s)\n" % (prefix, self.nid, self.__class__, self.mime))
+        s.write("{}- {} ({} {})\n".format(prefix, self.nid, self.__class__, self.mime))
         for child in self.children:
             child.print_tree(s, prefix + "  ")
 

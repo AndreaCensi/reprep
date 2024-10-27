@@ -1,7 +1,8 @@
-from . import skim_top
-from contracts import contract
-from numpy import maximum, minimum, zeros
 import numpy as np
+from numpy import maximum, minimum, zeros
+
+from contracts import contract
+from . import skim_top
 
 
 @contract(

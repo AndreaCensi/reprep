@@ -5,7 +5,6 @@ import os
 import pickle
 import shutil
 from string import Template
-from typing import Optional
 
 from zuper_commons.fs import DirPath, FilePath
 from zuper_commons.types import check_isinstance
@@ -14,8 +13,8 @@ NoneType = type(None)
 
 from pkg_resources import resource_filename
 
-from reprep import Figure, Table, mime_to_ext
-from reprep import MIME_PLAIN, MIME_RST, MIME_PYTHON, Node, logger
+from reprep import mime_to_ext
+from reprep import MIME_PLAIN, MIME_RST, MIME_PYTHON, logger
 from reprep.datanode import DataNode
 
 # language=html
@@ -214,9 +213,9 @@ def normalize(f):
 def node_to_html_document(
     node,
     filename: FilePath,
-    resources_dir: Optional[DirPath] = None,
-    static_dir: Optional[DirPath] = None,
-    extra_css: Optional[str] = None,
+    resources_dir: DirPath | None = None,
+    static_dir: DirPath | None = None,
+    extra_css: str | None = None,
     write_pickle: bool = False,
     pickle_compress: bool = True,
     extra_html_body_start: str = "",
@@ -349,7 +348,7 @@ def node_to_html(node, context):
     }
     t = type(node).__name__
     if not t in functions:
-        msg = "Could not find type of %s (%s) in %s." % (node, t, functions.keys())
+        msg = "Could not find type of {} ({}) in {}.".format(node, t, functions.keys())
         raise ValueError(msg)
     functions[t](node, context)
 
@@ -595,11 +594,11 @@ def datanode_to_html(node, context):
             inline = node.mime
 
         if add_link:
-            name = '<a href="%s">%s</a>: ' % (relative, node.nid)
+            name = '<a href="{}">{}</a>: '.format(relative, node.nid)
         else:
             name = "%s:" % node.nid
 
-        s = '<p class="datanode">%s %s</p>\n' % (name, inline)
+        s = '<p class="datanode">{} {}</p>\n'.format(name, inline)
         context.file.write(s)
 
     if node.children:
@@ -621,7 +620,7 @@ def simple_node_to_html(node, context):
     )
 
     href = "#%s" % complete_id
-    h = '<a href="%s">%s</a>' % (href, node.nid)
+    h = '<a href="{}">{}</a>'.format(href, node.nid)
     f.write("<h>%s</h>" % h)
 
     f.write("<section> \n")

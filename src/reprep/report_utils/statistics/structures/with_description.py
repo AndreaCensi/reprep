@@ -1,13 +1,12 @@
-from reprep import logger
 from contracts import new_contract
-
+from reprep import logger
 
 __all__ = [
     "WithDescription",
 ]
 
 
-class WithDescription(object):
+class WithDescription:
     """Descriptive fields for objects"""
 
     def __init__(self, name, desc=None, symbol=None):
@@ -16,7 +15,7 @@ class WithDescription(object):
         self._symbol = symbol
 
     def __repr__(self):
-        return "%s(name=%r)" % (self.__class__.__name__, self._name)
+        return "{}(name={!r})".format(self.__class__.__name__, self._name)
 
     def get_name(self):
         return self._name

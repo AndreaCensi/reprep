@@ -7,7 +7,7 @@ __all__ = [
 ]
 
 
-class RepRepStats(object):
+class RepRepStats:
     reductions = {}
     display = {}
 

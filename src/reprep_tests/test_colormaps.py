@@ -1,5 +1,6 @@
-from reprep import filter_colormap
 import numpy as np
+
+from reprep import filter_colormap
 
 
 def get_test_bar(shape=(100, 10), M=10, dtype="float32", with_strange=False):

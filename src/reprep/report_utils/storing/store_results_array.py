@@ -24,7 +24,7 @@ def array_from_sr(sr, fields):
             elif field in v:
                 values.append(v[field])
             else:
-                msg = "No field %r found in %r or %r" % (field, s, v)
+                msg = "No field {!r} found in {!r} or {!r}".format(field, s, v)
                 raise ValueError(msg)
         return values
 

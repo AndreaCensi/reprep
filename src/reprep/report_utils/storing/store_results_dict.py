@@ -20,7 +20,7 @@ class StoreResultsDict(StoreResults):
             if k in value:
                 msg = "The same field %r is found in both key and value. \n" "  key: %s \n" "value: %s" % (k, attrs, value)
                 raise ValueError(msg)
-        super(StoreResultsDict, self).__setitem__(attrs, value)
+        super().__setitem__(attrs, value)
 
     def field_or_value_field(self, field):
         """

@@ -6,14 +6,14 @@ from .. import RepRepStats
 @contract(s="tuple(number, number)", returns="str")
 def mean_std_display(s):
     mean, std = s
-    return "%s +/- %s" % (mean, std)
+    return "{} +/- {}".format(mean, std)
 
 
 @RepRepStats.reduction_display
 @contract(s="tuple(number, number, number)", returns="str")
 def min_mean_max_s(s):
     a, b, c = s
-    return "(%s) %s (%s)" % (a, b, c)
+    return "({}) {} ({})".format(a, b, c)
 
 
 @RepRepStats.reduction_display

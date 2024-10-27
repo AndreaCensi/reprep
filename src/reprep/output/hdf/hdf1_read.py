@@ -1,5 +1,5 @@
+from reprep import DataNode, Figure, Node, SubFigure, Table
 from . import read_python_data
-from reprep import DataNode, Node, Figure, SubFigure, Table
 
 
 def node_from_hdf_group_v1(hf, group):

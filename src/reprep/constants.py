@@ -30,7 +30,7 @@ mime_to_ext = {
 
 # VALID_ID_REGEXP = '\A\w+\Z'
 # VALID_ID_REGEXP = '\A\w(\w|-)*\Z'
-VALID_ID_REGEXP = "\A\w(\w|-|\.)*\Z"
+VALID_ID_REGEXP = r"\A\w(\w|-|\.)*\Z"
 
 
 def mime_implies_unicode_representation(x):

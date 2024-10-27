@@ -1,8 +1,7 @@
-from .. import RepRepStats
-
+import numpy as np
 
 from contracts import contract
-import numpy as np
+from .. import RepRepStats
 
 
 @RepRepStats.reduction
@@ -45,7 +44,7 @@ def max(x):  # @ReservedAssignment
 
 @RepRepStats.reduction
 def mean(x):
-    """E\{%s\} := Average %s"""
+    r"""E\{%s\} := Average %s"""
     from scipy.stats.stats import nanmean
 
     x = notnone(x)
@@ -54,7 +53,7 @@ def mean(x):
 
 @RepRepStats.reduction
 def stddev(x):
-    """std\{%s\} := Standard deviation of %s"""
+    r"""std\{%s\} := Standard deviation of %s"""
     from scipy.stats.stats import nanstd
 
     x = notnone(x)
@@ -64,7 +63,7 @@ def stddev(x):
 @RepRepStats.reduction
 @contract(a="array[N]", returns="tuple(number, number)")
 def mean_std(a):
-    """mean,std\{%s\} := mean and standard deviation of %s"""
+    r"""mean,std\{%s\} := mean and standard deviation of %s"""
     a = np.array(a)
     return (np.mean(a), np.std(a))
 
@@ -72,7 +71,7 @@ def mean_std(a):
 @RepRepStats.reduction
 @contract(a="array[N]|list", returns="tuple(number, number, number)")
 def min_mean_max(a):
-    """b\{%s\} := Min, mean and max of %s"""
+    r"""b\{%s\} := Min, mean and max of %s"""
     a = np.asarray(a, dtype="float")  # converts bool
     from scipy.stats.stats import nanmean
 

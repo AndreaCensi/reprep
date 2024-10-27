@@ -1,5 +1,6 @@
-import numpy as np
 from typing import Any
+
+import numpy as np
 
 
 def plot_horizontal_line(pylab: Any, y, *args, **kwargs):

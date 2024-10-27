@@ -1,5 +1,6 @@
-from contracts import contract
 import numpy as np
+
+from contracts import contract
 
 
 @contract(values="array[HxW]", colors="list[>=1](tuple(a,(b,b>a),seq[4](number)))")

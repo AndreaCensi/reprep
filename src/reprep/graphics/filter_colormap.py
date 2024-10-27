@@ -1,7 +1,6 @@
-from contracts import contract
-
 import numpy as np
 
+from contracts import contract
 from . import get_scaled_values
 from .. import get_matplotlib, get_pylab_instance
 

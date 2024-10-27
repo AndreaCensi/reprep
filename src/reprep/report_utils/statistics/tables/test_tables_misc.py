@@ -22,7 +22,7 @@ descs.append(WithDescription(name="objective", desc="Objective", symbol="J"))
 descs.append(WithDescription(name="algo1", desc="One algo", symbol="A1"))
 descs.append(WithDescription(name="algo2", desc="Other algo", symbol="A2"))
 
-source_descs = dict((a.get_name(), a) for a in descs)
+source_descs = {a.get_name(): a for a in descs}
 
 
 @reprep_demo

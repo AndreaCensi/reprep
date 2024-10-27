@@ -1,8 +1,8 @@
 import pickle
 from io import StringIO
 
-from reprep import logger
 from contracts import describe_type, describe_value
+from reprep import logger
 from reprep.output.hdf import get_tables
 
 __all__ = [

@@ -1,6 +1,7 @@
 import sys
+from collections.abc import Collection
 from io import StringIO
-from typing import Collection, Optional
+
 from contracts import check_isinstance, contract, describe_type
 from .interface import ReportInterface
 from .structures import InvalidURL, NotExistent
@@ -98,7 +99,7 @@ class Node(ReportInterface):
                 raise Exception("Already have child with same id %r." % n.nid)
         else:
             # give it a name
-            n.nid = "%s%s" % (n.__class__.__name__, len(self.children))
+            n.nid = "{}{}".format(n.__class__.__name__, len(self.children))
             assert not n.nid in self.childid2node
 
         n.parent = self
@@ -146,11 +147,11 @@ class Node(ReportInterface):
                 else:
                     raise NotExistent("No parent.")
 
-            l = dict([(child.nid, child) for child in self.children])
+            l = {child.nid: child for child in self.children}
             if not nid in l:
                 if self.nid == nid:
                     return self
-                msg = "Could not find child %r; I know %s." % (
+                msg = "Could not find child {!r}; I know {}.".format(
                     nid,
                     self.childid2node.keys(),
                 )
@@ -159,7 +160,7 @@ class Node(ReportInterface):
             return l[nid]
 
     @contract(url="unicode")
-    def resolve_url(self, url: str, already_visited: Optional[Collection[ReportInterface]] = None) -> ReportInterface:
+    def resolve_url(self, url: str, already_visited: Collection[ReportInterface] | None = None) -> ReportInterface:
         if not isinstance(url, str):
             raise ValueError(describe_type(url))
 
@@ -204,7 +205,7 @@ class Node(ReportInterface):
     @staticmethod
     def url_join(l):
         if not isinstance(l, list):
-            raise ValueError('I expect a list, got "%s" (%s).' % (l, type(l)))
+            raise ValueError('I expect a list, got "{}" ({}).'.format(l, type(l)))
         return "/".join(l)
 
     def get_relative_url(self, other):
@@ -252,7 +253,7 @@ class Node(ReportInterface):
             return []
 
     def print_leaf(self, s=sys.stdout, prefix=""):
-        s.write("%s- %s (%s)\n" % (prefix, self.nid, self.__class__.__name__))
+        s.write("{}- {} ({})\n".format(prefix, self.nid, self.__class__.__name__))
 
     def print_tree(self, s=sys.stdout, prefix=""):
         self.print_leaf(s, prefix)

@@ -1,5 +1,6 @@
-from contracts import contract
 import numpy as np
+
+from contracts import contract
 
 
 @contract(a="(array[HxW](uint8)|array[HxWx3](uint8)|array[HxWx4](uint8)),H>0,W>0")

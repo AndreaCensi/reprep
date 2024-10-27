@@ -1,13 +1,13 @@
 import mimetypes
 import tempfile
-from typing import Any, Optional, TYPE_CHECKING
+from typing import Any, TYPE_CHECKING
 
 from contracts import contract
 from zuper_commons.fs import FilePath
 from zuper_commons.text import MimeType
 from zuper_commons.types import ZException
 from .config import RepRepDefaults
-from .constants import MIME_JPG, MIME_PDF, MIME_PNG, MIME_SVG, mime_implies_unicode_representation, mime_to_ext
+from .constants import mime_implies_unicode_representation, MIME_JPG, MIME_PDF, MIME_PNG, MIME_SVG, mime_to_ext
 from .datanode import DataNode
 from .mpl import get_pylab_instance
 from .node import Node
@@ -22,16 +22,16 @@ __all__ = [
 class Attacher:
     node: Node
     nid: NID
-    mime: Optional[MimeType]
-    caption: Optional[str]
+    mime: MimeType | None
+    caption: str | None
 
-    def __init__(self, node: Node, nid: NID, mime: Optional[MimeType], caption: Optional[str]):
+    def __init__(self, node: Node, nid: NID, mime: MimeType | None, caption: str | None):
         self.node = node
         self.nid = nid
         self.mime = mime
         self.caption = caption
         if node.has_child(nid):
-            msg = "Node %s (id = %r) already has child %r" % (node, node.nid, nid)
+            msg = "Node {} (id = {!r}) already has child {!r}".format(node, node.nid, nid)
             raise ValueError(msg)
         if self.mime is not None:
             if self.mime in mime_to_ext:
@@ -66,11 +66,11 @@ class Attacher:
 class PylabAttacher:
     node: Node
     nid: NID
-    mime: Optional[MimeType]
-    caption: Optional[str]
+    mime: MimeType | None
+    caption: str | None
 
     @contract(node=Node, nid="valid_id", mime="None|unicode", caption="None|unicode")
-    def __init__(self, node: Node, nid: NID, mime: Optional[MimeType], caption: Optional[str], **figure_args):
+    def __init__(self, node: Node, nid: NID, mime: MimeType | None, caption: str | None, **figure_args):
         self.node = node
         self.nid = nid
         self.mime = mime
@@ -80,7 +80,7 @@ class PylabAttacher:
             self.mime = RepRepDefaults.default_image_format
 
         if node.has_child(nid):
-            raise ValueError("Node %s already has child %r" % (node, nid))
+            raise ValueError("Node {} already has child {!r}".format(node, nid))
 
         suffix = mimetypes.guess_extension(self.mime)
         if not suffix:
@@ -142,7 +142,7 @@ class PylabAttacher:
 
 
 @contract(parent=Node, nid="valid_id", rgb="array[HxWx(3|4)]")
-def data_rgb_imp(parent: Node, nid: NID, rgb, mime=MIME_PNG, caption: Optional[str] = None):
+def data_rgb_imp(parent: Node, nid: NID, rgb, mime=MIME_PNG, caption: str | None = None):
     from .graphics import Image_from_array, rgb_zoom
 
     # zoom images smaller than 50

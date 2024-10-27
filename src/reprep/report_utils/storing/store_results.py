@@ -49,14 +49,14 @@ class StoreResults(dict):
         r = self.__class__()
         for key in self:
             if not field in key:
-                msg = "Could not find field %r in key %r." % (field, key)
+                msg = "Could not find field {!r} in key {!r}.".format(field, key)
                 raise ValueError(msg)
 
             key2 = frozendict2(key)
             del key2[field]
 
             if key2 in r:
-                msg = "Removing field %r from key %r would make it non unique." % (
+                msg = "Removing field {!r} from key {!r} would make it non unique.".format(
                     field,
                     key,
                 )
@@ -90,7 +90,7 @@ class StoreResults(dict):
         """Returns all values of the given field"""
         for attrs in self:
             if not field in attrs:
-                msg = "Field %r not found in %s." % (field, attrs)
+                msg = "Field {!r} not found in {}.".format(field, attrs)
                 raise ValueError(msg)
             yield attrs[field]
 

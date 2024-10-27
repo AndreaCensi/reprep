@@ -16,7 +16,7 @@ def valid_id(s):
     check_isinstance(s, str)
 
     if re.match(VALID_ID_REGEXP, s) is None:
-        msg = "The given string %r does not match the spec %r." % (s, VALID_ID_REGEXP)
+        msg = "The given string {!r} does not match the spec {!r}.".format(s, VALID_ID_REGEXP)
         raise ValueError(msg)
 
 

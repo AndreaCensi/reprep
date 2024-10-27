@@ -1,5 +1,6 @@
-from .spines import set_spines_look_A
 from typing import Any
+
+from .spines import set_spines_look_A
 
 ieee_colsize = 1.57 * 2
 

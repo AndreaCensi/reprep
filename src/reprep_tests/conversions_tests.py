@@ -1,7 +1,8 @@
-import contracts
 import unittest
+
 import numpy as np
 
+import contracts
 from reprep import Image_from_array
 
 

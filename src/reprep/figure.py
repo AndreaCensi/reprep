@@ -24,7 +24,7 @@ class Figure(Node):
         self.automatically_added = []
 
     def __repr__(self):
-        return "Figure(cols=%s,%s)" % (self.cols, self.subfigures)
+        return "Figure(cols={},{})".format(self.cols, self.subfigures)
 
     def __eq__(self, other):
         if not Node.__eq__(self, other):
@@ -71,7 +71,7 @@ class Figure(Node):
         if isinstance(resource, str):
             data = self.resolve_url(resource)
             if not isinstance(data, DataNode):
-                msg = "I expected a DataNode for %r, got %s" % (resource, data)
+                msg = "I expected a DataNode for {!r}, got {}".format(resource, data)
                 raise ValueError(msg)
         elif isinstance(resource, DataNode):
             data = resource
@@ -152,7 +152,7 @@ class SubFigure:
         return (type(self) == type(other)) and (self.__dict__ == other.__dict__)
 
     def __repr__(self):
-        return "Sub(%s,%s,%s,%s)" % (
+        return "Sub({},{},{},{})".format(
             self.resource,
             self.image,
             self.web_image,

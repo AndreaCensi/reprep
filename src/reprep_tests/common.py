@@ -1,7 +1,7 @@
-import tempfile
 import os
-import unittest
 import shutil
+import tempfile
+import unittest
 
 
 class ReprepTest(unittest.TestCase):

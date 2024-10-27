@@ -17,7 +17,7 @@ def jobs_tables_by_sample(
     source_descs={},
 ):
     for id_case, case_runs in allstats.groups_by_field_value(one_table_for_each):
-        job_id = "%s-%s" % (id_table, id_case)
+        job_id = "{}-{}".format(id_table, id_case)
         report = context.comp(
             table_by_rows,
             id_report=job_id,
@@ -31,4 +31,4 @@ def jobs_tables_by_sample(
         attrs[one_table_for_each] = id_case
         if rows_field in attrs:
             del attrs[rows_field]
-        context.add_report(report, "%s-%s" % (id_table, id_case), **attrs)
+        context.add_report(report, "{}-{}".format(id_table, id_case), **attrs)

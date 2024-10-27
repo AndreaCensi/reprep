@@ -1,7 +1,7 @@
-from reprep.figure import Figure
-from reprep.table import Table
-from reprep.node import Node
 from reprep.datanode import DataNode
+from reprep.figure import Figure
+from reprep.node import Node
+from reprep.table import Table
 
 __all__ = [
     "report_to_ipn",
@@ -57,6 +57,6 @@ def node_to_ipn(node, context):
     }
     t = node.__class__
     if not t in functions:
-        msg = "Could not find type of %s (%s) in %s." % (node, t, functions.keys())
+        msg = "Could not find type of {} ({}) in {}.".format(node, t, functions.keys())
         raise ValueError(msg)
     functions[t](node, context)

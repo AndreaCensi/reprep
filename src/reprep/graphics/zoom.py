@@ -1,5 +1,6 @@
-from contracts import contract
 import numpy as np
+
+from contracts import contract
 
 __all__ = [
     "rgb_zoom",

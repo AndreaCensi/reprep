@@ -1,14 +1,16 @@
 import traceback
 import warnings
+from collections.abc import Iterator
 from contextlib import contextmanager
-from typing import Iterator, List, Optional, TYPE_CHECKING, Any
+from typing import Any, TYPE_CHECKING
 
 import numpy as np
+
 from zuper_commons.fs import DirPath, FilePath
+from zuper_commons.text import MimeType
 from zuper_commons.types import check_isinstance
 from . import logger
 from .constants import MIME_PLAIN, MIME_PNG, MIME_PYTHON
-from zuper_commons.text import MimeType
 
 __all__ = [
     "ReportInterface",
@@ -20,9 +22,7 @@ if TYPE_CHECKING:
 
 class ReportInterface:
     @contextmanager
-    def subsection(
-        self, nid: Optional[str] = None, caption: Optional[str] = None, robust: bool = False
-    ) -> "Iterator[ReportInterface]":
+    def subsection(self, nid: str | None = None, caption: str | None = None, robust: bool = False) -> "Iterator[ReportInterface]":
         """
 
         Can be called as a context manager.
@@ -78,7 +78,7 @@ class ReportInterface:
                 s.text("error", traceback.format_exc())
 
     # @contract(nid="valid_id", mime=caption_type, caption=caption_type)
-    def data(self, nid: str, data, mime: MimeType = MIME_PYTHON, caption: Optional[str] = None):
+    def data(self, nid: str, data, mime: MimeType = MIME_PYTHON, caption: str | None = None):
         """
         Attaches a data child to this node.
 
@@ -95,7 +95,7 @@ class ReportInterface:
         return n
 
     # @contract(nid="valid_id", mime=mime_type, caption=caption_type)
-    def data_file(self, nid: str, mime: MimeType, caption: Optional[str] = None) -> "Attacher":
+    def data_file(self, nid: str, mime: MimeType, caption: str | None = None) -> "Attacher":
         """
         Support for attaching data from a file. Note: this method is
         supposed to be used in conjunction with the "with" construct.
@@ -140,9 +140,9 @@ class ReportInterface:
     # @contract(nid="None|valid_id", mime=caption_type, caption=caption_type)
     def data_pylab(
         self,
-        nid: Optional[str],
-        mime: Optional[MimeType] = None,
-        caption: Optional[str] = None,
+        nid: str | None,
+        mime: MimeType | None = None,
+        caption: str | None = None,
         **figure_args,
     ):
         """Same as plot(), but deprecated."""
@@ -152,9 +152,9 @@ class ReportInterface:
     # @contract(nid="None|valid_id", mime=caption_type, caption=caption_type)
     def plot(
         self,
-        nid: Optional[str] = None,
-        mime: Optional[MimeType] = None,
-        caption: Optional[str] = None,
+        nid: str | None = None,
+        mime: MimeType | None = None,
+        caption: str | None = None,
         **figure_args: Any,
     ) -> "PylabAttacher":
         """
@@ -195,9 +195,9 @@ class ReportInterface:
     # @contract(nid="valid_id|None", cols="None|(int,>=1)", caption=caption_type)
     def figure(
         self,
-        nid: Optional[str] = None,
-        cols: Optional[int] = None,
-        caption: Optional[str] = None,
+        nid: str | None = None,
+        cols: int | None = None,
+        caption: str | None = None,
     ):
         """Creates a figure, which is a container for subfigures."""
         if nid is None:
@@ -215,10 +215,10 @@ class ReportInterface:
         self,
         nid: str,
         data,
-        cols: Optional[list[str]] = None,
-        rows: Optional[list[str]] = None,
-        fmt: Optional[str] = None,
-        caption: Optional[str] = None,
+        cols: list[str] | None = None,
+        rows: list[str] | None = None,
+        fmt: str | None = None,
+        caption: str | None = None,
     ):
         """
         Attach a table to this node.
@@ -251,7 +251,7 @@ class ReportInterface:
         return self.data(nid=nid, data=text, mime=mime)
 
     # @contract(name="string", value="array", caption=caption_type)
-    def array(self, name: str, value: np.array, caption: Optional[str] = None):  # XXX to change
+    def array(self, name: str, value: np.array, caption: str | None = None):  # XXX to change
         self.data(name, value, mime=MIME_PYTHON, caption=caption)
 
     # @contract(name="string", value="array", filter="string", caption=caption_type)
@@ -260,7 +260,7 @@ class ReportInterface:
         name: str,
         value: np.array,
         filter: str = "posneg",  # @ReservedAssignment # XXX: config
-        filter_params: Optional[dict] = None,
+        filter_params: dict | None = None,
         caption=None,
     ):  # @ReservedAssignment
         """Not elegant -- for backward compatibility."""
@@ -282,7 +282,7 @@ class ReportInterface:
                 caption = name
             f.sub(m, caption=caption)
 
-    def to_ipython(self, filename: Optional[FilePath] = None):
+    def to_ipython(self, filename: FilePath | None = None):
         """Displays in the IPython editor."""
         if filename is None:
             filename = "reprep-%s.html" % str(id(self))
@@ -291,7 +291,7 @@ class ReportInterface:
 
         display(HTML(open(filename).read()))
 
-    def to_html(self, filename: FilePath, resources_dir: Optional[DirPath] = None, **kwargs: Any) -> None:
+    def to_html(self, filename: FilePath, resources_dir: DirPath | None = None, **kwargs: Any) -> None:
         """Creates a HTML representation of this report."""
         from .output.html import node_to_html_document
 
