@@ -96,9 +96,6 @@ def add_checker_f(f, x, arguments, attributes, naming):
     add_to_module(caller, f.__module__)
 
 
-X = TypeVar("X")
-
-
 # TODO: add debug info function
 @nottest
 def fancy_test_decorator(
@@ -121,7 +118,7 @@ def fancy_test_decorator(
 
     """
 
-    def for_all_stuff(check: X) -> X:
+    def for_all_stuff[X](check: X) -> X:
         for x in lister():
             if debug:
                 logger.info("add test %s / %s " % (check, x))
