@@ -1,13 +1,13 @@
 """
-    Some notes on how these classes are used together.
+Some notes on how these classes are used together.
 
-    StoreResults is a dictionary of  ::
+StoreResults is a dictionary of  ::
 
-        dict(key=value) -> Compmake Promise
+    dict(key=value) -> Compmake Promise
 
-    After computation, it will have some values: ::
+After computation, it will have some values: ::
 
-        dict(key=value) -> dict(key2=value2,...)
+    dict(key=value) -> dict(key2=value2,...)
 
 """
 

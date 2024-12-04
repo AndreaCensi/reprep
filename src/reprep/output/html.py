@@ -543,9 +543,7 @@ def datanode_to_html(node, context):
    </div>
 
 </div>
-""".format(
-                content=content
-            )
+""".format(content=content)
 
         else:
             s = """
@@ -558,9 +556,7 @@ def datanode_to_html(node, context):
                </div>
 
             </div>
-            """.format(
-                id=node.nid, content=content
-            )
+            """.format(id=node.nid, content=content)
 
         context.file.write(s)
     else:

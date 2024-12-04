@@ -37,9 +37,7 @@ def node_to_hdf(hf, parent, node):
     attrs["reprep_version"] = str(__version__)
     attrs["reprep_date_created"] = datetime.datetime.now().isoformat()
     attrs["reprep_node_type"] = node.__class__.__name__
-    attrs[
-        "reprep_format_desc"
-    ] = """
+    attrs["reprep_format_desc"] = """
 
     Node attributes:
         reprep_format_version:
