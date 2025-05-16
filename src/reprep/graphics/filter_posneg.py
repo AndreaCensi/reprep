@@ -1,7 +1,9 @@
 import numpy as np
-from numpy import maximum, minimum, zeros
-
 from contracts import contract
+from numpy import maximum
+from numpy import minimum
+from numpy import zeros
+
 from .scaling import skim_top
 
 __all__ = [

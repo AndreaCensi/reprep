@@ -1,7 +1,9 @@
 import pickle
 from io import StringIO
 
-from contracts import describe_type, describe_value
+from contracts import describe_type
+from contracts import describe_value
+
 from reprep import logger
 from reprep.output.hdf import get_tables
 

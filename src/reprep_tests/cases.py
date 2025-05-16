@@ -1,4 +1,5 @@
 from reprep import Report
+
 from .checks_generation import fancy_test_decorator
 
 __all__ = [

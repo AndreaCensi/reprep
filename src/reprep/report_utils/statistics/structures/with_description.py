@@ -1,4 +1,5 @@
 from contracts import new_contract
+
 from reprep import logger
 
 __all__ = [

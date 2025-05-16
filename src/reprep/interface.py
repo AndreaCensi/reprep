@@ -2,22 +2,27 @@ import traceback
 import warnings
 from collections.abc import Iterator
 from contextlib import contextmanager
-from typing import Any, TYPE_CHECKING
+from typing import TYPE_CHECKING
+from typing import Any
 
 import numpy as np
-
-from zuper_commons.fs import DirPath, FilePath
+from zuper_commons.fs import DirPath
+from zuper_commons.fs import FilePath
 from zuper_commons.text import MimeType
 from zuper_commons.types import check_isinstance
+
 from . import logger
-from .constants import MIME_PLAIN, MIME_PNG, MIME_PYTHON
+from .constants import MIME_PLAIN
+from .constants import MIME_PNG
+from .constants import MIME_PYTHON
 
 __all__ = [
     "ReportInterface",
 ]
 
 if TYPE_CHECKING:
-    from .helpers import PylabAttacher, Attacher
+    from .helpers import Attacher
+    from .helpers import PylabAttacher
 
 
 class ReportInterface:
@@ -287,7 +292,8 @@ class ReportInterface:
         if filename is None:
             filename = "reprep-%s.html" % str(id(self))
         self.to_html(filename)
-        from IPython.display import display, HTML
+        from IPython.display import HTML
+        from IPython.display import display
 
         display(HTML(open(filename).read()))
 

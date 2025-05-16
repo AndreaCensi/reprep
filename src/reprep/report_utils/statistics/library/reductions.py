@@ -1,6 +1,6 @@
 import numpy as np
-
 from contracts import contract
+
 from ..structures import RepRepStats
 
 

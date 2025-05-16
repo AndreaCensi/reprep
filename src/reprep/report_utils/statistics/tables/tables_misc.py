@@ -1,5 +1,8 @@
 from contracts import contract
-from reprep import logger, MIME_RST, Report
+
+from reprep import MIME_RST
+from reprep import Report
+from reprep import logger
 from reprep.report_utils.statistics.structures.data_view import DataView
 from reprep.report_utils.statistics.structures.with_description import WithDescription
 from reprep.report_utils.storing.store_results import StoreResults
@@ -47,7 +50,7 @@ def table_by_rows(id_report, samples, rows_field, cols_fields, source_descs):
     samples=StoreResultsDict,
     rows_field="unicode",
     cols_fields="list[C](DataView)",
-    returns="tuple( list[R], list[R](list[C]),  " "list[R](list[C]), list[R](list[C]) )",
+    returns="tuple( list[R], list[R](list[C]),  list[R](list[C]), list[R](list[C]) )",
 )
 def summarize_data(samples, rows_field, cols_fields):
     """
@@ -58,7 +61,7 @@ def summarize_data(samples, rows_field, cols_fields):
         try:
             return data_view.reduce(samples)
         except:
-            msg = "Error while applying the view\n\t%s\nto the " "samples\n\t%s" % (
+            msg = "Error while applying the view\n\t%s\nto the samples\n\t%s" % (
                 data_view,
                 samples,
             )

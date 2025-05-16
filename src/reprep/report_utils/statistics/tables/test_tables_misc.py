@@ -1,6 +1,7 @@
 from reprep.demos.manager import reprep_demo
 from reprep.report_utils.statistics.structures.with_description import WithDescription
 from reprep.report_utils.storing.store_results import StoreResults
+
 from .tables_misc import table_by_rows
 
 s1 = StoreResults()

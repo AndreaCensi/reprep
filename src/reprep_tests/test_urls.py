@@ -1,6 +1,8 @@
 import unittest
 
-from reprep import InvalidURL, Node, NotExistent
+from reprep import InvalidURL
+from reprep import Node
+from reprep import NotExistent
 
 
 class Test(unittest.TestCase):

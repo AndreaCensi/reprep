@@ -1,13 +1,20 @@
 import mimetypes
 import tempfile
-from typing import Any, TYPE_CHECKING
+from typing import TYPE_CHECKING
+from typing import Any
 
 from contracts import contract
 from zuper_commons.fs import FilePath
 from zuper_commons.text import MimeType
 from zuper_commons.types import ZException
+
 from .config import RepRepDefaults
-from .constants import mime_implies_unicode_representation, MIME_JPG, MIME_PDF, MIME_PNG, MIME_SVG, mime_to_ext
+from .constants import MIME_JPG
+from .constants import MIME_PDF
+from .constants import MIME_PNG
+from .constants import MIME_SVG
+from .constants import mime_implies_unicode_representation
+from .constants import mime_to_ext
 from .datanode import DataNode
 from .mpl import get_pylab_instance
 from .node import Node
@@ -143,7 +150,8 @@ class PylabAttacher:
 
 @contract(parent=Node, nid="valid_id", rgb="array[HxWx(3|4)]")
 def data_rgb_imp(parent: Node, nid: NID, rgb, mime=MIME_PNG, caption: str | None = None):
-    from .graphics import Image_from_array, rgb_zoom
+    from .graphics import Image_from_array
+    from .graphics import rgb_zoom
 
     # zoom images smaller than 50
     if max(rgb.shape[0], rgb.shape[1]) < 50:  # XXX config

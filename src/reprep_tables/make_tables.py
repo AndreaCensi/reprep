@@ -1,4 +1,5 @@
 from contracts import contract
+
 from reprep.report_utils.statistics.tables.tables_misc import table_by_rows
 
 __all__ = [

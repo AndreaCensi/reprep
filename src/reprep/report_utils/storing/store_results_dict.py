@@ -1,4 +1,6 @@
-from contracts import describe_type, new_contract
+from contracts import describe_type
+from contracts import new_contract
+
 from .store_results import StoreResults
 
 __all__ = [
@@ -18,7 +20,7 @@ class StoreResultsDict(StoreResults):
             raise ValueError(msg)
         for k in attrs:
             if k in value:
-                msg = "The same field %r is found in both key and value. \n" "  key: %s \n" "value: %s" % (k, attrs, value)
+                msg = "The same field %r is found in both key and value. \n  key: %s \nvalue: %s" % (k, attrs, value)
                 raise ValueError(msg)
         super().__setitem__(attrs, value)
 
@@ -33,7 +35,7 @@ class StoreResultsDict(StoreResults):
             elif field in v:
                 yield v[field]
             else:
-                msg = "Could not find value of %r neither in key or value. " "Key: %s Value: %s" % (
+                msg = "Could not find value of %r neither in key or value. Key: %s Value: %s" % (
                     field,
                     k,
                     v,

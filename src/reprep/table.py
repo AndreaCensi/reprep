@@ -1,6 +1,8 @@
 import numpy as np
+from contracts import check_isinstance
+from contracts import contract
+from contracts import describe_value
 
-from contracts import check_isinstance, contract, describe_value
 from .node import Node
 
 __all__ = [
@@ -35,7 +37,7 @@ class Table(Node):
             for row in data:
                 check_isinstance(row, list)
                 if not len(row) == len(data[0]):
-                    msg = "I want all rows to be the same length" " Got %s != %s." % (
+                    msg = "I want all rows to be the same length Got %s != %s." % (
                         len(row),
                         len(data[0]),
                     )
@@ -76,7 +78,7 @@ class Table(Node):
 
             elif data.ndim == 2:
                 if data.dtype.fields is not None:
-                    msg = "Cannot convert ndarray to table using " "the heuristics that I know (received: %s). " % describe_value(
+                    msg = "Cannot convert ndarray to table using the heuristics that I know (received: %s). " % describe_value(
                         data
                     )
                     raise ValueError(msg)

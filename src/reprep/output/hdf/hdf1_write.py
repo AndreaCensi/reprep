@@ -1,8 +1,12 @@
 import datetime
 import os
 
-from reprep import __version__, DataNode, Figure, Table
+from reprep import DataNode
+from reprep import Figure
+from reprep import Table
+from reprep import __version__
 from reprep.output.hdf import get_tables
+
 from . import write_python_data
 
 

@@ -15,7 +15,7 @@ from .. import logger
 
 logger.hello_module(name=__name__, filename=__file__, version="n/a", date="n/a")
 
-from .storing import *
 from .statistics import *
+from .storing import *
 
 logger.hello_module_finished(__name__)

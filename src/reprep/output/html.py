@@ -6,15 +6,19 @@ import pickle
 import shutil
 from string import Template
 
-from zuper_commons.fs import DirPath, FilePath
+from zuper_commons.fs import DirPath
+from zuper_commons.fs import FilePath
 from zuper_commons.types import check_isinstance
 
 NoneType = type(None)
 
 from pkg_resources import resource_filename
 
+from reprep import MIME_PLAIN
+from reprep import MIME_PYTHON
+from reprep import MIME_RST
+from reprep import logger
 from reprep import mime_to_ext
-from reprep import MIME_PLAIN, MIME_RST, MIME_PYTHON, logger
 from reprep.datanode import DataNode
 
 # language=html

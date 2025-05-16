@@ -1,4 +1,5 @@
-from . import get_tables, node_from_hdf_group_v1
+from . import get_tables
+from . import node_from_hdf_group_v1
 
 
 def report_from_hdf(filename):

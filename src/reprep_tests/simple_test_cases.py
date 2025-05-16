@@ -1,7 +1,9 @@
 import numpy as np
 
-from reprep import MIME_PLAIN, Table
+from reprep import MIME_PLAIN
+from reprep import Table
 from reprep.types import NID
+
 from .cases import ExampleReports
 
 

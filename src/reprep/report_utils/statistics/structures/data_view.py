@@ -1,5 +1,8 @@
-from contracts import contract, new_contract
+from contracts import contract
+from contracts import new_contract
+
 from reprep.report_utils.storing import StoreResultsDict
+
 from .reduction import Reduction
 from .reduction_display import ReductionDisplay
 from .storage import RepRepStats

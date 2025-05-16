@@ -1,6 +1,6 @@
 import numpy as np
-
 from contracts import contract
+
 from .store_results import StoreResults
 
 __all__ = [

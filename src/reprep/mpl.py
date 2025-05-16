@@ -21,7 +21,7 @@ def try_load_matplotlib():
     try:
         import matplotlib
     except ImportError as e:
-        msg = "Could not import matplotlib; some functionality will be " "disabled."
+        msg = "Could not import matplotlib; some functionality will be disabled."
         logger.warning(msg)
         Global.matplotlib_error = e
     else:
@@ -58,5 +58,5 @@ def get_matplotlib():
 
 
 def raise_error():
-    msg = "Sorry, this functionality is not enabled because " "I could not import matplotlib (%s)" % Global.matplotlib_error
+    msg = "Sorry, this functionality is not enabled because I could not import matplotlib (%s)" % Global.matplotlib_error
     raise Exception(msg)

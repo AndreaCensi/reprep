@@ -1,5 +1,10 @@
-from contracts import check_isinstance, contract, new_contract
-from reprep.utils import deprecated, frozendict2, natsorted
+from contracts import check_isinstance
+from contracts import contract
+from contracts import new_contract
+
+from reprep.utils import deprecated
+from reprep.utils import frozendict2
+from reprep.utils import natsorted
 
 __all__ = [
     "StoreResults",

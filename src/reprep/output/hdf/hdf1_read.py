@@ -1,4 +1,9 @@
-from reprep import DataNode, Figure, Node, SubFigure, Table
+from reprep import DataNode
+from reprep import Figure
+from reprep import Node
+from reprep import SubFigure
+from reprep import Table
+
 from . import read_python_data
 
 

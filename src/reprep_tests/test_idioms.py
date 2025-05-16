@@ -1,12 +1,17 @@
 import unittest
 
+import contracts
 import numpy
+from contracts import ContractNotRespected
 from numpy.linalg.linalg import pinv
 
-import contracts
-from contracts import ContractNotRespected
-from reprep import MIME_PLAIN, MIME_PNG, Node, Report, Table
+from reprep import MIME_PLAIN
+from reprep import MIME_PNG
+from reprep import Node
+from reprep import Report
+from reprep import Table
 from reprep.mpl import get_pylab_instance
+
 from .common import ReprepTest
 
 

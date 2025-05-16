@@ -1,11 +1,17 @@
 import sys
 
 import numpy as np
-
 from contracts import contract
 from zuper_commons.types import describe_value
-from .constants import mime_implies_unicode_representation, MIME_PNG, MIME_PYTHON
-from .graphics import colorize_success, Image_from_array, posneg, rgb_zoom, scale
+
+from .constants import MIME_PNG
+from .constants import MIME_PYTHON
+from .constants import mime_implies_unicode_representation
+from .graphics import Image_from_array
+from .graphics import colorize_success
+from .graphics import posneg
+from .graphics import rgb_zoom
+from .graphics import scale
 from .node import Node
 
 __all__ = [

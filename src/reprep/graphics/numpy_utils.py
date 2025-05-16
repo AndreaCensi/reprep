@@ -1,4 +1,6 @@
-from numpy import isfinite, isinf, isnan
+from numpy import isfinite
+from numpy import isinf
+from numpy import isnan
 
 
 def assert_finite(a):

@@ -1,7 +1,9 @@
 import re
 
-from contracts import contract, new_contract
+from contracts import contract
+from contracts import new_contract
 from zuper_commons.types import check_isinstance
+
 from .constants import VALID_ID_REGEXP
 from .types import NID
 

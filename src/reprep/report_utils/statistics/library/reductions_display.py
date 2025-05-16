@@ -1,4 +1,5 @@
 from contracts import contract
+
 from ..structures import RepRepStats
 
 

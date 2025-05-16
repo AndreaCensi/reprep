@@ -1,8 +1,9 @@
 import numpy as np
-
 from contracts import contract
-from . import get_scaled_values
-from .. import get_matplotlib, get_pylab_instance
+
+from ..mpl import get_matplotlib
+from ..mpl import get_pylab_instance
+from .scaling import get_scaled_values
 
 
 @contract(returns="array[HxWx4](uint8)")

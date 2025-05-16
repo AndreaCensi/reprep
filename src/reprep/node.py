@@ -2,13 +2,20 @@ import sys
 from collections.abc import Collection
 from io import StringIO
 
-from contracts import check_isinstance, contract, describe_type
+from contracts import check_isinstance
+from contracts import contract
+from contracts import describe_type
+
 from .interface import ReportInterface
-from .structures import InvalidURL, NotExistent
+from .repcontracts import valid_id
+from .structures import InvalidURL
+from .structures import NotExistent
 
 __all__ = [
     "Node",
 ]
+
+_ = valid_id
 
 
 class Node(ReportInterface):
@@ -19,7 +26,7 @@ class Node(ReportInterface):
         check_isinstance(nid, (type(None), str))
         check_isinstance(caption, (type(None), str))
         if children is not None and not isinstance(children, list):
-            raise ValueError("Received a %s object as children list, should" " be None or list." % describe_type(children))
+            raise ValueError("Received a %s object as children list, should be None or list." % describe_type(children))
 
         self.nid = nid
 
