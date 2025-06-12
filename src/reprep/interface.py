@@ -295,7 +295,9 @@ class ReportInterface:
         from IPython.display import HTML
         from IPython.display import display
 
-        display(HTML(open(filename).read()))
+        with open(filename, "r") as f:
+            data = f.read()
+        display(HTML(data))
 
     def to_html(self, filename: FilePath, resources_dir: DirPath | None = None, **kwargs: Any) -> None:
         """Creates a HTML representation of this report."""

@@ -61,7 +61,8 @@ class Attacher:
         return self.temp_file.name
 
     def __exit__(self, _a: Any, _b: Any, _c: Any) -> None:
-        data = open(self.temp_file.name, "rb").read()
+        with open(self.temp_file.name, "rb") as f:
+            data = f.read()
 
         if mime_implies_unicode_representation(self.mime):
             data = data.decode("utf-8")
