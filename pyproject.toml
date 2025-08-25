@@ -1,8 +1,8 @@
 [project]
 name = "reprep-z7"
 version = "7.2"
-readme = ""
-description = ""
+readme = "README.md"
+description = "report reproducible research tables html latex"
 authors = [{name = "Andrea Censi", email = "AndreaCensi@users.noreply.github.com"}]
 dependencies = [
     "PyContracts3>=7",
