@@ -10,9 +10,9 @@ def get_test_bar(shape=(100, 10), M=10, dtype="float32", with_strange=False):
         pos = bar > M
         nan = bar > M * 1.1
         neg = bar < -M
-        bar[pos] = +np.Inf
-        bar[neg] = -np.Inf
-        bar[nan] = np.NaN
+        bar[pos] = +np.inf
+        bar[neg] = -np.inf
+        bar[nan] = np.nan
     return bar
 
 
