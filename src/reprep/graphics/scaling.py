@@ -39,11 +39,11 @@ def get_scaled_values(value, min_value=None, max_value=None, skim=0):
         value = skim_top(value, skim)
 
     if max_value is None or min_value is None:
-        value[value == +np.Inf] = -np.Inf
-        value[value == -np.Inf] = -np.Inf
+        value[value == +np.inf] = -np.inf
+        value[value == -np.inf] = -np.inf
         vmax = np.nanmax(value)
-        value[value == +np.Inf] = +np.Inf
-        value[value == -np.Inf] = +np.Inf
+        value[value == +np.inf] = +np.inf
+        value[value == -np.inf] = +np.inf
         vmin = np.nanmin(value)
         bounds = (vmin, vmax)
 

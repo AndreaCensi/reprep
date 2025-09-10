@@ -11,9 +11,9 @@ def get_test_bar(shape=(100, 10)):
     pos = bar > 1
     neg = bar < 0
     nan = bar > 1.1
-    bar[pos] = +np.Inf
-    bar[neg] = -np.Inf
-    bar[nan] = np.NaN
+    bar[pos] = +np.inf
+    bar[neg] = -np.inf
+    bar[nan] = np.nan
     return bar
 
 
