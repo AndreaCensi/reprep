@@ -12,7 +12,7 @@ from zuper_commons.types import check_isinstance
 
 NoneType = type(None)
 
-from pkg_resources import resource_filename
+from importlib.resources import files as resource_files
 
 from reprep import MIME_PLAIN
 from reprep import MIME_PYTHON
@@ -265,7 +265,7 @@ def node_to_html_document(
         static_dir = os.path.join(resources_dir, "static")
 
     # look for static data
-    static = resource_filename("reprep", "static")
+    static = str(resource_files("reprep").joinpath("static"))
     if not os.path.exists(static):
         # XXX:
         logger.warn("Warning: resource dir %s not found" % static)

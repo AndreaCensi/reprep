@@ -3,7 +3,7 @@ import unittest
 import contracts
 import numpy
 from contracts import ContractNotRespected
-from numpy.linalg.linalg import pinv
+from numpy.linalg import pinv
 
 from reprep import MIME_PLAIN
 from reprep import MIME_PNG
