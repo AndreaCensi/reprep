@@ -3,11 +3,21 @@ name = "reprep-z7"
 version = "7.2"
 readme = ""
 description = ""
-authors = [{ name = "Andrea Censi", email = "AndreaCensi@users.noreply.github.com" }]
-dependencies = ["PyContracts3>=7", "docutils", "ipython", "matplotlib", "numpy", "pillow", "scipy", "setuptools", "zuper-commons-z7"]
+authors = [{name = "Andrea Censi", email = "AndreaCensi@users.noreply.github.com"}]
+dependencies = [
+    "PyContracts3>=7",
+    "docutils",
+    "ipython",
+    "matplotlib",
+    "numpy",
+    "pillow",
+    "scipy",
+    "setuptools",
+    "zuper-commons-z7",]
 
 [project.optional-dependencies]
-test = []
+test = [
+    ]
 
 [tool.poetry]
 name = "reprep-z7"
@@ -15,22 +25,22 @@ version = "7.2"
 description = "report reproducible research tables html latex"
 authors = ["Andrea Censi <AndreaCensi@users.noreply.github.com>"]
 packages = [
-    { from = "src", include = "reprep" },
-    { from = "src", include = "reprep/demos" },
-    { from = "src", include = "reprep/graphics" },
-    { from = "src", include = "reprep/output" },
-    { from = "src", include = "reprep/output/hdf" },
-    { from = "src", include = "reprep/output/ipn" },
-    { from = "src", include = "reprep/plot_utils" },
-    { from = "src", include = "reprep/report_utils" },
-    { from = "src", include = "reprep/report_utils/statistics" },
-    { from = "src", include = "reprep/report_utils/statistics/library" },
-    { from = "src", include = "reprep/report_utils/statistics/structures" },
-    { from = "src", include = "reprep/report_utils/statistics/tables" },
-    { from = "src", include = "reprep/report_utils/storing" },
-    { from = "src", include = "reprep/utils" },
-    { from = "src", include = "reprep_tables" },
-]
+    {from = "src", include = "reprep"},
+    {from = "src", include = "reprep/demos"},
+    {from = "src", include = "reprep/graphics"},
+    {from = "src", include = "reprep/output"},
+    {from = "src", include = "reprep/output/hdf"},
+    {from = "src", include = "reprep/output/ipn"},
+    {from = "src", include = "reprep/plot_utils"},
+    {from = "src", include = "reprep/report_utils"},
+    {from = "src", include = "reprep/report_utils/statistics"},
+    {from = "src", include = "reprep/report_utils/statistics/library"},
+    {from = "src", include = "reprep/report_utils/statistics/structures"},
+    {from = "src", include = "reprep/report_utils/statistics/tables"},
+    {from = "src", include = "reprep/report_utils/storing"},
+    {from = "src", include = "reprep/utils"},
+    {from = "src", include = "reprep_tables"},
+    ]
 
 [tool.poetry.dependencies]
 PyContracts3 = ">=7"
@@ -47,5 +57,6 @@ zuper-commons-z7 = "*"
 python = ">=3.12"
 
 [build-system]
-requires = ["poetry-core>=1.0.0"]
+requires = [
+    "poetry-core>=1.0.0",]
 build-backend = "poetry.core.masonry.api"
