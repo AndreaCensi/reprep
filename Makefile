@@ -1,37 +1,67 @@
-package=reprep
-include pypackage.mk
+all:
+	@echo
 
-demos:
-	rm -rf reprep_demos_out
-	reprep_demos
+out=out
+tested_packages := reprep_tests
+deployed_packages := reprep reprep_tables
+test_environment := DISABLE_CONTRACTS=1
 
+ifneq ($(filter contracts,$(deployed_packages)),)
+test_environment :=
+endif
+
+.PHONY: all template bump upload black install-deps install-testing-deps test coverage-combine docs
+
+
+template:
+	zuper-cli template
 
 bump:
-	bumpversion --verbose patch
+	zuper-cli bump
 
 upload:
-	git push --tags
-	git push --all
-	rm -f dist/*
-	rm -rf src/*.egg-info
-	python3 setup.py sdist
-	devpi use $(TWINE_REPOSITORY_URL)
-	devpi login $(TWINE_USERNAME) --password $(TWINE_PASSWORD)
-	devpi upload --verbose dist/*
+	zuper-cli upload
 
-bump-upload:
-	$(MAKE) bump
-	$(MAKE) upload
+black:
+	black -l 110 --target-version py312 src
 
-name=reprep-python3
+install-deps:
+	pip3 install --user shyaml
+	shyaml get-values install_requires < project.pp1.yaml > .requirements.txt
+	pip3 install --user --upgrade -r .requirements.txt
+	rm .requirements.txt
 
-test-python3:
-	docker stop $(name) || true
-	docker rm $(name) || true
+install-testing-deps:
+	pip3 install --user shyaml
+	shyaml get-values tests_require < project.pp1.yaml > .requirements_tests.txt
+	pip3 install --user --upgrade -r .requirements_tests.txt
+	rm .requirements_tests.txt
 
-	docker run -it -v "$(shell realpath $(PWD)):/reprep" -w /reprep --name $(name) python:3 /bin/bash
+	pip install \
+		pipdeptree\
+		bumpversion\
+		nose2\
+		nose2-html-report\
+		pre-commit\
+		coverage\
+		codecov\
+		sphinx\
+		sphinx-rtd-theme
 
-test-python3-install:
-	pip install -r requirements.txt
-	pip install nose
-	python setup.py develop --no-deps
+test:
+	$(test_environment) python -m nose2 -v $(tested_packages)
+
+coverage-combine:
+	coverage combine
+
+ifneq (1,)
+docs:
+	$(MAKE) -C docs
+else
+docs:
+	sphinx-build src $(out)/docs
+endif
+
+-include extra.mk
+
+# sigil e1a6bff924de6cb168d5edbd53bf29fa
